@@ -8,19 +8,20 @@ using NIBRSXML.Constants;
 
 namespace NIBRSReport
 {
-    [XmlRoot(Namespace = Namespaces.cjisNibrs)]
-    class Submission : List<Report>
+    [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
+    public class Submission : List<Report>
     {
-        public Report Report { get; set; }
-
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
         public string xsiSchemaLocation = NIBRSXML.Constants.Misc.schemaLocation;
 
         public Submission() { }
 
-        public Submission(Report report)
+        public Submission(params Report[] reports)
         {
-            this.Report = report;
+            foreach (Report r in reports)
+            {
+                this.Add(r);
+            }
         }
     }
 }
