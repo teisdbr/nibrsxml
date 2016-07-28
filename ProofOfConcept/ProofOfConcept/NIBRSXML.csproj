@@ -42,15 +42,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Namespace.cs" />
-    <Compile Include="NIBRSReport\Arrestee.cs" />
-    <Compile Include="NIBRSReport\ArrestSubjectAssociation.cs" />
+    <Compile Include="NIBRSReport\Arrestee\Arrestee.cs" />
+    <Compile Include="NIBRSReport\Association\ArrestSubjectAssociation.cs" />
     <Compile Include="NIBRSReport\Arrest\Arrest.cs" />
     <Compile Include="NIBRSReport\Arrest\ArrestCharge.cs" />
+    <Compile Include="NIBRSReport\Association\AssociationList.cs" />
+    <Compile Include="NIBRSReport\Association\IAssociation.cs" />
     <Compile Include="NIBRSReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NIBRSReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
-    <Compile Include="NIBRSReport\OffenseLocationAssociation.cs" />
-    <Compile Include="NIBRSReport\OffenseVictimAssociation.cs" />
-    <Compile Include="NIBRSReport\Subject.cs" />
+    <Compile Include="NIBRSReport\IReportElement.cs" />
+    <Compile Include="NIBRSReport\Item\ItemList.cs" />
+    <Compile Include="NIBRSReport\Association\OffenseLocationAssociation.cs" />
+    <Compile Include="NIBRSReport\Association\OffenseVictimAssociation.cs" />
+    <Compile Include="NIBRSReport\Person\IPerson.cs" />
+    <Compile Include="NIBRSReport\Person\PersonList.cs" />
+    <Compile Include="NIBRSReport\Subject\Subject.cs" />
     <Compile Include="NIBRSReport\Misc\RoleOfPerson.cs" />
     <Compile Include="NIBRSReport\Misc\ActivityDate.cs" />
     <Compile Include="NIBRSReport\Misc\ActivityIdentification.cs" />
@@ -73,7 +79,6 @@
     <Compile Include="NIBRSReport\Person\IPersonAgeMeasure.cs" />
     <Compile Include="NIBRSReport\Person\MeasureIntegerRange.cs" />
     <Compile Include="NIBRSReport\Person\MeasureIntegerValue.cs" />
-    <Compile Include="NIBRSReport\Person\Person.cs" />
     <Compile Include="NIBRSReport\Person\PersonAgeMeasure.cs" />
     <Compile Include="NIBRSReport\Person\PersonAgeMeasureRange.cs" />
     <Compile Include="NIBRSReport\Person\PersonAgeMeasureValue.cs" />
@@ -85,11 +90,12 @@
     <Compile Include="NIBRSReport\Report.cs" />
     <Compile Include="NIBRSReport\ReportHeader\ReportHeader.cs" />
     <Compile Include="NIBRSReport\ReportHeader\ReportingAgency.cs" />
-    <Compile Include="NIBRSReport\SubjectVictimAssociation.cs" />
+    <Compile Include="NIBRSReport\Association\SubjectVictimAssociation.cs" />
     <Compile Include="NIBRSReport\Submission.cs" />
     <Compile Include="NIBRSReport\Substance\Substance.cs" />
+    <Compile Include="NIBRSReport\Substance\SubstanceList.cs" />
     <Compile Include="NIBRSReport\Substance\SubstanceQuantityMeasure.cs" />
-    <Compile Include="NIBRSReport\Victim.cs" />
+    <Compile Include="NIBRSReport\Victim\Victim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

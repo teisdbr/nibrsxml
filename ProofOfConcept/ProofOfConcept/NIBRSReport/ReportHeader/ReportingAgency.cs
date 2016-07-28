@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
+using NIBRSXML.NIBRSReport.Misc;
 
-namespace NIBRSXML.NIBRSReport
+namespace NIBRSXML.NIBRSReport.ReportHeader
 {
     public class ReportingAgency
     {

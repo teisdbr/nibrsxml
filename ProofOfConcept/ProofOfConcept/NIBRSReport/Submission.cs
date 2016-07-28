@@ -12,7 +12,7 @@ namespace NIBRSXML.NIBRSReport
     public class Submission : List<Report>
     {
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
-        public string xsiSchemaLocation = NIBRSXML.Constants.Misc.schemaLocation;
+        private string xsiSchemaLocation = NIBRSXML.Constants.Misc.schemaLocation;
 
         public Submission() { }
 

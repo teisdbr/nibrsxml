@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSXML.NIBRSReport
+namespace NIBRSXML.NIBRSReport.ReportHeader
 {
     public class ReportHeader
     {
