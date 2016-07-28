@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport
+namespace NIBRSXML.NIBRSReport.Person
 {
-    public interface IReportElement
+    public class PersonList
     {
     }
 }
