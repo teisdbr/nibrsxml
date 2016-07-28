@@ -8,7 +8,7 @@ using NIBRSXML.Constants;
 
 namespace NIBRSReport
 {
-    public class OrganizationAugmentation
+    class OrganizationAugmentation
     {
         public OrganizationORIIdentification OrganizationORIIdentification { get; set; }
 

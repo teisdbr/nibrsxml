@@ -8,7 +8,7 @@ using NIBRSXML.Constants;
 
 namespace NIBRSReport
 {
-    public class ReportingAgency
+    class ReportingAgency
     {
         [XmlElement(Namespace = Namespaces.justice)]
         public OrganizationAugmentation OrganizationAugmentation { get; set; }

@@ -8,7 +8,7 @@ using NIBRSXML.Constants;
 
 namespace NIBRSReport
 {
-    public class ReportHeader
+    class ReportHeader
     {
         public string NIBRSReportCategoryCode { get; set; }
 

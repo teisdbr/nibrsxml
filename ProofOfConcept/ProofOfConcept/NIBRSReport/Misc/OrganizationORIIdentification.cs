@@ -8,16 +8,16 @@ using NIBRSXML.Constants;
 
 namespace NIBRSReport
 {
-    public class ReportDate
+    class OrganizationORIIdentification
     {
         [XmlElement(Namespace = Namespaces.niemCore)]
-        public string YearMonthDate { get; set; }
+        public string IdentificationID;
 
-        public ReportDate() { }
+        public OrganizationORIIdentification() { }
 
-        public ReportDate(string ymd)
+        public OrganizationORIIdentification(string id)
         {
-            this.YearMonthDate = ymd;
+            this.IdentificationID = id;
         }
     }
 }

@@ -9,7 +9,7 @@ using NIBRSXML.Constants;
 namespace NIBRSReport
 {
     [XmlRoot(Namespace = Namespaces.cjisNibrs)]
-    public class Report
+    class Report
     {
         public ReportHeader ReportHeader {get; set;}
 

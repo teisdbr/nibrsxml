@@ -9,8 +9,8 @@ using NIBRSXML.Constants;
 namespace NIBRSReport
 {
     [XmlRoot(Namespace = Namespaces.cjisNibrs)]
-    public class Submission
-    {   
+    class Submission : List<Report>
+    {
         public Report Report { get; set; }
 
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
