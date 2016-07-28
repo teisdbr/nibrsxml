@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSReport
+namespace NIBRSXML.NIBRSReport
 {
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
     public class Submission : List<Report>

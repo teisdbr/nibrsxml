@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIBRSXML.NIBRSReport
 {
-    class jxdmIncidentAugmentation
+    public class jxdmIncidentAugmentation
     {
     }
 }

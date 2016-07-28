@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Person
+namespace NIBRSXML.NIBRSReport
 {
-    class PersonAgeMeasure
+    public class PersonAgeMeasure
     {
     }
 }

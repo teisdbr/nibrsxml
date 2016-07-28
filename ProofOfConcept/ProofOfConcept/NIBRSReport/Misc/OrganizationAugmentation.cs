@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSReport
+namespace NIBRSXML.NIBRSReport
 {
-    class OrganizationAugmentation
+    public class OrganizationAugmentation
     {
         public OrganizationORIIdentification OrganizationORIIdentification { get; set; }
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Substance
+namespace NIBRSXML.NIBRSReport
 {
-    class Substance
+    public class Substance
     {
     }
 }

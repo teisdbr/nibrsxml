@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSReport
+namespace NIBRSXML.NIBRSReport
 {
-    class ReportHeader
+    public class ReportHeader
     {
         public string NIBRSReportCategoryCode { get; set; }
 

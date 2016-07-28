@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIBRSXML.NIBRSReport
 {
-    class ActivityDate
+    public class ActivityDate
     {
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Item
+namespace NIBRSXML.NIBRSReport
 {
-    class ItemValueDate
+    public class ItemValueDate
     {
     }
 }

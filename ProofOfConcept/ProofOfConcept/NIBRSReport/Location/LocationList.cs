@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Location
+namespace NIBRSXML.NIBRSReport
 {
-    class LocationList
+    public class LocationList
     {
     }
 }

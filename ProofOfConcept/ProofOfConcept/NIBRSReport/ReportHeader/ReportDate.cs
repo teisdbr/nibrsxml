@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSReport
+namespace NIBRSXML.NIBRSReport
 {
-    class ReportDate
+    public class ReportDate
     {
         [XmlElement(Namespace = Namespaces.niemCore)]
         public string YearMonthDate { get; set; }

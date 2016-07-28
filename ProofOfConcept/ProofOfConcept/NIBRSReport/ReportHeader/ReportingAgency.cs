@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NIBRSXML.Constants;
 
-namespace NIBRSReport
+namespace NIBRSXML.NIBRSReport
 {
-    class ReportingAgency
+    public class ReportingAgency
     {
         [XmlElement(Namespace = Namespaces.justice)]
         public OrganizationAugmentation OrganizationAugmentation { get; set; }
