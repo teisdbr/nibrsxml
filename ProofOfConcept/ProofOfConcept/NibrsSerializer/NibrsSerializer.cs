@@ -151,9 +151,7 @@ namespace NibrsXml.NibrsSerializer
             //                "A",
             //                new IncidentExceptionalClearanceDate("2016-02-25")))));
 
-            Submission submission =
-                new Submission(
-                    new Report(
+            Report report = new Report(
                         new ReportHeader(
                             "GROUP A INCIDENT REPORT",
                             "I",
@@ -168,6 +166,27 @@ namespace NibrsXml.NibrsSerializer
                             new jxdmIncidentAugmentation(
                                 "A",
                                 new IncidentExceptionalClearanceDate("2016-02-25"))),
+                //new OffenseList(
+                //    new Offense(
+                //        1,
+                //        "64A",
+                //        "N",
+                //        "NONE",
+                //        1,
+                //        new OffenseFactor("N"),
+                //        new OffenseEntryPoint("F"),
+                //        new OffenseForce("11A"),
+                //        false),
+                //    new Offense(
+                //        1,
+                //        "64A",
+                //        "N",
+                //        "NONE",
+                //        1,
+                //        new OffenseFactor("N"),
+                //        new OffenseEntryPoint("F"),
+                //        new OffenseForce("11A"),
+                //        false)),
                         null,
                         null,
                         null,
@@ -179,8 +198,31 @@ namespace NibrsXml.NibrsSerializer
                         null,
                         null,
                         null,
-                        null,
-                        null));
+                        null);
+
+            report.addOffenses(
+                    new Offense(
+                        1,
+                        "64A",
+                        "N",
+                        "NONE",
+                        1,
+                        new OffenseFactor("N"),
+                        new OffenseEntryPoint("F"),
+                        new OffenseForce("11A"),
+                        false),
+                    new Offense(
+                        2,
+                        "64A",
+                        "N",
+                        "NONE",
+                        1,
+                        new OffenseFactor("N"),
+                        new OffenseEntryPoint("F"),
+                        new OffenseForce("11A"),
+                        false));
+            
+            Submission submission = new Submission(report);
             
             Console.WriteLine(NibrsSerializer.SerializeSubmission(submission));
             Console.ReadLine();

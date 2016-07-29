@@ -11,16 +11,16 @@ namespace NibrsXml.NibrsReport.ReportHeader
     [XmlRoot("ReportHeader", Namespace = Namespaces.cjisNibrs)]
     public class ReportHeader : ReportElement
     {
-        [XmlElement("NIBRSReportCategoryCode", Namespace = Namespaces.cjisNibrs)]
+        [XmlElement("NIBRSReportCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
         public string nibrsReportCategoryCode { get; set; }
 
-        [XmlElement("ReportActionCategoryCode", Namespace = Namespaces.cjisNibrs)]
+        [XmlElement("ReportActionCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
         public string reportActionCategoryCode { get; set; }
 
-        [XmlElement("ReportDate", Namespace = Namespaces.cjisNibrs)]
+        [XmlElement("ReportDate", Namespace = Namespaces.cjisNibrs, Order = 3)]
         public ReportDate reportDate { get; set; }
 
-        [XmlElement("ReportingAgency", Namespace = Namespaces.justice)]
+        [XmlElement("ReportingAgency", Namespace = Namespaces.justice, Order = 4)]
         public ReportingAgency reportingAgency { get; set; }
 
         public ReportHeader() { }

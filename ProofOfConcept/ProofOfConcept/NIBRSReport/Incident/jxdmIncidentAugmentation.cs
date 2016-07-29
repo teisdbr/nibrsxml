@@ -11,9 +11,10 @@ namespace NibrsXml.NibrsReport.Incident
     [XmlRoot("IncidentAugmentation", Namespace = Namespaces.justice)]
     public class jxdmIncidentAugmentation
     {
-        [XmlElement("IncidentExceptionalClearanceCode", Namespace = Namespaces.justice)]
+        [XmlElement("IncidentExceptionalClearanceCode", Namespace = Namespaces.justice, Order = 1)]
         public string incidentExceptionalClearanceCode { get; set; }
 
+        [XmlElement("IncidentExceptionalClearanceDate", Namespace = Namespaces.justice, Order = 2)]
         public IncidentExceptionalClearanceDate incidentExceptionalClearanceDate { get; set; }
 
         public jxdmIncidentAugmentation() { }

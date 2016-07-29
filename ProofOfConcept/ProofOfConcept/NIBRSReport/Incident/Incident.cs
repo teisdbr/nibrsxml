@@ -12,16 +12,16 @@ namespace NibrsXml.NibrsReport.Incident
     [XmlRoot("Incident", Namespace = Namespaces.niemCore)]
     public class Incident : ReportElement
     {
-        [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore)]
+        [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore, Order = 1)]
         public ActivityIdentification activityId { get; set; }
 
-        [XmlElement("ActivityDate", Namespace = Namespaces.niemCore)]
+        [XmlElement("ActivityDate", Namespace = Namespaces.niemCore, Order = 2)]
         public ActivityDate activityDate { get; set; }
 
-        [XmlElement("IncidentAugmentation", Namespace = Namespaces.cjis)]
+        [XmlElement("IncidentAugmentation", Namespace = Namespaces.cjis, Order = 3)]
         public cjisIncidentAugmentation cjisIncidentAugmentation { get; set; }
 
-        [XmlElement("IncidentAugmentation", Namespace = Namespaces.justice)]
+        [XmlElement("IncidentAugmentation", Namespace = Namespaces.justice, Order = 4)]
         public jxdmIncidentAugmentation jxdmIncidentAugmentation { get; set; }
 
         public Incident() { }

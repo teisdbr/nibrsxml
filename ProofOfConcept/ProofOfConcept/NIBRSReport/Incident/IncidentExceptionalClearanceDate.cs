@@ -8,7 +8,7 @@ using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Incident
 {
-    [XmlRoot("ActivityIdentification", Namespace = Namespaces.justice)]
+    [XmlRoot("IncidentExceptionalClearanceDate", Namespace = Namespaces.justice)]
     public class IncidentExceptionalClearanceDate
     {
         [XmlElement("Date", Namespace = Namespaces.niemCore)]

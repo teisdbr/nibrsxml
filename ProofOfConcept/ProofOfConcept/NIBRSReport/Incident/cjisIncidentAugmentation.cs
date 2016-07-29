@@ -11,10 +11,10 @@ namespace NibrsXml.NibrsReport.Incident
     [XmlRoot("IncidentAugmentation", Namespace = Namespaces.cjis)]
     public class cjisIncidentAugmentation
     {
-        [XmlElement("IncidentReportDateIndication", Namespace = Namespaces.niemCore)]
+        [XmlElement("IncidentReportDateIndicator", Namespace = Namespaces.niemCore, Order = 1)]
         public string incidentReportDateIndicator { get; set; }
         
-        [XmlElement("OffenseCargoTheftIndicator", Namespace = Namespaces.niemCore)]
+        [XmlElement("OffenseCargoTheftIndicator", Namespace = Namespaces.niemCore, Order = 2)]
         public string offenseCargoTheftIndicator { get; set; }
         
         public cjisIncidentAugmentation() { }
