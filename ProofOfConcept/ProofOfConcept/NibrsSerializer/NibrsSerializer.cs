@@ -133,38 +133,54 @@ namespace NibrsXml.NibrsSerializer
         static void Main(string[] args)
         {
             //Initialize the test submission object whose XML shall be rendered
+            //Submission submission =
+            //new Submission(
+            //    new Report(
+            //        new ReportHeader(
+            //            "GROUP A INCIDENT REPORT",
+            //            "I",
+            //            new ReportDate("2016-02"),
+            //            new ReportingAgency(
+            //                new OrganizationAugmentation(
+            //                    new OrganizationORIIdentification("WVNDX01")))),
+            //        new Incident(
+            //            new ActivityIdentification("54236732"),
+            //            new ActivityDate("2016-02-19T10:00:00"),
+            //            new cjisIncidentAugmentation(false, true),
+            //            new jxdmIncidentAugmentation(
+            //                "A",
+            //                new IncidentExceptionalClearanceDate("2016-02-25")))));
+
             Submission submission =
-            new Submission(
-                new Report(
-                    new ReportHeader(
-                        "GROUP A INCIDENT REPORT",
-                        "I",
-                        new ReportDate("2016-02"),
-                        new ReportingAgency(
-                            new OrganizationAugmentation(
-                                new OrganizationORIIdentification("WVNDX01")))),
-                    new Incident(
-                        new ActivityIdentification("54236732"),
-                        new ActivityDate("2016-02-19T10:00:00"),
-                        new cjisIncidentAugmentation(false, true),
-                        new jxdmIncidentAugmentation(
-                            "A",
-                            new IncidentExceptionalClearanceDate("2016-02-25"))))/*,
-                new Report(
-                    new ReportHeader(
-                        "GROUP A INCIDENT REPORT",
-                        "I",
-                        new ReportDate("2016-02"),
-                        new ReportingAgency(
-                            new OrganizationAugmentation(
-                                new OrganizationORIIdentification("WVNDX01")))),
-                    new Incident(
-                        new ActivityIdentification("54236732"),
-                        new ActivityDate("2016-02-19T10:00:00"),
-                        new cjisIncidentAugmentation(false, true),
-                        new jxdmIncidentAugmentation(
-                            "A",
-                            new IncidentExceptionalClearanceDate("2016-02-25"))))*/);
+                new Submission(
+                    new Report(
+                        new ReportHeader(
+                            "GROUP A INCIDENT REPORT",
+                            "I",
+                            new ReportDate("2016-02"),
+                            new ReportingAgency(
+                                new OrganizationAugmentation(
+                                    new OrganizationORIIdentification("WVNDX01")))),
+                        new Incident(
+                            new ActivityIdentification("54236732"),
+                            new ActivityDate("2016-02-19T10:00:00"),
+                            new cjisIncidentAugmentation(false, true),
+                            new jxdmIncidentAugmentation(
+                                "A",
+                                new IncidentExceptionalClearanceDate("2016-02-25"))),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null));
             
             Console.WriteLine(NibrsSerializer.SerializeSubmission(submission));
             Console.ReadLine();

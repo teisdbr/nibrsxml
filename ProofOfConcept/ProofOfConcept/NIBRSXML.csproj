@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Constants\Namespace.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
+    <Compile Include="NibrsReport\Arrest\ArrestList.cs" />
     <Compile Include="NibrsReport\Association\ArrestSubjectAssociation.cs" />
     <Compile Include="NibrsReport\Arrest\Arrest.cs" />
     <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
