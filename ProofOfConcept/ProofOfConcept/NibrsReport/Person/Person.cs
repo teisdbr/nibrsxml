@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport
+namespace NibrsXml.NibrsReport.Person
 {
-    public interface IReportElement
+    public abstract class Person
     {
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace NIBRSXML.Constants
+namespace NibrsXml.Constants
 {
     /// <summary>
     /// A listing of miscellaneous constants used for generating NIBRSXML reports

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.EnforcementOfficial
+namespace NibrsXml.NibrsReport.EnforcementOfficial
 {
     public class EnforcementOfficialUnit
     {

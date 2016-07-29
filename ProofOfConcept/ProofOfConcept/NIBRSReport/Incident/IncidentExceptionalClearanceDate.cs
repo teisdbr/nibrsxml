@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
+using NibrsXml.Constants;
 
-namespace NIBRSXML.NIBRSReport.Incident
+namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("ActivityIdentification", Namespace = Namespaces.justice)]
     public class IncidentExceptionalClearanceDate

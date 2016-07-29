@@ -4,17 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
-using NIBRSXML.NIBRSReport.Misc;
+using NibrsXml.Constants;
+using NibrsXml.NibrsReport.Misc;
 
-namespace NIBRSXML.NIBRSReport.Incident
+namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("Incident", Namespace = Namespaces.niemCore)]
-    public class Incident : IReportElement
+    public class Incident : ReportElement
     {
+        [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore)]
         public ActivityIdentification activityId { get; set; }
+
+        [XmlElement("ActivityDate", Namespace = Namespaces.niemCore)]
         public ActivityDate activityDate { get; set; }
+
+        [XmlElement("IncidentAugmentation", Namespace = Namespaces.cjis)]
         public cjisIncidentAugmentation cjisIncidentAugmentation { get; set; }
+
+        [XmlElement("IncidentAugmentation", Namespace = Namespaces.justice)]
         public jxdmIncidentAugmentation jxdmIncidentAugmentation { get; set; }
 
         public Incident() { }

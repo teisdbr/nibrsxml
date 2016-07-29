@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
+using NibrsXml.Constants;
 
-namespace NIBRSXML.NIBRSReport.Misc
+namespace NibrsXml.NibrsReport.Misc
 {
     [XmlRoot("ActivityIdentification", Namespace = Namespaces.niemCore)]
     public class ActivityIdentification

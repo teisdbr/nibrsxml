@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
+using NibrsXml.Constants;
 
-namespace NIBRSXML.NIBRSReport.Incident
+namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("IncidentAugmentation", Namespace = Namespaces.cjis)]
     public class cjisIncidentAugmentation
@@ -21,8 +21,8 @@ namespace NIBRSXML.NIBRSReport.Incident
 
         public cjisIncidentAugmentation(bool reportDateIndicator, bool cargoTheftIndicator)
         {
-            this.incidentReportDateIndicator = reportDateIndicator ? "true" : "false";
-            this.offenseCargoTheftIndicator = cargoTheftIndicator ? "true" : "false";
+            this.incidentReportDateIndicator = reportDateIndicator.ToString().ToLower();
+            this.offenseCargoTheftIndicator = cargoTheftIndicator.ToString().ToLower();
         }
     }
 }

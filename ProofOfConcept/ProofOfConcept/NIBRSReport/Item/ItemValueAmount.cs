@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Item
+namespace NibrsXml.NibrsReport.Item
 {
     public class ItemValueAmount
     {

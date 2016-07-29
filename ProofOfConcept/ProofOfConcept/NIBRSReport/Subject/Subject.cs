@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Subject
+namespace NibrsXml.NibrsReport.Subject
 {
     public class Subject
     {

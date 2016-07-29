@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Person
+namespace NibrsXml.NibrsReport.Person
 {
     public class MeasureIntegerValue
     {

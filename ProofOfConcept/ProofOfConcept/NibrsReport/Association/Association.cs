@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Person
+namespace NibrsXml.NibrsReport.Association
 {
-    public interface IPersonAgeMeasure
+    public abstract class Association
     {
     }
 }

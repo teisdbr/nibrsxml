@@ -4,20 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
+using NibrsXml.Constants;
 
-namespace NIBRSXML.NIBRSReport.ReportHeader
+namespace NibrsXml.NibrsReport.ReportHeader
 {
+    [XmlRoot("ReportDate", Namespace = Namespaces.cjisNibrs)]
     public class ReportDate
     {
-        [XmlElement(Namespace = Namespaces.niemCore)]
-        public string YearMonthDate { get; set; }
+        [XmlElement("YearMonthDate", Namespace = Namespaces.niemCore)]
+        public string yearMonthDate { get; set; }
 
         public ReportDate() { }
 
         public ReportDate(string ymd)
         {
-            this.YearMonthDate = ymd;
+            this.yearMonthDate = ymd;
         }
     }
 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{60A3E206-C3FF-4DEF-A1C1-C03E54505D97}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NIBRSXML</RootNamespace>
+    <RootNamespace>NibrsXml</RootNamespace>
     <AssemblyName>NIBRSXML</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,62 +42,63 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Namespace.cs" />
-    <Compile Include="NIBRSReport\Arrestee\Arrestee.cs" />
-    <Compile Include="NIBRSReport\Association\ArrestSubjectAssociation.cs" />
-    <Compile Include="NIBRSReport\Arrest\Arrest.cs" />
-    <Compile Include="NIBRSReport\Arrest\ArrestCharge.cs" />
-    <Compile Include="NIBRSReport\Association\AssociationList.cs" />
-    <Compile Include="NIBRSReport\Association\IAssociation.cs" />
-    <Compile Include="NIBRSReport\EnforcementOfficial\EnforcementOfficial.cs" />
-    <Compile Include="NIBRSReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
-    <Compile Include="NIBRSReport\IReportElement.cs" />
-    <Compile Include="NIBRSReport\Item\ItemList.cs" />
-    <Compile Include="NIBRSReport\Association\OffenseLocationAssociation.cs" />
-    <Compile Include="NIBRSReport\Association\OffenseVictimAssociation.cs" />
-    <Compile Include="NIBRSReport\Person\IPerson.cs" />
-    <Compile Include="NIBRSReport\Person\PersonList.cs" />
-    <Compile Include="NIBRSReport\Subject\Subject.cs" />
-    <Compile Include="NIBRSReport\Misc\RoleOfPerson.cs" />
-    <Compile Include="NIBRSReport\Misc\ActivityDate.cs" />
-    <Compile Include="NIBRSReport\Misc\ActivityIdentification.cs" />
-    <Compile Include="NIBRSReport\Incident\Incident.cs" />
-    <Compile Include="NIBRSReport\Incident\cjisIncidentAugmentation.cs" />
-    <Compile Include="NIBRSReport\Incident\IncidentExceptionalClearanceDate.cs" />
-    <Compile Include="NIBRSReport\Incident\jxdmIncidentAugmentation.cs" />
-    <Compile Include="NIBRSReport\Item\Item.cs" />
-    <Compile Include="NIBRSReport\Item\ItemStatus.cs" />
-    <Compile Include="NIBRSReport\Item\ItemValue.cs" />
-    <Compile Include="NIBRSReport\Item\ItemValueAmount.cs" />
-    <Compile Include="NIBRSReport\Item\ItemValueDate.cs" />
-    <Compile Include="NIBRSReport\Location\Location.cs" />
-    <Compile Include="NIBRSReport\Location\LocationList.cs" />
-    <Compile Include="NIBRSReport\Offense\Offense.cs" />
-    <Compile Include="NIBRSReport\Offense\OffenseEntryPoint.cs" />
-    <Compile Include="NIBRSReport\Offense\OffenseFactor.cs" />
-    <Compile Include="NIBRSReport\Offense\OffenseForce.cs" />
-    <Compile Include="NIBRSReport\Offense\OffenseList.cs" />
-    <Compile Include="NIBRSReport\Person\IPersonAgeMeasure.cs" />
-    <Compile Include="NIBRSReport\Person\MeasureIntegerRange.cs" />
-    <Compile Include="NIBRSReport\Person\MeasureIntegerValue.cs" />
-    <Compile Include="NIBRSReport\Person\PersonAgeMeasure.cs" />
-    <Compile Include="NIBRSReport\Person\PersonAgeMeasureRange.cs" />
-    <Compile Include="NIBRSReport\Person\PersonAgeMeasureValue.cs" />
-    <Compile Include="NIBRSReport\Person\PersonAugmentation.cs" />
-    <Compile Include="NIBRSReport\Person\PersonInjury.cs" />
-    <Compile Include="NIBRSReport\Misc\OrganizationAugmentation.cs" />
-    <Compile Include="NIBRSReport\Misc\OrganizationORIIdentification.cs" />
-    <Compile Include="NIBRSReport\ReportHeader\ReportDate.cs" />
-    <Compile Include="NIBRSReport\Report.cs" />
-    <Compile Include="NIBRSReport\ReportHeader\ReportHeader.cs" />
-    <Compile Include="NIBRSReport\ReportHeader\ReportingAgency.cs" />
-    <Compile Include="NIBRSReport\Association\SubjectVictimAssociation.cs" />
-    <Compile Include="NIBRSReport\Submission.cs" />
-    <Compile Include="NIBRSReport\Substance\Substance.cs" />
-    <Compile Include="NIBRSReport\Substance\SubstanceList.cs" />
-    <Compile Include="NIBRSReport\Substance\SubstanceQuantityMeasure.cs" />
-    <Compile Include="NIBRSReport\Victim\Victim.cs" />
+    <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
+    <Compile Include="NibrsReport\Association\ArrestSubjectAssociation.cs" />
+    <Compile Include="NibrsReport\Arrest\Arrest.cs" />
+    <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
+    <Compile Include="NibrsReport\Association\AssociationList.cs" />
+    <Compile Include="NibrsReport\Association\Association.cs" />
+    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
+    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
+    <Compile Include="NibrsReport\NibrsSerializable.cs" />
+    <Compile Include="NibrsReport\ReportElement.cs" />
+    <Compile Include="NibrsReport\Item\ItemList.cs" />
+    <Compile Include="NibrsReport\Association\OffenseLocationAssociation.cs" />
+    <Compile Include="NibrsReport\Association\OffenseVictimAssociation.cs" />
+    <Compile Include="NibrsReport\Person\Person.cs" />
+    <Compile Include="NibrsReport\Person\PersonList.cs" />
+    <Compile Include="NibrsReport\Subject\Subject.cs" />
+    <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />
+    <Compile Include="NibrsReport\Misc\ActivityDate.cs" />
+    <Compile Include="NibrsReport\Misc\ActivityIdentification.cs" />
+    <Compile Include="NibrsReport\Incident\Incident.cs" />
+    <Compile Include="NibrsReport\Incident\cjisIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Incident\IncidentExceptionalClearanceDate.cs" />
+    <Compile Include="NibrsReport\Incident\jxdmIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Item\Item.cs" />
+    <Compile Include="NibrsReport\Item\ItemStatus.cs" />
+    <Compile Include="NibrsReport\Item\ItemValue.cs" />
+    <Compile Include="NibrsReport\Item\ItemValueAmount.cs" />
+    <Compile Include="NibrsReport\Item\ItemValueDate.cs" />
+    <Compile Include="NibrsReport\Location\Location.cs" />
+    <Compile Include="NibrsReport\Location\LocationList.cs" />
+    <Compile Include="NibrsReport\Offense\Offense.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseEntryPoint.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseFactor.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseForce.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseList.cs" />
+    <Compile Include="NibrsReport\Person\MeasureIntegerRange.cs" />
+    <Compile Include="NibrsReport\Person\MeasureIntegerValue.cs" />
+    <Compile Include="NibrsReport\Person\PersonAgeMeasure.cs" />
+    <Compile Include="NibrsReport\Person\PersonAgeMeasureRange.cs" />
+    <Compile Include="NibrsReport\Person\PersonAgeMeasureValue.cs" />
+    <Compile Include="NibrsReport\Person\PersonAugmentation.cs" />
+    <Compile Include="NibrsReport\Person\PersonInjury.cs" />
+    <Compile Include="NibrsReport\Misc\OrganizationAugmentation.cs" />
+    <Compile Include="NibrsReport\Misc\OrganizationORIIdentification.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportDate.cs" />
+    <Compile Include="NibrsReport\Report.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportHeader.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportingAgency.cs" />
+    <Compile Include="NibrsReport\Association\SubjectVictimAssociation.cs" />
+    <Compile Include="NibrsReport\Submission.cs" />
+    <Compile Include="NibrsReport\Substance\Substance.cs" />
+    <Compile Include="NibrsReport\Substance\SubstanceList.cs" />
+    <Compile Include="NibrsReport\Substance\SubstanceQuantityMeasure.cs" />
+    <Compile Include="NibrsReport\Victim\Victim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
   </ItemGroup>

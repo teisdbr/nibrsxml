@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Substance
+namespace NibrsXml.NibrsReport.Substance
 {
     public class SubstanceList
     {

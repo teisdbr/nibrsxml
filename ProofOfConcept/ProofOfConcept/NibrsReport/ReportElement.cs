@@ -22,19 +22,20 @@ using NibrsXml.NibrsReport.Victim;
 
 namespace NibrsXml.NibrsReport
 {
-    [XmlRoot("Report", Namespace = Namespaces.cjisNibrs)]
-    public class Report : NibrsSerializable
+    [XmlInclude(typeof(Arrest.Arrest))]
+    [XmlInclude(typeof(Arrestee.Arrestee))]
+    [XmlInclude(typeof(Association.Association))]
+    [XmlInclude(typeof(EnforcementOfficial.EnforcementOfficial))]
+    [XmlInclude(typeof(Incident.Incident))]
+    [XmlInclude(typeof(Item.Item))]
+    [XmlInclude(typeof(Location.Location))]
+    [XmlInclude(typeof(Offense.Offense))]
+    [XmlInclude(typeof(ReportHeader.ReportHeader))]
+    [XmlInclude(typeof(Subject.Subject))]
+    [XmlInclude(typeof(Substance.Substance))]
+    [XmlInclude(typeof(Victim.Victim))]
+    [XmlRoot(Namespace = Namespaces.cjisNibrs)]
+    public abstract class ReportElement
     {
-        [XmlElement("Report")]
-        public List<ReportElement> reportElements { get; set; }
-
-        public Report() { }
-
-        public Report(params ReportElement[] elements)
-        {
-            reportElements = new List<ReportElement>();
-            foreach (ReportElement element in elements)
-                reportElements.Add(element);
-        }
     }
 }

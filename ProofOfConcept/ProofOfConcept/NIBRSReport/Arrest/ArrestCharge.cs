@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIBRSXML.NIBRSReport.Arrest
+namespace NibrsXml.NibrsReport.Arrest
 {
     public class ArrestCharge
     {

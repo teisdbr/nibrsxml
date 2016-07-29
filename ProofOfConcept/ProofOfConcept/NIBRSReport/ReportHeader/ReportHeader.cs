@@ -4,28 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NIBRSXML.Constants;
+using NibrsXml.Constants;
 
-namespace NIBRSXML.NIBRSReport.ReportHeader
+namespace NibrsXml.NibrsReport.ReportHeader
 {
-    public class ReportHeader
+    [XmlRoot("ReportHeader", Namespace = Namespaces.cjisNibrs)]
+    public class ReportHeader : ReportElement
     {
-        public string NIBRSReportCategoryCode { get; set; }
+        [XmlElement("NIBRSReportCategoryCode", Namespace = Namespaces.cjisNibrs)]
+        public string nibrsReportCategoryCode { get; set; }
 
-        public string ReportActionCategoryCode { get; set; }
+        [XmlElement("ReportActionCategoryCode", Namespace = Namespaces.cjisNibrs)]
+        public string reportActionCategoryCode { get; set; }
 
-        public ReportDate ReportDate { get; set; }
+        [XmlElement("ReportDate", Namespace = Namespaces.cjisNibrs)]
+        public ReportDate reportDate { get; set; }
 
-        public ReportingAgency ReportingAgency { get; set; }
+        [XmlElement("ReportingAgency", Namespace = Namespaces.justice)]
+        public ReportingAgency reportingAgency { get; set; }
 
         public ReportHeader() { }
 
         public ReportHeader(string nibrsCode, string actionCode, ReportDate date, ReportingAgency agency)
         {
-            this.NIBRSReportCategoryCode = nibrsCode;
-            this.ReportActionCategoryCode = actionCode;
-            this.ReportDate = date;
-            this.ReportingAgency = agency;
+            this.nibrsReportCategoryCode = nibrsCode;
+            this.reportActionCategoryCode = actionCode;
+            this.reportDate = date;
+            this.reportingAgency = agency;
         }
     }
 }
