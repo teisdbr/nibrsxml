@@ -9,7 +9,7 @@ using NibrsXml.Constants;
 namespace NibrsXml.NibrsReport.ReportHeader
 {
     [XmlRoot("ReportHeader", Namespace = Namespaces.cjisNibrs)]
-    public class ReportHeader : ReportElement
+    public class ReportHeader
     {
         [XmlElement("NIBRSReportCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
         public string nibrsReportCategoryCode { get; set; }

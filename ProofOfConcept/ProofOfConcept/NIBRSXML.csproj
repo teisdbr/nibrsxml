@@ -50,7 +50,6 @@
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
-    <Compile Include="NibrsReport\ReportElement.cs" />
     <Compile Include="NibrsReport\Association\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Association\OffenseVictimAssociation.cs" />
     <Compile Include="NibrsReport\Person\Person.cs" />

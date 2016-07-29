@@ -10,7 +10,7 @@ using NibrsXml.NibrsReport.Misc;
 namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("Incident", Namespace = Namespaces.niemCore)]
-    public class Incident : ReportElement
+    public class Incident
     {
         [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore, Order = 1)]
         public ActivityIdentification activityId { get; set; }
