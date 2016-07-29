@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NibrsXml.NibrsReport.Association
 {
-    public class SubjectVictimAssociation
+    public class SubjectVictimAssociation : Association
     {
     }
 }

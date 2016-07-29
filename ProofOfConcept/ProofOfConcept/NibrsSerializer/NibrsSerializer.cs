@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -103,10 +104,8 @@ namespace NibrsXml.NibrsSerializer
             {
                 try
                 {
-                    if (serializee.GetType() == typeof(Submission))
+                    if (serializee.GetType() == typeof(Submission) || serializee.GetType() == typeof(Report))
                         base.Serialize(writer, serializee, namespaces);
-                    else if (serializee.GetType() == typeof(Report))
-                        base.Serialize(writer, serializee);
                     else
                         throw new ArgumentException("The object provided must be of type Submission or Report.");
                     xml = writer.ToString();
@@ -127,7 +126,7 @@ namespace NibrsXml.NibrsSerializer
 
         public static string SerializeReport(Report report)
         {
-            return reportSerializer.Serialize(report);
+            return Regex.Replace(reportSerializer.Serialize(report), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
         }
 
         static void Main(string[] args)
@@ -165,42 +164,9 @@ namespace NibrsXml.NibrsSerializer
                             new cjisIncidentAugmentation(false, true),
                             new jxdmIncidentAugmentation(
                                 "A",
-                                new IncidentExceptionalClearanceDate("2016-02-25"))),
-                //new OffenseList(
-                //    new Offense(
-                //        1,
-                //        "64A",
-                //        "N",
-                //        "NONE",
-                //        1,
-                //        new OffenseFactor("N"),
-                //        new OffenseEntryPoint("F"),
-                //        new OffenseForce("11A"),
-                //        false),
-                //    new Offense(
-                //        1,
-                //        "64A",
-                //        "N",
-                //        "NONE",
-                //        1,
-                //        new OffenseFactor("N"),
-                //        new OffenseEntryPoint("F"),
-                //        new OffenseForce("11A"),
-                //        false)),
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
+                                new IncidentExceptionalClearanceDate("2016-02-25"))));
 
-            report.addOffenses(
+            report.AddOffenses(
                     new Offense(
                         1,
                         "64A",
@@ -224,7 +190,8 @@ namespace NibrsXml.NibrsSerializer
             
             Submission submission = new Submission(report);
             
-            Console.WriteLine(NibrsSerializer.SerializeSubmission(submission));
+            //Console.WriteLine(NibrsSerializer.SerializeSubmission(submission));
+            Console.WriteLine(NibrsSerializer.SerializeReport(report));
             Console.ReadLine();
         }
     }
