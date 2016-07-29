@@ -3,10 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NibrsXml.Constants;
+using System.Xml.Serialization;
 
 namespace NibrsXml.NibrsReport.Substance
 {
+    [XmlRoot("SubstanceQuantityMeasure", Namespace = Namespaces.niemCore)]
     public class SubstanceQuantityMeasure
     {
+        [XmlElement("MeasureDecimalValue", Namespace = Namespaces.niemCore)]
+        public string decimalValue { get; set; }
+
+        [XmlElement("SubstanceUnitCode", Namespace = Namespaces.justice)]
+        public string substanceUnitCode { get; set; }
+
+        public SubstanceQuantityMeasure() { }
+
+        public SubstanceQuantityMeasure(string decimalValue, string substanceUnitCode)
+        {
+            this.decimalValue = decimalValue;
+            this.substanceUnitCode = substanceUnitCode;
+        }
     }
 }

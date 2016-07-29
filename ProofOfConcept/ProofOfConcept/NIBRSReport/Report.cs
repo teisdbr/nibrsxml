@@ -73,6 +73,9 @@ namespace NibrsXml.NibrsReport
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
         public List<Association.Association> subjectVictimAssocs { get; set; }
 
+        [XmlIgnore]
+        public string xml { get { return NibrsSerializer.NibrsSerializer.SerializeReport(this); } }
+
         public Report() { }
 
         public Report(
@@ -172,5 +175,7 @@ namespace NibrsXml.NibrsReport
             foreach (Association.SubjectVictimAssociation association in associations)
                 this.subjectVictimAssocs.Add(association);
         }
+
+        
     }
 }

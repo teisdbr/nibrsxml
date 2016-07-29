@@ -17,6 +17,9 @@ namespace NibrsXml.NibrsReport
         [XmlElement("Report")]
         public List<Report> reports = new List<Report>();
 
+        [XmlIgnore]
+        public string xml { get { return NibrsSerializer.NibrsSerializer.SerializeSubmission(this); } }
+
         public Submission() { }
 
         public Submission(params Report[] reports)
