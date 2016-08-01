@@ -8,15 +8,17 @@ using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Misc
 {
+    [XmlRoot("OrganizationAugmentation", Namespace = Namespaces.justice)]
     public class OrganizationAugmentation
     {
-        public OrganizationORIIdentification OrganizationORIIdentification { get; set; }
+        [XmlElement("OrganizationORIIdentification", Namespace = Namespaces.justice)]
+        public OrganizationORIIdentification orgOriId { get; set; }
 
         public OrganizationAugmentation() { }
 
-        public OrganizationAugmentation(OrganizationORIIdentification id)
+        public OrganizationAugmentation(OrganizationORIIdentification orgOriId)
         {
-            this.OrganizationORIIdentification = id;
+            this.orgOriId = orgOriId;
         }
     }
 }

@@ -11,6 +11,9 @@ namespace NibrsXml.NibrsReport.Location
     [XmlRoot("Location", Namespace = Namespaces.niemCore)]
     public class Location
     {
+        [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
+        public string locationRef { get; set; }
+        
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string id { get; set; }
 
@@ -19,10 +22,20 @@ namespace NibrsXml.NibrsReport.Location
 
         public Location() { }
 
+        private Location(string locationRef)
+        {
+            this.locationRef = locationRef;
+        }
+
         public Location(int id, string locationCategoryCode)
         {
             this.id = "Location" + id.ToString();
             this.locationCategoryCode = locationCategoryCode;
+        }
+
+        public Location getRef()
+        {
+            return new Location(id);
         }
     }
 }

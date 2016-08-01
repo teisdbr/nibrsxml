@@ -25,12 +25,12 @@ namespace NibrsXml.NibrsReport.Item
 
         public Item() { }
 
-        public Item(ItemStatus status, ItemValue value, string nibrsPropertyCategoryCode, string quantity)
+        public Item(ItemStatus status, ItemValue value, string nibrsPropertyCategoryCode, int quantity)
         {
             this.status = status;
             this.value = value;
             this.nibrsPropertyCategoryCode = nibrsPropertyCategoryCode;
-            this.quantity = quantity;
+            this.quantity = quantity.ToString();
         }
     }
 }

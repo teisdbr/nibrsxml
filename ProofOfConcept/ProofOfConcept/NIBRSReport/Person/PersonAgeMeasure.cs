@@ -8,17 +8,10 @@ using System.Xml.Serialization;
 
 namespace NibrsXml.NibrsReport.Person
 {
-    [XmlRoot("PersonAgeMeasure", Namespace = Namespaces.niemCore)]
+    [XmlInclude(typeof(PersonAgeMeasureRange))]
+    [XmlInclude(typeof(PersonAgeMeasureValue))]
+    [XmlRoot(Namespace = Namespaces.niemCore)]
     public abstract class PersonAgeMeasure
     {
-        [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
-		public string value { get; set; }
-
-        public PersonAgeMeasure() { }
-
-        public PersonAgeMeasure(int value)
-        {
-            this.value = value.ToString();
-        }
     }
 }

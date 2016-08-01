@@ -11,7 +11,7 @@ using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Arrest;
 using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.Association;
+using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Incident;
 using NibrsXml.NibrsReport.Item;
@@ -85,10 +85,10 @@ namespace NibrsXml.NibrsSerializer
                 new XmlQualifiedName(Aliases.nibrscodes, Namespaces.cjisNibrsCodes)
             });
 
-        private static NibrsSerializer submissionSerializer = new NibrsSerializer(typeof(Submission));
-        private static NibrsSerializer reportSerializer = new NibrsSerializer(typeof(Report));
+        //private static NibrsSerializer submissionSerializer = new NibrsSerializer(typeof(Submission));
+        //private static NibrsSerializer reportSerializer = new NibrsSerializer(typeof(Report));
 
-        private NibrsSerializer(Type type) : base(type, nonRootTypes)
+        public NibrsSerializer(Type type) : base(type, nonRootTypes)
         {
             if (type != typeof(Submission) && type != typeof(Report))
                 throw new ArgumentException(
@@ -96,7 +96,7 @@ namespace NibrsXml.NibrsSerializer
                     " Requires first argument to be either typeof(Submission) or typeof(Report)");
         }
 
-        private string Serialize(NibrsSerializable serializee)
+        public string Serialize(NibrsSerializable serializee)
         {
             // Initialize the XML string to be returned
             string xml = "";
@@ -119,15 +119,15 @@ namespace NibrsXml.NibrsSerializer
             return xml;
         }
 
-        public static string SerializeSubmission(Submission submission)
-        {
-            return submissionSerializer.Serialize(submission);
-        }
+        //private  string SerializeSubmission(Submission submission)
+        //{
+        //    return submissionSerializer.Serialize(submission);
+        //}
 
-        public static string SerializeReport(Report report)
-        {
-            return Regex.Replace(reportSerializer.Serialize(report), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
-        }
+        //private string SerializeReport(Report report)
+        //{
+        //    return Regex.Replace(reportSerializer.Serialize(report), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
+        //}
 
         static void Main(string[] args)
         {
@@ -150,21 +150,42 @@ namespace NibrsXml.NibrsSerializer
             //                "A",
             //                new IncidentExceptionalClearanceDate("2016-02-25")))));
 
-            Report report = new Report(
-                        new ReportHeader(
+            ReportHeader reportHeader = new ReportHeader(
                             "GROUP A INCIDENT REPORT",
                             "I",
                             new ReportDate("2016-02"),
                             new ReportingAgency(
                                 new OrganizationAugmentation(
-                                    new OrganizationORIIdentification("WVNDX01")))),
-                        new Incident(
+                                    new OrganizationORIIdentification("WVNDX01"))));
+            
+            Incident incident = new Incident(
                             new ActivityIdentification("54236732"),
                             new ActivityDate("2016-02-19T10:00:00"),
                             new cjisIncidentAugmentation(false, true),
                             new jxdmIncidentAugmentation(
                                 "A",
-                                new IncidentExceptionalClearanceDate("2016-02-25"))));
+                                new IncidentExceptionalClearanceDate("2016-02-25")));
+
+            EnforcementOfficial officer =
+                new EnforcementOfficial(
+                    new Person(
+                        new PersonAgeMeasureValue(32),
+                        "N",
+                        new PersonInjury("N"),
+                        "B",
+                        "R",
+                        "M",
+                        null),
+                    1,
+                    "10",
+                    "G",
+                    new EnforcementOfficialUnit(
+                        new OrganizationAugmentation(
+                            new OrganizationORIIdentification("WVNDX01"))));
+            
+            Report report = new Report(
+                        reportHeader,
+                        incident);
 
             report.AddOffenses(
                     new Offense(
@@ -176,22 +197,69 @@ namespace NibrsXml.NibrsSerializer
                         new OffenseFactor("N"),
                         new OffenseEntryPoint("F"),
                         new OffenseForce("11A"),
-                        false),
-                    new Offense(
-                        2,
-                        "64A",
-                        "N",
-                        "NONE",
-                        1,
-                        new OffenseFactor("N"),
-                        new OffenseEntryPoint("F"),
-                        new OffenseForce("11A"),
                         false));
-            
-            Submission submission = new Submission(report);
-            
-            //Console.WriteLine(NibrsSerializer.SerializeSubmission(submission));
-            Console.WriteLine(NibrsSerializer.SerializeReport(report));
+
+            report.AddLocations(
+                new Location(
+                   1,
+                   "13"));
+
+            report.AddItems(
+                new Item(
+                    new ItemStatus("NONE"),
+                    new ItemValue(
+                        new ItemValueAmount(12000),
+                        new ItemValueDate("2016-02-24")),
+                    "01",
+                    1));
+
+            report.AddSubstances(
+                new Substance(
+                    "X",
+                    new SubstanceQuantityMeasure(
+                        "1.5",
+                        "XX")));
+
+            report.AddEnforcementOfficials(officer);
+
+            report.AddVictims(
+                new Victim(
+                    officer,
+                    "L",
+                    "01",
+                    "C"),
+                new Victim(
+                    new Person(
+                        null,
+                        "U",
+                        new PersonInjury("N"),
+                        "W",
+                        "R",
+                        "M",
+                        new PersonAugmentation("BB")),
+                    2,
+                    "I",
+                    "10",
+                    "G"));
+
+            report.AddSubjects(
+                new Subject(
+                    new Person(
+                        new PersonAgeMeasureRange(
+                            new MeasureIntegerRange(
+                                30,
+                                25)),
+                        "N",
+                        null,
+                        "W",
+                        null,
+                        "F",
+                        null),
+                    1));
+
+            //Submission submission = new Submission(report);
+
+            Console.WriteLine(report.xml);
             Console.ReadLine();
         }
     }

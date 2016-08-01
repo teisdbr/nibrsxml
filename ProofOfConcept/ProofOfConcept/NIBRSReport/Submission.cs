@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
+using NibrsXml.NibrsSerializer;
 
 namespace NibrsXml.NibrsReport
 {
@@ -18,7 +19,7 @@ namespace NibrsXml.NibrsReport
         public List<Report> reports = new List<Report>();
 
         [XmlIgnore]
-        public string xml { get { return NibrsSerializer.NibrsSerializer.SerializeSubmission(this); } }
+        public string xml { get { return new NibrsSerializer.NibrsSerializer(typeof(Submission)).Serialize(this); } }
 
         public Submission() { }
 
