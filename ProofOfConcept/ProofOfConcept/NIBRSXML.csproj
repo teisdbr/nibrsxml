@@ -95,7 +95,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
