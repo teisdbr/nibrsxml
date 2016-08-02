@@ -42,15 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Namespace.cs" />
+    <Compile Include="Constants\NibrsCodes.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
-    <Compile Include="NibrsReport\Associations\ActivityReference.cs" />
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
     <Compile Include="NibrsReport\Arrest\Arrest.cs" />
     <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
     <Compile Include="NibrsReport\Associations\Association.cs" />
-    <Compile Include="NibrsReport\Associations\OffenseReference.cs" />
-    <Compile Include="NibrsReport\Associations\SubjectReference.cs" />
-    <Compile Include="NibrsReport\Associations\VictimReference.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
@@ -77,8 +74,6 @@
     <Compile Include="NibrsReport\Offense\OffenseForce.cs" />
     <Compile Include="NibrsReport\Person\MeasureIntegerRange.cs" />
     <Compile Include="NibrsReport\Person\PersonAgeMeasure.cs" />
-    <Compile Include="NibrsReport\Person\PersonAgeMeasureRange.cs" />
-    <Compile Include="NibrsReport\Person\PersonAgeMeasureValue.cs" />
     <Compile Include="NibrsReport\Person\PersonAugmentation.cs" />
     <Compile Include="NibrsReport\Person\PersonInjury.cs" />
     <Compile Include="NibrsReport\Misc\OrganizationAugmentation.cs" />

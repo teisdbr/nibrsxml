@@ -14,6 +14,9 @@ namespace NibrsXml.NibrsReport.Offense
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string offenseId { get; set; }
 
+        [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
+        public string offenseRef { get; set; }
+
         [XmlElement("OffenseUCRCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
         public string offenseUcrCode { get; set; }
 
@@ -38,8 +41,16 @@ namespace NibrsXml.NibrsReport.Offense
         [XmlElement("OffenseAttemptedIndicator", Namespace = Namespaces.justice, Order = 8)]
         public string offenseAttemptedIndicator { get; set; }
 
+        [XmlIgnore]
+        public Offense reference { get { return new Offense(this.offenseId); } }
+
         public Offense() { }
 
+        private Offense(string offenseId)
+        {
+            this.offenseRef = offenseId;
+        }
+        
         public Offense(
             int id,
             string offenceUcrCode, 

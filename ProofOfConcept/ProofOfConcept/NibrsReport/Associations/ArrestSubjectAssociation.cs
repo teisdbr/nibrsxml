@@ -9,20 +9,20 @@ using NibrsXml.Constants;
 namespace NibrsXml.NibrsReport.Associations
 {
     [XmlRoot("ArrestSubjectAssociation", Namespace = Namespaces.justice)]
-    public class ArrestSubjectAssociation : Association
+    public class ArrestSubjectAssociation //: Association
     {
         [XmlElement("Activity", Namespace = Namespaces.niemCore, Order = 1)]
-        public ActivityReference activityRef { get; set; }
+        public Arrest.Arrest activityRef { get; set; }
 
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 2)]
-        public SubjectReference subjectRef { get; set; }
+        public Arrestee.Arrestee arresteeRef { get; set; }
 
         public ArrestSubjectAssociation() { }
 
-        public ArrestSubjectAssociation(Arrest.Arrest arrest, Subject.Subject subject)
+        public ArrestSubjectAssociation(Arrest.Arrest arrest, Arrestee.Arrestee arrestee)
         {
-            this.activityRef = new ActivityReference(arrest);
-            this.subjectRef = new SubjectReference(subject);
+            this.activityRef = arrest.reference;
+            this.arresteeRef = arrestee.reference;
         }
     }
 }

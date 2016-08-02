@@ -11,14 +11,14 @@ namespace NibrsXml.NibrsReport.ReportHeader
 {
     public class ReportingAgency
     {
-        [XmlElement(Namespace = Namespaces.justice)]
-        public OrganizationAugmentation OrganizationAugmentation { get; set; }
+        [XmlElement("OrganizationAugmentation", Namespace = Namespaces.justice)]
+        public OrganizationAugmentation orgAugmentation { get; set; }
 
         public ReportingAgency() { }
 
-        public ReportingAgency(OrganizationAugmentation orgAug)
+        public ReportingAgency(OrganizationAugmentation orgAugmentation)
         {
-            this.OrganizationAugmentation = orgAug;
+            this.orgAugmentation = orgAugmentation;
         }
     }
 }

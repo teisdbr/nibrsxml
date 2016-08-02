@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
+using System.Text.RegularExpressions;
 
 namespace NibrsXml.NibrsReport
 {
@@ -48,19 +49,25 @@ namespace NibrsXml.NibrsReport
         public List<Arrest.Arrest> arrests { get; set; }
 
         [XmlElement("ArrestSubjectAssociation", Namespace = Namespaces.justice, Order = 13)]
-        public List<Associations.Association> arrestSubjectAssocs { get; set; }
+        public List<Associations.ArrestSubjectAssociation> arrestSubjectAssocs { get; set; }
 
         [XmlElement("OffenseLocationAssociation", Namespace = Namespaces.justice, Order = 14)]
-        public List<Associations.Association> offenseLocationAssocs { get; set; }
+        public List<Associations.OffenseLocationAssociation> offenseLocationAssocs { get; set; }
 
         [XmlElement("OffenseVictimAssociation", Namespace = Namespaces.justice, Order = 15)]
-        public List<Associations.Association> offenseVictimAssocs { get; set; }
+        public List<Associations.OffenseVictimAssociation> offenseVictimAssocs { get; set; }
 
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
-        public List<Associations.Association> subjectVictimAssocs { get; set; }
+        public List<Associations.SubjectVictimAssociation> subjectVictimAssocs { get; set; }
 
         [XmlIgnore]
-        public string xml { get { return new NibrsSerializer.NibrsSerializer(typeof(Report)).Serialize(this); } }
+        public string xml 
+        { 
+            get 
+            {
+                return Regex.Replace(new NibrsSerializer.NibrsSerializer(typeof(Report)).Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
+            } 
+        }
 
         public Report() { }
 
@@ -80,10 +87,10 @@ namespace NibrsXml.NibrsReport
             subjects = new List<Subject.Subject>();
             arrestees = new List<Arrestee.Arrestee>();
             arrests = new List<Arrest.Arrest>();
-            arrestSubjectAssocs = new List<Associations.Association>();
-            offenseLocationAssocs = new List<Associations.Association>();
-            offenseVictimAssocs = new List<Associations.Association>();
-            subjectVictimAssocs = new List<Associations.Association>();
+            arrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
+            offenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
+            offenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
+            subjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
         }
 
         public void AddOffenses(params Offense.Offense[] offenses)
@@ -141,6 +148,7 @@ namespace NibrsXml.NibrsReport
             foreach (Arrestee.Arrestee arrestee in arrestees)
             {
                 this.arrestees.Add(arrestee);
+                this.persons.Add(arrestee.person);
             }
         }
 

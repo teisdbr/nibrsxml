@@ -20,6 +20,9 @@ namespace NibrsXml.NibrsReport.Location
         [XmlElement("LocationCategoryCode", Namespace = Namespaces.justice)]
         public string locationCategoryCode { get; set; }
 
+        [XmlIgnore]
+        public Location reference { get { return new Location(id); } }
+
         public Location() { }
 
         private Location(string locationRef)
@@ -31,11 +34,6 @@ namespace NibrsXml.NibrsReport.Location
         {
             this.id = "Location" + id.ToString();
             this.locationCategoryCode = locationCategoryCode;
-        }
-
-        public Location getRef()
-        {
-            return new Location(id);
         }
     }
 }
