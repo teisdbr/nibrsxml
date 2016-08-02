@@ -17,7 +17,10 @@ namespace NibrsXml.NibrsReport.Arrestee
         public Person.Person person { get; set; }
 
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string id { get; set; }
+        public string arresteeId { get; set; }
+
+        [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
+        public string arresteeRef { get; set; }
         
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson role { get; set; }
@@ -34,7 +37,14 @@ namespace NibrsXml.NibrsReport.Arrestee
         [XmlElement("ArresteeJuvenileDispositionCode", Namespace = Namespaces.justice, Order = 5)]
         public string juvenileDispositionCode { get; set; }
 
+        public Arrestee reference { get { return new Arrestee(person.id); } }
+
         public Arrestee() { }
+
+        private Arrestee(string arresteeId)
+        {
+            this.arresteeRef = arresteeId;
+        }
 
         public Arrestee(
             Person.Person person,
@@ -45,7 +55,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         {
             this.person = person;
             this.person.id = "PersonArrestee" + seqId.ToString();
-            this.id = "Arrestee" + seqId.ToString();
+            this.arresteeId = "Arrestee" + seqId.ToString();
             this.role = new RoleOfPerson(this.person.id);
             this.seqId = seqId.ToString();
             this.clearanceIndicator = clearanceIndicator.ToString().ToLower();

@@ -85,9 +85,6 @@ namespace NibrsXml.NibrsSerializer
                 new XmlQualifiedName(Aliases.nibrscodes, Namespaces.cjisNibrsCodes)
             });
 
-        //private static NibrsSerializer submissionSerializer = new NibrsSerializer(typeof(Submission));
-        //private static NibrsSerializer reportSerializer = new NibrsSerializer(typeof(Report));
-
         public NibrsSerializer(Type type) : base(type, nonRootTypes)
         {
             if (type != typeof(Submission) && type != typeof(Report))
@@ -119,37 +116,8 @@ namespace NibrsXml.NibrsSerializer
             return xml;
         }
 
-        //private  string SerializeSubmission(Submission submission)
-        //{
-        //    return submissionSerializer.Serialize(submission);
-        //}
-
-        //private string SerializeReport(Report report)
-        //{
-        //    return Regex.Replace(reportSerializer.Serialize(report), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
-        //}
-
         static void Main(string[] args)
         {
-            //Initialize the test submission object whose XML shall be rendered
-            //Submission submission =
-            //new Submission(
-            //    new Report(
-            //        new ReportHeader(
-            //            "GROUP A INCIDENT REPORT",
-            //            "I",
-            //            new ReportDate("2016-02"),
-            //            new ReportingAgency(
-            //                new OrganizationAugmentation(
-            //                    new OrganizationORIIdentification("WVNDX01")))),
-            //        new Incident(
-            //            new ActivityIdentification("54236732"),
-            //            new ActivityDate("2016-02-19T10:00:00"),
-            //            new cjisIncidentAugmentation(false, true),
-            //            new jxdmIncidentAugmentation(
-            //                "A",
-            //                new IncidentExceptionalClearanceDate("2016-02-25")))));
-
             ReportHeader reportHeader = new ReportHeader(
                             "GROUP A INCIDENT REPORT",
                             "I",
@@ -166,10 +134,27 @@ namespace NibrsXml.NibrsSerializer
                                 "A",
                                 new IncidentExceptionalClearanceDate("2016-02-25")));
 
+            Offense offense1 =
+                new Offense(
+                    1,
+                    "64A",
+                    "N",
+                    "NONE",
+                    1,
+                    new OffenseFactor("N"),
+                    new OffenseEntryPoint("F"),
+                    new OffenseForce("11A"),
+                    false);
+
+            Location location1 =
+                new Location(
+                   1,
+                   "13");
+
             EnforcementOfficial officer =
                 new EnforcementOfficial(
                     new Person(
-                        new PersonAgeMeasureValue(32),
+                        new PersonAgeMeasure(32),
                         "N",
                         new PersonInjury("N"),
                         "B",
@@ -182,28 +167,68 @@ namespace NibrsXml.NibrsSerializer
                     new EnforcementOfficialUnit(
                         new OrganizationAugmentation(
                             new OrganizationORIIdentification("WVNDX01"))));
+
+            Victim 
+                victim1 =
+                    new Victim(
+                        officer,
+                        "L",
+                        "01",
+                        "C"),
+                victim2 =
+                    new Victim(
+                        new Person(
+                            null,
+                            "U",
+                            new PersonInjury("N"),
+                            "W",
+                            "R",
+                            "M",
+                            new PersonAugmentation("BB")),
+                        2,
+                        "I",
+                        "10",
+                        "G");
             
-            Report report = new Report(
-                        reportHeader,
-                        incident);
-
-            report.AddOffenses(
-                    new Offense(
-                        1,
-                        "64A",
+            Subject subject1 =
+                new Subject(
+                    new Person(
+                        new PersonAgeMeasure(30, 25),
                         "N",
-                        "NONE",
-                        1,
-                        new OffenseFactor("N"),
-                        new OffenseEntryPoint("F"),
-                        new OffenseForce("11A"),
-                        false));
+                        null,
+                        "W",
+                        null,
+                        "F",
+                        null),
+                    1);
 
-            report.AddLocations(
-                new Location(
-                   1,
-                   "13"));
+            Arrestee arrestee1 =
+                new Arrestee(
+                    new Person(
+                        new PersonAgeMeasure(25),
+                        "N",
+                        null,
+                        "W",
+                        "R",
+                        "F",
+                        null),
+                    1,
+                    true,
+                    "12",
+                    "H");
 
+            Arrest arrest1 =
+                new Arrest(
+                    1,
+                    new ActivityIdentification("12345"),
+                    new ActivityDate("2016-02-28"),
+                    new ArrestCharge("64A"),
+                    "O",
+                    "N");
+            
+            Report report = new Report(reportHeader, incident);
+            report.AddOffenses(offense1);
+            report.AddLocations(location1);
             report.AddItems(
                 new Item(
                     new ItemStatus("NONE"),
@@ -219,62 +244,23 @@ namespace NibrsXml.NibrsSerializer
                     new SubstanceQuantityMeasure(
                         "1.5",
                         "XX")));
-
             report.AddEnforcementOfficials(officer);
+            report.AddVictims(victim1, victim2);
+            report.AddSubjects(subject1);
+            report.AddArrestees(arrestee1);
+            report.AddArrests(arrest1);
+            report.AddArrestSubjectAssociations(new ArrestSubjectAssociation(arrest1, arrestee1));
+            report.AddOffenseLocationAssociations(new OffenseLocationAssociation(offense1, location1));
+            report.AddOffenseVictimAssociations(
+                new OffenseVictimAssociation(offense1, victim1),
+                new OffenseVictimAssociation(offense1, victim2));
+            report.AddSubjectVictimAssociations(
+                new SubjectVictimAssociation(1, subject1, victim1, "Acquaintance"),
+                new SubjectVictimAssociation(2, subject1, victim2, "Stranger"));
 
-            report.AddVictims(
-                new Victim(
-                    officer,
-                    "L",
-                    "01",
-                    "C"),
-                new Victim(
-                    new Person(
-                        null,
-                        "U",
-                        new PersonInjury("N"),
-                        "W",
-                        "R",
-                        "M",
-                        new PersonAugmentation("BB")),
-                    2,
-                    "I",
-                    "10",
-                    "G"));
-
-            report.AddSubjects(
-                new Subject(
-                    new Person(
-                        new PersonAgeMeasureRange(
-                            new MeasureIntegerRange(
-                                30,
-                                25)),
-                        "N",
-                        null,
-                        "W",
-                        null,
-                        "F",
-                        null),
-                    1));
-
-            report.AddArrestees(
-                new Arrestee(
-                    new Person(
-                        new PersonAgeMeasureValue(25),
-                        "N",
-                        null,
-                        "W",
-                        "R",
-                        "F",
-                        null),
-                    1,
-                    true,
-                    "12",
-                    "H"));
-
-            //Submission submission = new Submission(report);
-
-            Console.WriteLine(report.xml);
+            Submission submission = new Submission(report);
+            string x = submission.xml;
+            Console.WriteLine(x);
             Console.ReadLine();
         }
     }

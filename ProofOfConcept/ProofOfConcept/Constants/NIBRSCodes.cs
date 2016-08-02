@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using NIBRSXML.Utility;
+using NibrsXml.Utility;
 
 /**
  * See the NIBRSCode and CodeDescription classes to see how to extract descriptions from the following enums
  */
 
-namespace NIBRSXML.Constants
+namespace NibrsXml.Constants
 {
     /// <summary>
     /// A data type for Sex
@@ -980,90 +980,6 @@ namespace NIBRSXML.Constants
         [NIBRSCode("17")]
         [CodeDescription("Club/ Blackjack/ Brass Knuckles")]
         CLUB_BLACKJACK_BRASS_KNUCKLES
-    }
-
-    /// <summary>
-    /// A data type for kinds of incidents
-    /// </summary>
-    [Description("A data type for kinds of incidents.")]
-    enum CriminalActivityCategoryCode
-    {
-        /// <summary>
-        /// buying/ receiving
-        /// </summary>
-        [NIBRSCode("B")]
-        [CodeDescription("buying/ receiving")]
-        BUYING_RECEIVING,
-
-        /// <summary>
-        /// cultivate/ manufacture/ publish (i.e,production of any type)
-        /// </summary>
-        [NIBRSCode("C")]
-        [CodeDescription("cultivate/ manufacture/ publish (i.e.,production of any type)")]
-        CULTIVATE_MANUFACTURE_PUBLISH,
-
-        /// <summary>
-        /// distribute/ selling
-        /// </summary>
-        [NIBRSCode("D")]
-        [CodeDescription("distribute/ selling")]
-        DISTRIBUTE_SELLING,
-
-        /// <summary>
-        /// exploiting children
-        /// </summary>
-        [NIBRSCode("E")]
-        [CodeDescription("exploiting children")]
-        EXPLOITING_CHILDREN,
-
-        /// <summary>
-        /// other gang
-        /// </summary>
-        [NIBRSCode("G")]
-        [CodeDescription("other gang")]
-        OTHER_GANG,
-
-        /// <summary>
-        /// juvenile gang
-        /// </summary>
-        [NIBRSCode("J")]
-        [CodeDescription("juvenile gang")]
-        JUVENILE_GANG,
-
-        /// <summary>
-        /// none/ unknown
-        /// </summary>
-        [NIBRSCode("N")]
-        [CodeDescription("none/ unknown")]
-        NONE_UNKNOWN,
-
-        /// <summary>
-        /// operate/ promote/ assist
-        /// </summary>
-        [NIBRSCode("O")]
-        [CodeDescription("operate/ promote/ assist")]
-        OOPERATE_PROMOTE_ASSIST,
-
-        /// <summary>
-        /// possession/ conceal
-        /// </summary>
-        [NIBRSCode("P")]
-        [CodeDescription("possession/ conceal")]
-        POSSESS_CONCEAL,
-
-        /// <summary>
-        /// transport/ transmitting
-        /// </summary>
-        [NIBRSCode("T")]
-        [CodeDescription("transport/ transmitting")]
-        TRANSPORT_TRANSMIT,
-
-        /// <summary>
-        /// using/ consuming
-        /// </summary>
-        [NIBRSCode("U")]
-        [CodeDescription("using/ consuming")]
-        USING_CONSUMING
     }
 
     /// <summary>
@@ -2890,116 +2806,116 @@ namespace NIBRSXML.Constants
 	/// <summary>
 	 /// A data type for a code that identifies additional information on criminal activity of offenders in the offense.
 	/// </summary>
-	[Description("A data type for a code that identifies additional information on criminal activity of offenders in the offense.")]
-	enum CriminalActivityCategoryCode
-	{
-		/// <summary>
-		/// Simple/Gross Neglect
-		/// </summary>
-		[NIBRSCode("A")]
-		[CodeDescription("Simple/Gross Neglect")]
-		A,
+    [Description("A data type for a code that identifies additional information on criminal activity of offenders in the offense.")]
+    enum CriminalActivityCategoryCode
+    {
+        /// <summary>
+        /// Simple/Gross Neglect
+        /// </summary>
+        [NIBRSCode("A")]
+        [CodeDescription("Simple/Gross Neglect")]
+        A,
 
-		/// <summary>
-		/// Buying/Receiving
-		/// </summary>
-		[NIBRSCode("B")]
-		[CodeDescription("Buying/Receiving")]
-		B,
+        /// <summary>
+        /// Buying/Receiving
+        /// </summary>
+        [NIBRSCode("B")]
+        [CodeDescription("Buying/Receiving")]
+        B,
 
-		/// <summary>
-		/// Cultivating/Manufacturing/Publishing (i.e., production of any type)
-		/// </summary>
-		[NIBRSCode("C")]
-		[CodeDescription("Cultivating/Manufacturing/Publishing (i.e., production of any type)")]
-		C,
+        /// <summary>
+        /// Cultivating/Manufacturing/Publishing (i.e., production of any type)
+        /// </summary>
+        [NIBRSCode("C")]
+        [CodeDescription("Cultivating/Manufacturing/Publishing (i.e., production of any type)")]
+        C,
 
-		/// <summary>
-		/// Distributing/Selling
-		/// </summary>
-		[NIBRSCode("D")]
-		[CodeDescription("Distributing/Selling")]
-		D,
+        /// <summary>
+        /// Distributing/Selling
+        /// </summary>
+        [NIBRSCode("D")]
+        [CodeDescription("Distributing/Selling")]
+        D,
 
-		/// <summary>
-		/// Exploiting Children
-		/// </summary>
-		[NIBRSCode("E")]
-		[CodeDescription("Exploiting Children")]
-		E,
+        /// <summary>
+        /// Exploiting Children
+        /// </summary>
+        [NIBRSCode("E")]
+        [CodeDescription("Exploiting Children")]
+        E,
 
-		/// <summary>
-		/// Organized Abuse (Dog Fighting and Cock Fighting)
-		/// </summary>
-		[NIBRSCode("F")]
-		[CodeDescription("Organized Abuse (Dog Fighting and Cock Fighting)")]
-		F,
+        /// <summary>
+        /// Organized Abuse (Dog Fighting and Cock Fighting)
+        /// </summary>
+        [NIBRSCode("F")]
+        [CodeDescription("Organized Abuse (Dog Fighting and Cock Fighting)")]
+        F,
 
-		/// <summary>
-		/// Other Gang
-		/// </summary>
-		[NIBRSCode("G")]
-		[CodeDescription("Other Gang")]
-		G,
+        /// <summary>
+        /// Other Gang
+        /// </summary>
+        [NIBRSCode("G")]
+        [CodeDescription("Other Gang")]
+        G,
 
-		/// <summary>
-		/// Intentional Abuse and Torture (tormenting, mutilating, maiming,poisoning, or abandonment)
-		/// </summary>
-		[NIBRSCode("I")]
-		[CodeDescription("Intentional Abuse and Torture (tormenting, mutilating, maiming,poisoning, or abandonment)")]
-		I,
+        /// <summary>
+        /// Intentional Abuse and Torture (tormenting, mutilating, maiming,poisoning, or abandonment)
+        /// </summary>
+        [NIBRSCode("I")]
+        [CodeDescription("Intentional Abuse and Torture (tormenting, mutilating, maiming,poisoning, or abandonment)")]
+        I,
 
-		/// <summary>
-		/// Juvenile Gang
-		/// </summary>
-		[NIBRSCode("J")]
-		[CodeDescription("Juvenile Gang")]
-		J,
+        /// <summary>
+        /// Juvenile Gang
+        /// </summary>
+        [NIBRSCode("J")]
+        [CodeDescription("Juvenile Gang")]
+        J,
 
-		/// <summary>
-		/// None/Unknown
-		/// </summary>
-		[NIBRSCode("N")]
-		[CodeDescription("None/Unknown")]
-		N,
+        /// <summary>
+        /// None/Unknown
+        /// </summary>
+        [NIBRSCode("N")]
+        [CodeDescription("None/Unknown")]
+        N,
 
-		/// <summary>
-		/// Operating/Promoting/Assisting
-		/// </summary>
-		[NIBRSCode("O")]
-		[CodeDescription("Operating/Promoting/Assisting")]
-		O,
+        /// <summary>
+        /// Operating/Promoting/Assisting
+        /// </summary>
+        [NIBRSCode("O")]
+        [CodeDescription("Operating/Promoting/Assisting")]
+        O,
 
-		/// <summary>
-		/// Possessing/Concealing
-		/// </summary>
-		[NIBRSCode("P")]
-		[CodeDescription("Possessing/Concealing")]
-		P,
+        /// <summary>
+        /// Possessing/Concealing
+        /// </summary>
+        [NIBRSCode("P")]
+        [CodeDescription("Possessing/Concealing")]
+        P,
 
-		/// <summary>
-		/// Animal Sexual Abuse (Bestiality)
-		/// </summary>
-		[NIBRSCode("S")]
-		[CodeDescription("Animal Sexual Abuse (Bestiality)")]
-		S,
+        /// <summary>
+        /// Animal Sexual Abuse (Bestiality)
+        /// </summary>
+        [NIBRSCode("S")]
+        [CodeDescription("Animal Sexual Abuse (Bestiality)")]
+        S,
 
-		/// <summary>
-		/// Transporting/Transmitting/Importing
-		/// </summary>
-		[NIBRSCode("T")]
-		[CodeDescription("Transporting/Transmitting/Importing")]
-		T,
+        /// <summary>
+        /// Transporting/Transmitting/Importing
+        /// </summary>
+        [NIBRSCode("T")]
+        [CodeDescription("Transporting/Transmitting/Importing")]
+        T,
 
-		/// <summary>
-		/// Using/Consuming
-		/// </summary>
-		[NIBRSCode("U")]
-		[CodeDescription("Using/Consuming")]
-		U
-	}
+        /// <summary>
+        /// Using/Consuming
+        /// </summary>
+        [NIBRSCode("U")]
+        [CodeDescription("Using/Consuming")]
+        U
+    }
 
-	/// <summary>
+    /// <summary>
     /// A data type for kinds or functional descriptions of a location
     /// </summary>
     [Description("A data type for kinds or functional descriptions of a location.")]

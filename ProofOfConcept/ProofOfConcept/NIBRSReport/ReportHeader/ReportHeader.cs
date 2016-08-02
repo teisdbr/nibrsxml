@@ -20,7 +20,7 @@ namespace NibrsXml.NibrsReport.ReportHeader
         [XmlElement("ReportDate", Namespace = Namespaces.cjisNibrs, Order = 3)]
         public ReportDate reportDate { get; set; }
 
-        [XmlElement("ReportingAgency", Namespace = Namespaces.justice, Order = 4)]
+        [XmlElement("ReportingAgency", Namespace = Namespaces.cjisNibrs, Order = 4)]
         public ReportingAgency reportingAgency { get; set; }
 
         public ReportHeader() { }

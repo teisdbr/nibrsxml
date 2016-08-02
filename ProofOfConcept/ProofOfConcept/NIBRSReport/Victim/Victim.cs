@@ -15,7 +15,10 @@ namespace NibrsXml.NibrsReport.Victim
     {
         [XmlIgnore]
         public Person.Person person { get; set; }
-        
+
+        [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
+        public string victimRef { get; set; }
+
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson role { get; set; }
 
@@ -31,7 +34,15 @@ namespace NibrsXml.NibrsReport.Victim
         [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
         public string justifiableHomicideFactorCode { get; set; }
 
+        public Victim reference { get { return new Victim(this.person.id); } }
+
         public Victim() { }
+
+        private Victim(string victimId)
+        {
+            this.victimRef = victimId;
+        }
+
 
         public Victim(
             Person.Person person,

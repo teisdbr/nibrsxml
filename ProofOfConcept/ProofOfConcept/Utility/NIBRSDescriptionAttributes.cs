@@ -10,7 +10,7 @@ using System.Reflection;
  * Creating custom description attributes for NIBRS constants
  */
 
-namespace NIBRSXML.Utility
+namespace NibrsXml.Utility
 {
     public abstract class NIBRSDescriptionAttribute : DescriptionAttribute
     {
