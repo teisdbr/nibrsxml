@@ -257,6 +257,21 @@ namespace NibrsXml.NibrsSerializer
                         null),
                     1));
 
+            report.AddArrestees(
+                new Arrestee(
+                    new Person(
+                        new PersonAgeMeasureValue(25),
+                        "N",
+                        null,
+                        "W",
+                        "R",
+                        "F",
+                        null),
+                    1,
+                    true,
+                    "12",
+                    "H"));
+
             //Submission submission = new Submission(report);
 
             Console.WriteLine(report.xml);

@@ -11,34 +11,13 @@ using NibrsXml.NibrsReport.Person;
 namespace NibrsXml.NibrsReport.Arrestee
 {
     [XmlRoot("Arrestee", Namespace = Namespaces.justice)]
-    public class Arrestee //: Person.Person
+    public class Arrestee 
     {
-        //[XmlIgnore]
-        //public override string personId { get { return base.personId; } set { base.personId = value; } }
+        [XmlIgnore]
+        public Person.Person person { get; set; }
 
-        //[XmlIgnore]
-        //public override PersonAgeMeasure ageMeasure { get { return base.ageMeasure; } set { base.ageMeasure = value; } }
-
-        //[XmlIgnore]
-        //public override string ethnicityCode { get { return base.ethnicityCode; } set { base.ethnicityCode = value; } }
-
-        //[XmlIgnore]
-        //public override PersonInjury injury { get { return base.injury; } set { base.injury = value; } }
-
-        //[XmlIgnore]
-        //public override string raceCode { get { return base.raceCode; } set { base.raceCode = value; } }
-
-        //[XmlIgnore]
-        //public override string residentCode { get { return base.residentCode; } set { base.residentCode = value; } }
-
-        //[XmlIgnore]
-        //public override string sexCode { get { return base.sexCode; } set { base.sexCode = value; } }
-
-        //[XmlIgnore]
-        //public override PersonAugmentation augmentation { get { return base.augmentation; } set { base.augmentation = value; } }
-        
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        private string id { get; set; }
+        public string id { get; set; }
         
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson role { get; set; }
@@ -58,29 +37,18 @@ namespace NibrsXml.NibrsReport.Arrestee
         public Arrestee() { }
 
         public Arrestee(
-            PersonAgeMeasure ageMeasure,
-            string ethnicityCode,
-            PersonInjury injury,
-            string raceCode,
-            string residentCode,
-            string sexCode,
-            PersonAugmentation augmentation,
-            string seqId,
-            string clearanceIndicator,
+            Person.Person person,
+            int seqId,
+            bool clearanceIndicator,
             string armedWithCode,
             string juvenileDispositionCode)
         {
-            //this.personId = "PersonArrestee" + seqId.ToString();
-            //this.ageMeasure = ageMeasure;
-            //this.ethnicityCode = ethnicityCode;
-            //this.injury = injury;
-            //this.raceCode = raceCode;
-            //this.residentCode = residentCode;
-            //this.augmentation = augmentation;
+            this.person = person;
+            this.person.id = "PersonArrestee" + seqId.ToString();
             this.id = "Arrestee" + seqId.ToString();
-            //this.role = new RoleOfPerson(personId);
-            this.seqId = seqId;
-            this.clearanceIndicator = clearanceIndicator;
+            this.role = new RoleOfPerson(this.person.id);
+            this.seqId = seqId.ToString();
+            this.clearanceIndicator = clearanceIndicator.ToString().ToLower();
             this.armedWithCode = armedWithCode;
             this.juvenileDispositionCode = juvenileDispositionCode;
         }
