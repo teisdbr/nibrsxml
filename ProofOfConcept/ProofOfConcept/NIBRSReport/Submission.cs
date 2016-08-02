@@ -13,7 +13,7 @@ namespace NibrsXml.NibrsReport
     public class Submission : NibrsSerializable
     {
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
-        private string xsiSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
+        public string xsiSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
 
         [XmlElement("Report")]
         public List<Report> reports = new List<Report>();
