@@ -14,11 +14,21 @@ namespace NibrsXml.NibrsReport.Misc
         [XmlElement("DateTime", Namespace = Namespaces.niemCore)]
         public string dateTime { get; set; }
 
+        [XmlElement("Date", Namespace = Namespaces.niemCore)]
+        public string date { get; set; }
+
+        public string time { get { return dateTime.Substring(dateTime.IndexOf("T") + 1); } }
+
         public ActivityDate() { }
 
-        public ActivityDate(string dateTime)
+        public ActivityDate(string date)
         {
-            this.dateTime = dateTime;
+            this.date = date;
+        }
+
+        public ActivityDate(string date, string time)
+        {
+            this.dateTime = date + "T" + time;
         }
     }
 }

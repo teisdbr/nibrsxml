@@ -40,7 +40,7 @@ namespace NibrsXml.NibrsReport.Arrest
 
         private Arrest(string arrestId)
         {
-            this.arrestId = arrestId;
+            this.arrestRef = arrestId;
         }
 
         public Arrest(int arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)

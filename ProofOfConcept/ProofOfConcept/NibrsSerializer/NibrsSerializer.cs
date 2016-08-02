@@ -128,7 +128,7 @@ namespace NibrsXml.NibrsSerializer
             
             Incident incident = new Incident(
                             new ActivityIdentification("54236732"),
-                            new ActivityDate("2016-02-19T10:00:00"),
+                            new ActivityDate("2016-02-19", "10:00:00"),
                             new cjisIncidentAugmentation(false, true),
                             new jxdmIncidentAugmentation(
                                 "A",
