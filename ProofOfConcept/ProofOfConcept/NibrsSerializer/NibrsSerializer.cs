@@ -27,8 +27,11 @@ using NibrsXml.NibrsReport.Victim;
 
 namespace NibrsXml.NibrsSerializer
 {
-    public class NibrsSerializer : XmlSerializer
+    sealed internal class NibrsSerializer : XmlSerializer
     {
+        /// <summary>
+        /// This class allows the serializer to write in UTF-8
+        /// </summary>
         private class Utf8StringWriter : StringWriter
         {
             public override Encoding Encoding { get { return Encoding.UTF8; } }
@@ -93,25 +96,22 @@ namespace NibrsXml.NibrsSerializer
                     " Requires first argument to be either typeof(Submission) or typeof(Report)");
         }
 
+        /// <summary>
+        /// Writes an XML representation of the given NibrsSerializable object with the statically defined namespaces within this class
+        /// </summary>
+        /// <param name="serializee">The Submission or Report object to serialize</param>
+        /// <returns>An XML representation of the argument object using NIBRS XML schema definitions</returns>
         public string Serialize(NibrsSerializable serializee)
         {
-            // Initialize the XML string to be returned
+            // Initialize the XML string to be returned and the 
             string xml = "";
-            using (StringWriter writer = new Utf8StringWriter())
+            using (StringWriter xmlWriter = new Utf8StringWriter())
             {
-                try
-                {
-                    if (serializee.GetType() == typeof(Submission) || serializee.GetType() == typeof(Report))
-                        base.Serialize(writer, serializee, namespaces);
-                    else
-                        throw new ArgumentException("The object provided must be of type Submission or Report.");
-                    xml = writer.ToString();
-                }
-                catch (InvalidOperationException e)
-                {
-                    Exception inner = e.InnerException;
-                    string innerMessage = inner.Message;
-                }
+                if (serializee.GetType() == typeof(Submission) || serializee.GetType() == typeof(Report))
+                    base.Serialize(xmlWriter, serializee, namespaces);
+                else
+                    throw new ArgumentException("The object provided must be of type Submission or Report.");
+                xml = xmlWriter.ToString() + "\r\n";
             }
             return xml;
         }
@@ -242,7 +242,7 @@ namespace NibrsXml.NibrsSerializer
                 new Substance(
                     "X",
                     new SubstanceQuantityMeasure(
-                        "1.5",
+                        001.500,
                         "XX")));
             report.AddEnforcementOfficials(officer);
             report.AddVictims(victim1, victim2);
@@ -260,6 +260,7 @@ namespace NibrsXml.NibrsSerializer
 
             Submission submission = new Submission(report);
             string x = submission.xml;
+            string y = report.xml;
             Console.WriteLine(x);
             Console.ReadLine();
         }

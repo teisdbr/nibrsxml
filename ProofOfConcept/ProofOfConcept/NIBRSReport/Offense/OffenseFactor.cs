@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Offense
     public class OffenseFactor
     {
         [XmlElement("OffenseFactorCode", Namespace = Namespaces.justice)]
-        public string offenseFactorCode { get; set; }
+        public string code { get; set; }
 
         public OffenseFactor() { }
 
-        public OffenseFactor(string offenseFactorCode)
+        public OffenseFactor(string code)
         {
-            this.offenseFactorCode = offenseFactorCode;
+            this.code = code;
         }
     }
 }

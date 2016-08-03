@@ -13,7 +13,7 @@ namespace NibrsXml.NibrsReport.Arrest
     public class Arrest
     {
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string arrestId { get; set; }
+        public string id { get; set; }
 
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
         public string arrestRef { get; set; }
@@ -34,18 +34,18 @@ namespace NibrsXml.NibrsReport.Arrest
         public string subjectCountCode { get; set; }
 
         [XmlIgnore]
-        public Arrest reference { get { return new Arrest(this.arrestId); } }
+        public Arrest reference { get { return new Arrest(this.id); } }
 
         public Arrest() { }
 
-        private Arrest(string arrestId)
+        public Arrest(string arrestId)
         {
             this.arrestRef = arrestId;
         }
 
         public Arrest(int arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
         {
-            this.arrestId = "Arrest" + arrestId.ToString();
+            this.id = "Arrest" + arrestId.ToString();
             this.activityId = activityId;
             this.date = date;
             this.charge = charge;

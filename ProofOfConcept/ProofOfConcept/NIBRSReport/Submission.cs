@@ -9,6 +9,11 @@ using NibrsXml.NibrsSerializer;
 
 namespace NibrsXml.NibrsReport
 {
+    /// <summary>
+    /// In the NibrsReport namespace, all XML elements that must be serialized must be given public access in order for
+    /// NibrsSerializer to print them accordingly. This also gives full freedom for NibrsReportBuilder to build reports
+    /// however it sees fit.
+    /// </summary>
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
     public class Submission : NibrsSerializable
     {
@@ -19,7 +24,10 @@ namespace NibrsXml.NibrsReport
         public List<Report> reports = new List<Report>();
 
         [XmlIgnore]
-        public string xml { get { return new NibrsSerializer.NibrsSerializer(typeof(Submission)).Serialize(this); } }
+        private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
+
+        [XmlIgnore]
+        public string xml { get { return serializer.Serialize(this); } }
 
         public Submission() { }
 

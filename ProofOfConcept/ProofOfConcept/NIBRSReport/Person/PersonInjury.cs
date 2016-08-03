@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Person
     public class PersonInjury
     {
         [XmlElement("InjuryCategoryCode", Namespace = Namespaces.justice)]
-        public string injuryCategoryCode { get; set; }
+        public string categoryCode { get; set; }
 
         public PersonInjury() { }
 
-        public PersonInjury(string injuryCategoryCode)
+        public PersonInjury(string categoryCode)
         {
-            this.injuryCategoryCode = injuryCategoryCode;
+            this.categoryCode = categoryCode;
         }
     }
 }

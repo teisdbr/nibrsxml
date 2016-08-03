@@ -24,5 +24,11 @@ namespace NibrsXml.NibrsReport.Associations
             this.activityRef = arrest.reference;
             this.arresteeRef = arrestee.reference;
         }
+
+        public ArrestSubjectAssociation(string arrestRef, string arresteeRef)
+        {
+            this.activityRef = new Arrest.Arrest(arrestRef);
+            this.arresteeRef = new Arrestee.Arrestee(arresteeRef);
+        }
     }
 }

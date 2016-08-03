@@ -16,6 +16,10 @@ namespace NibrsXml.NibrsReport.Victim
         [XmlIgnore]
         public Person.Person person { get; set; }
 
+        /// <summary>
+        /// This property is public only for serialization.
+        /// It should only be set by using the Victim(string) constructor and accessed using the reference property.
+        /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
         public string victimRef { get; set; }
 
@@ -23,7 +27,7 @@ namespace NibrsXml.NibrsReport.Victim
         public RoleOfPerson role { get; set; }
 
         [XmlElement("VictimSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
-        public string seqNum { get; set; }
+        public int seqNum { get; set; }
 
         [XmlElement("VictimCategoryCode", Namespace = Namespaces.justice, Order = 3)]
         public string categoryCode { get; set; }
@@ -38,7 +42,7 @@ namespace NibrsXml.NibrsReport.Victim
 
         public Victim() { }
 
-        private Victim(string victimId)
+        public Victim(string victimId)
         {
             this.victimRef = victimId;
         }
@@ -54,7 +58,7 @@ namespace NibrsXml.NibrsReport.Victim
             this.person = person;
             this.person.id = "PersonVictim" + seqNum.ToString();
             this.role = new RoleOfPerson(this.person.id);
-            this.seqNum = seqNum.ToString();
+            this.seqNum = seqNum;
             this.categoryCode = categoryCode;
             this.aggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.justifiableHomicideFactorCode = justifiableHomicideFactorCode;

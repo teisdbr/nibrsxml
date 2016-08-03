@@ -8,7 +8,7 @@ using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport
 {
-    public abstract class NibrsSerializable
+    public interface NibrsSerializable
     {
     }
 }

@@ -12,8 +12,12 @@ namespace NibrsXml.NibrsReport.Offense
     public class Offense
     {
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string offenseId { get; set; }
+        public string id { get; set; }
 
+        /// <summary>
+        /// This property is public only for serialization.
+        /// It should only be set by using the Offense(string) constructor and accessed using the reference property.
+        /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
         public string offenseRef { get; set; }
 
@@ -27,7 +31,7 @@ namespace NibrsXml.NibrsReport.Offense
         public string offenseFactorBiasMotivationCode { get; set; }
 
         [XmlElement("OffenseStructuresEnteredQuantity", Namespace = Namespaces.justice, Order = 4)]
-        public string offenseStructuresEnteredQuantity { get; set; }
+        public int offenseStructuresEnteredQuantity { get; set; }
 
         [XmlElement("OffenseFactor", Namespace = Namespaces.justice, Order = 5)]
         public OffenseFactor offenseFactor { get; set; }
@@ -42,11 +46,11 @@ namespace NibrsXml.NibrsReport.Offense
         public string offenseAttemptedIndicator { get; set; }
 
         [XmlIgnore]
-        public Offense reference { get { return new Offense(this.offenseId); } }
+        public Offense reference { get { return new Offense(this.id); } }
 
         public Offense() { }
 
-        private Offense(string offenseId)
+        public Offense(string offenseId)
         {
             this.offenseRef = offenseId;
         }
@@ -62,11 +66,11 @@ namespace NibrsXml.NibrsReport.Offense
             OffenseForce offenseForce,
             bool offenseAttemptedIndicator)
         {
-            this.offenseId = "Offense" + id.ToString();
+            this.id = "Offense" + id.ToString();
             this.offenseUcrCode = offenceUcrCode;
             this.criminalActivityCategoryCode = criminalActivityCategoryCode;
             this.offenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
-            this.offenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
+            this.offenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity;
             this.offenseFactor = offenseFactor;
             this.offenseEntryPoint = offenseEntryPoint;
             this.offenseForce = offenseForce;

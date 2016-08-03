@@ -17,7 +17,7 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
         public Person.Person person { get; set; }
 
         [XmlIgnore]
-        public string victimSeqNum { get; set; }
+        public int victimSeqNum { get; set; }
         
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson role { get; set; }
@@ -42,7 +42,7 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
         {
             this.person = person;
             this.person.id = "PersonVictim" + victimSeqNum.ToString();
-            this.victimSeqNum = victimSeqNum.ToString();
+            this.victimSeqNum = victimSeqNum;
             this.role = new RoleOfPerson(this.person.id);
             this.activityCategoryCode = activityCategoryCode;
             this.assignmentCategoryCode = assignmentCategoryCode;

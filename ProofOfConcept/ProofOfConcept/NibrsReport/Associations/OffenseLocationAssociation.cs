@@ -24,5 +24,11 @@ namespace NibrsXml.NibrsReport.Associations
             this.offenseRef = offense.reference;
             this.locationRef = location.reference;
         }
+
+        public OffenseLocationAssociation(string offenseRef, string locationRef)
+        {
+            this.offenseRef = new Offense.Offense(offenseRef);
+            this.locationRef = new Location.Location(locationRef);
+        }
     }
 }

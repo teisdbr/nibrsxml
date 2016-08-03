@@ -17,8 +17,12 @@ namespace NibrsXml.NibrsReport.Arrestee
         public Person.Person person { get; set; }
 
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string arresteeId { get; set; }
+        public string id { get; set; }
 
+        /// <summary>
+        /// This property is public only for serialization.
+        /// It should only be set by using the Arrestee(string) constructor and accessed using the reference property.
+        /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
         public string arresteeRef { get; set; }
         
@@ -26,7 +30,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         public RoleOfPerson role { get; set; }
         
         [XmlElement("ArrestSequenceID", Namespace = Namespaces.justice, Order = 2)]
-        public string seqId { get; set; }
+        public int seqId { get; set; }
 
         [XmlElement("ArresteeClearanceIndicator", Namespace = Namespaces.justice, Order = 3)]
         public string clearanceIndicator { get; set; }
@@ -41,7 +45,7 @@ namespace NibrsXml.NibrsReport.Arrestee
 
         public Arrestee() { }
 
-        private Arrestee(string arresteeId)
+        public Arrestee(string arresteeId)
         {
             this.arresteeRef = arresteeId;
         }
@@ -55,9 +59,9 @@ namespace NibrsXml.NibrsReport.Arrestee
         {
             this.person = person;
             this.person.id = "PersonArrestee" + seqId.ToString();
-            this.arresteeId = "Arrestee" + seqId.ToString();
+            this.id = "Arrestee" + seqId.ToString();
             this.role = new RoleOfPerson(this.person.id);
-            this.seqId = seqId.ToString();
+            this.seqId = seqId;
             this.clearanceIndicator = clearanceIndicator.ToString().ToLower();
             this.armedWithCode = armedWithCode;
             this.juvenileDispositionCode = juvenileDispositionCode;

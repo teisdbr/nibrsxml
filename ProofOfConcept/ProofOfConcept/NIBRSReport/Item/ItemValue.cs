@@ -12,17 +12,17 @@ namespace NibrsXml.NibrsReport.Item
     public class ItemValue
     {
         [XmlElement("ItemValueAmount", Namespace = Namespaces.niemCore, Order = 1)]
-        public ItemValueAmount amount { get; set; }
+        public ItemValueAmount valueAmount { get; set; }
 
         [XmlElement("ItemValueDate", Namespace = Namespaces.niemCore, Order = 2)]
-        public ItemValueDate date { get; set; }
+        public ItemValueDate valueDate { get; set; }
 
         public ItemValue() { }
 
-        public ItemValue(ItemValueAmount amount, ItemValueDate date)
+        public ItemValue(ItemValueAmount valueAmount, ItemValueDate valueDate)
         {
-            this.amount = amount;
-            this.date = date;
+            this.valueAmount = valueAmount;
+            this.valueDate = valueDate;
         }
     }
 }

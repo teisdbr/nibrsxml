@@ -24,5 +24,11 @@ namespace NibrsXml.NibrsReport.Associations
             this.offenseRef = offense.reference;
             this.victimRef = victim.reference;
         }
+
+        public OffenseVictimAssociation(string offenseRef, string victimRef)
+        {
+            this.offenseRef = new Offense.Offense(offenseRef);
+            this.victimRef = new Victim.Victim(victimRef);
+        }
     }
 }

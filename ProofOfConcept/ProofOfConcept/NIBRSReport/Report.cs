@@ -61,13 +61,10 @@ namespace NibrsXml.NibrsReport
         public List<Associations.SubjectVictimAssociation> subjectVictimAssocs { get; set; }
 
         [XmlIgnore]
-        public string xml 
-        { 
-            get 
-            {
-                return Regex.Replace(new NibrsSerializer.NibrsSerializer(typeof(Report)).Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
-            } 
-        }
+        private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
+
+        [XmlIgnore]
+        public string xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
 
         public Report() { }
 

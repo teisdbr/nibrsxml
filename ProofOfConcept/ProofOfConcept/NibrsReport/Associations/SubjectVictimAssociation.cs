@@ -32,5 +32,13 @@ namespace NibrsXml.NibrsReport.Associations
             this.victimRef = victim.reference;
             this.relationshipCode = relationshipCode;
         }
+
+        public SubjectVictimAssociation(int id, string subjectRef, string victimRef, string relationshipCode)
+        {
+            this.id = "SubjectVictimAssocSP" + id.ToString();
+            this.subjectRef = new Subject.Subject(subjectRef);
+            this.victimRef = new Victim.Victim(victimRef);
+            this.relationshipCode = relationshipCode;
+        }
     }
 }
