@@ -27,7 +27,7 @@ namespace NibrsXml.NibrsReport.Subject
         public RoleOfPerson role { get; set; }
 
         [XmlElement("SubjectSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
-        public int seqNum { get; set; }
+        public string seqNum { get; set; }
 
         [XmlIgnore]
         public Subject reference { get { return new Subject(person.id); } }
@@ -46,7 +46,7 @@ namespace NibrsXml.NibrsReport.Subject
             this.person = person;
             this.person.id = "PersonSubject" + seqNum.ToString();
             this.role = new RoleOfPerson(this.person.id);
-            this.seqNum = seqNum;
+            this.seqNum = seqNum.ToString();
         }
     }
 }

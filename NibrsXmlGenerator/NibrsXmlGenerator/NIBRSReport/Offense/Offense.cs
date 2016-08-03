@@ -31,7 +31,7 @@ namespace NibrsXml.NibrsReport.Offense
         public string offenseFactorBiasMotivationCode { get; set; }
 
         [XmlElement("OffenseStructuresEnteredQuantity", Namespace = Namespaces.justice, Order = 4)]
-        public int offenseStructuresEnteredQuantity { get; set; }
+        public string offenseStructuresEnteredQuantity { get; set; }
 
         [XmlElement("OffenseFactor", Namespace = Namespaces.justice, Order = 5)]
         public OffenseFactor offenseFactor { get; set; }
@@ -70,7 +70,7 @@ namespace NibrsXml.NibrsReport.Offense
             this.offenseUcrCode = offenceUcrCode;
             this.criminalActivityCategoryCode = criminalActivityCategoryCode;
             this.offenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
-            this.offenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity;
+            this.offenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
             this.offenseFactor = offenseFactor;
             this.offenseEntryPoint = offenseEntryPoint;
             this.offenseForce = offenseForce;

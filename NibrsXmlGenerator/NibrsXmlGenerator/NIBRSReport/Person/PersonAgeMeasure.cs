@@ -15,45 +15,50 @@ namespace NibrsXml.NibrsReport.Person
     [XmlRoot("PersonAgeMeasure", Namespace = Namespaces.niemCore)]
     public class PersonAgeMeasure
     {
-        private const int nil = -1;
-        private MeasureIntegerRange _range;
-        private int _value = nil;
+        //private MeasureIntegerRange _range;
+        //private int _value;
         
+        //[XmlElement("MeasureIntegerRange", Namespace = Namespaces.niemCore)]
+        //public MeasureIntegerRange range
+        //{
+        //    get
+        //    {
+        //        return _range;
+        //    }
+        //    set
+        //    {
+        //        if (_value != null)
+        //            _value = null;
+        //        _range = value;
+        //    }
+        //}
+
+        //[XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
+        //public int value 
+        //{ 
+        //    get
+        //    {
+        //        return _value;
+        //    }
+        //    set
+        //    {
+        //        if (_range != null)
+        //            _range = null;
+        //        _value = value;
+        //    }
+        //}
+
         [XmlElement("MeasureIntegerRange", Namespace = Namespaces.niemCore)]
-        public MeasureIntegerRange range
-        {
-            get
-            {
-                return _range;
-            }
-            set
-            {
-                if (_value != nil)
-                    _value = nil;
-                _range = value;
-            }
-        }
+        public MeasureIntegerRange range { get; set; }
 
         [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
-        public int value 
-        { 
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                if (_range != null)
-                    _range = null;
-                _value = value;
-            }
-        }
+        public string value { get; set; }
 
         public PersonAgeMeasure() { }
 
         public PersonAgeMeasure(int value)
         {
-            this.value = value;
+            this.value = value.ToString();
         }
 
         public PersonAgeMeasure(int max, int min)

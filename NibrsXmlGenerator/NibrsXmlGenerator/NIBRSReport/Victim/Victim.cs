@@ -27,7 +27,7 @@ namespace NibrsXml.NibrsReport.Victim
         public RoleOfPerson role { get; set; }
 
         [XmlElement("VictimSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
-        public int seqNum { get; set; }
+        public string seqNum { get; set; }
 
         [XmlElement("VictimCategoryCode", Namespace = Namespaces.justice, Order = 3)]
         public string categoryCode { get; set; }
@@ -58,7 +58,7 @@ namespace NibrsXml.NibrsReport.Victim
             this.person = person;
             this.person.id = "PersonVictim" + seqNum.ToString();
             this.role = new RoleOfPerson(this.person.id);
-            this.seqNum = seqNum;
+            this.seqNum = seqNum.ToString();
             this.categoryCode = categoryCode;
             this.aggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.justifiableHomicideFactorCode = justifiableHomicideFactorCode;
@@ -72,7 +72,7 @@ namespace NibrsXml.NibrsReport.Victim
         {
             this.person = officer.person;
             this.role = officer.role;
-            this.seqNum = officer.victimSeqNum;
+            this.seqNum = officer.victimSeqNum.ToString();
             this.categoryCode = categoryCode;
             this.aggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.justifiableHomicideFactorCode = justifiableHomicideFactorCode;
