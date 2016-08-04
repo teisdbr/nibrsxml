@@ -14,37 +14,37 @@ namespace NibrsXml.NibrsReport.Victim
     public class Victim
     {
         [XmlIgnore]
-        public Person.Person person { get; set; }
+        public Person.Person Person { get; set; }
 
         /// <summary>
-        /// This property is public only for serialization.
+        /// This property is public only For serialization.
         /// It should only be set by using the Victim(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string victimRef { get; set; }
+        public string VictimRef { get; set; }
 
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
-        public RoleOfPerson role { get; set; }
+        public RoleOfPerson Role { get; set; }
 
         [XmlElement("VictimSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
-        public string seqNum { get; set; }
+        public string SeqNum { get; set; }
 
         [XmlElement("VictimCategoryCode", Namespace = Namespaces.justice, Order = 3)]
-        public string categoryCode { get; set; }
+        public string CategoryCode { get; set; }
 
         [XmlElement("VictimAggravatedAssaultHomicideFactorCode", Namespace = Namespaces.justice, Order = 4)]
-        public string aggravatedAssaultHomicideFactorCode { get; set; }
+        public string AggravatedAssaultHomicideFactorCode { get; set; }
 
         [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
-        public string justifiableHomicideFactorCode { get; set; }
+        public string JustifiableHomicideFactorCode { get; set; }
 
-        public Victim reference { get { return new Victim(this.person.id); } }
+        public Victim Reference { get { return new Victim(this.Person.Id); } }
 
         public Victim() { }
 
         public Victim(string victimId)
         {
-            this.victimRef = victimId;
+            this.VictimRef = victimId;
         }
 
 
@@ -55,13 +55,13 @@ namespace NibrsXml.NibrsReport.Victim
             string aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode)
         {
-            this.person = person;
-            this.person.id = "PersonVictim" + seqNum.ToString();
-            this.role = new RoleOfPerson(this.person.id);
-            this.seqNum = seqNum.ToString();
-            this.categoryCode = categoryCode;
-            this.aggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
-            this.justifiableHomicideFactorCode = justifiableHomicideFactorCode;
+            this.Person = person;
+            this.Person.Id = "PersonVictim" + seqNum.ToString();
+            this.Role = new RoleOfPerson(this.Person.Id);
+            this.SeqNum = seqNum.ToString();
+            this.CategoryCode = categoryCode;
+            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
+            this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }
 
         public Victim(
@@ -70,12 +70,12 @@ namespace NibrsXml.NibrsReport.Victim
             string aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode)
         {
-            this.person = officer.person;
-            this.role = officer.role;
-            this.seqNum = officer.victimSeqNum.ToString();
-            this.categoryCode = categoryCode;
-            this.aggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
-            this.justifiableHomicideFactorCode = justifiableHomicideFactorCode;
+            this.Person = officer.Person;
+            this.Role = officer.Role;
+            this.SeqNum = officer.VictimSeqNum.ToString();
+            this.CategoryCode = categoryCode;
+            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
+            this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }
     }
 }

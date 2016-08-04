@@ -9,20 +9,20 @@ using NibrsXml.Constants;
 namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("IncidentAugmentation", Namespace = Namespaces.cjis)]
-    public class cjisIncidentAugmentation
+    public class CjisIncidentAugmentation
     {
         [XmlElement("IncidentReportDateIndicator", Namespace = Namespaces.cjis, Order = 1)]
-        public string incidentReportDateIndicator { get; set; }
+        public string IncidentReportDateIndicator { get; set; }
         
         [XmlElement("OffenseCargoTheftIndicator", Namespace = Namespaces.justice, Order = 2)]
-        public string offenseCargoTheftIndicator { get; set; }
+        public string OffenseCargoTheftIndicator { get; set; }
         
-        public cjisIncidentAugmentation() { }
+        public CjisIncidentAugmentation() { }
 
-        public cjisIncidentAugmentation(bool reportDateIndicator, bool cargoTheftIndicator)
+        public CjisIncidentAugmentation(bool reportDateIndicator, bool cargoTheftIndicator)
         {
-            this.incidentReportDateIndicator = reportDateIndicator.ToString().ToLower();
-            this.offenseCargoTheftIndicator = cargoTheftIndicator.ToString().ToLower();
+            this.IncidentReportDateIndicator = reportDateIndicator.ToString().ToLower();
+            this.OffenseCargoTheftIndicator = cargoTheftIndicator.ToString().ToLower();
         }
     }
 }

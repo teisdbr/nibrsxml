@@ -14,39 +14,39 @@ namespace NibrsXml.NibrsReport.Subject
     public class Subject
     {
         [XmlIgnore]
-        public Person.Person person { get; set; }
+        public Person.Person Person { get; set; }
 
         /// <summary>
-        /// This property is public only for serialization.
+        /// This property is public only For serialization.
         /// It should only be set by using the Subject(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string subjectRef { get; set; }
+        public string SubjectRef { get; set; }
 
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
-        public RoleOfPerson role { get; set; }
+        public RoleOfPerson Role { get; set; }
 
         [XmlElement("SubjectSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
-        public string seqNum { get; set; }
+        public string SeqNum { get; set; }
 
         [XmlIgnore]
-        public Subject reference { get { return new Subject(person.id); } }
+        public Subject Reference { get { return new Subject(Person.Id); } }
 
         public Subject() { }
 
         public Subject(string subjectId)
         {
-            this.subjectRef = subjectId;
+            this.SubjectRef = subjectId;
         }
 
         public Subject(
             Person.Person person,
             int seqNum)
         {
-            this.person = person;
-            this.person.id = "PersonSubject" + seqNum.ToString();
-            this.role = new RoleOfPerson(this.person.id);
-            this.seqNum = seqNum.ToString();
+            this.Person = person;
+            this.Person.Id = "PersonSubject" + seqNum.ToString();
+            this.Role = new RoleOfPerson(this.Person.Id);
+            this.SeqNum = seqNum.ToString();
         }
     }
 }

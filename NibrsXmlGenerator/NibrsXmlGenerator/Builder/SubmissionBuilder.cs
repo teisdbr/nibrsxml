@@ -11,7 +11,6 @@ namespace NibrsXml.Builder
 {
     class SubmissionBuilder 
     {
-
         public static Submission Build(List<IncidentList> agencySpecificIncidents)
         {
             Submission sub = new Submission();
@@ -20,7 +19,7 @@ namespace NibrsXml.Builder
                 foreach (LIBRSIncident incident in agencyIncidentList) {
                     if (!incident.HasErrors)
                     {
-                        sub.reports.TryAdd(Builder.ReportBuilder.Build(incident));
+                        sub.Reports.TryAdd(Builder.ReportBuilder.Build(incident));
                     }
                 }
             }

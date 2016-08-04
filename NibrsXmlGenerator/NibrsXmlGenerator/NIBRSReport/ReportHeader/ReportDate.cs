@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.ReportHeader
     public class ReportDate
     {
         [XmlElement("YearMonthDate", Namespace = Namespaces.niemCore)]
-        public string yearMonthDate { get; set; }
+        public string YearMonthDate { get; set; }
 
         public ReportDate() { }
 
         public ReportDate(string ymd)
         {
-            this.yearMonthDate = ymd;
+            this.YearMonthDate = ymd;
         }
     }
 }

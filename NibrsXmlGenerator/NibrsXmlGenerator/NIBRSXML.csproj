@@ -65,9 +65,9 @@
     <Compile Include="NibrsReport\Misc\ActivityDate.cs" />
     <Compile Include="NibrsReport\Misc\ActivityIdentification.cs" />
     <Compile Include="NibrsReport\Incident\Incident.cs" />
-    <Compile Include="NibrsReport\Incident\cjisIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Incident\CjisIncidentAugmentation.cs" />
     <Compile Include="NibrsReport\Incident\IncidentExceptionalClearanceDate.cs" />
-    <Compile Include="NibrsReport\Incident\jxdmIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Incident\JxdmIncidentAugmentation.cs" />
     <Compile Include="NibrsReport\Item\Item.cs" />
     <Compile Include="NibrsReport\Item\ItemStatus.cs" />
     <Compile Include="NibrsReport\Item\ItemValue.cs" />

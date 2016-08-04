@@ -12,17 +12,17 @@ namespace NibrsXml.NibrsReport.Person
     public class MeasureIntegerRange
     {
         [XmlElement("RangeMaximumIntegerValue", Namespace = Namespaces.niemCore, Order = 1)]
-        public int max { get; set; }
+        public int Max { get; set; }
 
         [XmlElement("RangeMinimumIntegerValue", Namespace = Namespaces.niemCore, Order = 2)]
-        public int min { get; set; }
+        public int Min { get; set; }
 
         public MeasureIntegerRange() { }
 
         public MeasureIntegerRange(int max, int min)
         {
-            this.max = max;
-            this.min = min;
+            this.Max = max;
+            this.Min = min;
         }
     }
 }

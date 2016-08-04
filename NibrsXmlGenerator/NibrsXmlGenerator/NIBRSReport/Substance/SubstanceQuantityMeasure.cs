@@ -12,17 +12,17 @@ namespace NibrsXml.NibrsReport.Substance
     public class SubstanceQuantityMeasure
     {
         [XmlElement("MeasureDecimalValue", Namespace = Namespaces.niemCore)]
-        public double decimalValue { get; set; }
+        public double DecimalValue { get; set; }
 
         [XmlElement("SubstanceUnitCode", Namespace = Namespaces.justice)]
-        public string substanceUnitCode { get; set; }
+        public string SubstanceUnitCode { get; set; }
 
         public SubstanceQuantityMeasure() { }
 
         public SubstanceQuantityMeasure(double decimalValue, string substanceUnitCode)
         {
-            this.decimalValue = decimalValue;
-            this.substanceUnitCode = substanceUnitCode;
+            this.DecimalValue = decimalValue;
+            this.SubstanceUnitCode = substanceUnitCode;
         }
     }
 }

@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Person
     public class PersonAugmentation
     {
         [XmlElement("PersonAgeCode", Namespace = Namespaces.cjisNibrs)]
-        public string ageCode { get; set; }
+        public string AgeCode { get; set; }
 
         public PersonAugmentation() { }
 
         public PersonAugmentation(string ageCode)
         {
-            this.ageCode = ageCode;
+            this.AgeCode = ageCode;
         }
     }
 }

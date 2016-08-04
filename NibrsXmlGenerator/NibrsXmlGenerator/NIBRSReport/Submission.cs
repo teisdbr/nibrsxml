@@ -18,16 +18,16 @@ namespace NibrsXml.NibrsReport
     public class Submission : NibrsSerializable
     {
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
-        public string xsiSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
+        public string XsiSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
 
         [XmlElement("Report")]
-        public List<Report> reports = new List<Report>();
+        public List<Report> Reports = new List<Report>();
 
         [XmlIgnore]
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlIgnore]
-        public string xml { get { return serializer.Serialize(this); } }
+        public string Xml { get { return serializer.Serialize(this); } }
 
         public Submission() { }
 
@@ -35,7 +35,7 @@ namespace NibrsXml.NibrsReport
         {
             foreach (Report r in reports)
             {
-                this.reports.Add(r);
+                this.Reports.Add(r);
             }
         }
     }

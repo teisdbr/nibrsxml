@@ -13,25 +13,25 @@ namespace NibrsXml.NibrsReport.Incident
     public class Incident
     {
         [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore, Order = 1)]
-        public ActivityIdentification activityId { get; set; }
+        public ActivityIdentification ActivityId { get; set; }
 
         [XmlElement("ActivityDate", Namespace = Namespaces.niemCore, Order = 2)]
-        public ActivityDate activityDate { get; set; }
+        public ActivityDate ActivityDate { get; set; }
 
         [XmlElement("IncidentAugmentation", Namespace = Namespaces.cjis, Order = 3)]
-        public cjisIncidentAugmentation cjisIncidentAugmentation { get; set; }
+        public CjisIncidentAugmentation CjisIncidentAugmentation { get; set; }
 
         [XmlElement("IncidentAugmentation", Namespace = Namespaces.justice, Order = 4)]
-        public jxdmIncidentAugmentation jxdmIncidentAugmentation { get; set; }
+        public JxdmIncidentAugmentation JxdmIncidentAugmentation { get; set; }
 
         public Incident() { }
 
-        public Incident(ActivityIdentification id, ActivityDate date, cjisIncidentAugmentation cjis, jxdmIncidentAugmentation jdxm)
+        public Incident(ActivityIdentification id, ActivityDate date, CjisIncidentAugmentation cjis, JxdmIncidentAugmentation jdxm)
         {
-            this.activityId = id;
-            this.activityDate = date;
-            this.cjisIncidentAugmentation = cjis;
-            this.jxdmIncidentAugmentation = jdxm;
+            this.ActivityId = id;
+            this.ActivityDate = date;
+            this.CjisIncidentAugmentation = cjis;
+            this.JxdmIncidentAugmentation = jdxm;
         }
     }
 }

@@ -12,28 +12,28 @@ namespace NibrsXml.NibrsReport.Person
     public class Person
     {
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [XmlElement("PersonAgeMeasure", Namespace = Namespaces.niemCore, Order = 1)]
-        public PersonAgeMeasure ageMeasure { get; set; }
+        public PersonAgeMeasure AgeMeasure { get; set; }
 
         [XmlElement("PersonEthnicityCode", Namespace = Namespaces.justice, Order = 2)]
-        public string ethnicityCode { get; set; }
+        public string EthnicityCode { get; set; }
 
         [XmlElement("PersonInjury", Namespace = Namespaces.niemCore, Order = 3)]
-        public PersonInjury injury { get; set; }
+        public PersonInjury Injury { get; set; }
 
         [XmlElement("PersonRaceNDExCode", Namespace = Namespaces.justice, Order = 4)]
-        public string raceCode { get; set; }
+        public string RaceCode { get; set; }
 
         [XmlElement("PersonResidentCode", Namespace = Namespaces.justice, Order = 5)]
-        public string residentCode { get; set; }
+        public string ResidentCode { get; set; }
 
         [XmlElement("PersonSexCode", Namespace = Namespaces.justice, Order = 6)]
-        public string sexCode { get; set; }
+        public string SexCode { get; set; }
 
         [XmlElement("PersonAugmentation", Namespace = Namespaces.justice, Order = 7)]
-        public PersonAugmentation augmentation { get; set; }
+        public PersonAugmentation Augmentation { get; set; }
 
         public Person() { }
 
@@ -75,14 +75,14 @@ namespace NibrsXml.NibrsReport.Person
             string sexCode,
             PersonAugmentation augmentation)
         {
-            this.id = id;
-            this.ageMeasure = ageMeasure;
-            this.ethnicityCode = ethnicityCode;
-            this.injury = injury;
-            this.raceCode = raceCode;
-            this.residentCode = residentCode;
-            this.sexCode = sexCode;
-            this.augmentation = augmentation;
+            this.Id = id;
+            this.AgeMeasure = ageMeasure;
+            this.EthnicityCode = ethnicityCode;
+            this.Injury = injury;
+            this.RaceCode = raceCode;
+            this.ResidentCode = residentCode;
+            this.SexCode = sexCode;
+            this.Augmentation = augmentation;
         }
     }
 }

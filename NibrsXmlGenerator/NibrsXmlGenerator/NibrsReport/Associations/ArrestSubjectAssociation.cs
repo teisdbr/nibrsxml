@@ -12,23 +12,23 @@ namespace NibrsXml.NibrsReport.Associations
     public class ArrestSubjectAssociation //: Association
     {
         [XmlElement("Activity", Namespace = Namespaces.niemCore, Order = 1)]
-        public Arrest.Arrest activityRef { get; set; }
+        public Arrest.Arrest ActivityRef { get; set; }
 
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 2)]
-        public Arrestee.Arrestee arresteeRef { get; set; }
+        public Arrestee.Arrestee ArresteeRef { get; set; }
 
         public ArrestSubjectAssociation() { }
 
         public ArrestSubjectAssociation(Arrest.Arrest arrest, Arrestee.Arrestee arrestee)
         {
-            this.activityRef = arrest.reference;
-            this.arresteeRef = arrestee.reference;
+            this.ActivityRef = arrest.Reference;
+            this.ArresteeRef = arrestee.Reference;
         }
 
         public ArrestSubjectAssociation(string arrestRef, string arresteeRef)
         {
-            this.activityRef = new Arrest.Arrest(arrestRef);
-            this.arresteeRef = new Arrestee.Arrestee(arresteeRef);
+            this.ActivityRef = new Arrest.Arrest(arrestRef);
+            this.ArresteeRef = new Arrestee.Arrestee(arresteeRef);
         }
     }
 }

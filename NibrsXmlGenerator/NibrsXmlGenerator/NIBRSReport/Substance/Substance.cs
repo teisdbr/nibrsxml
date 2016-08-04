@@ -12,17 +12,17 @@ namespace NibrsXml.NibrsReport.Substance
     public class Substance
     {
         [XmlElement("DrugCategoryCode", Namespace = Namespaces.justice, Order = 1)]
-        public string drugCategoryCode { get; set; }
+        public string DrugCategoryCode { get; set; }
 
         [XmlElement("SubstanceQuantityMeasure", Namespace = Namespaces.niemCore, Order = 2)]
-	    public SubstanceQuantityMeasure quantityMeasure { get; set; }
+        public SubstanceQuantityMeasure QuantityMeasure { get; set; }
 
         public Substance() { }
 
         public Substance(string drugCategoryCode, SubstanceQuantityMeasure quantityMeasure)
         {
-            this.drugCategoryCode = drugCategoryCode;
-            this.quantityMeasure = quantityMeasure;
+            this.DrugCategoryCode = drugCategoryCode;
+            this.QuantityMeasure = quantityMeasure;
         }
     }
 }

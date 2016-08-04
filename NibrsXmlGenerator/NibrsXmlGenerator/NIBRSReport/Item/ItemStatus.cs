@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Item
     public class ItemStatus
     {
         [XmlElement("ItemStatusCode", Namespace = Namespaces.cjis)]
-        public string code { get; set; }
+        public string Code { get; set; }
 
         public ItemStatus() { }
 
         public ItemStatus(string code)
         {
-            this.code = code;
+            this.Code = code;
         }
     }
 }

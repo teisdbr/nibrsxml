@@ -45,10 +45,10 @@ namespace NibrsXml.NibrsSerializer
                 typeof(Report), 
                 
                 // Incident namespace
-                typeof(cjisIncidentAugmentation),
+                typeof(CjisIncidentAugmentation),
                 typeof(Incident),
                 typeof(IncidentExceptionalClearanceDate),
-                typeof(jxdmIncidentAugmentation),
+                typeof(JxdmIncidentAugmentation),
 
                 // Offense namespace
                 typeof(Offense),
@@ -129,8 +129,8 @@ namespace NibrsXml.NibrsSerializer
             Incident incident = new Incident(
                             new ActivityIdentification("54236732"),
                             new ActivityDate("2016-02-19", "10:00:00"),
-                            new cjisIncidentAugmentation(false, true),
-                            new jxdmIncidentAugmentation(
+                            new CjisIncidentAugmentation(false, true),
+                            new JxdmIncidentAugmentation(
                                 "A",
                                 new IncidentExceptionalClearanceDate("2016-02-25")));
 
@@ -259,8 +259,8 @@ namespace NibrsXml.NibrsSerializer
                 new SubjectVictimAssociation(2, subject1, victim2, "Stranger"));
 
             Submission submission = new Submission(report);
-            string x = submission.xml;
-            string y = report.xml;
+            string x = submission.Xml;
+            string y = report.Xml;
             Console.WriteLine(x);
             Console.ReadLine();
         }

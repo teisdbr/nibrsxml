@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Arrest
     public class ArrestCharge
     {
         [XmlElement("ChargeUCRCode", Namespace = Namespaces.cjisNibrs)]
-        public string ucrCode { get; set; }
+        public string UcrCode { get; set; }
 
         public ArrestCharge() { }
 
         public ArrestCharge(string ucrCode)
         {
-            this.ucrCode = ucrCode;
+            this.UcrCode = ucrCode;
         }
     }
 }

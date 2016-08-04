@@ -20,7 +20,7 @@ namespace NibrsXml.NibrsReport.Misc
         private string _date;
         
         [XmlElement("DateTime", Namespace = Namespaces.niemCore)]
-        public string dateTime { 
+        public string DateTime { 
             get 
             { 
                 return _dateTime;
@@ -34,7 +34,7 @@ namespace NibrsXml.NibrsReport.Misc
         }
 
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
-        public string date
+        public string Date
         { 
             get 
             { 
@@ -48,18 +48,18 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
-        public string time { get { return dateTime.Substring(dateTime.IndexOf("T") + 1); } }
+        public string Time { get { return DateTime.Substring(DateTime.IndexOf("T") + 1); } }
 
         public ActivityDate() { }
 
         public ActivityDate(string date)
         {
-            this.date = date;
+            this.Date = date;
         }
 
         public ActivityDate(string date, string time)
         {
-            this.dateTime = date + "T" + time;
+            this.DateTime = date + "T" + time;
         }
     }
 }

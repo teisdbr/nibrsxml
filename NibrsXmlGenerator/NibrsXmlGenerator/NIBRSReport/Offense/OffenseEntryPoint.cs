@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Offense
     public class OffenseEntryPoint
     {
         [XmlElement("PassagePointMethodCode", Namespace = Namespaces.justice)]
-        public string passagePointMethodCode { get; set; }
+        public string PassagePointMethodCode { get; set; }
         
         public OffenseEntryPoint() { }
 
         public OffenseEntryPoint(string passagePointMethodCode)
         {
-            this.passagePointMethodCode = passagePointMethodCode;
+            this.PassagePointMethodCode = passagePointMethodCode;
         }
     }
 }

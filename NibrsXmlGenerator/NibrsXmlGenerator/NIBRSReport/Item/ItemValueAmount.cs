@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Item
 	public class ItemValueAmount
     {
         [XmlElement("Amount", Namespace = Namespaces.niemCore)]
-        public int amount { get; set; }
+        public int Amount { get; set; }
 
         public ItemValueAmount() { }
 
         public ItemValueAmount(int amount)
         {
-            this.amount = amount;
+            this.Amount = amount;
         }
     }
 }

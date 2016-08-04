@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Misc
     public class ActivityIdentification
     {
         [XmlElement("IdentificationID", Namespace = Namespaces.niemCore)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         public ActivityIdentification() { }
 
         public ActivityIdentification(string id)
         {
-            this.id = id;
+            this.Id = id;
         }
     }
 }

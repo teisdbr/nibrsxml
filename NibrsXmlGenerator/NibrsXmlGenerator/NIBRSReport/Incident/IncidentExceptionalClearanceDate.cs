@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Incident
     public class IncidentExceptionalClearanceDate
     {
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
-        public string date { get; set; }
+        public string Date { get; set; }
 
         public IncidentExceptionalClearanceDate() { }
 
         public IncidentExceptionalClearanceDate(string date)
         {
-            this.date = date;
+            this.Date = date;
         }
     }
 }

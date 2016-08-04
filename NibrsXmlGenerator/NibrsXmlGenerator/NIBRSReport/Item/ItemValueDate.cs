@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Item
     public class ItemValueDate
     {
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
-        public string date { get; set; }
+        public string Date { get; set; }
 
         public ItemValueDate() { }
 
         public ItemValueDate(string date)
         {
-            this.date = date;
+            this.Date = date;
         }
     }
 }

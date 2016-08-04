@@ -11,43 +11,43 @@ using NibrsXml.NibrsReport.Person;
 namespace NibrsXml.NibrsReport.Arrestee
 {
     [XmlRoot("Arrestee", Namespace = Namespaces.justice)]
-    public class Arrestee 
+    public class Arrestee
     {
         [XmlIgnore]
-        public Person.Person person { get; set; }
+        public Person.Person Person { get; set; }
 
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// This property is public only for serialization.
+        /// This property is public only For serialization.
         /// It should only be set by using the Arrestee(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string arresteeRef { get; set; }
-        
+        public string ArresteeRef { get; set; }
+
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
-        public RoleOfPerson role { get; set; }
-        
+        public RoleOfPerson Role { get; set; }
+
         [XmlElement("ArrestSequenceID", Namespace = Namespaces.justice, Order = 2)]
-        public string seqId { get; set; }
+        public string SeqId { get; set; }
 
         [XmlElement("ArresteeClearanceIndicator", Namespace = Namespaces.justice, Order = 3)]
-        public string clearanceIndicator { get; set; }
+        public string ClearanceIndicator { get; set; }
 
         [XmlElement("ArresteeArmedWithCode", Namespace = Namespaces.justice, Order = 4)]
-        public string armedWithCode { get; set; }
+        public string ArmedWithCode { get; set; }
 
         [XmlElement("ArresteeJuvenileDispositionCode", Namespace = Namespaces.justice, Order = 5)]
-        public string juvenileDispositionCode { get; set; }
+        public string JuvenileDispositionCode { get; set; }
 
-        public Arrestee reference { get { return new Arrestee(person.id); } }
+        public Arrestee Reference { get { return new Arrestee(Person.Id); } }
 
         public Arrestee() { }
 
         public Arrestee(string arresteeId)
         {
-            this.arresteeRef = arresteeId;
+            this.ArresteeRef = arresteeId;
         }
 
         public Arrestee(
@@ -57,14 +57,14 @@ namespace NibrsXml.NibrsReport.Arrestee
             string armedWithCode,
             string juvenileDispositionCode)
         {
-            this.person = person;
-            this.person.id = "PersonArrestee" + seqId.ToString();
-            this.id = "Arrestee" + seqId.ToString();
-            this.role = new RoleOfPerson(this.person.id);
-            this.seqId = seqId.ToString();
-            this.clearanceIndicator = clearanceIndicator.ToString().ToLower();
-            this.armedWithCode = armedWithCode;
-            this.juvenileDispositionCode = juvenileDispositionCode;
+            this.Person = person;
+            this.Person.Id = "PersonArrestee" + seqId.ToString();
+            this.Id = "Arrestee" + seqId.ToString();
+            this.Role = new RoleOfPerson(this.Person.Id);
+            this.SeqId = seqId.ToString();
+            this.ClearanceIndicator = clearanceIndicator.ToString().ToLower();
+            this.ArmedWithCode = armedWithCode;
+            this.JuvenileDispositionCode = juvenileDispositionCode;
         }
     }
 }

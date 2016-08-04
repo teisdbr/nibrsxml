@@ -13,13 +13,13 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
     public class EnforcementOfficialUnit
     {
         [XmlElement("OrganizationAugmentation", Namespace = Namespaces.justice)]
-        public OrganizationAugmentation orgAugmentation { get; set; }
+        public OrganizationAugmentation OrgAugmentation { get; set; }
 
         public EnforcementOfficialUnit() { }
 
         public EnforcementOfficialUnit(OrganizationAugmentation orgAugmentation)
         {
-            this.orgAugmentation = orgAugmentation;
+            this.OrgAugmentation = orgAugmentation;
         }
     }
 }

@@ -12,32 +12,32 @@ namespace NibrsXml.NibrsReport.Location
     public class Location
     {
         /// <summary>
-        /// This property is public only for serialization.
+        /// This property is public only For serialization.
         /// It should only be set by using the Location(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string locationRef { get; set; }
-        
+        public string LocationRef { get; set; }
+
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [XmlElement("LocationCategoryCode", Namespace = Namespaces.justice)]
-        public string categoryCode { get; set; }
+        public string CategoryCode { get; set; }
 
         [XmlIgnore]
-        public Location reference { get { return new Location(id); } }
+        public Location Reference { get { return new Location(Id); } }
 
         public Location() { }
 
         public Location(string locationRef)
         {
-            this.locationRef = locationRef;
+            this.LocationRef = locationRef;
         }
 
         public Location(int id, string categoryCode)
         {
-            this.id = "Location" + id.ToString();
-            this.categoryCode = categoryCode;
+            this.Id = "Location" + id.ToString();
+            this.CategoryCode = categoryCode;
         }
     }
 }

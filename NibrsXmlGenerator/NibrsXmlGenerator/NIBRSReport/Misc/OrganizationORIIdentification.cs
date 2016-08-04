@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Misc
     public class OrganizationORIIdentification
     {
         [XmlElement("IdentificationID", Namespace = Namespaces.niemCore)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         public OrganizationORIIdentification() { }
 
         public OrganizationORIIdentification(string id)
         {
-            this.id = id;
+            this.Id = id;
         }
     }
 }

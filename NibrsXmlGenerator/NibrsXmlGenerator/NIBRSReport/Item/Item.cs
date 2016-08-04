@@ -12,25 +12,25 @@ namespace NibrsXml.NibrsReport.Item
     public class Item
     {
         [XmlElement("ItemStatus", Namespace = Namespaces.niemCore, Order = 1)]
-        public ItemStatus status { get; set; }
+        public ItemStatus Status { get; set; }
 
         [XmlElement("ItemValue", Namespace = Namespaces.niemCore, Order = 2)]
-        public ItemValue value { get; set; }
+        public ItemValue Value { get; set; }
 
         [XmlElement("ItemCategoryNIBRSPropertyCategoryCode", Namespace = Namespaces.justice, Order = 3)]
-        public string nibrsPropertyCategoryCode { get; set; }
+        public string NibrsPropertyCategoryCode { get; set; }
 
         [XmlElement("ItemQuantity", Namespace = Namespaces.niemCore, Order = 4)]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
 
         public Item() { }
 
         public Item(ItemStatus status, ItemValue value, string nibrsPropertyCategoryCode, int quantity)
         {
-            this.status = status;
-            this.value = value;
-            this.nibrsPropertyCategoryCode = nibrsPropertyCategoryCode;
-            this.quantity = quantity;
+            this.Status = status;
+            this.Value = value;
+            this.NibrsPropertyCategoryCode = nibrsPropertyCategoryCode;
+            this.Quantity = quantity;
         }
     }
 }

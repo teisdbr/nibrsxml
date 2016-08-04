@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Misc
     public class OrganizationAugmentation
     {
         [XmlElement("OrganizationORIIdentification", Namespace = Namespaces.justice)]
-        public OrganizationORIIdentification orgOriId { get; set; }
+        public OrganizationORIIdentification OrgOriId { get; set; }
 
         public OrganizationAugmentation() { }
 
         public OrganizationAugmentation(OrganizationORIIdentification orgOriId)
         {
-            this.orgOriId = orgOriId;
+            this.OrgOriId = orgOriId;
         }
     }
 }

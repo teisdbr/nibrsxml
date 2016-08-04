@@ -14,22 +14,22 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
     public class EnforcementOfficial
     {
         [XmlIgnore]
-        public Person.Person person { get; set; }
+        public Person.Person Person { get; set; }
 
         [XmlIgnore]
-        public int victimSeqNum { get; set; }
-        
+        public int VictimSeqNum { get; set; }
+
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
-        public RoleOfPerson role { get; set; }
+        public RoleOfPerson Role { get; set; }
 
         [XmlElement("EnforcementOfficialActivityCategoryCode", Namespace = Namespaces.justice, Order = 2)]
-        public string activityCategoryCode { get; set; }
+        public string ActivityCategoryCode { get; set; }
 
         [XmlElement("EnforcementOfficialAssignmentCategoryCode", Namespace = Namespaces.justice, Order = 3)]
-        public string assignmentCategoryCode { get; set; }
+        public string AssignmentCategoryCode { get; set; }
 
         [XmlElement("EnforcementOfficialUnit", Namespace = Namespaces.justice, Order = 4)]
-        public EnforcementOfficialUnit unit { get; set; }
+        public EnforcementOfficialUnit Unit { get; set; }
 
         public EnforcementOfficial() { }
 
@@ -40,13 +40,13 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
             string assignmentCategoryCode,
             EnforcementOfficialUnit unit)
         {
-            this.person = person;
-            this.person.id = "PersonVictim" + victimSeqNum.ToString();
-            this.victimSeqNum = victimSeqNum;
-            this.role = new RoleOfPerson(this.person.id);
-            this.activityCategoryCode = activityCategoryCode;
-            this.assignmentCategoryCode = assignmentCategoryCode;
-            this.unit = unit;
+            this.Person = person;
+            this.Person.Id = "PersonVictim" + victimSeqNum.ToString();
+            this.VictimSeqNum = victimSeqNum;
+            this.Role = new RoleOfPerson(this.Person.Id);
+            this.ActivityCategoryCode = activityCategoryCode;
+            this.AssignmentCategoryCode = assignmentCategoryCode;
+            this.Unit = unit;
         }
     }
 }

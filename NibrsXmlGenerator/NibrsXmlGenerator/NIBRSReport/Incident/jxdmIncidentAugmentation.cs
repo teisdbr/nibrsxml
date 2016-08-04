@@ -9,20 +9,20 @@ using NibrsXml.Constants;
 namespace NibrsXml.NibrsReport.Incident
 {
     [XmlRoot("IncidentAugmentation", Namespace = Namespaces.justice)]
-    public class jxdmIncidentAugmentation
+    public class JxdmIncidentAugmentation
     {
         [XmlElement("IncidentExceptionalClearanceCode", Namespace = Namespaces.justice, Order = 1)]
-        public string incidentExceptionalClearanceCode { get; set; }
+        public string IncidentExceptionalClearanceCode { get; set; }
 
         [XmlElement("IncidentExceptionalClearanceDate", Namespace = Namespaces.justice, Order = 2)]
-        public IncidentExceptionalClearanceDate incidentExceptionalClearanceDate { get; set; }
+        public IncidentExceptionalClearanceDate IncidentExceptionalClearanceDate { get; set; }
 
-        public jxdmIncidentAugmentation() { }
+        public JxdmIncidentAugmentation() { }
 
-        public jxdmIncidentAugmentation(string clearanceCode, IncidentExceptionalClearanceDate clearanceDate)
+        public JxdmIncidentAugmentation(string clearanceCode, IncidentExceptionalClearanceDate clearanceDate)
         {
-            this.incidentExceptionalClearanceCode = clearanceCode;
-            this.incidentExceptionalClearanceDate = clearanceDate;
+            this.IncidentExceptionalClearanceCode = clearanceCode;
+            this.IncidentExceptionalClearanceDate = clearanceDate;
         }
     }
 }

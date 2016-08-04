@@ -24,10 +24,10 @@ namespace NibrsXml.Builder
 
             DetermineNibrsReportCatCode();
 
-            this.report.reportActionCategoryCode = incident.ActionType;
+            this.report.ReportActionCategoryCode = incident.ActionType;
             //TODO: BOBBY!!!
-            this.report.reportDate = new ReportDate(DateTime.Now.ToString("yyyy-MM"));
-            this.report.reportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(incident.Admin.ORINumber)));
+            this.report.ReportDate = new ReportDate(DateTime.Now.ToString("yyyy-MM"));
+            this.report.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(incident.Admin.ORINumber)));
         }
 
         public ReportHeader report { get; private set; }
@@ -35,17 +35,17 @@ namespace NibrsXml.Builder
         public void DetermineNibrsReportCatCode()
         {
 
-                Boolean groupAOffenseExists = false;
+                //Boolean groupAOffenseExists = false;
                 foreach (LIBRSOffense offense in currentIncident.Offense)
                 {
                     if (LarsList.LarsDictionary[offense.LRSNumber].lgroup == "A")
                     {
-                        this.report.nibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.A);
+                        this.report.NibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.A);
                         return;
                     }
 
                 }
-                this.report.nibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.B);
+                this.report.NibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.B);
         }
     }
 }

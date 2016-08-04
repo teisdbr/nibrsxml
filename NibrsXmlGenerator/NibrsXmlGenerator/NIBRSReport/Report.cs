@@ -13,58 +13,58 @@ namespace NibrsXml.NibrsReport
     public class Report : NibrsSerializable
     {
         [XmlElement("ReportHeader", Namespace = Namespaces.cjisNibrs, Order = 1)]
-        public ReportHeader.ReportHeader header { get; set; }
+        public ReportHeader.ReportHeader Header { get; set; }
 
         [XmlElement("Incident", Namespace = Namespaces.niemCore, Order = 2)]
-        public Incident.Incident incident { get; set; }
+        public Incident.Incident Incident { get; set; }
 
         [XmlElement("Offense", Namespace = Namespaces.justice, Order = 3)]
-        public List<Offense.Offense> offenses { get; set; }
+        public List<Offense.Offense> Offenses { get; set; }
 
         [XmlElement("Location", Namespace = Namespaces.niemCore, Order = 4)]
-        public List<Location.Location> locations { get; set; }
+        public List<Location.Location> Locations { get; set; }
 
         [XmlElement("Item", Namespace = Namespaces.niemCore, Order = 5)]
-        public List<Item.Item> items { get; set; }
+        public List<Item.Item> Items { get; set; }
 
         [XmlElement("Substance", Namespace = Namespaces.niemCore, Order = 6)]
-        public List<Substance.Substance> substances { get; set; }
+        public List<Substance.Substance> Substances { get; set; }
 
         [XmlElement("Person", Namespace = Namespaces.niemCore, Order = 7)]
-        public List<Person.Person> persons;
+        public List<Person.Person> Persons;
 
         [XmlElement("EnforcementOfficial", Namespace = Namespaces.justice, Order = 8)]
-        public List<EnforcementOfficial.EnforcementOfficial> officers { get; set; }
+        public List<EnforcementOfficial.EnforcementOfficial> Officers { get; set; }
 
         [XmlElement("Victim", Namespace = Namespaces.justice, Order = 9)]
-        public List<Victim.Victim> victims { get; set; }
+        public List<Victim.Victim> Victims { get; set; }
 
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 10)]
-        public List<Subject.Subject> subjects { get; set; }
+        public List<Subject.Subject> Subjects { get; set; }
 
         [XmlElement("Arrestee", Namespace = Namespaces.justice, Order = 11)]
-        public List<Arrestee.Arrestee> arrestees { get; set; }
+        public List<Arrestee.Arrestee> Arrestees { get; set; }
 
         [XmlElement("Arrest", Namespace = Namespaces.justice, Order = 12)]
-        public List<Arrest.Arrest> arrests { get; set; }
+        public List<Arrest.Arrest> Arrests { get; set; }
 
         [XmlElement("ArrestSubjectAssociation", Namespace = Namespaces.justice, Order = 13)]
-        public List<Associations.ArrestSubjectAssociation> arrestSubjectAssocs { get; set; }
+        public List<Associations.ArrestSubjectAssociation> ArrestSubjectAssocs { get; set; }
 
         [XmlElement("OffenseLocationAssociation", Namespace = Namespaces.justice, Order = 14)]
-        public List<Associations.OffenseLocationAssociation> offenseLocationAssocs { get; set; }
+        public List<Associations.OffenseLocationAssociation> OffenseLocationAssocs { get; set; }
 
         [XmlElement("OffenseVictimAssociation", Namespace = Namespaces.justice, Order = 15)]
-        public List<Associations.OffenseVictimAssociation> offenseVictimAssocs { get; set; }
+        public List<Associations.OffenseVictimAssociation> OffenseVictimAssocs { get; set; }
 
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
-        public List<Associations.SubjectVictimAssociation> subjectVictimAssocs { get; set; }
+        public List<Associations.SubjectVictimAssociation> SubjectVictimAssocs { get; set; }
 
         [XmlIgnore]
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
 
         [XmlIgnore]
-        public string xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
+        public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
 
         public Report() { }
 
@@ -72,53 +72,53 @@ namespace NibrsXml.NibrsReport
             ReportHeader.ReportHeader header,
             Incident.Incident incident)
         {
-            this.header = header;
-            this.incident = incident;
-            offenses = new List<Offense.Offense>();
-            locations = new List<Location.Location>();
-            items = new List<Item.Item>();
-            substances = new List<Substance.Substance>();
-            persons = new List<Person.Person>();
-            officers = new List<EnforcementOfficial.EnforcementOfficial>();
-            victims = new List<Victim.Victim>();
-            subjects = new List<Subject.Subject>();
-            arrestees = new List<Arrestee.Arrestee>();
-            arrests = new List<Arrest.Arrest>();
-            arrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
-            offenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
-            offenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
-            subjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
+            this.Header = header;
+            this.Incident = incident;
+            this.Offenses = new List<Offense.Offense>();
+            this.Locations = new List<Location.Location>();
+            this.Items = new List<Item.Item>();
+            this.Substances = new List<Substance.Substance>();
+            this.Persons = new List<Person.Person>();
+            this.Officers = new List<EnforcementOfficial.EnforcementOfficial>();
+            this.Victims = new List<Victim.Victim>();
+            this.Subjects = new List<Subject.Subject>();
+            this.Arrestees = new List<Arrestee.Arrestee>();
+            this.Arrests = new List<Arrest.Arrest>();
+            this.ArrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
+            this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
+            this.OffenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
+            this.SubjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
         }
 
         public void AddOffenses(params Offense.Offense[] offenses)
         {
             foreach (Offense.Offense offense in offenses)
-                this.offenses.Add(offense);
+                this.Offenses.Add(offense);
         }
 
         public void AddLocations(params Location.Location[] locations)
         {
             foreach (Location.Location location in locations)
-                this.locations.Add(location);
+                this.Locations.Add(location);
         }
 
         public void AddItems(params Item.Item[] items)
         {
             foreach (Item.Item item in items)
-                this.items.Add(item);
+                this.Items.Add(item);
         }
 
         public void AddSubstances(params Substance.Substance[] substances)
         {
             foreach (Substance.Substance substance in substances)
-                this.substances.Add(substance);
+                this.Substances.Add(substance);
         }
 
         public void AddEnforcementOfficials(params EnforcementOfficial.EnforcementOfficial[] officers)
         {
             foreach (EnforcementOfficial.EnforcementOfficial officer in officers)
             {
-                this.officers.Add(officer);
+                this.Officers.Add(officer);
             }
         }
 
@@ -126,8 +126,8 @@ namespace NibrsXml.NibrsReport
         {
             foreach (Victim.Victim victim in victims)
             {
-                this.victims.Add(victim);
-                this.persons.Add(victim.person);
+                this.Victims.Add(victim);
+                this.Persons.Add(victim.Person);
             }
         }
 
@@ -135,8 +135,8 @@ namespace NibrsXml.NibrsReport
         {
             foreach (Subject.Subject subject in subjects)
             {
-                this.subjects.Add(subject);
-                this.persons.Add(subject.person);
+                this.Subjects.Add(subject);
+                this.Persons.Add(subject.Person);
             }
         }
 
@@ -144,39 +144,39 @@ namespace NibrsXml.NibrsReport
         {
             foreach (Arrestee.Arrestee arrestee in arrestees)
             {
-                this.arrestees.Add(arrestee);
-                this.persons.Add(arrestee.person);
+                this.Arrestees.Add(arrestee);
+                this.Persons.Add(arrestee.Person);
             }
         }
 
         public void AddArrests(params Arrest.Arrest[] arrests)
         {
             foreach (Arrest.Arrest arrest in arrests)
-                this.arrests.Add(arrest);
+                this.Arrests.Add(arrest);
         }
 
         public void AddArrestSubjectAssociations(params Associations.ArrestSubjectAssociation[] associations)
         {
             foreach (Associations.ArrestSubjectAssociation association in associations)
-                this.arrestSubjectAssocs.Add(association);
+                this.ArrestSubjectAssocs.Add(association);
         }
 
         public void AddOffenseLocationAssociations(params Associations.OffenseLocationAssociation[] associations)
         {
             foreach (Associations.OffenseLocationAssociation association in associations)
-                this.offenseLocationAssocs.Add(association);
+                this.OffenseLocationAssocs.Add(association);
         }
 
         public void AddOffenseVictimAssociations(params Associations.OffenseVictimAssociation[] associations)
         {
             foreach (Associations.OffenseVictimAssociation association in associations)
-                this.offenseVictimAssocs.Add(association);
+                this.OffenseVictimAssocs.Add(association);
         }
 
         public void AddSubjectVictimAssociations(params Associations.SubjectVictimAssociation[] associations)
         {
             foreach (Associations.SubjectVictimAssociation association in associations)
-                this.subjectVictimAssocs.Add(association);
+                this.SubjectVictimAssocs.Add(association);
         }
     }
 }

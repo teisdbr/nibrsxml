@@ -12,13 +12,13 @@ namespace NibrsXml.NibrsReport.Misc
     public class RoleOfPerson
     {
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string personId { get; set; }
+        public string PersonId { get; set; }
 
         public RoleOfPerson() { }
 
         public RoleOfPerson(string personId)
         {
-            this.personId = personId;
+            this.PersonId = personId;
         }
     }
 }

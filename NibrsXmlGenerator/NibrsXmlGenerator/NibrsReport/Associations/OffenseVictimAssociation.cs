@@ -12,23 +12,23 @@ namespace NibrsXml.NibrsReport.Associations
     public class OffenseVictimAssociation// : Association
     {
         [XmlElement("Offense", Namespace = Namespaces.justice, Order = 1)]
-        public Offense.Offense offenseRef { get; set; }
+        public Offense.Offense OffenseRef { get; set; }
 
         [XmlElement("Victim", Namespace = Namespaces.justice, Order = 2)]
-        public Victim.Victim victimRef { get; set; }
+        public Victim.Victim VictimRef { get; set; }
 
         public OffenseVictimAssociation() { }
 
         public OffenseVictimAssociation(Offense.Offense offense, Victim.Victim victim)
         {
-            this.offenseRef = offense.reference;
-            this.victimRef = victim.reference;
+            this.OffenseRef = offense.Reference;
+            this.VictimRef = victim.Reference;
         }
 
         public OffenseVictimAssociation(string offenseRef, string victimRef)
         {
-            this.offenseRef = new Offense.Offense(offenseRef);
-            this.victimRef = new Victim.Victim(victimRef);
+            this.OffenseRef = new Offense.Offense(offenseRef);
+            this.VictimRef = new Victim.Victim(victimRef);
         }
     }
 }

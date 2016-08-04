@@ -12,69 +12,69 @@ namespace NibrsXml.NibrsReport.Offense
     public class Offense
     {
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// This property is public only for serialization.
+        /// This property is public only For serialization.
         /// It should only be set by using the Offense(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string offenseRef { get; set; }
+        public string OffenseRef { get; set; }
 
         [XmlElement("OffenseUCRCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
-        public string offenseUcrCode { get; set; }
+        public string OffenseUcrCode { get; set; }
 
         [XmlElement("CriminalActivityCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
-        public string criminalActivityCategoryCode { get; set; }
+        public string CriminalActivityCategoryCode { get; set; }
 
         [XmlElement("OffenseFactorBiasMotivationCode", Namespace = Namespaces.justice, Order = 3)]
-        public string offenseFactorBiasMotivationCode { get; set; }
+        public string OffenseFactorBiasMotivationCode { get; set; }
 
         [XmlElement("OffenseStructuresEnteredQuantity", Namespace = Namespaces.justice, Order = 4)]
-        public string offenseStructuresEnteredQuantity { get; set; }
+        public string OffenseStructuresEnteredQuantity { get; set; }
 
         [XmlElement("OffenseFactor", Namespace = Namespaces.justice, Order = 5)]
-        public OffenseFactor offenseFactor { get; set; }
-        
+        public OffenseFactor OffenseFactor { get; set; }
+
         [XmlElement("OffenseEntryPoint", Namespace = Namespaces.justice, Order = 6)]
-        public OffenseEntryPoint offenseEntryPoint { get; set; }
-        
+        public OffenseEntryPoint OffenseEntryPoint { get; set; }
+
         [XmlElement("OffenseForce", Namespace = Namespaces.justice, Order = 7)]
-        public OffenseForce offenseForce { get; set; }
+        public OffenseForce OffenseForce { get; set; }
 
         [XmlElement("OffenseAttemptedIndicator", Namespace = Namespaces.justice, Order = 8)]
-        public string offenseAttemptedIndicator { get; set; }
+        public string OffenseAttemptedIndicator { get; set; }
 
         [XmlIgnore]
-        public Offense reference { get { return new Offense(this.id); } }
+        public Offense Reference { get { return new Offense(this.Id); } }
 
         public Offense() { }
 
         public Offense(string offenseId)
         {
-            this.offenseRef = offenseId;
+            this.OffenseRef = offenseId;
         }
-        
+
         public Offense(
             int id,
-            string offenceUcrCode, 
-            string criminalActivityCategoryCode, 
-            string offenseFactorBiasMotivationCode, 
-            int offenseStructuresEnteredQuantity, 
-            OffenseFactor offenseFactor, 
+            string offenceUcrCode,
+            string criminalActivityCategoryCode,
+            string offenseFactorBiasMotivationCode,
+            int offenseStructuresEnteredQuantity,
+            OffenseFactor offenseFactor,
             OffenseEntryPoint offenseEntryPoint,
             OffenseForce offenseForce,
             bool offenseAttemptedIndicator)
         {
-            this.id = "Offense" + id.ToString();
-            this.offenseUcrCode = offenceUcrCode;
-            this.criminalActivityCategoryCode = criminalActivityCategoryCode;
-            this.offenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
-            this.offenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
-            this.offenseFactor = offenseFactor;
-            this.offenseEntryPoint = offenseEntryPoint;
-            this.offenseForce = offenseForce;
-            this.offenseAttemptedIndicator = offenseAttemptedIndicator.ToString().ToLower();
+            this.Id = "Offense" + id.ToString();
+            this.OffenseUcrCode = offenceUcrCode;
+            this.CriminalActivityCategoryCode = criminalActivityCategoryCode;
+            this.OffenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
+            this.OffenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
+            this.OffenseFactor = offenseFactor;
+            this.OffenseEntryPoint = offenseEntryPoint;
+            this.OffenseForce = offenseForce;
+            this.OffenseAttemptedIndicator = offenseAttemptedIndicator.ToString().ToLower();
         }
     }
 }

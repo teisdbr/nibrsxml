@@ -12,25 +12,25 @@ namespace NibrsXml.NibrsReport.ReportHeader
     public class ReportHeader
     {
         [XmlElement("NIBRSReportCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
-        public string nibrsReportCategoryCode { get; set; }
+        public string NibrsReportCategoryCode { get; set; }
 
         [XmlElement("ReportActionCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
-        public string reportActionCategoryCode { get; set; }
+        public string ReportActionCategoryCode { get; set; }
 
         [XmlElement("ReportDate", Namespace = Namespaces.cjisNibrs, Order = 3)]
-        public ReportDate reportDate { get; set; }
+        public ReportDate ReportDate { get; set; }
 
         [XmlElement("ReportingAgency", Namespace = Namespaces.cjisNibrs, Order = 4)]
-        public ReportingAgency reportingAgency { get; set; }
+        public ReportingAgency ReportingAgency { get; set; }
 
         public ReportHeader() { }
 
         public ReportHeader(string nibrsCode, string actionCode, ReportDate date, ReportingAgency agency)
         {
-            this.nibrsReportCategoryCode = nibrsCode;
-            this.reportActionCategoryCode = actionCode;
-            this.reportDate = date;
-            this.reportingAgency = agency;
+            this.NibrsReportCategoryCode = nibrsCode;
+            this.ReportActionCategoryCode = actionCode;
+            this.ReportDate = date;
+            this.ReportingAgency = agency;
         }
     }
 }
