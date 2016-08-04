@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\ReportBuilder.cs" />
+    <Compile Include="Builder\ReportHeaderBuilder.cs" />
+    <Compile Include="Builder\SubmissionBuilder.cs" />
     <Compile Include="Constants\Namespace.cs" />
     <Compile Include="Constants\NibrsCodes.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="NibrsReport\Victim\Victim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
+    <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +107,7 @@
       <Name>LoadBusinessLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
