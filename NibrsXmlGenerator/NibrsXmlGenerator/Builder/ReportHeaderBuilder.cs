@@ -32,6 +32,9 @@ namespace NibrsXml.Builder
              // Determine NIBRS report category code based on provided offenses
             foreach (LIBRSOffense offense in offenses)
             {
+                //Trim LRSNumber value in offense
+                offense.LRSNumber = offense.LRSNumber.Trim();
+
                 if (LarsList.LarsDictionary[offense.LRSNumber].lgroup == groupAIncidentReport)
                 {
                     return NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.A);
