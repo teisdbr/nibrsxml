@@ -9,7 +9,7 @@ using NibrsXml.Utility;
 
 namespace NibrsXml.Builder
 {
-    class SubmissionBuilder 
+    public class SubmissionBuilder 
     {
         public static Submission Build(List<IncidentList> agencySpecificIncidents)
         {

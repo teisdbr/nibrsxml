@@ -13,7 +13,7 @@ using NibrsXml.NibrsReport.Misc;
 
 namespace NibrsXml.Builder
 {
-    class ReportHeaderBuilder 
+    public class ReportHeaderBuilder 
     {
         private const string groupAIncidentReport = "A";
 

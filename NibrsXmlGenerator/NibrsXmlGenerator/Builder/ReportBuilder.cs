@@ -8,7 +8,7 @@ using NibrsXml.NibrsReport;
 
 namespace NibrsXml.Builder
 {
-    class ReportBuilder
+    public class ReportBuilder
     {
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
