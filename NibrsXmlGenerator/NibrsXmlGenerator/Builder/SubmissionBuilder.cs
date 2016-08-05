@@ -19,11 +19,10 @@ namespace NibrsXml.Builder
                 foreach (LIBRSIncident incident in agencyIncidentList) {
                     if (!incident.HasErrors)
                     {
-                        sub.Reports.TryAdd(Builder.ReportBuilder.Build(incident));
+                        sub.Reports.TryAdd(ReportBuilder.Build(incident));
                     }
                 }
             }
-
             return sub;
         }
     }

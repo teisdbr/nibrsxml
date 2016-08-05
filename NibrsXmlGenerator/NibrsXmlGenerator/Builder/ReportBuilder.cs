@@ -13,6 +13,9 @@ namespace NibrsXml.Builder
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
             Report rpt = new Report();
+            rpt.Header = ReportHeaderBuilder.Build(incident.Offense, incident.ActionType, incident.Admin);
+            rpt.Incident = IncidentBuilder.Build(incident.Admin);
+            rpt.Offenses = OffenseBuilder.Build(incident.Offense);
             return rpt;
         }
     }

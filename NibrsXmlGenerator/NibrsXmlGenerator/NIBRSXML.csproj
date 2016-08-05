@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\LibrsExtensions.cs" />
+    <Compile Include="Builder\IncidentBuilder.cs" />
+    <Compile Include="Builder\OffenseBuilder.cs" />
     <Compile Include="Builder\ReportBuilder.cs" />
     <Compile Include="Builder\ReportHeaderBuilder.cs" />
     <Compile Include="Builder\SubmissionBuilder.cs" />

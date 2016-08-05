@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSOffense;
+using LoadBusinessLayer.LIBRSAdmin;
 using NibrsXml.Utility;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.ReportHeader;
@@ -14,38 +15,30 @@ namespace NibrsXml.Builder
 {
     class ReportHeaderBuilder 
     {
-        private LIBRSIncident currentIncident { get; set; }
+        private const string groupAIncidentReport = "A";
 
-        public ReportHeaderBuilder(LIBRSIncident incident)
+        public static ReportHeader Build(List<LIBRSOffense> offenses, string actionType, LIBRSAdmin admin)
         {
-            this.currentIncident = incident;
-
-            report = new NibrsReport.ReportHeader.ReportHeader();
-
-            DetermineNibrsReportCatCode();
-
-            this.report.ReportActionCategoryCode = incident.ActionType;
-            //TODO: BOBBY!!!
-            this.report.ReportDate = new ReportDate(DateTime.Now.ToString("yyyy-MM"));
-            this.report.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(incident.Admin.ORINumber)));
+            ReportHeader rptHeader = new ReportHeader();
+            rptHeader.NibrsReportCategoryCode = DetermineNibrsReportCategoryCode(ref offenses);
+            rptHeader.ReportActionCategoryCode = actionType;
+            rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
+            rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));
+            return rptHeader;
         }
 
-        public ReportHeader report { get; private set; }
-
-        public void DetermineNibrsReportCatCode()
+        private static string DetermineNibrsReportCategoryCode(ref List<LIBRSOffense> offenses)
         {
-
-                //Boolean groupAOffenseExists = false;
-                foreach (LIBRSOffense offense in currentIncident.Offense)
+             // Determine NIBRS report category code based on provided offenses
+            foreach (LIBRSOffense offense in offenses)
+            {
+                if (LarsList.LarsDictionary[offense.LRSNumber].lgroup == groupAIncidentReport)
                 {
-                    if (LarsList.LarsDictionary[offense.LRSNumber].lgroup == "A")
-                    {
-                        this.report.NibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.A);
-                        return;
-                    }
-
+                    return NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.A);
                 }
-                this.report.NibrsReportCategoryCode = NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.B);
+            }
+            // If there are no group A offenses, this is a group B incident report
+            return NIBRSCodeAttribute.GetDescription(NIBRSReportCategoryCode.B);
         }
     }
 }

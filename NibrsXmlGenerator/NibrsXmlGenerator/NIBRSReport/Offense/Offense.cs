@@ -22,10 +22,10 @@ namespace NibrsXml.NibrsReport.Offense
         public string OffenseRef { get; set; }
 
         [XmlElement("OffenseUCRCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
-        public string OffenseUcrCode { get; set; }
+        public string UcrCode { get; set; }
 
         [XmlElement("CriminalActivityCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
-        public string CriminalActivityCategoryCode { get; set; }
+        public List<String> CriminalActivityCategoryCodes { get; set; }
 
         [XmlElement("OffenseFactorBiasMotivationCode", Namespace = Namespaces.justice, Order = 3)]
         public string OffenseFactorBiasMotivationCode { get; set; }
@@ -40,7 +40,7 @@ namespace NibrsXml.NibrsReport.Offense
         public OffenseEntryPoint OffenseEntryPoint { get; set; }
 
         [XmlElement("OffenseForce", Namespace = Namespaces.justice, Order = 7)]
-        public OffenseForce OffenseForce { get; set; }
+        public List<OffenseForce> OffenseForces { get; set; }
 
         [XmlElement("OffenseAttemptedIndicator", Namespace = Namespaces.justice, Order = 8)]
         public string OffenseAttemptedIndicator { get; set; }
@@ -66,14 +66,17 @@ namespace NibrsXml.NibrsReport.Offense
             OffenseForce offenseForce,
             bool offenseAttemptedIndicator)
         {
+            this.OffenseForces = new List<OffenseForce>();
+            this.CriminalActivityCategoryCodes = new List<String>();
+
             this.Id = "Offense" + id.ToString();
-            this.OffenseUcrCode = offenceUcrCode;
-            this.CriminalActivityCategoryCode = criminalActivityCategoryCode;
+            this.UcrCode = offenceUcrCode;
+            this.CriminalActivityCategoryCodes.Add(criminalActivityCategoryCode);
             this.OffenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
             this.OffenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
             this.OffenseFactor = offenseFactor;
             this.OffenseEntryPoint = offenseEntryPoint;
-            this.OffenseForce = offenseForce;
+            this.OffenseForces.Add(offenseForce);
             this.OffenseAttemptedIndicator = offenseAttemptedIndicator.ToString().ToLower();
         }
     }
