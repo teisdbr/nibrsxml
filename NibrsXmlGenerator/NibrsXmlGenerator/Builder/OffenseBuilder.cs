@@ -26,9 +26,9 @@ namespace NibrsXml.Builder
                 offenseReport.UcrCode = ExtractNibrsCode(offense);
                 offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
                 //todo: figure out how to relate the LibrsOffender's bias code to the NibrsOffense's bias code
-                offenseReport.OffenseStructuresEnteredQuantity = offense.Premises;
+                offenseReport.OffenseStructuresEnteredQuantity = offense.Premises.TryBuild<String>();
                 //todo: figure out how to relate the LibrsOffender's suspected of using code to the NibrsOffense's suspected of using code
-                offenseReport.OffenseEntryPoint = new OffenseEntryPoint(offense.MethodOfEntry);
+                offenseReport.OffenseEntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.OffenseForces = ExtractNibrsOffenseForces(offense);
                 offenseReport.OffenseAttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
                 offenseReports.Add(offenseReport);

@@ -30,5 +30,12 @@ namespace NibrsXml.Utility
                 return (T)Activator.CreateInstance(typeof(T), input);
             return default(T);
         }
+
+        public static T TryBuild<T>(this String input, params string[] args)
+        {
+            if (input.Trim() != String.Empty)
+                return (T)Activator.CreateInstance(typeof(T), input, args);
+            return default(T);
+        }
     }
 }
