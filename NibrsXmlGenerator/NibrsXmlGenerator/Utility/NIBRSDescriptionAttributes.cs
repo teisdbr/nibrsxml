@@ -12,9 +12,9 @@ using System.Reflection;
 
 namespace NibrsXml.Utility
 {
-    public abstract class NIBRSDescriptionAttribute : DescriptionAttribute
+    public abstract class NibrsDescriptionAttribute : DescriptionAttribute
     {
-        public NIBRSDescriptionAttribute(string description) : base(description) { }
+        public NibrsDescriptionAttribute(string description) : base(description) { }
 
         protected static string GetDescription(Enum nc, Type descriptionType)
         {
@@ -36,17 +36,17 @@ namespace NibrsXml.Utility
         }
     }
 
-    class NIBRSCodeAttribute : NIBRSDescriptionAttribute
+    class NibrsCodeAttribute : NibrsDescriptionAttribute
     {
-        public NIBRSCodeAttribute(string description) : base(description) { }
+        public NibrsCodeAttribute(string description) : base(description) { }
 
         public static string GetDescription(Enum nc)
         {
-            return GetDescription(nc, typeof(NIBRSCodeAttribute));
+            return GetDescription(nc, typeof(NibrsCodeAttribute));
         }
     }
 
-    class CodeDescriptionAttribute : NIBRSDescriptionAttribute
+    class CodeDescriptionAttribute : NibrsDescriptionAttribute
     {
         public CodeDescriptionAttribute(string description) : base(description) { }
 

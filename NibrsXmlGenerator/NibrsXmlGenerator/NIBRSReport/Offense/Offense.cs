@@ -28,22 +28,22 @@ namespace NibrsXml.NibrsReport.Offense
         public List<String> CriminalActivityCategoryCodes { get; set; }
 
         [XmlElement("OffenseFactorBiasMotivationCode", Namespace = Namespaces.justice, Order = 3)]
-        public string OffenseFactorBiasMotivationCode { get; set; }
+        public List<String> FactorBiasMotivationCodes { get; set; }
 
         [XmlElement("OffenseStructuresEnteredQuantity", Namespace = Namespaces.justice, Order = 4)]
-        public string OffenseStructuresEnteredQuantity { get; set; }
+        public string StructuresEnteredQuantity { get; set; }
 
         [XmlElement("OffenseFactor", Namespace = Namespaces.justice, Order = 5)]
-        public OffenseFactor OffenseFactor { get; set; }
+        public List<OffenseFactor> Factors { get; set; }
 
         [XmlElement("OffenseEntryPoint", Namespace = Namespaces.justice, Order = 6)]
-        public OffenseEntryPoint OffenseEntryPoint { get; set; }
+        public OffenseEntryPoint EntryPoint { get; set; }
 
         [XmlElement("OffenseForce", Namespace = Namespaces.justice, Order = 7)]
-        public List<OffenseForce> OffenseForces { get; set; }
+        public List<OffenseForce> Forces { get; set; }
 
         [XmlElement("OffenseAttemptedIndicator", Namespace = Namespaces.justice, Order = 8)]
-        public string OffenseAttemptedIndicator { get; set; }
+        public string AttemptedIndicator { get; set; }
 
         [XmlIgnore]
         public Offense Reference { get { return new Offense(this.Id); } }
@@ -56,28 +56,25 @@ namespace NibrsXml.NibrsReport.Offense
         }
 
         public Offense(
-            int id,
+            string id,
             string offenceUcrCode,
-            string criminalActivityCategoryCode,
-            string offenseFactorBiasMotivationCode,
-            int offenseStructuresEnteredQuantity,
-            OffenseFactor offenseFactor,
+            List<string> criminalActivityCategoryCodes,
+            List<string> offenseFactorBiasMotivationCodes,
+            string offenseStructuresEnteredQuantity,
+            List<OffenseFactor> offenseFactors,
             OffenseEntryPoint offenseEntryPoint,
-            OffenseForce offenseForce,
-            bool offenseAttemptedIndicator)
+            List<OffenseForce> offenseForces,
+            string offenseAttemptedIndicator)
         {
-            this.OffenseForces = new List<OffenseForce>();
-            this.CriminalActivityCategoryCodes = new List<String>();
-
-            this.Id = "Offense" + id.ToString();
+            this.Id = "Offense" + id;
             this.UcrCode = offenceUcrCode;
-            this.CriminalActivityCategoryCodes.Add(criminalActivityCategoryCode);
-            this.OffenseFactorBiasMotivationCode = offenseFactorBiasMotivationCode;
-            this.OffenseStructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
-            this.OffenseFactor = offenseFactor;
-            this.OffenseEntryPoint = offenseEntryPoint;
-            this.OffenseForces.Add(offenseForce);
-            this.OffenseAttemptedIndicator = offenseAttemptedIndicator.ToString().ToLower();
+            this.CriminalActivityCategoryCodes = criminalActivityCategoryCodes;
+            this.FactorBiasMotivationCodes = offenseFactorBiasMotivationCodes;
+            this.StructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();
+            this.Factors = offenseFactors;
+            this.EntryPoint = offenseEntryPoint;
+            this.Forces = offenseForces;
+            this.AttemptedIndicator = offenseAttemptedIndicator.ToString().ToLower();
         }
     }
 }

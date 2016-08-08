@@ -34,7 +34,7 @@ namespace NibrsXml.NibrsReport.Location
             this.LocationRef = locationRef;
         }
 
-        public Location(int id, string categoryCode)
+        public Location(string categoryCode, int id)
         {
             this.Id = "Location" + id.ToString();
             this.CategoryCode = categoryCode;

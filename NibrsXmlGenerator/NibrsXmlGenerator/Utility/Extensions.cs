@@ -24,6 +24,17 @@ namespace NibrsXml.Utility
             }
         }
 
+        public static void UniqueAdd<T>(this List<T> list, params T[] items)
+        {
+            foreach (T item in items)
+            {
+                if (!list.Contains(item))
+                {
+                    list.TryAdd(item);
+                }
+            }
+        }
+
         public static T TryBuild<T>(this String input)
         {
             if (input.Trim() != String.Empty)
@@ -36,6 +47,16 @@ namespace NibrsXml.Utility
             if (input.Trim() != String.Empty)
                 return (T)Activator.CreateInstance(typeof(T), input, args);
             return default(T);
+        }
+
+        public static string NibrsCode(this Enum e)
+        {
+            return NibrsCodeAttribute.GetDescription(e);
+        }
+
+        public static string NibrsCodeDescription(this Enum e)
+        {
+            return CodeDescriptionAttribute.GetDescription(e);
         }
     }
 }

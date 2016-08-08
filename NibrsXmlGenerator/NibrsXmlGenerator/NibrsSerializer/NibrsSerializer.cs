@@ -30,7 +30,7 @@ namespace NibrsXml.NibrsSerializer
     sealed internal class NibrsSerializer : XmlSerializer
     {
         /// <summary>
-        /// This class allows the serializer to write in UTF-8
+        /// This class allows the serializer to write in UTF-8 formatting
         /// </summary>
         private class Utf8StringWriter : StringWriter
         {
@@ -90,6 +90,7 @@ namespace NibrsXml.NibrsSerializer
 
         public NibrsSerializer(Type type) : base(type, nonRootTypes)
         {
+            // Constrain the argument to be either of type Submission or Report
             if (type != typeof(Submission) && type != typeof(Report))
                 throw new ArgumentException(
                     "There was an error constructing the NibrsSerializer object." +
@@ -102,8 +103,7 @@ namespace NibrsXml.NibrsSerializer
         /// <param name="serializee">The Submission or Report object to serialize</param>
         /// <returns>An XML representation of the argument object using NIBRS XML schema definitions</returns>
         public string Serialize(NibrsSerializable serializee)
-        {
-            // Initialize the XML string to be returned and the 
+        { 
             string xml = "";
             using (StringWriter xmlWriter = new Utf8StringWriter())
             {
@@ -134,22 +134,22 @@ namespace NibrsXml.NibrsSerializer
                                 "A",
                                 new IncidentExceptionalClearanceDate("2016-02-25")));
 
-            Offense offense1 =
-                new Offense(
-                    1,
-                    "64A",
-                    "N",
-                    "NONE",
-                    1,
-                    new OffenseFactor("N"),
-                    new OffenseEntryPoint("F"),
-                    new OffenseForce("11A"),
-                    false);
+            //Offense offense1 =
+            //    new Offense(
+            //        1,
+            //        "64A",
+            //        "N",
+            //        "NONE",
+            //        1,
+            //        new OffenseFactor("N"),
+            //        new OffenseEntryPoint("F"),
+            //        new OffenseForce("11A"),
+            //        false);
 
             Location location1 =
                 new Location(
-                   1,
-                   "13");
+                   "13",
+                   1);
 
             EnforcementOfficial officer =
                 new EnforcementOfficial(
@@ -227,7 +227,7 @@ namespace NibrsXml.NibrsSerializer
                     "N");
             
             Report report = new Report(reportHeader, incident);
-            report.AddOffenses(offense1);
+            //report.AddOffenses(offense1);
             report.AddLocations(location1);
             report.AddItems(
                 new Item(
@@ -250,10 +250,10 @@ namespace NibrsXml.NibrsSerializer
             report.AddArrestees(arrestee1);
             report.AddArrests(arrest1);
             report.AddArrestSubjectAssociations(new ArrestSubjectAssociation(arrest1, arrestee1));
-            report.AddOffenseLocationAssociations(new OffenseLocationAssociation(offense1, location1));
-            report.AddOffenseVictimAssociations(
-                new OffenseVictimAssociation(offense1, victim1),
-                new OffenseVictimAssociation(offense1, victim2));
+            //report.AddOffenseLocationAssociations(new OffenseLocationAssociation(offense1, location1));
+            //report.AddOffenseVictimAssociations(
+            //    new OffenseVictimAssociation(offense1, victim1),
+            //    new OffenseVictimAssociation(offense1, victim2));
             report.AddSubjectVictimAssociations(
                 new SubjectVictimAssociation(1, subject1, victim1, "Acquaintance"),
                 new SubjectVictimAssociation(2, subject1, victim2, "Stranger"));
