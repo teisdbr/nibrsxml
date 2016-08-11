@@ -38,7 +38,9 @@ namespace NibrsXml.NibrsReport.Misc
         { 
             get 
             { 
-                return _date;
+                if (_date != null)
+                    return _date;
+                return _dateTime.Substring(0, _dateTime.IndexOf("T"));
             }
             set 
             { 
@@ -48,7 +50,7 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
-        public string Time { get { return DateTime.Substring(DateTime.IndexOf("T") + 1); } }
+        public string Time { get { return _dateTime.Substring(_dateTime.IndexOf("T") + 1); } }
 
         public ActivityDate() { }
 

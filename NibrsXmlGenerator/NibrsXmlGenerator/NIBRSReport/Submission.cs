@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsSerializer;
+using System.IO;
+using System.Xml;
 
 namespace NibrsXml.NibrsReport
 {
@@ -37,6 +39,28 @@ namespace NibrsXml.NibrsReport
             {
                 this.Reports.Add(r);
             }
+        }
+
+        public static Submission Deserialize(string filepath)
+        {
+            // Retrieve the XML file
+            FileStream xmlFile = new FileStream(filepath, FileMode.Open);
+            XmlReader xmlReader = XmlReader.Create(xmlFile);
+
+            // Deserialize the XML file
+            Submission sub;
+            try
+            {
+                sub = (Submission)serializer.Deserialize(xmlReader);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There was an error deserializing a submission.", e);
+            }
+
+            // Close the file and return
+            xmlFile.Close();
+            return sub;
         }
     }
 }
