@@ -21,6 +21,8 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
         public string Value { get; set; }
 
+        public string RangeOrValue { get { return Value ?? Range.Min + "-" + Range.Max; } }
+
         public PersonAgeMeasure() { }
 
         public PersonAgeMeasure(int value)
