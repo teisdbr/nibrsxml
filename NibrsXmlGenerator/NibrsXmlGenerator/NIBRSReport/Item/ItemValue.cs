@@ -24,5 +24,13 @@ namespace NibrsXml.NibrsReport.Item
             this.ValueAmount = valueAmount;
             this.ValueDate = valueDate;
         }
+
+        public ItemValue(String itemValueAmount, String itemValueDate)
+        {
+            this.ValueAmount = new ItemValueAmount(itemValueAmount);
+            
+            if (itemValueDate != null)
+                this.ValueDate = new ItemValueDate(itemValueDate);
+        }
     }
 }
