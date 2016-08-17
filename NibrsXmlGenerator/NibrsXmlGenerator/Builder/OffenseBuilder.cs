@@ -58,13 +58,13 @@ namespace NibrsXml.Builder
             { "99", BiasMotivationCode.UNKNOWN.NibrsCode() }
         };
 
-        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes)
+        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, String uniqueReportPrefix)
         {
             List<Offense> offenseReports = new List<Offense>();
             foreach (LIBRSOffense offense in offenses)
             {
                 Offense offenseReport = new Offense();
-                offenseReport.Id = ExtractOffenseId(offense.OffenseSeqNum);
+                offenseReport.Id = ExtractOffenseId(uniqueReportPrefix: uniqueReportPrefix, offenseSeqNum: offense.OffenseSeqNum);
                 offenseReport.UcrCode = ExtractNibrsCode(offense);
                 offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
@@ -73,14 +73,15 @@ namespace NibrsXml.Builder
                 offenseReport.EntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offense);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
+                offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
                 offenseReports.Add(offenseReport);
             }
             return offenseReports;
         }
 
-        private static string ExtractOffenseId(string offenseSeqNum)
+        private static string ExtractOffenseId(String uniqueReportPrefix, string offenseSeqNum)
         {
-            return "Offense" + offenseSeqNum.Trim().TrimStart('0');
+            return uniqueReportPrefix + "Offense" + offenseSeqNum.Trim().TrimStart('0');
         }
 
         private static string ExtractNibrsCode(LIBRSOffense offense)

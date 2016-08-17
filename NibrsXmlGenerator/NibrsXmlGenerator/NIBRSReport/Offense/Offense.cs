@@ -48,6 +48,9 @@ namespace NibrsXml.NibrsReport.Offense
         [XmlIgnore]
         public Offense Reference { get { return new Offense(this.Id); } }
 
+        [XmlIgnore]
+        public Location.Location Location { get; set; }
+
         public Offense() { }
 
         public Offense(string offenseId)

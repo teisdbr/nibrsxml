@@ -118,21 +118,21 @@ namespace NibrsXml.NibrsSerializer
 
         static void Main(string[] args)
         {
-            ReportHeader reportHeader = new ReportHeader(
-                            "GROUP A INCIDENT REPORT",
-                            "I",
-                            new ReportDate("2016-02"),
-                            new ReportingAgency(
-                                new OrganizationAugmentation(
-                                    new OrganizationORIIdentification("WVNDX01"))));
+            //ReportHeader reportHeader = new ReportHeader(
+            //                "GROUP A INCIDENT REPORT",
+            //                "I",
+            //                new ReportDate("2016-02"),
+            //                new ReportingAgency(
+            //                    new OrganizationAugmentation(
+            //                        new OrganizationORIIdentification("WVNDX01"))));
             
-            Incident incident = new Incident(
-                            new ActivityIdentification("54236732"),
-                            new ActivityDate("2016-02-19", "10:00:00"),
-                            new CjisIncidentAugmentation(false, true),
-                            new JxdmIncidentAugmentation(
-                                "A",
-                                new IncidentExceptionalClearanceDate("2016-02-25")));
+            //Incident incident = new Incident(
+            //                new ActivityIdentification("54236732"),
+            //                new ActivityDate("2016-02-19", "10:00:00"),
+            //                new CjisIncidentAugmentation(false, true),
+            //                new JxdmIncidentAugmentation(
+            //                    "A",
+            //                    new IncidentExceptionalClearanceDate("2016-02-25")));
 
             //Offense offense1 =
             //    new Offense(
@@ -146,123 +146,123 @@ namespace NibrsXml.NibrsSerializer
             //        new OffenseForce("11A"),
             //        false);
 
-            Location location1 =
-                new Location(
-                   "13",
-                   1);
+            //Location location1 =
+            //    new Location(
+            //       "13",
+            //       1);
 
-            EnforcementOfficial officer =
-                new EnforcementOfficial(
-                    new Person(
-                        new PersonAgeMeasure(32),
-                        "N",
-                        new PersonInjury("N"),
-                        "B",
-                        "R",
-                        "M",
-                        null),
-                    1,
-                    "10",
-                    "G",
-                    new EnforcementOfficialUnit(
-                        new OrganizationAugmentation(
-                            new OrganizationORIIdentification("WVNDX01"))));
+            //EnforcementOfficial officer =
+            //    new EnforcementOfficial(
+            //        new Person(
+            //            new PersonAgeMeasure(32),
+            //            "N",
+            //            new PersonInjury("N"),
+            //            "B",
+            //            "R",
+            //            "M",
+            //            null),
+            //        1,
+            //        "10",
+            //        "G",
+            //        new EnforcementOfficialUnit(
+            //            new OrganizationAugmentation(
+            //                new OrganizationORIIdentification("WVNDX01"))));
 
-            Victim 
-                victim1 =
-                    new Victim(
-                        officer,
-                        "L",
-                        "01",
-                        "C"),
-                victim2 =
-                    new Victim(
-                        new Person(
-                            null,
-                            "U",
-                            new PersonInjury("N"),
-                            "W",
-                            "R",
-                            "M",
-                            new PersonAugmentation("BB")),
-                        2,
-                        "I",
-                        "10",
-                        "G");
+            //Victim 
+            //    victim1 =
+            //        new Victim(
+            //            officer,
+            //            "L",
+            //            "01",
+            //            "C"),
+            //    victim2 =
+            //        new Victim(
+            //            new Person(
+            //                null,
+            //                "U",
+            //                new PersonInjury("N"),
+            //                "W",
+            //                "R",
+            //                "M",
+            //                new PersonAugmentation("BB")),
+            //            2,
+            //            "I",
+            //            "10",
+            //            "G");
             
-            Subject subject1 =
-                new Subject(
-                    new Person(
-                        new PersonAgeMeasure(30, 25),
-                        "N",
-                        null,
-                        "W",
-                        null,
-                        "F",
-                        null),
-                    1);
+            //Subject subject1 =
+            //    new Subject(
+            //        new Person(
+            //            new PersonAgeMeasure(30, 25),
+            //            "N",
+            //            null,
+            //            "W",
+            //            null,
+            //            "F",
+            //            null),
+            //        1);
 
-            Arrestee arrestee1 =
-                new Arrestee(
-                    new Person(
-                        new PersonAgeMeasure(25),
-                        "N",
-                        null,
-                        "W",
-                        "R",
-                        "F",
-                        null),
-                    1,
-                    true,
-                    "12",
-                    "H");
+            //Arrestee arrestee1 =
+            //    new Arrestee(
+            //        new Person(
+            //            new PersonAgeMeasure(25),
+            //            "N",
+            //            null,
+            //            "W",
+            //            "R",
+            //            "F",
+            //            null),
+            //        1,
+            //        true,
+            //        "12",
+            //        "H");
 
-            Arrest arrest1 =
-                new Arrest(
-                    1,
-                    new ActivityIdentification("12345"),
-                    new ActivityDate("2016-02-28"),
-                    new ArrestCharge("64A"),
-                    "O",
-                    "N");
+            //Arrest arrest1 =
+            //    new Arrest(
+            //        1,
+            //        new ActivityIdentification("12345"),
+            //        new ActivityDate("2016-02-28"),
+            //        new ArrestCharge("64A"),
+            //        "O",
+            //        "N");
             
-            Report report = new Report(reportHeader, incident);
-            //report.AddOffenses(offense1);
-            report.AddLocations(location1);
-            report.AddItems(
-                new Item(
-                    new ItemStatus("NONE"),
-                    new ItemValue(
-                        new ItemValueAmount(12000),
-                        new ItemValueDate("2016-02-24")),
-                    "01",
-                    1));
+            //Report report = new Report(reportHeader, incident);
+            ////report.AddOffenses(offense1);
+            //report.AddLocations(location1);
+            //report.AddItems(
+            //    new Item(
+            //        new ItemStatus("NONE"),
+            //        new ItemValue(
+            //            new ItemValueAmount(12000),
+            //            new ItemValueDate("2016-02-24")),
+            //        "01",
+            //        1));
 
-            report.AddSubstances(
-                new Substance(
-                    "X",
-                    new SubstanceQuantityMeasure(
-                        001.500,
-                        "XX")));
-            report.AddEnforcementOfficials(officer);
-            report.AddVictims(victim1, victim2);
-            report.AddSubjects(subject1);
-            report.AddArrestees(arrestee1);
-            report.AddArrests(arrest1);
-            report.AddArrestSubjectAssociations(new ArrestSubjectAssociation(arrest1, arrestee1));
-            //report.AddOffenseLocationAssociations(new OffenseLocationAssociation(offense1, location1));
-            //report.AddOffenseVictimAssociations(
-            //    new OffenseVictimAssociation(offense1, victim1),
-            //    new OffenseVictimAssociation(offense1, victim2));
-            report.AddSubjectVictimAssociations(
-                new SubjectVictimAssociation(1, subject1, victim1, "Acquaintance"),
-                new SubjectVictimAssociation(2, subject1, victim2, "Stranger"));
+            //report.AddSubstances(
+            //    new Substance(
+            //        "X",
+            //        new SubstanceQuantityMeasure(
+            //            001.500,
+            //            "XX")));
+            //report.AddEnforcementOfficials(officer);
+            //report.AddVictims(victim1, victim2);
+            //report.AddSubjects(subject1);
+            //report.AddArrestees(arrestee1);
+            //report.AddArrests(arrest1);
+            //report.AddArrestSubjectAssociations(new ArrestSubjectAssociation(arrest1, arrestee1));
+            ////report.AddOffenseLocationAssociations(new OffenseLocationAssociation(offense1, location1));
+            ////report.AddOffenseVictimAssociations(
+            ////    new OffenseVictimAssociation(offense1, victim1),
+            ////    new OffenseVictimAssociation(offense1, victim2));
+            //report.AddSubjectVictimAssociations(
+            //    new SubjectVictimAssociation(1, subject1, victim1, "Acquaintance"),
+            //    new SubjectVictimAssociation(2, subject1, victim2, "Stranger"));
 
-            Submission submission = new Submission(report);
-            string x = submission.Xml;
-            string y = report.Xml;
-            Console.WriteLine(x);
-            Console.ReadLine();
+            //Submission submission = new Submission(report);
+            //string x = submission.Xml;
+            //string y = report.Xml;
+            //Console.WriteLine(x);
+            //Console.ReadLine();
         }
     }
 }

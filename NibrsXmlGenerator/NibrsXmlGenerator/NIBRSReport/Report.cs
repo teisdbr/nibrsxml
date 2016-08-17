@@ -66,7 +66,13 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore]
         public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
 
-        public Report() { }
+        public Report() { 
+            //Initialize Locations
+            this.Locations = new List<Location.Location>();
+
+            //Initialize Location Associations
+            this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
+        }
 
         public Report(
             ReportHeader.ReportHeader header,
