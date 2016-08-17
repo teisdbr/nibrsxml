@@ -73,6 +73,7 @@ namespace NibrsXml.Builder
                 offenseReport.EntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offense);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
+                // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
                 offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
                 offenseReports.Add(offenseReport);
             }
@@ -86,7 +87,11 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsCode(LIBRSOffense offense)
         {
-            return LarsList.LarsDictionary[offense.LRSNumber].nibr;
+            if (offense.AgencyAssignedNibrs.Trim() != String.Empty)
+            {
+                return offense.AgencyAssignedNibrs;
+            }
+            return LarsList.LarsDictionary[offense.LRSNumber.Trim()].nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
@@ -106,9 +111,11 @@ namespace NibrsXml.Builder
 
         private static string TranslateCriminalActivityCategoryCode(string librsCriminalActivity)
         {
+            if (librsCriminalActivity.Trim() == String.Empty)
+                return null;
             if (librsCriminalActivity == LIBRSErrorConstants.OthCrim)
-                librsCriminalActivity = LIBRSErrorConstants.Posses;
-            return librsCriminalActivity.TryBuild<String>();
+                return LIBRSErrorConstants.Posses;
+            return librsCriminalActivity;
         }
 
         private static string ExtractNibrsBiasMotivationCode(LIBRSOffender offender)

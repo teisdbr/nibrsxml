@@ -4,19 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LoadBusinessLayer;
+using LoadBusinessLayer.LIBRSErrorConstants;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
+using LoadBusinessLayer.LIBRSProperty;
 using NibrsXml.NibrsReport;
+using NibrsXml.Constants;
 using NibrsXml.Utility;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.NibrsReport.Location;
 using NibrsXml.NibrsReport.Associations;
+using NibrsXml.NibrsReport.Item;
+using NibrsXml.NibrsReport.Substance;
+using LoadBusinessLayer.LIBRS;
 
 namespace NibrsXml.Builder
 {
     public class ReportBuilder
     {
+        private static string drugNarcoticLibrsPropDesc = "10";
+        
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
             Report rpt = new Report();
@@ -28,16 +36,21 @@ namespace NibrsXml.Builder
             rpt.Offenses = OffenseBuilder.Build(incident.Offense, UniqueBiasMotivationCodes(incident.Offender), UniqueSuspectedOfUsingCodes(incident.OffUsing), uniqueReportPrefix: uniqueReportPrefix);
             
             //Build list of locations and location associations
-            LocationListBuilder(offenses: rpt.Offenses, locations: rpt.Locations, locationAssociations: rpt.OffenseLocationAssocs, uniqueReportPrefix: uniqueReportPrefix);
-            //todo: ItemBuilder
-            //todo: SubstanceBuilder
+            LocationListBuilder(
+                offenses: rpt.Offenses,
+                locations: rpt.Locations,
+                locationAssociations: rpt.OffenseLocationAssocs,
+                uniqueReportPrefix: uniqueReportPrefix);
+            BuildItemsAndSubstances(
+                nibrsItems: rpt.Items,
+                nibrsSubstances: rpt.Substances,
+                librsProperties: incident.PropDesc);
             //todo: EnforcementOfficialBuilder
             //todo: VictimBuilder
             //todo: SubjectBuilder
             //todo: ArresteeBuilder
             //todo: ArrestBuilder
             //todo: ArrestSubjectAssociationBuilder
-            //todo: OffenseLocationAssociationBuilder
             //todo: OffenseVictimAssociationBuilder
             //todo: SubjectVictimAssociationBuilder
             return rpt;
@@ -85,6 +98,49 @@ namespace NibrsXml.Builder
                 offenseAssoc.OffenseRef = offense.Reference;
                 offenseAssoc.LocationRef = locations.Where(location => location.CategoryCode == offense.Location.CategoryCode).First().Reference;
                 locationAssociations.Add(offenseAssoc);
+            }
+        }
+
+        private static void BuildItemsAndSubstances(List<Item> nibrsItems, List<Substance> nibrsSubstances, List<LIBRSPropertyDescription> librsProperties)
+        {
+            foreach (LIBRSPropertyDescription prop in librsProperties)
+            {
+                if (prop.PropertyDescription == drugNarcoticLibrsPropDesc && prop.PropertyLossType == LIBRSErrorConstants.PLSeiz)
+                {
+                    // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
+                    String drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
+                    
+                    // Instantiate and add a new Substance object to the list of substances
+                    nibrsSubstances.Add(new Substance(
+                        drugCategoryCode: drugCatCode,
+                        measureDecimalValue: prop.EstimatedDrugQty,
+                        substanceUnitCode: prop.TypeDrugMeas));
+                }
+                else
+                {
+                    // Translate LIBRS Property Description to NIBRS ItemStatusCode
+                    string librsTypeOfPropertyLoss = prop.PropertyLossType.TrimStart('0');
+                    string nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
+
+                    if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode()) // todo: maybe UNKNOWN will need to ignore extra elements
+                    {
+                        nibrsItems.Add(new Item(
+                            statusCode: nibrsItemStatusCode,
+                            valueAmount: null,
+                            valueDate: null,
+                            nibrsPropCategCode: null,
+                            quantity: null));
+                        continue;
+                    }
+                    
+                    // Instantiate and add a new Item object to the list of items
+                    nibrsItems.Add(new Item(
+                        statusCode: nibrsItemStatusCode,
+                        valueAmount: prop.PropertyValue.Trim() == String.Empty ? null : prop.PropertyValue.Trim(),
+                        valueDate: prop.DateRecovered.Trim() == String.Empty ? null : prop.DateRecovered.ConvertToNibrsYearMonthDay(),
+                        nibrsPropCategCode: prop.PropertyDescription,
+                        quantity: null)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
+                }
             }
         }
     }

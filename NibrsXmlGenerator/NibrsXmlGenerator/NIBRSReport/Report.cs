@@ -72,6 +72,12 @@ namespace NibrsXml.NibrsReport
 
             //Initialize Location Associations
             this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
+
+            //Initialize Items
+            this.Items = new List<Item.Item>();
+            
+            //Initialize Substances
+            this.Substances = new List<Substance.Substance>();
         }
 
         public Report(
