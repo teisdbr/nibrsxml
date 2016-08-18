@@ -25,17 +25,17 @@ namespace NibrsXml.NibrsReport.Associations
 
         public SubjectVictimAssociation() { }
 
-        public SubjectVictimAssociation(int id, Subject.Subject subject, Victim.Victim victim, string relationshipCode)
+        public SubjectVictimAssociation(String uniquePrefix,String id, Subject.Subject subject, Victim.Victim victim, string relationshipCode)
         {
-            this.Id = "SubjectVictimAssocSP" + id.ToString();
+            this.Id = uniquePrefix + "SubjectVictimAssocSP" + id;
             this.SubjectRef = subject.Reference;
             this.VictimRef = victim.Reference;
             this.RelationshipCode = RelationshipCode;
         }
 
-        public SubjectVictimAssociation(int id, string subjectRef, string victimRef, string relationshipCode)
+        public SubjectVictimAssociation(String uniquePrefix, String id, string subjectRef, string victimRef, string relationshipCode)
         {
-            this.Id = "SubjectVictimAssocSP" + id.ToString();
+            this.Id = "SubjectVictimAssocSP" + id;
             this.SubjectRef = new Subject.Subject(subjectRef);
             this.VictimRef = new Victim.Victim(victimRef);
             this.RelationshipCode = relationshipCode;

@@ -79,9 +79,17 @@ namespace NibrsXml.NibrsReport
             //Initialize Substances
             this.Substances = new List<Substance.Substance>();
 
-            //Initialize Persons, Victims, etc.
+            //Initialize Persons, Victims, EnforcementOfficial, Subjects, Arrestees, Arrests, ArrestSubjectAssocs ,OffenseVictimAssocs, SubjectVictimAssocs
             this.Persons = new List<Person.Person>();
             this.Victims = new List<Victim.Victim>();
+            this.Officers = new List<EnforcementOfficial.EnforcementOfficial>();
+            this.Subjects = new List<Subject.Subject>();
+            this.Arrestees = new List<Arrestee.Arrestee>();
+            this.Arrests = new List<Arrest.Arrest>();
+            this.ArrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
+            this.OffenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
+            this.SubjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
+
         }
 
         public Report(

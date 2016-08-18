@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Person;
+using LoadBusinessLayer.LIBRSVictim;
 
 namespace NibrsXml.NibrsReport.Victim
 {
@@ -37,6 +38,9 @@ namespace NibrsXml.NibrsReport.Victim
 
         [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
         public string JustifiableHomicideFactorCode { get; set; }
+
+        [XmlIgnore]
+        public List<LIBRSVictimOffenderRelation> RelatedOffenders { get; set; }
 
         public Victim Reference { get { return new Victim(this.Person.Id); } }
 

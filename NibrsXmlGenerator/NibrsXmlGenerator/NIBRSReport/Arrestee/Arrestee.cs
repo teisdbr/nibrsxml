@@ -58,7 +58,7 @@ namespace NibrsXml.NibrsReport.Arrestee
             string juvenileDispositionCode)
         {
             this.Person = person;
-            this.Person.Id = "PersonArrestee" + seqId.ToString();
+            this.Person.Id += "PersonArrestee" + seqId.ToString();
             this.Id = "Arrestee" + seqId.ToString();
             this.Role = new RoleOfPerson(this.Person.Id);
             this.SeqId = seqId.ToString();

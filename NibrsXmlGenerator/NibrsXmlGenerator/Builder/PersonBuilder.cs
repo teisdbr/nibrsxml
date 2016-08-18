@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.NibrsReport.Person;
 using NibrsXml.NibrsReport.Victim;
+using NibrsXml.NibrsReport.Subject;
+using NibrsXml.NibrsReport.Arrestee;
+using NibrsXml.NibrsReport.Arrest;
+using NibrsXml.NibrsReport.Associations;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSVictim;
 using System.Text.RegularExpressions;
@@ -15,14 +19,14 @@ namespace NibrsXml.Builder
     class PersonBuilder
     {
 
-        public static void Build(List<Person> persons, List<Victim> victims, LIBRSIncident incident, String uniquePrefix)
+        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects, List<Arrestee> arrestees, List<Arrest> arrests, List<SubjectVictimAssociation> subjectVictimAssocs, LIBRSIncident incident, String uniquePrefix)
         {  
             //Collect all victims
             foreach (var victim in incident.Victim)
             {
                 //Get injury if applicable for current victim
                 var victimInjury = incident.VicInjury.Where(injury => injury.VictimSeqNum == victim.VictimSeqNum);
-                PersonInjury newInjury = null;
+                PersonInjury newInjury = null; 
 
                 //Only instantiate newInjury if one exists.
                 if (victimInjury.Count() > 0)
@@ -50,6 +54,9 @@ namespace NibrsXml.Builder
                         new Victim(newPerson, victim.VictimSeqNum, victim.VictimType, aggAssaults, victim.AdditionalHomicide.TrimNullIfEmpty());
 
 
+                    //Add related offenders for establishing relationships later on.
+                    newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
+
                     //Add each of the new objects above to their respective lists
                     persons.Add(newPerson);
                     victims.Add(newVictim);
@@ -61,6 +68,52 @@ namespace NibrsXml.Builder
                 else
                 {
 
+                }
+            }
+            //Collect all subjects (offenders)
+            foreach (var offender in incident.Offender)
+            {
+                //Create new person
+                var newPerson =
+                    new Person(
+                            id: uniquePrefix,
+                            ageMeasure: LibrsAgeMeasureParser(offender.Age),
+                            ethnicityCode: null,
+                            injury: null,   //Injury is not collected for offenders
+                            raceCode: offender.Race,
+                            residentCode: null,
+                            sexCode: offender.Sex,
+                            augmentation: null    //This person should never be a NB, BB, or NN.
+                        );
+
+                //Create new subject
+                var newSubject = new Subject(newPerson, offender.OffenderSeqNum);
+
+                //Add each of the new objects above to their respective lists
+                persons.Add(newPerson);
+                subjects.Add(newSubject);
+            }
+            //Match victims to subjects and create relationships
+            foreach (var victim in victims)
+            {
+                foreach (var relatedOffender in victim.RelatedOffenders) {
+                    //Find matching subjects
+                    var matchingSubjects = subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated);
+
+                    //Create relationships
+                    foreach (var subject in matchingSubjects)
+	                {
+                        //Create association
+		                var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
+                                                                                            uniquePrefix: uniquePrefix,
+                                                                                            id: (subjectVictimAssocs.Count() + 1).ToString(),
+                                                                                            subject: subject,
+                                                                                            victim: victim,
+                                                                                            relationshipCode: relatedOffender.VictimOffenderRelation);
+
+                        //Add Association to list
+                        subjectVictimAssocs.Add(subVicAssoc);
+	                }
                 }
             }
         }
