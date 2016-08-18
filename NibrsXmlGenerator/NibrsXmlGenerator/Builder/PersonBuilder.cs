@@ -70,9 +70,6 @@ namespace NibrsXml.Builder
                             assignmentCategoryCode: victim.OfficerAssignmentType.TrimNullIfEmpty(),
                             agencyOri: incident.Admin.ORINumber);
 
-                    //Add related offenders for establishing relationships later on.
-                    newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
-
                     //Add each of the new objects above to their respective lists
                         newVictim = new Victim(
                             officer: newOfficer,
@@ -88,6 +85,9 @@ namespace NibrsXml.Builder
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
                     }
+
+                    //Add related offenders for establishing relationships later on.
+                    newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
                     
                     //Add each of the new person objects above to their respective lists
                     persons.Add(newPerson);
@@ -130,7 +130,7 @@ namespace NibrsXml.Builder
                 subjects.Add(newSubject);
             }
             //Match victims to subjects and create relationships
-            foreach (var victim in victims)
+            foreach (var victim in victims.Where(victim => victim.CategoryCode == LIBRSErrorConstants.VTIndividual || victim.CategoryCode == LIBRSErrorConstants.VTLawEnfOfficer).ToList())
             {
                 foreach (var relatedOffender in victim.RelatedOffenders) {
                     //Find matching subjects

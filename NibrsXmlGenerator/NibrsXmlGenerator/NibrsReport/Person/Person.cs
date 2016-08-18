@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.Constants;
 using System.Xml.Serialization;
+using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Person
 {
@@ -77,11 +78,11 @@ namespace NibrsXml.NibrsReport.Person
         {
             this.Id = id;
             this.AgeMeasure = ageMeasure;
-            this.EthnicityCode = ethnicityCode;
+            this.EthnicityCode = ethnicityCode == null ? null : ethnicityCode.TrimNullIfEmpty();
             this.Injury = injury;
-            this.RaceCode = raceCode;
-            this.ResidentCode = residentCode;
-            this.SexCode = sexCode;
+            this.RaceCode = raceCode == null ? null : raceCode.TrimNullIfEmpty();
+            this.ResidentCode = residentCode == null ? null : residentCode.TrimNullIfEmpty();
+            this.SexCode = sexCode == null ? null : sexCode.TrimNullIfEmpty();
             this.Augmentation = augmentation;
         }
     }
