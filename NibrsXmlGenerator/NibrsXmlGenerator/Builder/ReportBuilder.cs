@@ -11,13 +11,12 @@ using LoadBusinessLayer.LIBRSProperty;
 using NibrsXml.NibrsReport;
 using NibrsXml.Constants;
 using NibrsXml.Utility;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Offense;
 using NibrsXml.NibrsReport.Location;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.NibrsReport.Substance;
 using LoadBusinessLayer.LIBRS;
+using NibrsXml.NibrsReport.Offense;
 
 namespace NibrsXml.Builder
 {
@@ -45,6 +44,11 @@ namespace NibrsXml.Builder
                 nibrsItems: rpt.Items,
                 nibrsSubstances: rpt.Substances,
                 librsProperties: incident.PropDesc);
+            //todo: Populate Persons, Victims, etc.
+            PersonBuilder.Build(persons: rpt.Persons, victims: rpt.Victims, incident: incident);
+            
+            //todo: ItemBuilder
+            //todo: SubstanceBuilder
             //todo: EnforcementOfficialBuilder
             //todo: VictimBuilder
             //todo: SubjectBuilder

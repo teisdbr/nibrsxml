@@ -78,6 +78,10 @@ namespace NibrsXml.NibrsReport
             
             //Initialize Substances
             this.Substances = new List<Substance.Substance>();
+
+            //Initialize Persons, Victims, etc.
+            this.Persons = new List<Person.Person>();
+            this.Victims = new List<Victim.Victim>();
         }
 
         public Report(
