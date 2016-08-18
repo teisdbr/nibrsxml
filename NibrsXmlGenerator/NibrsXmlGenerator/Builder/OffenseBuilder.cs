@@ -68,7 +68,7 @@ namespace NibrsXml.Builder
                 offenseReport.UcrCode = ExtractNibrsCode(offense);
                 offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
-                offenseReport.StructuresEnteredQuantity = offense.Premises.TryBuild<String>();
+                offenseReport.StructuresEnteredQuantity = offense.Premises.TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
                 offenseReport.EntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offense);
@@ -137,7 +137,9 @@ namespace NibrsXml.Builder
             List<OffenseFactor> offenseFactors = new List<OffenseFactor>();
             foreach (string code in suspectedOfUsingCodes)
             {
-                offenseFactors.Add(code.TryBuild<OffenseFactor>());
+                //Exception: If LIBRS is G, should be translated to N
+                var translatedCode = code == "G" ? "N" : code;
+                offenseFactors.Add(translatedCode.TryBuild<OffenseFactor>());
             }
             return offenseFactors;
         }
@@ -146,9 +148,9 @@ namespace NibrsXml.Builder
         {
             List<OffenseForce> nibrsOffenseForces = new List<OffenseForce>();
             nibrsOffenseForces.TryAdd(
-                offense.WeaponForce1.TryBuild<OffenseForce>(),
-                offense.WeaponForce2.TryBuild<OffenseForce>(),
-                offense.WeaponForce3.TryBuild<OffenseForce>());
+                offense.WeaponForce1.Trim().TryBuild<OffenseForce>(),
+                offense.WeaponForce2.Trim().TryBuild<OffenseForce>(),
+                offense.WeaponForce3.Trim().TryBuild<OffenseForce>());
             return nibrsOffenseForces;
         }
 

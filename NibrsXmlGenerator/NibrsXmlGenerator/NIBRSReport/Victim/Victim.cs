@@ -58,7 +58,7 @@ namespace NibrsXml.NibrsReport.Victim
             //Initialize required properties
             
             this.Person = person;
-            this.Person.Id = "PersonVictim" + seqNum;
+            this.Person.Id += "PersonVictim" + seqNum;
             this.Role = new RoleOfPerson(this.Person.Id);
             this.SeqNum = seqNum.ToString();
             this.CategoryCode = categoryCode;

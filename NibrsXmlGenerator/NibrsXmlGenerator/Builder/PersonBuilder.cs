@@ -15,7 +15,7 @@ namespace NibrsXml.Builder
     class PersonBuilder
     {
 
-        public static void Build(List<Person> persons, List<Victim> victims, LIBRSIncident incident)
+        public static void Build(List<Person> persons, List<Victim> victims, LIBRSIncident incident, String uniquePrefix)
         {  
             //Collect all victims
             foreach (var victim in incident.Victim)
@@ -32,6 +32,7 @@ namespace NibrsXml.Builder
                 {
                     var newPerson =
                         new Person(
+                                uniquePrefix,
                                 LibrsAgeMeasureParser(victim.Age),
                                 victim.Ethnicity,
                                 newInjury,

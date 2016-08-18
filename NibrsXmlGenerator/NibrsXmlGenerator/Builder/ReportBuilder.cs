@@ -45,7 +45,11 @@ namespace NibrsXml.Builder
                 nibrsSubstances: rpt.Substances,
                 librsProperties: incident.PropDesc);
             //todo: Populate Persons, Victims, etc.
-            PersonBuilder.Build(persons: rpt.Persons, victims: rpt.Victims, incident: incident);
+            PersonBuilder.Build(
+                persons: rpt.Persons, 
+                victims: rpt.Victims, 
+                incident: incident, 
+                uniquePrefix: uniqueReportPrefix);
             
             //todo: ItemBuilder
             //todo: SubstanceBuilder
