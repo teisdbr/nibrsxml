@@ -75,6 +75,7 @@ namespace NibrsXml.Builder
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
                 // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
                 offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
+                offenseReport.librsVictimSequenceNumber = offense.OffConnecttoVic;
                 offenseReports.Add(offenseReport);
             }
             return offenseReports;
@@ -138,7 +139,7 @@ namespace NibrsXml.Builder
             foreach (string code in suspectedOfUsingCodes)
             {
                 //Exception: If LIBRS is G, should be translated to N
-                var translatedCode = code == "G" ? "N" : code;
+                var translatedCode = code == LIBRSErrorConstants.OffGaming ? LIBRSErrorConstants.OffNotApp : code;
                 offenseFactors.Add(translatedCode.TryBuild<OffenseFactor>());
             }
             return offenseFactors;

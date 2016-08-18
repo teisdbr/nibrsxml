@@ -51,6 +51,9 @@ namespace NibrsXml.NibrsReport.Offense
         [XmlIgnore]
         public Location.Location Location { get; set; }
 
+        [XmlIgnore]
+        public String librsVictimSequenceNumber { get; set; }
+
         public Offense() { }
 
         public Offense(string offenseId)

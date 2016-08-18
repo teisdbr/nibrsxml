@@ -12,6 +12,7 @@ using NibrsXml.NibrsReport;
 using NibrsXml.Constants;
 using NibrsXml.Utility;
 using NibrsXml.NibrsReport.Location;
+using NibrsXml.NibrsReport.Victim;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.NibrsReport.Substance;
@@ -26,13 +27,24 @@ namespace NibrsXml.Builder
         
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
+            //Initialize a new report
             Report rpt = new Report();
 
+            //Determine the unique report prefix to be used for all items that are to be identified within the report
             var uniqueReportPrefix = incident.Admin.ORINumber + "-" + incident.IncidentNumber + "-";
 
-            rpt.Header = ReportHeaderBuilder.Build(incident.Offense, incident.ActionType, incident.Admin);
-            rpt.Incident = IncidentBuilder.Build(incident.Admin);
-            rpt.Offenses = OffenseBuilder.Build(incident.Offense, UniqueBiasMotivationCodes(incident.Offender), UniqueSuspectedOfUsingCodes(incident.OffUsing), uniqueReportPrefix: uniqueReportPrefix);
+            //Build the report
+
+            rpt.Header = ReportHeaderBuilder.Build(
+                offenses: incident.Offense,
+                actionType: incident.ActionType,
+                admin: incident.Admin);
+            rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
+            rpt.Offenses = OffenseBuilder.Build(
+                offenses: incident.Offense,
+                uniqueBiasMotivationCodes: UniqueBiasMotivationCodes(incident.Offender),
+                uniqueSuspectedOfUsingCodes: UniqueSuspectedOfUsingCodes(incident.OffUsing),
+                uniqueReportPrefix: uniqueReportPrefix);
             
             //Build list of locations and location associations
             LocationListBuilder(
@@ -40,34 +52,35 @@ namespace NibrsXml.Builder
                 locations: rpt.Locations,
                 locationAssociations: rpt.OffenseLocationAssocs,
                 uniqueReportPrefix: uniqueReportPrefix);
+            
             BuildItemsAndSubstances(
                 nibrsItems: rpt.Items,
                 nibrsSubstances: rpt.Substances,
                 librsProperties: incident.PropDesc);
-            //todo: Populate Persons, Victims, etc.
+            
+            //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
             PersonBuilder.Build(
                 persons: rpt.Persons, 
                 victims: rpt.Victims,
+                officers: rpt.Officers,
                 subjects: rpt.Subjects,
                 arrestees: rpt.Arrestees,
                 arrests: rpt.Arrests,
                 subjectVictimAssocs: rpt.SubjectVictimAssocs,
                 incident: incident, 
                 uniquePrefix: uniqueReportPrefix);
-            
-            //todo: ItemBuilder
-            //todo: SubstanceBuilder
-            //todo: EnforcementOfficialBuilder
-            //todo: VictimBuilder
-            //todo: SubjectBuilder
             //todo: ArresteeBuilder
             //todo: ArrestBuilder
+
             //todo: ArrestSubjectAssociationBuilder
-            //todo: OffenseVictimAssociationBuilder
+            rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
+                offenses: rpt.Offenses,
+                victims: rpt.Victims);
             //todo: SubjectVictimAssociationBuilder
             return rpt;
         }
-        
+
+        #region Helper Functions
         private static List<String> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
             List<string> uniqueBiasMotivationCodes = new List<string>();
@@ -86,8 +99,10 @@ namespace NibrsXml.Builder
                 uniqueSuspectedofUsingCodes.UniqueAdd(offenderUsing.OffUsingGamingMot);
             }
             return uniqueSuspectedofUsingCodes;
-        }
+        } 
+        #endregion
 
+        #region Builder Functions
         /// <summary>
         /// This method initializes the list of Locations and the list of OffenseLocationAssociations
         /// </summary>
@@ -96,15 +111,16 @@ namespace NibrsXml.Builder
         /// <param name="locationAssociations">List of location associations to match to locations</param>
         private static void LocationListBuilder(List<Offense> offenses, List<Location> locations, List<OffenseLocationAssociation> locationAssociations, String uniqueReportPrefix)
         {
-            foreach (var offense in offenses) {
+            foreach (var offense in offenses)
+            {
                 //Modify and Use current offense Location Object
                 //Add to location list only if category code does not already exist.
                 if ((locations.Where(location => location.CategoryCode == offense.Location.CategoryCode)).Count() == 0)
                 {
-                    offense.Location.Id += "Location" + (locations.Count + 1).ToString(); 
+                    offense.Location.Id += "Location" + (locations.Count + 1).ToString();
                     locations.Add(offense.Location);
                 }
-                
+
                 //Create Offense Location Object
                 OffenseLocationAssociation offenseAssoc = new OffenseLocationAssociation();
                 offenseAssoc.OffenseRef = offense.Reference;
@@ -121,7 +137,7 @@ namespace NibrsXml.Builder
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
                     String drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
-                    
+
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCategoryCode: drugCatCode,
@@ -144,7 +160,7 @@ namespace NibrsXml.Builder
                             quantity: null));
                         continue;
                     }
-                    
+
                     // Instantiate and add a new Item object to the list of items
                     nibrsItems.Add(new Item(
                         statusCode: nibrsItemStatusCode,
@@ -155,5 +171,15 @@ namespace NibrsXml.Builder
                 }
             }
         }
+
+        private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims)
+        {
+            return offenses.Join(
+                inner: victims.Where(victim => victim.CategoryCode == LIBRSErrorConstants.VTIndividual || victim.CategoryCode == LIBRSErrorConstants.VTLawEnfOfficer),
+                outerKeySelector: offense => offense.librsVictimSequenceNumber,
+                innerKeySelector: victim => victim.SeqNum,
+                resultSelector: (offense, victim) => new OffenseVictimAssociation(offense, victim)).ToList();
+        }
+        #endregion
     }
 }

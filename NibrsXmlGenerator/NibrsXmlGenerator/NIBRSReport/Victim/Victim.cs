@@ -8,6 +8,7 @@ using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Person;
 using LoadBusinessLayer.LIBRSVictim;
+using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Victim
 {
@@ -60,10 +61,12 @@ namespace NibrsXml.NibrsReport.Victim
             string justifiableHomicideFactorCode)
         {
             //Initialize required properties
-            
-            this.Person = person;
-            this.Person.Id += "PersonVictim" + seqNum;
-            this.Role = new RoleOfPerson(this.Person.Id);
+            if (person != null)
+            {
+                this.Person = person;
+                this.Person.Id += "PersonVictim" + seqNum;
+                this.Role = new RoleOfPerson(this.Person.Id);
+            }
             this.SeqNum = seqNum.ToString();
             this.CategoryCode = categoryCode;
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
@@ -72,14 +75,13 @@ namespace NibrsXml.NibrsReport.Victim
 
         public Victim(
             EnforcementOfficial.EnforcementOfficial officer,
-            string categoryCode,
             List<String> aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode)
         {
             this.Person = officer.Person;
             this.Role = officer.Role;
             this.SeqNum = officer.VictimSeqNum.ToString();
-            this.CategoryCode = categoryCode;
+            this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }

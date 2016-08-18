@@ -8,9 +8,11 @@ using NibrsXml.NibrsReport.Victim;
 using NibrsXml.NibrsReport.Subject;
 using NibrsXml.NibrsReport.Arrestee;
 using NibrsXml.NibrsReport.Arrest;
+using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Associations;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSVictim;
+using LoadBusinessLayer.LIBRSErrorConstants;
 using System.Text.RegularExpressions;
 using NibrsXml.Utility;
 
@@ -19,11 +21,14 @@ namespace NibrsXml.Builder
     class PersonBuilder
     {
 
-        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects, List<Arrestee> arrestees, List<Arrest> arrests, List<SubjectVictimAssociation> subjectVictimAssocs, LIBRSIncident incident, String uniquePrefix)
+        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects, List<Arrestee> arrestees, List<Arrest> arrests, List<SubjectVictimAssociation> subjectVictimAssocs,List<EnforcementOfficial> officers, LIBRSIncident incident, String uniquePrefix)
         {  
             //Collect all victims
             foreach (var victim in incident.Victim)
             {
+                //Initialize victim variable to null
+                Victim newVictim = null;
+                
                 //Get injury if applicable for current victim
                 var victimInjury = incident.VicInjury.Where(injury => injury.VictimSeqNum == victim.VictimSeqNum);
                 PersonInjury newInjury = null; 
@@ -32,43 +37,74 @@ namespace NibrsXml.Builder
                 if (victimInjury.Count() > 0)
                     newInjury = new PersonInjury(victimInjury.First().InjuryType);
 
-                if (victim.VictimType == "I")
+                if (victim.VictimType == LIBRSErrorConstants.VTIndividual || victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
                 {
-                    var newPerson =
-                        new Person(
-                                uniquePrefix,
-                                LibrsAgeMeasureParser(victim.Age),
-                                victim.Ethnicity,
-                                newInjury,
-                                victim.Race,
-                                victim.ResidentStatus,
-                                victim.Sex,
-                                LibrsAgeCodeParser(victim.Age)
-                            );
+                    var newPerson = new Person(
+                        id: uniquePrefix, 
+                        ageMeasure: LibrsAgeMeasureParser(victim.Age),
+                        ethnicityCode: victim.Ethnicity,
+                        injury: newInjury,
+                        raceCode: victim.Race,
+                        residentCode: victim.ResidentStatus,
+                        sexCode: victim.Sex,
+                        augmentation: LibrsAgeCodeParser(victim.Age));
 
                     //First create the new list of aggravated assault homicide to use when creating the new victim
                     var aggAssaults = new List<String>();
-                    aggAssaults.TryAdd(victim.AggravatedAssault1.TrimNullIfEmpty(), victim.AggravatedAssault2.TrimNullIfEmpty(), victim.AggravatedAssault3.TrimNullIfEmpty());
+                    aggAssaults.TryAdd(
+                        victim.AggravatedAssault1.TrimNullIfEmpty(),
+                        victim.AggravatedAssault2.TrimNullIfEmpty(),
+                        victim.AggravatedAssault3.TrimNullIfEmpty());
 
-                    var newVictim =
-                        new Victim(newPerson, victim.VictimSeqNum, victim.VictimType, aggAssaults, victim.AdditionalHomicide.TrimNullIfEmpty());
+                    //Initialize officer variable to null
+                    EnforcementOfficial newOfficer = null;
 
+                    //Create a new EnforcementOfficial object if this person is an officer
+                    //Since Victim takes
+                    if (victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
+                    {
+                        newOfficer = new EnforcementOfficial(
+                            person: newPerson,
+                            victimSeqNum: victim.VictimSeqNum,
+                            activityCategoryCode: victim.OfficerActivityCircumstance.TrimNullIfEmpty(),
+                            assignmentCategoryCode: victim.OfficerAssignmentType.TrimNullIfEmpty(),
+                            agencyOri: incident.Admin.ORINumber);
 
                     //Add related offenders for establishing relationships later on.
                     newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
 
                     //Add each of the new objects above to their respective lists
+                        newVictim = new Victim(
+                            officer: newOfficer,
+                            aggravatedAssaultHomicideFactorCode: aggAssaults,
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide);
+                    }
+                    else
+                    {
+                        newVictim = new Victim(
+                            person: newPerson,
+                            seqNum: victim.VictimSeqNum,
+                            categoryCode: victim.VictimType,
+                            aggravatedAssaultHomicideFactorCode: aggAssaults,
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
+                    }
+                    
+                    //Add each of the new person objects above to their respective lists
                     persons.Add(newPerson);
-                    victims.Add(newVictim);
-                }
-                else if (victim.VictimType == "L")
-                {
-
+                    officers.TryAdd(newOfficer);
                 }
                 else
                 {
-
+                    newVictim = new Victim(
+                        person: null,
+                        seqNum: victim.VictimSeqNum,
+                        categoryCode: victim.VictimType,
+                        aggravatedAssaultHomicideFactorCode: null,
+                        justifiableHomicideFactorCode: null);
                 }
+
+                //Add the newly created victim to the report's victim list
+                victims.TryAdd(newVictim);
             }
             //Collect all subjects (offenders)
             foreach (var offender in incident.Offender)

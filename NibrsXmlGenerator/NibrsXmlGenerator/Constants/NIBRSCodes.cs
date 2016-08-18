@@ -2331,7 +2331,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("L")]
         [CodeDescription("Law Enforcement Officer")]
-        LAW_ENFORCEMENT_OFFICER_LEO,
+        LAW_ENFORCEMENT_OFFICER,
 
         /// <summary>
         /// Other
