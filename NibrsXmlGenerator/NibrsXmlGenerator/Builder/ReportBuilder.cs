@@ -69,7 +69,6 @@ namespace NibrsXml.Builder
                 officers: rpt.Officers,
                 subjects: rpt.Subjects,
                 arrestees: rpt.Arrestees,
-                arrests: rpt.Arrests,
                 subjectVictimAssocs: rpt.SubjectVictimAssocs,
                 incident: incident, 
                 uniquePrefix: uniqueReportPrefix);

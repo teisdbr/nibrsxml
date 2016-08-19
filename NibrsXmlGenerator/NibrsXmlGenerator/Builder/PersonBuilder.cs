@@ -10,9 +10,11 @@ using NibrsXml.NibrsReport.Arrestee;
 using NibrsXml.NibrsReport.Arrest;
 using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Associations;
+using NibrsXml.Constants;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSVictim;
 using LoadBusinessLayer.LIBRSErrorConstants;
+using LoadBusinessLayer.LIBRSArrestee;
 using System.Text.RegularExpressions;
 using NibrsXml.Utility;
 
@@ -21,17 +23,17 @@ namespace NibrsXml.Builder
     class PersonBuilder
     {
 
-        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects, List<Arrestee> arrestees, List<Arrest> arrests, List<SubjectVictimAssociation> subjectVictimAssocs,List<EnforcementOfficial> officers, LIBRSIncident incident, String uniquePrefix)
-        {  
-            //Collect all victims
+        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects, List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,List<EnforcementOfficial> officers, LIBRSIncident incident, String uniquePrefix)
+        {
+            #region Victims & EnforcementOfficials
             foreach (var victim in incident.Victim)
             {
                 //Initialize victim variable to null
                 Victim newVictim = null;
-                
+
                 //Get injury if applicable for current victim
                 var victimInjury = incident.VicInjury.Where(injury => injury.VictimSeqNum == victim.VictimSeqNum);
-                PersonInjury newInjury = null; 
+                PersonInjury newInjury = null;
 
                 //Only instantiate newInjury if one exists.
                 if (victimInjury.Count() > 0)
@@ -40,7 +42,7 @@ namespace NibrsXml.Builder
                 if (victim.VictimType == LIBRSErrorConstants.VTIndividual || victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
                 {
                     var newPerson = new Person(
-                        id: uniquePrefix, 
+                        id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(victim.Age),
                         ethnicityCode: victim.Ethnicity,
                         injury: newInjury,
@@ -70,7 +72,7 @@ namespace NibrsXml.Builder
                             assignmentCategoryCode: victim.OfficerAssignmentType.TrimNullIfEmpty(),
                             agencyOri: incident.Admin.ORINumber);
 
-                    //Add each of the new objects above to their respective lists
+                        //Add each of the new objects above to their respective lists
                         newVictim = new Victim(
                             officer: newOfficer,
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
@@ -88,7 +90,7 @@ namespace NibrsXml.Builder
 
                     //Add related offenders for establishing relationships later on.
                     newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
-                    
+
                     //Add each of the new person objects above to their respective lists
                     persons.Add(newPerson);
                     officers.TryAdd(newOfficer);
@@ -105,8 +107,10 @@ namespace NibrsXml.Builder
 
                 //Add the newly created victim to the report's victim list
                 victims.TryAdd(newVictim);
-            }
-            //Collect all subjects (offenders)
+            } 
+            #endregion
+
+            #region Subjects
             foreach (var offender in incident.Offender)
             {
                 //Create new person
@@ -129,18 +133,22 @@ namespace NibrsXml.Builder
                 persons.Add(newPerson);
                 subjects.Add(newSubject);
             }
+            #endregion
+
+            #region SubjectVictimAssociations
             //Match victims to subjects and create relationships
             foreach (var victim in victims.Where(victim => victim.CategoryCode == LIBRSErrorConstants.VTIndividual || victim.CategoryCode == LIBRSErrorConstants.VTLawEnfOfficer).ToList())
             {
-                foreach (var relatedOffender in victim.RelatedOffenders) {
+                foreach (var relatedOffender in victim.RelatedOffenders)
+                {
                     //Find matching subjects
                     var matchingSubjects = subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated);
 
                     //Create relationships
                     foreach (var subject in matchingSubjects)
-	                {
+                    {
                         //Create association
-		                var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
+                        var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
                                                                                             uniquePrefix: uniquePrefix,
                                                                                             id: (subjectVictimAssocs.Count() + 1).ToString(),
                                                                                             subject: subject,
@@ -149,9 +157,55 @@ namespace NibrsXml.Builder
 
                         //Add Association to list
                         subjectVictimAssocs.Add(subVicAssoc);
-	                }
+                    }
                 }
             }
+            #endregion
+
+            #region Arrestees
+            var nibrsArrestees = incident.Arrestee.Join(
+                inner: incident.ArrArm,
+                outerKeySelector: librsArrestee => librsArrestee.ArrestSeqNum,
+                innerKeySelector: librsArresteeArmed => librsArresteeArmed.ArrestSeqNum,
+                resultSelector: (librsArrestee, librsArresteeArmed) =>
+                    {
+                        //Translate juvenile disposition code
+                        var juvenileDispositionCode = librsArrestee.DispositionUnder17;
+                        switch (juvenileDispositionCode)
+                        {
+                            case LIBRSErrorConstants.DispDepartment:    juvenileDispositionCode = JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode(); break;
+                            case LIBRSErrorConstants.DispPoliceAgency:  juvenileDispositionCode = JuvenileDispositionCode.OTHER_AUTHORITIES.NibrsCode(); break;
+                            case LIBRSErrorConstants.DispAdultCourt:    juvenileDispositionCode = JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode(); break;
+                            case LIBRSErrorConstants.DispJuvenileCourt:
+                            case LIBRSErrorConstants.DispWelfareAgency: break;
+                            default:                                    juvenileDispositionCode = null; break;
+                        }
+
+                        return new Arrestee(
+                            person: new Person(
+                                id: uniquePrefix,
+                                ageMeasure: LibrsAgeMeasureParser(librsArrestee.Age),
+                                ethnicityCode: librsArrestee.Ethnicity,
+                                injury: null,
+                                raceCode: librsArrestee.Race,
+                                residentCode: librsArrestee.ResidentStatus,
+                                sexCode: librsArrestee.Sex,
+                                augmentation: LibrsAgeCodeParser(librsArrestee.Age)),
+                            seqId: librsArrestee.ArrestSeqNum,
+                            clearanceIndicator: //Translate LIBRS OtherExceptionalClearances to NIBRS NotApplicable; other clearance codes do not require translation
+                                librsArrestee.ClearanceIndicator == LIBRSErrorConstants.CEOther
+                                ? IncidentExceptionalClearanceCode.NOT_APPLICABLE.NibrsCode()
+                                : librsArrestee.ClearanceIndicator,
+                            //todo: ??? Does LIBRS Clearance Indicator of "O" translate to NIBRS of "N"?
+                            armedWithCode: librsArresteeArmed.ArrestArmedWith,
+                            juvenileDispositionCode: juvenileDispositionCode);
+                    }).ToList();
+            foreach (var arrestee in nibrsArrestees)
+            {
+                persons.Add(arrestee.Person);
+                arrestees.Add(arrestee);
+            }
+            #endregion
         }
 
         #region Helper Static Methods
