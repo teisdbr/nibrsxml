@@ -163,11 +163,8 @@ namespace NibrsXml.Builder
             #endregion
 
             #region Arrestees
-            var nibrsArrestees = incident.Arrestee.Join(
-                inner: incident.ArrArm,
-                outerKeySelector: librsArrestee => librsArrestee.ArrestSeqNum,
-                innerKeySelector: librsArresteeArmed => librsArresteeArmed.ArrestSeqNum,
-                resultSelector: (librsArrestee, librsArresteeArmed) =>
+            var nibrsArrestees = incident.Arrestee.Select(
+                librsArrestee => 
                     {
                         //Translate juvenile disposition code
                         var juvenileDispositionCode = librsArrestee.DispositionUnder17;
@@ -197,9 +194,13 @@ namespace NibrsXml.Builder
                                 ? IncidentExceptionalClearanceCode.NOT_APPLICABLE.NibrsCode()
                                 : librsArrestee.ClearanceIndicator,
                             //todo: ??? Does LIBRS Clearance Indicator of "O" translate to NIBRS of "N"?
-                            armedWithCode: librsArresteeArmed.ArrestArmedWith,
+                            armedWithCode: incident.ArrArm.Where(armm => armm.ArrestSeqNum == librsArrestee.ArrestSeqNum).Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty()).ToList(),
                             juvenileDispositionCode: juvenileDispositionCode);
-                    }).ToList();
+                    }).ToList(); 
+
+            //var removedDupArrestees = nibrsArrestees.GroupBy(
+            //    keySelector: arrtee => arrtee.Person.Id).Select(group => group.First()).ToList();
+
             foreach (var arrestee in nibrsArrestees)
             {
                 persons.Add(arrestee.Person);

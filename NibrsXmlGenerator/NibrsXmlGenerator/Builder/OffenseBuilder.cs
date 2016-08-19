@@ -47,8 +47,11 @@ namespace NibrsXml.Builder
             { "52", BiasMotivationCode.ANTIMENTAL_DISABILITY.NibrsCode() },
             { "61", BiasMotivationCode.ANTIMALE.NibrsCode() },
             { "62", BiasMotivationCode.ANTIFEMALE.NibrsCode() },
-            { "71", BiasMotivationCode.ANTITRANSGENDER.NibrsCode() },
-            { "72", BiasMotivationCode.ANTIGENDER_NONCONFORMING.NibrsCode() },
+            { "70", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "71", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "72", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "73", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "74", BiasMotivationCode.UNKNOWN.NibrsCode() },
             { "81", BiasMotivationCode.ANTIEASTERNORTHODOX.NibrsCode() },
             { "82", BiasMotivationCode.ANTIOTHER_CHRISTIAN.NibrsCode() },
             { "83", BiasMotivationCode.ANTIBUDDHIST.NibrsCode() },
@@ -120,7 +123,7 @@ namespace NibrsXml.Builder
         }
 
         private static string ExtractNibrsBiasMotivationCode(LIBRSOffender offender)
-        {
+        {    
             HashSet<String> librsOnlyBiasMotivationCodes = new HashSet<string>()
             {
                 "70",   //Age
@@ -129,8 +132,8 @@ namespace NibrsXml.Builder
                 "73",   //Gender
                 "74"    //Organizational Affiliation
             };
-            // 88 is the default bias code 
-            return librsOnlyBiasMotivationCodes.Contains(offender.BiasMotivation) ? "88" : offender.BiasMotivation;
+            // 99 is the default bias code 
+            return librsOnlyBiasMotivationCodes.Contains(offender.BiasMotivation) ? "99" : offender.BiasMotivation;
         }
 
         private static List<OffenseFactor> TranslateOffenseFactors(List<string> suspectedOfUsingCodes)

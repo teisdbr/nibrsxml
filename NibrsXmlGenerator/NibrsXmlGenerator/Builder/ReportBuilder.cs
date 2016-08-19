@@ -44,6 +44,7 @@ namespace NibrsXml.Builder
                 actionType: incident.ActionType,
                 admin: incident.Admin);
             rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
+
             rpt.Offenses = OffenseBuilder.Build(
                 offenses: incident.Offense,
                 uniqueBiasMotivationCodes: UniqueBiasMotivationCodes(incident.Offender),
@@ -72,18 +73,20 @@ namespace NibrsXml.Builder
                 subjectVictimAssocs: rpt.SubjectVictimAssocs,
                 incident: incident, 
                 uniquePrefix: uniqueReportPrefix);
-            //todo: ArresteeBuilder
-            //todo: ArrestBuilder
+
             ArrestBuilder(
                 arrests: rpt.Arrests,
                 incident: incident,
                 uniquePrefix: uniqueReportPrefix);
+
             rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
                 arrests: rpt.Arrests,
                 arrestees: rpt.Arrestees);
+
             rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
                 offenses: rpt.Offenses,
                 victims: rpt.Victims);
+            
             return rpt;
         }
 
@@ -157,7 +160,8 @@ namespace NibrsXml.Builder
                     string librsTypeOfPropertyLoss = prop.PropertyLossType.TrimStart('0');
                     string nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
-                    if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode()) // todo: maybe UNKNOWN will need to ignore extra elements
+                    // todo: ??? May need to also create the minimal Item within condition for when the Property Loss Type (ItemStatusCode) is Unknown (8) 
+                    if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode()) 
                     {
                         nibrsItems.Add(new Item(
                             statusCode: nibrsItemStatusCode,

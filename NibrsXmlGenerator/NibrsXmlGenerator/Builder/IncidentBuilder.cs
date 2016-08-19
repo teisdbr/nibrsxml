@@ -19,7 +19,7 @@ namespace NibrsXml.Builder
             Incident inc = new Incident();
             inc.ActivityId = new ActivityIdentification(admin.IncidentNumber);
             inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
-            //todo: Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
+            //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
             inc.CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false); // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
             inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin), new IncidentExceptionalClearanceDate(ExtractNibrsClearanceDate(admin)));
             return inc;
