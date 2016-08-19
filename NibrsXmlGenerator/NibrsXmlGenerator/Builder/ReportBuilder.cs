@@ -18,6 +18,10 @@ using NibrsXml.NibrsReport.Item;
 using NibrsXml.NibrsReport.Substance;
 using LoadBusinessLayer.LIBRS;
 using NibrsXml.NibrsReport.Offense;
+using NibrsXml.NibrsReport.Arrest;
+using LoadBusinessLayer.LIBRSArrestee;
+using NibrsXml.NibrsReport.Misc;
+using NibrsXml.NibrsReport.Arrestee;
 
 namespace NibrsXml.Builder
 {
@@ -71,12 +75,16 @@ namespace NibrsXml.Builder
                 uniquePrefix: uniqueReportPrefix);
             //todo: ArresteeBuilder
             //todo: ArrestBuilder
-
-            //todo: ArrestSubjectAssociationBuilder
+            ArrestBuilder(
+                arrests: rpt.Arrests,
+                incident: incident,
+                uniquePrefix: uniqueReportPrefix);
+            rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
+                arrests: rpt.Arrests,
+                arrestees: rpt.Arrestees);
             rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
                 offenses: rpt.Offenses,
                 victims: rpt.Victims);
-            //todo: SubjectVictimAssociationBuilder
             return rpt;
         }
 
@@ -172,6 +180,49 @@ namespace NibrsXml.Builder
             }
         }
 
+        private static void ArrestBuilder(List<Arrest> arrests, LIBRSIncident incident, String uniquePrefix)
+        {
+
+            var arrestList =
+                incident.Arrestee.Join(
+                    inner: incident.ArrStatute,
+                    outerKeySelector: arrest => arrest.ArrestSeqNum,
+                    innerKeySelector: arrlrs => arrlrs.ArrestSeqNum,
+                    resultSelector: (arrest, lrs) => new
+                    {
+                        TransactionNumber = arrest.ArrTransactionNumber,
+                        ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
+                        Charge = lrs.AgencyAssignedNibrs,
+                        CategoryCode = arrest.ArrestType,
+                        ArrestCount = arrest.MultipleArresteeIndicator,
+                        SeqNum = arrest.ArrestSeqNum,
+                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LRSNumber.Trim()].lrank)
+                    }
+                ).ToList();
+
+            var groupedArrests = arrestList.GroupBy(arr => arr.SeqNum,
+                                                    arr => arr,
+                                                    (seq, arrList) => { 
+                                                        var minRank = arrList.Min(arr => arr.Rank);
+                                                        var arrest = arrList.Where(arr => arr.Rank == minRank).First();
+                                                        return
+                                                        new Arrest(
+                                                            uniquePrefix: uniquePrefix,
+                                                            arrestId: arrest.SeqNum,
+                                                            activityId: arrest.TransactionNumber.TrimNullIfEmpty() != null ? new NibrsReport.Misc.ActivityIdentification() : null,
+                                                            date: new ActivityDate(arrest.ActivityDate),
+                                                            charge: new ArrestCharge(arrest.Charge),
+                                                            categoryCode: arrest.CategoryCode,
+                                                            subjectCountCode: arrest.ArrestCount
+                                                            );
+                                                    }).ToList();
+
+            foreach (var arr in groupedArrests)
+            {
+                arrests.Add(arr);
+            }            
+        }
+
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims)
         {
             return offenses.Join(
@@ -179,6 +230,15 @@ namespace NibrsXml.Builder
                 outerKeySelector: offense => offense.librsVictimSequenceNumber,
                 innerKeySelector: victim => victim.SeqNum,
                 resultSelector: (offense, victim) => new OffenseVictimAssociation(offense, victim)).ToList();
+        }
+
+        private static List<ArrestSubjectAssociation> BuildArrestSubjectAssociation(List<Arrest> arrests, List<Arrestee> arrestees)
+        {
+            return arrests.Join(
+                inner: arrestees,
+                outerKeySelector: (Arrest arrest) => arrest.SequenceNumber,
+                innerKeySelector: (Arrestee arrestee) => arrestee.SeqId,
+                resultSelector: (arrest, arrestee) => new ArrestSubjectAssociation(arrest,arrestee)).ToList();
         }
         #endregion
     }
