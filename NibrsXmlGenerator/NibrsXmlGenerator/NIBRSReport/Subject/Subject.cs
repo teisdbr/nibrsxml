@@ -41,12 +41,12 @@ namespace NibrsXml.NibrsReport.Subject
 
         public Subject(
             Person.Person person,
-            int seqNum)
+            String seqNum)
         {
             this.Person = person;
-            this.Person.Id = "PersonSubject" + seqNum.ToString();
+            this.Person.Id += "PersonSubject" + seqNum;
             this.Role = new RoleOfPerson(this.Person.Id);
-            this.SeqNum = seqNum.ToString();
+            this.SeqNum = seqNum;
         }
     }
 }

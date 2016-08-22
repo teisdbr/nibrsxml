@@ -72,7 +72,31 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore]
         public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
 
-        public Report() { }
+        public Report() { 
+            //Initialize Locations
+            this.Locations = new List<Location.Location>();
+
+            //Initialize Location Associations
+            this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
+
+            //Initialize Items
+            this.Items = new List<Item.Item>();
+            
+            //Initialize Substances
+            this.Substances = new List<Substance.Substance>();
+
+            //Initialize Persons, Victims, EnforcementOfficial, Subjects, Arrestees, Arrests, ArrestSubjectAssocs ,OffenseVictimAssocs, SubjectVictimAssocs
+            this.Persons = new List<Person.Person>();
+            this.Victims = new List<Victim.Victim>();
+            this.Officers = new List<EnforcementOfficial.EnforcementOfficial>();
+            this.Subjects = new List<Subject.Subject>();
+            this.Arrestees = new List<Arrestee.Arrestee>();
+            this.Arrests = new List<Arrest.Arrest>();
+            this.ArrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
+            this.OffenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
+            this.SubjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
+
+        }
 
         public Report(
             ReportHeader.ReportHeader header,

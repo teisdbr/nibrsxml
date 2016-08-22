@@ -47,8 +47,11 @@ namespace NibrsXml.Builder
             { "52", BiasMotivationCode.ANTIMENTAL_DISABILITY.NibrsCode() },
             { "61", BiasMotivationCode.ANTIMALE.NibrsCode() },
             { "62", BiasMotivationCode.ANTIFEMALE.NibrsCode() },
-            { "71", BiasMotivationCode.ANTITRANSGENDER.NibrsCode() },
-            { "72", BiasMotivationCode.ANTIGENDER_NONCONFORMING.NibrsCode() },
+            { "70", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "71", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "72", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "73", BiasMotivationCode.UNKNOWN.NibrsCode() },
+            { "74", BiasMotivationCode.UNKNOWN.NibrsCode() },
             { "81", BiasMotivationCode.ANTIEASTERNORTHODOX.NibrsCode() },
             { "82", BiasMotivationCode.ANTIOTHER_CHRISTIAN.NibrsCode() },
             { "83", BiasMotivationCode.ANTIBUDDHIST.NibrsCode() },
@@ -58,34 +61,41 @@ namespace NibrsXml.Builder
             { "99", BiasMotivationCode.UNKNOWN.NibrsCode() }
         };
 
-        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes)
+        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, String uniqueReportPrefix)
         {
             List<Offense> offenseReports = new List<Offense>();
             foreach (LIBRSOffense offense in offenses)
             {
                 Offense offenseReport = new Offense();
-                offenseReport.Id = ExtractOffenseId(offense.OffenseSeqNum);
+                offenseReport.Id = ExtractOffenseId(uniqueReportPrefix: uniqueReportPrefix, offenseSeqNum: offense.OffenseSeqNum);
                 offenseReport.UcrCode = ExtractNibrsCode(offense);
                 offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
-                offenseReport.StructuresEnteredQuantity = offense.Premises.TryBuild<String>();
+                offenseReport.StructuresEnteredQuantity = offense.Premises.TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
                 offenseReport.EntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offense);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
+                // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
+                offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
+                offenseReport.librsVictimSequenceNumber = offense.OffConnecttoVic;
                 offenseReports.Add(offenseReport);
             }
             return offenseReports;
         }
 
-        private static string ExtractOffenseId(string offenseSeqNum)
+        private static string ExtractOffenseId(String uniqueReportPrefix, string offenseSeqNum)
         {
-            return "Offense" + offenseSeqNum.Trim().TrimStart('0');
+            return uniqueReportPrefix + "Offense" + offenseSeqNum.Trim().TrimStart('0');
         }
 
         private static string ExtractNibrsCode(LIBRSOffense offense)
         {
-            return LarsList.LarsDictionary[offense.LRSNumber].nibr;
+            if (offense.AgencyAssignedNibrs.Trim() != String.Empty)
+            {
+                return offense.AgencyAssignedNibrs;
+            }
+            return LarsList.LarsDictionary[offense.LRSNumber.Trim()].nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
@@ -105,13 +115,15 @@ namespace NibrsXml.Builder
 
         private static string TranslateCriminalActivityCategoryCode(string librsCriminalActivity)
         {
+            if (librsCriminalActivity.Trim() == String.Empty)
+                return null;
             if (librsCriminalActivity == LIBRSErrorConstants.OthCrim)
-                librsCriminalActivity = LIBRSErrorConstants.Posses;
-            return librsCriminalActivity.TryBuild<String>();
+                return LIBRSErrorConstants.Posses;
+            return librsCriminalActivity;
         }
 
         private static string ExtractNibrsBiasMotivationCode(LIBRSOffender offender)
-        {
+        {    
             HashSet<String> librsOnlyBiasMotivationCodes = new HashSet<string>()
             {
                 "70",   //Age
@@ -120,8 +132,8 @@ namespace NibrsXml.Builder
                 "73",   //Gender
                 "74"    //Organizational Affiliation
             };
-            // 88 is the default bias code 
-            return librsOnlyBiasMotivationCodes.Contains(offender.BiasMotivation) ? "88" : offender.BiasMotivation;
+            // 99 is the default bias code 
+            return librsOnlyBiasMotivationCodes.Contains(offender.BiasMotivation) ? "99" : offender.BiasMotivation;
         }
 
         private static List<OffenseFactor> TranslateOffenseFactors(List<string> suspectedOfUsingCodes)
@@ -129,7 +141,9 @@ namespace NibrsXml.Builder
             List<OffenseFactor> offenseFactors = new List<OffenseFactor>();
             foreach (string code in suspectedOfUsingCodes)
             {
-                offenseFactors.Add(code.TryBuild<OffenseFactor>());
+                //Exception: If LIBRS is G, should be translated to N
+                var translatedCode = code == LIBRSErrorConstants.OffGaming ? LIBRSErrorConstants.OffNotApp : code;
+                offenseFactors.Add(translatedCode.TryBuild<OffenseFactor>());
             }
             return offenseFactors;
         }
@@ -138,9 +152,9 @@ namespace NibrsXml.Builder
         {
             List<OffenseForce> nibrsOffenseForces = new List<OffenseForce>();
             nibrsOffenseForces.TryAdd(
-                offense.WeaponForce1.TryBuild<OffenseForce>(),
-                offense.WeaponForce2.TryBuild<OffenseForce>(),
-                offense.WeaponForce3.TryBuild<OffenseForce>());
+                offense.WeaponForce1.Trim().TryBuild<OffenseForce>(),
+                offense.WeaponForce2.Trim().TryBuild<OffenseForce>(),
+                offense.WeaponForce3.Trim().TryBuild<OffenseForce>());
             return nibrsOffenseForces;
         }
 

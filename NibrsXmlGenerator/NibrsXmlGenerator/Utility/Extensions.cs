@@ -8,7 +8,7 @@ namespace NibrsXml.Utility
 {
     public static class Extensions
     {
-        // Dictionary Extensions
+        #region Dictionary Extensions
         public static Dictionary<string, int> TryAdd(this Dictionary<string, Dictionary<string, int>> dictionary, string key)
         {
             if (!dictionary.ContainsKey(key))
@@ -28,19 +28,8 @@ namespace NibrsXml.Utility
                 dictionary.Add(key, 1);
             }
         }
-        
-        // Enum Extensions
-        public static string NibrsCode(this Enum e)
-        {
-            return NibrsCodeAttribute.GetDescription(e);
-        }
-
-        public static string NibrsCodeDescription(this Enum e)
-        {
-            return CodeDescriptionAttribute.GetDescription(e);
-        }
-
-        // List extensions
+        #endregion
+        #region List Extensions
         public static void TryAdd<T>(this List<T> list, T item)
         {
             if (item != null)
@@ -66,6 +55,13 @@ namespace NibrsXml.Utility
                     list.TryAdd(item);
                 }
             }
+        } 
+        #endregion
+
+        #region String Extensions
+        public static string TrimNullIfEmpty(this String input)
+        {
+            return input.Trim() == String.Empty ? null : input.Trim();
         }
 
         // String Extensions
@@ -81,6 +77,19 @@ namespace NibrsXml.Utility
             if (input.Trim() != String.Empty)
                 return (T)Activator.CreateInstance(typeof(T), input, args);
             return default(T);
+        } 
+        #endregion
+
+        #region Enum Extensions
+        public static string NibrsCode(this Enum e)
+        {
+            return NibrsCodeAttribute.GetDescription(e);
         }
+
+        public static string NibrsCodeDescription(this Enum e)
+        {
+            return CodeDescriptionAttribute.GetDescription(e);
+        } 
+        #endregion
     }
 }

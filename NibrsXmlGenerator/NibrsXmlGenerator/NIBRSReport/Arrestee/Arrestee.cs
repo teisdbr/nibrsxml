@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Person;
+using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Arrestee
 {
@@ -36,7 +37,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         public string ClearanceIndicator { get; set; }
 
         [XmlElement("ArresteeArmedWithCode", Namespace = Namespaces.justice, Order = 4)]
-        public string ArmedWithCode { get; set; }
+        public List<String> ArmedWithCodes { get; set; }
 
         [XmlElement("ArresteeJuvenileDispositionCode", Namespace = Namespaces.justice, Order = 5)]
         public string JuvenileDispositionCode { get; set; }
@@ -52,18 +53,19 @@ namespace NibrsXml.NibrsReport.Arrestee
 
         public Arrestee(
             Person.Person person,
-            int seqId,
-            bool clearanceIndicator,
-            string armedWithCode,
+            string seqId,
+            string clearanceIndicator,
+            List<String> armedWithCode,
             string juvenileDispositionCode)
         {
             this.Person = person;
-            this.Person.Id = "PersonArrestee" + seqId.ToString();
-            this.Id = "Arrestee" + seqId.ToString();
+            this.Id = this.Person.Id; //Since person should already contain a unique prefix by now, we can reuse it here for the arrestee id
+            this.Person.Id += "PersonArrestee" + seqId.ToString();
+            this.Id += "Arrestee" + seqId.ToString();
             this.Role = new RoleOfPerson(this.Person.Id);
-            this.SeqId = seqId.ToString();
-            this.ClearanceIndicator = clearanceIndicator.ToString().ToLower();
-            this.ArmedWithCode = armedWithCode;
+            this.SeqId = seqId;
+            this.ClearanceIndicator = clearanceIndicator.ToLower().TrimNullIfEmpty();
+            this.ArmedWithCodes = armedWithCode;
             this.JuvenileDispositionCode = juvenileDispositionCode;
         }
     }

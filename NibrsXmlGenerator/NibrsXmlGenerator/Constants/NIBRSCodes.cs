@@ -2331,7 +2331,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("L")]
         [CodeDescription("Law Enforcement Officer")]
-        LAW_ENFORCEMENT_OFFICER_LEO,
+        LAW_ENFORCEMENT_OFFICER,
 
         /// <summary>
         /// Other
@@ -2460,19 +2460,68 @@ namespace NibrsXml.Constants
     enum ItemStatusCode
     {
         /// <summary>
-        /// Bait
+        /// None
         /// </summary>
-        [NibrsCode("BAIT")]
-        [CodeDescription("Bait")]
-        BAIT,
+        [NibrsCode("NONE")]
+        [CodeDescription("None")]
+        NONE = 1,
 
         /// <summary>
         /// Burned
         /// </summary>
         [NibrsCode("BURNED")]
         [CodeDescription("Burned")]
-        BURNED,
+        BURNED = 2,
 
+        /// <summary>
+        /// Counterfeited, includes forged
+        /// </summary>
+        [NibrsCode("COUNTERFEITED")]
+        [CodeDescription("Counterfeited, includes forged")]
+        COUNTERFEITED = 3,
+
+        /// <summary>
+        /// Destroyed_Damaged_Vandalized
+        /// </summary>
+        [NibrsCode("DESTROYED_DAMAGED_VANDALIZED")]
+        [CodeDescription("Destroyed_Damaged_Vandalized")]
+        DESTROYED_DAMAGED_VANDALIZED = 4,
+
+        /// <summary>
+        /// Recovered (To impound property previously stolen)
+        /// </summary>
+        [NibrsCode("RECOVERED")]
+        [CodeDescription("Recovered (To impound property previously stolen)")]
+        RECOVERED = 5,
+
+        /// <summary>
+        /// Seized (To impound property not previously stolen)
+        /// </summary>
+        [NibrsCode("SEIZED")]
+        [CodeDescription("Seized (To impound property not previously stolen)")]
+        SEIZED = 6,
+
+        /// <summary>
+        /// Stolen
+        /// </summary>
+        [NibrsCode("STOLEN")]
+        [CodeDescription("Stolen")]
+        STOLEN = 7,
+
+        /// <summary>
+        /// Unknown
+        /// </summary>
+        [NibrsCode("UNKNOWN")]
+        [CodeDescription("Unknown")]
+        UNKNOWN = 8,
+
+        /// <summary>
+        /// Bait
+        /// </summary>
+        [NibrsCode("BAIT")]
+        [CodeDescription("Bait")]
+        BAIT,
+        
         /// <summary>
         /// Cargo
         /// </summary>
@@ -2486,13 +2535,6 @@ namespace NibrsXml.Constants
         [NibrsCode("CONTRABAND")]
         [CodeDescription("Contraband")]
         CONTRABAND,
-
-        /// <summary>
-        /// Counterfeited, includes forged
-        /// </summary>
-        [NibrsCode("COUNTERFEITED")]
-        [CodeDescription("Counterfeited, includes forged")]
-        COUNTERFEITED,
 
         /// <summary>
         /// Cultivated
@@ -2516,13 +2558,6 @@ namespace NibrsXml.Constants
         DESTROYED,
 
         /// <summary>
-        /// Destroyed_Damaged_Vandalized
-        /// </summary>
-        [NibrsCode("DESTROYED_DAMAGED_VANDALIZED")]
-        [CodeDescription("Destroyed_Damaged_Vandalized")]
-        DESTROYED_DAMAGED_VANDALIZED,
-
-        /// <summary>
         /// Found
         /// </summary>
         [NibrsCode("FOUND")]
@@ -2537,32 +2572,11 @@ namespace NibrsXml.Constants
         LOST,
 
         /// <summary>
-        /// Recovered (To impound property previously stolen)
-        /// </summary>
-        [NibrsCode("RECOVERED")]
-        [CodeDescription("Recovered (To impound property previously stolen)")]
-        RECOVERED,
-
-        /// <summary>
         /// Returned
         /// </summary>
         [NibrsCode("RETURNED")]
         [CodeDescription("Returned")]
         RETURNED,
-
-        /// <summary>
-        /// Seized (To impound property not previously stolen)
-        /// </summary>
-        [NibrsCode("SEIZED")]
-        [CodeDescription("Seized (To impound property not previously stolen)")]
-        SEIZED,
-
-        /// <summary>
-        /// Stolen
-        /// </summary>
-        [NibrsCode("STOLEN")]
-        [CodeDescription("Stolen")]
-        STOLEN,
 
         /// <summary>
         /// Stolen_Bribed
@@ -2611,25 +2625,11 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("VANDALIZED")]
         [CodeDescription("Vandalized")]
-        VANDALIZED,
-
-        /// <summary>
-        /// None
-        /// </summary>
-        [NibrsCode("NONE")]
-        [CodeDescription("None")]
-        NONE,
-
-        /// <summary>
-        /// Unknown
-        /// </summary>
-        [NibrsCode("UNKNOWN")]
-        [CodeDescription("Unknown")]
-        UNKNOWN
+        VANDALIZED
     }
 
-    	/// <summary>
-	 /// A data type for circumstances of either an aggravated assault or homicide.
+    /// <summary>
+	/// A data type for circumstances of either an aggravated assault or homicide.
 	/// </summary>
 	[Description("A data type for circumstances of either an aggravated assault or homicide.")]
 	enum AggravatedAssaultHomicideFactorsCode

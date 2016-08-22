@@ -59,6 +59,7 @@
     <Compile Include="Builder\LibrsExtensions.cs" />
     <Compile Include="Builder\IncidentBuilder.cs" />
     <Compile Include="Builder\OffenseBuilder.cs" />
+    <Compile Include="Builder\PersonBuilder.cs" />
     <Compile Include="Builder\ReportBuilder.cs" />
     <Compile Include="Builder\ReportHeaderBuilder.cs" />
     <Compile Include="Builder\SubmissionBuilder.cs" />
@@ -108,8 +109,8 @@
     <Compile Include="NibrsReport\Substance\Substance.cs" />
     <Compile Include="NibrsReport\Substance\SubstanceQuantityMeasure.cs" />
     <Compile Include="NibrsReport\Victim\Victim.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\UcrReportTypes.cs" />
     <Compile Include="Ucr\DataMining\AsreMiner.cs" />
     <Compile Include="Ucr\DataMining\ReportDataMiner.cs" />

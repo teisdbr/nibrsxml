@@ -16,11 +16,12 @@ namespace NibrsXml.Builder
     public class ReportHeaderBuilder 
     {
         private const string groupAIncidentReport = "A";
+        private const string deleteActionType = "D";
 
         public static ReportHeader Build(List<LIBRSOffense> offenses, string actionType, LIBRSAdmin admin)
         {
             ReportHeader rptHeader = new ReportHeader();
-            rptHeader.NibrsReportCategoryCode = DetermineNibrsReportCategoryCode(offenses);
+            rptHeader.NibrsReportCategoryCode = actionType == deleteActionType ? NIBRSReportCategoryCode.A.NibrsCode() : DetermineNibrsReportCategoryCode(offenses);
             rptHeader.ReportActionCategoryCode = actionType;
             rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
             rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));

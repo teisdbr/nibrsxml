@@ -24,5 +24,10 @@ namespace NibrsXml.NibrsReport.Substance
             this.DrugCategoryCode = drugCategoryCode;
             this.QuantityMeasure = quantityMeasure;
         }
+        public Substance(string drugCategoryCode, String measureDecimalValue, String substanceUnitCode)
+        {
+            this.DrugCategoryCode = drugCategoryCode;
+            this.QuantityMeasure = new SubstanceQuantityMeasure(decimalValue: measureDecimalValue, substanceUnitCode: substanceUnitCode);
+        }
     }
 }
