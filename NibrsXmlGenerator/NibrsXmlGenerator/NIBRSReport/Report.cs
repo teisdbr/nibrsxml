@@ -63,6 +63,12 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore]
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
 
+        /// <summary>
+        /// A composite key comprised of the report date and the agency ori
+        /// </summary>
+        [XmlIgnore]
+        public string UcrKey { get { return Header.ReportDate.YearMonthDate + Header.ReportingAgency.OrgAugmentation.OrgOriId.Id; } }
+
         [XmlIgnore]
         public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NibrsXml.Ucr.DataCollections
 {
-    class ReportData
+    public class ReportData
     {
         public Asra AsraData { get; set; }
 

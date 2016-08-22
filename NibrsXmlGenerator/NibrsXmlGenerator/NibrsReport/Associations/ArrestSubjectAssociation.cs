@@ -15,20 +15,20 @@ namespace NibrsXml.NibrsReport.Associations
         public Arrest.Arrest ActivityRef { get; set; }
 
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 2)]
-        public Arrestee.Arrestee ArresteeRef { get; set; }
+        public Arrestee.Arrestee SubjectRef { get; set; }
 
         public ArrestSubjectAssociation() { }
 
         public ArrestSubjectAssociation(Arrest.Arrest arrest, Arrestee.Arrestee arrestee)
         {
             this.ActivityRef = arrest.Reference;
-            this.ArresteeRef = arrestee.Reference;
+            this.SubjectRef = arrestee.Reference;
         }
 
         public ArrestSubjectAssociation(string arrestRef, string arresteeRef)
         {
             this.ActivityRef = new Arrest.Arrest(arrestRef);
-            this.ArresteeRef = new Arrestee.Arrestee(arresteeRef);
+            this.SubjectRef = new Arrestee.Arrestee(arresteeRef);
         }
     }
 }

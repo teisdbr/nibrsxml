@@ -10,10 +10,10 @@ using NibrsXml.Ucr.DataMining;
 
 namespace NibrsXml.Ucr
 {
-    class NibrsImport
+    public class NibrsImport
     {
         public List<Report> Reports { get; private set; }
-        public ConcurrentDictionary<string, ReportData> MontlyReportData { get; private set; }
+        public ConcurrentDictionary<string, ReportData> MonthlyOriReportData { get; private set; }
 
         public NibrsImport(string xmlFilepath)
         {
@@ -21,7 +21,7 @@ namespace NibrsXml.Ucr
             if (!validator.HasErrors)
             {
                 Reports = Submission.Deserialize(xmlFilepath).Reports;
-                MontlyReportData = ReportDataMiner.Mine(Reports);
+                MonthlyOriReportData = ReportDataMiner.Mine(Reports);
             }
         }
     }

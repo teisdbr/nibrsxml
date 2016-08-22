@@ -24,6 +24,7 @@ namespace NibrsXml.Ucr.DataCollections
 
         public void AddCounts(string age, string sex, string race, string ethnicity)
         {
+            // todo: parse counts into ranges for ages 25+ before adding it to ageSexCounts
             ageSexCounts.TryAdd(age).TryIncrement(sex);
             raceCounts.TryIncrement(race);
             ethnicityCounts.TryIncrement(ethnicity);

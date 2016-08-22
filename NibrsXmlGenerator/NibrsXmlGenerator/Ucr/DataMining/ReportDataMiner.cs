@@ -14,14 +14,17 @@ namespace NibrsXml.Ucr.DataMining
     {
         public static ConcurrentDictionary<string, ReportData> Mine(List<Report> nibrsIncidentReports)
         {
-            ConcurrentDictionary<string, ReportData> monthlyReportData = new ConcurrentDictionary<string, ReportData>();
+            ConcurrentDictionary<string, ReportData> monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
             foreach (Report report in nibrsIncidentReports)
             {
-                monthlyReportData.TryAdd(report.Header.ReportDate.YearMonthDate, new ReportData());
-                AsreMiner.MineAdd(monthlyReportData, report);
+                //Make sure there is at least an empty ReportData structure for this report
+                monthlyOriReportData.TryAdd(report.UcrKey, new ReportData());
+
+                //Mine data
+                AsreMiner.MineAdd(monthlyOriReportData, report);
             }
 
-            return monthlyReportData;
+            return monthlyOriReportData;
         }
     }
 }

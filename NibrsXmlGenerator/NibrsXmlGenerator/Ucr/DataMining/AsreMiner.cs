@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
+using LoadBusinessLayer.LIBRSErrorConstants;
 using System.Collections.Concurrent;
+using NibrsXml.NibrsReport.Arrestee;
+using NibrsXml.NibrsReport.Associations;
 
 namespace NibrsXml.Ucr.DataMining
 {
@@ -17,26 +20,34 @@ namespace NibrsXml.Ucr.DataMining
             if (nibrsIncidentReport.Arrestees.Count == 0)
                 return;
 
-            // Query data
-            var arrestRef = nibrsIncidentReport.Arrestees.Join(
-                inner: nibrsIncidentReport.ArrestSubjectAssocs,
-                outerKeySelector: arrestee => arrestee.ArresteeRef,
-                innerKeySelector: assoc => assoc.ArresteeRef.ArresteeRef,
-                resultSelector: (arrestee, assoc) => assoc.ActivityRef.ArrestRef);
-            string offenseUcrCode = nibrsIncidentReport.Arrests.Where((arrest) => arrest.Id == arrestRef.ToString()).ElementAt(0).Charge.UcrCode;
-            var asre = nibrsIncidentReport.Arrestees.Join(
+            var associationsToPersons = nibrsIncidentReport.ArrestSubjectAssocs.Join(
                 nibrsIncidentReport.Persons,
-                arrestee => arrestee.ArresteeRef,
+                assoc => assoc.SubjectRef.PersonRef,
                 person => person.Id,
-                (arrestee, person) => new { Age = person.AgeMeasure.RangeOrValue, Sex = person.SexCode, Race = person.RaceCode, Ethnicity = person.EthnicityCode });
-            
-            // Use query results to add ASRA and ASRJ counts
-            monthlyReportData[nibrsIncidentReport.Header.ReportDate.YearMonthDate].AsraData.AddCounts(
-                offenseUcrCode,
-                asre.ElementAt(0).Age,
-                asre.ElementAt(0).Sex,
-                asre.ElementAt(0).Race,
-                asre.ElementAt(0).Ethnicity);
+                (assoc, person) => new {
+                    ActivityRef = assoc.ActivityRef.ArrestRef,
+                    Person = person
+                }).ToList();
+            var associationsToPersonsToArrests = associationsToPersons.Join(
+                nibrsIncidentReport.Arrests.Where(arrest => arrest.SubjectCountCode != LIBRSErrorConstants.MAMultiple).ToList(), // Count only arrestees that do not have the multiple count indicator of 'M'
+                assocPerson => assocPerson.ActivityRef,
+                arrest => arrest.Id,
+                (assocPerson, arrest) => new
+                {
+                    Person = assocPerson.Person,
+                    OffenseUcrCode = arrest.Charge.UcrCode
+                }).ToList();
+    
+            //Use query results to add ASRA and ASRJ counts
+            foreach (var arrest in associationsToPersonsToArrests)
+            {
+                monthlyReportData[nibrsIncidentReport.UcrKey].AsraData.AddCounts(
+                    offenseUcrCode: arrest.OffenseUcrCode,
+                    age: arrest.Person.AgeMeasure.RangeOrValue,
+                    sex: arrest.Person.SexCode,
+                    race: arrest.Person.RaceCode,
+                    ethnicity: arrest.Person.EthnicityCode);
+            }
         }
     }
 }

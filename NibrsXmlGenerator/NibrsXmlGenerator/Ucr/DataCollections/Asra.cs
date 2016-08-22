@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NibrsXml.Ucr.DataCollections
 {
-    class Asra : Data
+    public class Asra : Data
     {
         // Properties
         private Dictionary<string, Asre> offenseAsre { get; set; }

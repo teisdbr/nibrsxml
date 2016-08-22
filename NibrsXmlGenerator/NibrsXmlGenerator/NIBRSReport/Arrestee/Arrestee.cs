@@ -24,7 +24,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         /// It should only be set by using the Arrestee(string) constructor and accessed using the reference property.
         /// </summary>
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
-        public string ArresteeRef { get; set; }
+        public string PersonRef { get; set; }
 
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson Role { get; set; }
@@ -47,7 +47,7 @@ namespace NibrsXml.NibrsReport.Arrestee
 
         public Arrestee(string arresteeId)
         {
-            this.ArresteeRef = arresteeId;
+            this.PersonRef = arresteeId;
         }
 
         public Arrestee(
