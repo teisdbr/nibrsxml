@@ -177,7 +177,7 @@ namespace NibrsXml.Builder
                         statusCode: nibrsItemStatusCode,
                         valueAmount: prop.PropertyValue.Trim() == String.Empty ? null : prop.PropertyValue.Trim(),
                         valueDate: prop.DateRecovered.Trim() == String.Empty ? null : prop.DateRecovered.ConvertToNibrsYearMonthDay(),
-                        nibrsPropCategCode: prop.PropertyDescription,
+                        nibrsPropCategCode: prop.PropertyDescription.TrimNullIfEmpty(),
                         quantity: null)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
                 }
             }

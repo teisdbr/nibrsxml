@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://support.teisd.com/asre.xsl"?>
+<ASRSummary>
+	<UCR value="64A">
+		<Age value="18">
+			<M>18</M>
+			<F>18</F>
+		</Age>
+		<Races>
+			<White>1</White>
+			<Black>1</Black>
+			<AmericanIndian>1</AmericanIndian>
+			<Asian>1</Asian>
+			<NativeHawaiianOrOther>1</NativeHawaiianOrOther>
+		</Races>
+		<Ethnicities>
+			<Hispanic>22</Hispanic>
+			<Non-Hispanic>22</Non-Hispanic>
+		</Ethnicities>	
+	</UCR>
+	<UCR value="65A">
+		<Age value="19">
+			<M>19</M>
+			<F>19</F>
+		</Age>
+		<Races>
+			<White>2</White>
+			<Black>2</Black>
+			<AmericanIndian>2</AmericanIndian>
+			<Asian>2</Asian>
+			<NativeHawaiianOrOther>2</NativeHawaiianOrOther>
+		</Races>
+		<Ethnicities>
+			<Hispanic>22</Hispanic>
+			<Non-Hispanic>22</Non-Hispanic>
+		</Ethnicities>		
+	</UCR>
+	<UCR value="39A">
+		<Age value="20">
+			<M>20</M>
+			<F>20</F>
+		</Age>
+		<Races>
+			<White>3</White>
+			<Black>3</Black>
+			<AmericanIndian>3</AmericanIndian>
+			<Asian>3</Asian>
+			<NativeHawaiianOrOther>3</NativeHawaiianOrOther>
+		</Races>
+		<Ethnicities>
+			<Hispanic>22</Hispanic>
+			<Non-Hispanic>22</Non-Hispanic>
+		</Ethnicities>		
+	</UCR>
+</ASRSummary>

@@ -36,8 +36,9 @@ namespace NibrsXml.Builder
                 PersonInjury newInjury = null;
 
                 //Only instantiate newInjury if one exists.
+                //Todo: ??? Do we want to handle multiple injuries per victim.
                 if (victimInjury.Count() > 0)
-                    newInjury = new PersonInjury(victimInjury.First().InjuryType);
+                    newInjury = victimInjury.First().InjuryType.TrimNullIfEmpty() == null ? null : new PersonInjury(victimInjury.First().InjuryType);
 
                 if (victim.VictimType == LIBRSErrorConstants.VTIndividual || victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
                 {
