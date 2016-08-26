@@ -141,40 +141,48 @@
           <td><xsl:value-of select="sum(Age/F)"/></td>
         </tr>
         </xsl:for-each>
-        <!-- <tr>
-          <td><xsl:value-of select="sum()"/></td>
-          <td><xsl:value-of select="Age[@value='16']/F"/></td>
-          <td><xsl:value-of select="Age[@value='17']/F"/></td>
-          <td><xsl:value-of select="Age[@value='18']/F"/></td>
-          <td><xsl:value-of select="Age[@value='19']/F"/></td>
-          <td><xsl:value-of select="Age[@value='20']/F"/></td>
-          <td><xsl:value-of select="Age[@value='21']/F"/></td>
-          <td><xsl:value-of select="Age[@value='22']/F"/></td>
-          <td><xsl:value-of select="Age[@value='23']/F"/></td>
-          <td><xsl:value-of select="Age[@value='24']/F"/></td>
-          <td><xsl:value-of select="Age[@value='15']/F"/></td>
-          <td><xsl:value-of select="Age[@value='16']/F"/></td>
-          <td><xsl:value-of select="Age[@value='17']/F"/></td>
-          <td><xsl:value-of select="Age[@value='18']/F"/></td>
-          <td><xsl:value-of select="Age[@value='19']/F"/></td>
-          <td><xsl:value-of select="Age[@value='20']/F"/></td>
-          <td><xsl:value-of select="Age[@value='21']/F"/></td>
-          <td><xsl:value-of select="Age[@value='22']/F"/></td>
-          <td><xsl:value-of select="Age[@value='23']/F"/></td>
-          <td><xsl:value-of select="Age[@value='24']/F"/></td>
-          <td><xsl:value-of select="Age[@value='15']/F"/></td>
-          <td><xsl:value-of select="Age[@value='16']/F"/></td>
-          <td><xsl:value-of select="Age[@value='17']/F"/></td>
-          <td><xsl:value-of select="Age[@value='18']/F"/></td>
-          <td><xsl:value-of select="Age[@value='19']/F"/></td>
-          <td><xsl:value-of select="Age[@value='20']/F"/></td>
-          <td><xsl:value-of select="Age[@value='21']/F"/></td>
-          <td><xsl:value-of select="Age[@value='22']/F"/></td>
-          <td><xsl:value-of select="Age[@value='23']/F"/></td>
-          <td><xsl:value-of select="Age[@value='24']/F"/></td>
-          <td><xsl:value-of select="Age[@value='23']/F"/></td>
-          <td><xsl:value-of select="Age[@value='24']/F"/></td>
-        </tr> -->
+        <tr>
+          <th scope="row" colspan="2">Totals</th>
+          <td><xsl:value-of select="sum(//Age[@value='Under 10']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='10-12']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='13-14']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='15']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='16']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='17']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='18']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='19']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='20']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='21']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='22']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='23']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='24']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='25-29']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='30-34']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='35-39']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='40-44']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='45-49']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='50-54']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='55-59']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='60-64']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age[@value='65+']/*)"/></td>
+          <td><xsl:value-of select="sum(//Age/*)"/></td>
+          <td><xsl:value-of select="sum(//White)"/></td>
+          <td><xsl:value-of select="sum(//Black)"/></td>
+          <td><xsl:value-of select="sum(//AmericanIndian)"/></td>
+          <td><xsl:value-of select="sum(//Asian)"/></td>
+          <td><xsl:value-of select="sum(//NativeHawaiianOrOther)"/></td>      
+          <td><xsl:value-of select="sum(//Hispanic)"/></td>
+          <td><xsl:value-of select="sum(//Non-Hispanic)"/></td> 
+
+       <!--              <td rowspan="2"><xsl:if test="not(Races/White)">0</xsl:if><xsl:value-of select="Races/White"/></td>
+          <td rowspan="2"><xsl:if test="not(Races/Black)">0</xsl:if><xsl:value-of select="Races/Black"/></td>
+          <td rowspan="2"><xsl:if test="not(Races/AmericanIndian)">0</xsl:if><xsl:value-of select="Races/AmericanIndian"/></td>
+          <td rowspan="2"><xsl:if test="not(Races/Asian)">0</xsl:if><xsl:value-of select="Races/Asian"/></td>
+          <td rowspan="2"><xsl:if test="not(Races/NativeHawaiianOrOther)">0</xsl:if><xsl:value-of select="Races/NativeHawaiianOrOther"/></td>
+          <td rowspan="2"><xsl:if test="not(Ethnicities/Hispanic)">0</xsl:if><xsl:value-of select="Ethnicities/Hispanic"/></td>
+          <td rowspan="2"><xsl:if test="not(Ethnicities/Non-Hispanic)">0</xsl:if><xsl:value-of select="Ethnicities/Non-Hispanic"/></td>
+        -->   
+        </tr>
       </tbody>
     </table>
   </body>
