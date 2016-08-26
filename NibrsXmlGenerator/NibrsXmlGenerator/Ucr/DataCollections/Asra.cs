@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -90,6 +91,18 @@ namespace NibrsXml.Ucr.DataCollections
         public int GetGrandTotal(string age)
         {
             return offenseAsre.Keys.Aggregate(0, (total, offense) => total + offenseAsre[offense].TotalCount);
+        }
+
+        public XDocument Serialize() 
+        {
+            return new XDocument(
+                new XProcessingInstruction(
+                    "xml-stylesheet",
+                    "type=\"text/xsl\" href=\"asre.xsl\""),
+                new XElement(
+                    "ASRSummary",
+                    // todo: translate all offense codes to their actual description representation (this may not be the appropriate place to do so)
+                    offenseAsre.Select(offenseToCountsPair => new XElement("UCR", new XAttribute("value", offenseToCountsPair.Key), offenseToCountsPair.Value.Serialize()))));
         }
     }
 }

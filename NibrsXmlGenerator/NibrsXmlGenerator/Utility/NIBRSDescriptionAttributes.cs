@@ -55,4 +55,14 @@ namespace NibrsXml.Utility
             return GetDescription(nc, typeof(CodeDescriptionAttribute));
         }
     }
+
+    class UcrElementName : NibrsDescriptionAttribute
+    {
+        public UcrElementName(string description) : base(description) { }
+
+        public static string GetDescription(Enum nc)
+        {
+            return GetDescription(nc, typeof(UcrElementName));
+        }
+    }
 }

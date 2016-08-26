@@ -5,15 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.Utility;
 using NibrsXml.Constants;
+using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
 {
     class Asre
     {
+        #region Class Constants
+        private static Dictionary<string, string> nibrsRaceCodeToUcrElementName = new Dictionary<string, string>()
+        {
+            { RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.NibrsCode(), RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.UcrReportHeader() },
+            { RACCode.ASIAN.NibrsCode(), RACCode.ASIAN.UcrReportHeader() },
+            { RACCode.BLACK.NibrsCode(), RACCode.BLACK.UcrReportHeader() },
+            { RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(), RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.UcrReportHeader() },
+            { RACCode.WHITE.NibrsCode(), RACCode.WHITE.UcrReportHeader() }
+        };
+        private static Dictionary<string, string> nibrsEthnicityCodeToUcrElementName = new Dictionary<string, string>()
+        {
+            { EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.HISPANIC_OR_LATINO.UcrReportHeader() },
+            { EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.UcrReportHeader() }
+        };
+        #endregion
+        
+        #region Instance Variables and Properties
         private Dictionary<string, Dictionary<string, int>> ageSexCounts { get; set; }
         private Dictionary<string, int> raceCounts { get; set; }
         private Dictionary<string, int> ethnicityCounts { get; set; }
         public int TotalCount { get; private set; }
+        #endregion
 
         public Asre()
         {
@@ -25,6 +44,7 @@ namespace NibrsXml.Ucr.DataCollections
 
         public void AddCounts(string age, string sex, string race, string ethnicity)
         {
+            // Categorize ages by their ucr age groups. When serializing to xml, no further serialization will be required.
             var ageGroup = age.TrimStart('0');
             switch (ageGroup)
             {
@@ -157,13 +177,17 @@ namespace NibrsXml.Ucr.DataCollections
                     return;
 
             }
-
             ageSexCounts.TryAdd(ageGroup).TryIncrement(sex);
-            raceCounts.TryIncrement(race);
-            ethnicityCounts.TryIncrement(ethnicity);
+            
+            // Translate nibrs code to specific keys before inserting into dictionary to accommodate ucr xml serialization.
+            raceCounts.TryIncrement(nibrsRaceCodeToUcrElementName[race]);
+            ethnicityCounts.TryIncrement(nibrsEthnicityCodeToUcrElementName[ethnicity]);
+
+            // Increment total count for this particular offense
             TotalCount += 1;
         }
 
+        #region Aggregate Functions
         // Get individual counts
         public int GetAgeSexCount(string age, string sex)
         {
@@ -191,6 +215,24 @@ namespace NibrsXml.Ucr.DataCollections
         public int GetSexTotal(string sex)
         {
             return ageSexCounts.Keys.Aggregate(0, (total, age) => total + (ageSexCounts[age].ContainsKey(sex) ? ageSexCounts[age][sex] : 0));
+        }
+        #endregion
+
+        public XElement[] Serialize()
+        {
+            // Create XElements for ages, sexes, races, and ethnicities
+            // todo: translate all sex, race, and ethnicity codes to their actual description representation (this may not be the appropriate place to do so)
+            var ageElements = ageSexCounts.Select(ageSexdictionaryPair => new XElement("Age", new XAttribute("value", ageSexdictionaryPair.Key), ageSexdictionaryPair.Value.Select(sexCountPair => new XElement(sexCountPair.Key, sexCountPair.Value))));
+            var racesElement = new XElement("Races", raceCounts.Select(raceCountPair => new XElement(raceCountPair.Key, raceCountPair.Value)));
+            var ethnicitiesElement = new XElement("Ethnicities", ethnicityCounts.Select(ethnicityCountPair => new XElement(ethnicityCountPair.Key, ethnicityCountPair.Value)));
+            
+            // Concatenate all XElements into a list
+            var xelements = new List<XElement>(ageElements);
+            xelements.Add(racesElement);
+            xelements.Add(ethnicitiesElement);
+            
+            // Convert the list of XElements to an array and return
+            return xelements.ToArray();
         }
     }
 }

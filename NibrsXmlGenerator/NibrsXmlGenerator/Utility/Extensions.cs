@@ -89,7 +89,12 @@ namespace NibrsXml.Utility
         public static string NibrsCodeDescription(this Enum e)
         {
             return CodeDescriptionAttribute.GetDescription(e);
-        } 
+        }
+
+        public static string UcrReportHeader(this Enum e)
+        {
+            return UcrElementName.GetDescription(e);
+        }
         #endregion
     }
 }
