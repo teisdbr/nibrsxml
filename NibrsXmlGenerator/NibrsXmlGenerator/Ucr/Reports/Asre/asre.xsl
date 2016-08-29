@@ -44,7 +44,7 @@
           <th colspan="2" scope="colgroup">Ethnicity</th>
         </tr>
         <tr>
-          <th scope="col">UCR</th>
+          <th scope="col">Classification of Offenses</th>
           <th scope="col">Sex</th>
           <th scope="col">Under<br/>10</th>
           <th scope="col">10-12</th>
@@ -81,7 +81,17 @@
       <tbody>
         <xsl:for-each select="ASRSummary/UCR">
         <tr>
-          <th rowspan="2" scope="rowgroup"><xsl:value-of select="@value"/></th>
+          <th rowspan="2" scope="rowgroup">
+            <xsl:variable name="ucrCode" select="./@value"/>
+            <xsl:choose>
+              <xsl:when test="//UCRDescription[@value=$ucrCode]">
+                <xsl:value-of select="//UCRDescription[@value=$ucrCode]"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="@value"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </th>
           <td class="centered">M</td>
           <td><xsl:if test="not(Age[@value='Under 10']/M)">0</xsl:if><xsl:value-of select="Age[@value='Under 10']/M"/></td>
           <td><xsl:if test="not(Age[@value='10-12']/M)">0</xsl:if><xsl:value-of select="Age[@value='10-12']/M"/></td>

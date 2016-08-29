@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="asre.xsl"?>
 <ASRSummary>
+	<UcrCodeDictionary>
+	    <UCRDescription value="09A">Murder &amp; Nonnegligent Manslaughter</UCRDescription>
+	    <UCRDescription value="09B">Negligent Manslaughter</UCRDescription>
+	    <UCRDescription value="11A">Rape</UCRDescription>
+	    <UCRDescription value="120">Robbery</UCRDescription>
+	    <UCRDescription value="13A">Aggravated Assault</UCRDescription>
+	    <UCRDescription value="220">Burglary/Breaking &amp; Entering</UCRDescription>
+	    <UCRDescription value="240">Motor Vehicle Theft</UCRDescription>
+	    <UCRDescription value="23D">Theft From Building</UCRDescription>
+	    <UCRDescription value="23E">Theft From Coin-Operated Machine or Device</UCRDescription>
+	    <UCRDescription value="23F">Theft From Motor Vehicle</UCRDescription>
+	    <UCRDescription value="23G">Theft of Motor Vehicle Parts or Accessories</UCRDescription>
+	    <UCRDescription value="23H">All Other Larceny</UCRDescription>
+	    <UCRDescription value="13B">Simple Assault</UCRDescription>
+	    <UCRDescription value="13C">Intimidation</UCRDescription>
+	    <UCRDescription value="200">Arson</UCRDescription>
+	    <UCRDescription value="250">Counterfeiting/Forgery</UCRDescription>
+	    <UCRDescription value="26A">False Pretenses/Swindle/Confidence Game</UCRDescription>
+	    <UCRDescription value="26B">Credit Card/Automated Teller Machine Fraud</UCRDescription>
+	    <UCRDescription value="26C">Impersonation</UCRDescription>
+	    <UCRDescription value="26D">Welfare Fraud</UCRDescription>
+	    <UCRDescription value="26E">Wire Fraud</UCRDescription>
+	    <UCRDescription value="270">Embezzlement</UCRDescription>
+	    <UCRDescription value="280">Stolen Property Offenses</UCRDescription>
+	    <UCRDescription value="290">Destruction/Damage/Vandalism of Property</UCRDescription>
+	    <UCRDescription value="520">Weapon Law Violations</UCRDescription>
+	    <UCRDescription value="40A">Prostitution</UCRDescription>
+	    <UCRDescription value="40B">Assisting or Promoting Prostitution</UCRDescription>
+	    <UCRDescription value="40C">Purchasing Prostitution</UCRDescription>
+	    <UCRDescription value="11B">Sodomy</UCRDescription>
+	    <UCRDescription value="11C">Sexual Assault With An Object</UCRDescription>
+	    <UCRDescription value="11D">Fondling</UCRDescription>
+	    <UCRDescription value="35A">Drug/Narcotic Violations</UCRDescription>
+	    <UCRDescription value="39A">Betting/Wagering</UCRDescription>
+	    <UCRDescription value="39B">Operating/Promoting/Assisting Gambling</UCRDescription>
+	    <UCRDescription value="39C">Gambling Equipment Violations</UCRDescription>
+	    <UCRDescription value="39D">Sports Tampering</UCRDescription>
+	    <UCRDescription value="90F">Family Offenses, Nonviolent</UCRDescription>
+	    <UCRDescription value="90D">Driving Under the Influence</UCRDescription>
+	    <UCRDescription value="90G">Liquor Law Violations</UCRDescription>
+	    <UCRDescription value="90E">Drunkenness</UCRDescription>
+	    <UCRDescription value="90C">Disorderly Conduct</UCRDescription>
+	    <UCRDescription value="90B">Curfew/Loitering/Vagrancy Violations</UCRDescription>
+	    <UCRDescription value="100">Kidnapping/Abduction</UCRDescription>
+	    <UCRDescription value="210">Extortion/Blackmail</UCRDescription>
+	    <UCRDescription value="370">Pornography/Obscene Material</UCRDescription>
+	    <UCRDescription value="510">Bribery</UCRDescription>
+	    <UCRDescription value="09C">Justifiable Homicide</UCRDescription>
+	    <UCRDescription value="23A">Pocket-picking</UCRDescription>
+	    <UCRDescription value="23B">Purse-snatching</UCRDescription>
+	    <UCRDescription value="23C">Shoplifting</UCRDescription>
+	    <UCRDescription value="35B">Drug Equipment Violations</UCRDescription>
+	    <UCRDescription value="36A">Incest</UCRDescription>
+	    <UCRDescription value="36B">Statutory Rape</UCRDescription>
+	    <UCRDescription value="90A">Bad Checks</UCRDescription>
+	    <UCRDescription value="90H">Peeping Tom</UCRDescription>
+	    <UCRDescription value="90I">Runaway</UCRDescription>
+	    <UCRDescription value="90J">Trespass of Real Property</UCRDescription>
+	    <UCRDescription value="90Z">All Other Offenses</UCRDescription>
+	    <UCRDescription value="64A">Human Trafficking, Commercial Sex Acts</UCRDescription>
+	    <UCRDescription value="64B">Human Trafficking, Involuntary Servitude</UCRDescription>
+  	</UcrCodeDictionary>	
 	<UCR value="64A">
 		<Age value="18">
 			<M>18</M>
