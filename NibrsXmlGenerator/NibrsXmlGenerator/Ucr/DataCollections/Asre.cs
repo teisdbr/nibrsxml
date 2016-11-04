@@ -180,8 +180,11 @@ namespace NibrsXml.Ucr.DataCollections
             ageSexCounts.TryAdd(ageGroup).TryIncrement(sex);
             
             // Translate nibrs code to specific keys before inserting into dictionary to accommodate ucr xml serialization.
-            raceCounts.TryIncrement(nibrsRaceCodeToUcrElementName[race]);
-            ethnicityCounts.TryIncrement(nibrsEthnicityCodeToUcrElementName[ethnicity]);
+            if (race != null && nibrsRaceCodeToUcrElementName.ContainsKey(race))
+                raceCounts.TryIncrement(nibrsRaceCodeToUcrElementName[race]);
+
+            if (ethnicity != null && nibrsEthnicityCodeToUcrElementName.ContainsKey(ethnicity)) 
+                ethnicityCounts.TryIncrement(nibrsEthnicityCodeToUcrElementName[ethnicity]);
 
             // Increment total count for this particular offense
             TotalCount += 1;

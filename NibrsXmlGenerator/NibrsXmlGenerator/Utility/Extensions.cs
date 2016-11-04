@@ -17,13 +17,16 @@ namespace NibrsXml.Utility
             }
             return dictionary[key];
         }
-        public static void TryIncrement(this Dictionary<string, int> dictionary, string key)
+        public static void TryIncrement(this Dictionary<string, int> dictionary, string key, Boolean force = true)
         {
-            if (dictionary.ContainsKey(key))
+            if (key == null || (!force && key != null && !dictionary.ContainsKey(key))){
+                return;
+            }
+            else if (dictionary.ContainsKey(key))
             {
                 dictionary[key] += 1;
             }
-            else
+            else if (force)
             {
                 dictionary.Add(key, 1);
             }
