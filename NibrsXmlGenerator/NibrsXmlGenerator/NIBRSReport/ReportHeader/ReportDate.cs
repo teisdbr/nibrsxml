@@ -14,6 +14,19 @@ namespace NibrsXml.NibrsReport.ReportHeader
         [XmlElement("YearMonthDate", Namespace = Namespaces.niemCore)]
         public string YearMonthDate { get; set; }
 
+        [XmlIgnore]
+        public DateTime YearMonthDateTime
+        {
+            get
+            {
+                //Attempt to convert date
+                DateTime dt;
+                DateTime.TryParse(this.YearMonthDate, out dt);
+
+                return dt;
+            }
+        }
+
         public ReportDate() { }
 
         public ReportDate(string ymd)

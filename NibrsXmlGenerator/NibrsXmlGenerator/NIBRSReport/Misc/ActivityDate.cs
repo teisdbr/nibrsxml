@@ -33,6 +33,18 @@ namespace NibrsXml.NibrsReport.Misc
             } 
         }
 
+        [XmlIgnore]
+        public String YearMonthDate
+        {
+            get
+            {
+                DateTime dt;
+                if (System.DateTime.TryParse(this.DateTime, out dt))
+                    return dt.ToString("yyyy-MM");
+                return null;
+            }
+        }
+
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
         public string Date
         { 

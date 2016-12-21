@@ -14,6 +14,18 @@ namespace NibrsXml.NibrsReport.Incident
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
         public string Date { get; set; }
 
+        [XmlIgnore]
+        public string YearMonthDate
+        {
+            get
+            {
+                DateTime dt;
+                if (DateTime.TryParse(this.Date, out dt))
+                    return dt.ToString("yyyy-MM");
+                return null;
+            }
+        }
+
         public IncidentExceptionalClearanceDate() { }
 
         public IncidentExceptionalClearanceDate(string date)

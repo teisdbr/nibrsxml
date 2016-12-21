@@ -23,6 +23,21 @@ namespace NibrsXml.NibrsReport.Person
 
         public string RangeOrValue { get { return Value ?? Range.Min + "-" + Range.Max; } }
 
+        [XmlIgnore]
+        public bool IsJuvenile
+        {
+            get
+            {
+                //Todo: Verify this logic is accurate.
+                //Verify there is a value, not a range and if so indicate whether individual is juvenile or not.
+                int ageValue;
+                if (int.TryParse(this.Value, out ageValue)){
+                    return ageValue < 18;
+                }
+                return this.Range.Max >= 1 && this.Range.Max < 18;
+            }
+        }
+
         public PersonAgeMeasure() { }
 
         public PersonAgeMeasure(int value)

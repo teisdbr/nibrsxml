@@ -17,6 +17,14 @@ namespace NibrsXml.Utility
             }
             return dictionary[key];
         }
+        public static TValue TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new()
+        {
+            if (!dictionary.ContainsKey(key))
+            {
+                dictionary.Add(key, new TValue());
+            }
+            return dictionary[key];
+        }
         public static void TryIncrement(this Dictionary<string, int> dictionary, string key, Boolean force = true)
         {
             if (key == null || (!force && key != null && !dictionary.ContainsKey(key))){
