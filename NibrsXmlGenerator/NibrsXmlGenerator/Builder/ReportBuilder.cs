@@ -199,7 +199,7 @@ namespace NibrsXml.Builder
                         CategoryCode = arrest.ArrestType,
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
-                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LRSNumber.Trim()].lrank)
+                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LrsNumber.Trim()].lrank)
                     }
                 ).ToList();
 

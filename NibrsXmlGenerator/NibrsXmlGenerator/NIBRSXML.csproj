@@ -149,7 +149,10 @@
   <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
-    <Folder Include="Ucr\Reports\Asre\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ucr\Reports\Asre\asre.xml" />
+    <Content Include="Ucr\Reports\Asre\asre.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

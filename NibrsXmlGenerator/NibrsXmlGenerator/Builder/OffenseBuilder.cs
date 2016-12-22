@@ -95,7 +95,7 @@ namespace NibrsXml.Builder
             {
                 return offense.AgencyAssignedNibrs;
             }
-            return LarsList.LarsDictionary[offense.LRSNumber.Trim()].nibr;
+            return LarsList.LarsDictionary[offense.LrsNumber.Trim()].nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
