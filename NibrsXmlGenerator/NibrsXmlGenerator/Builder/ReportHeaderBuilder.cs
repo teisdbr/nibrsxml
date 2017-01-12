@@ -35,8 +35,8 @@ namespace NibrsXml.Builder
             {
                 //Trim LRSNumber value in offense
                 offense.LrsNumber = offense.LrsNumber.Trim();
-
-                if (LarsList.LarsDictionary[offense.LrsNumber].lgroup == groupAIncidentReport)
+                
+                if (offense.OffenseGroup == groupAIncidentReport)
                 {
                     return NIBRSReportCategoryCode.A.NibrsCode();
                 }

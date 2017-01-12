@@ -12,6 +12,7 @@ using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
 using LoadBusinessLayer.LIBRSErrorConstants;
 using System.Text.RegularExpressions;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -91,11 +92,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsCode(LIBRSOffense offense)
         {
-            if (offense.AgencyAssignedNibrs.Trim() != String.Empty)
-            {
-                return offense.AgencyAssignedNibrs;
-            }
-            return LarsList.LarsDictionary[offense.LrsNumber.Trim()].nibr;
+            return offense.AgencyAssignedNibrs.HasValue(trim: true) ? offense.AgencyAssignedNibrs : LarsList.LarsDictionary[offense.LrsNumber.Trim()].nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)

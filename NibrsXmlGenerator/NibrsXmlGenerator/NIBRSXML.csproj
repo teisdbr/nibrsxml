@@ -142,6 +142,10 @@
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
+      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
+      <Name>TeUtil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\XmlValidator\XMLValidatorUtility.csproj">
       <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
       <Name>XMLValidatorUtility</Name>

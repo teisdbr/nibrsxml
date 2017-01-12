@@ -22,6 +22,7 @@ using NibrsXml.NibrsReport.Arrest;
 using LoadBusinessLayer.LIBRSArrestee;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Arrestee;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -35,13 +36,14 @@ namespace NibrsXml.Builder
             Report rpt = new Report();
 
             //Determine the unique report prefix to be used for all items that are to be identified within the report
+            incident.IncidentNumber = incident.IncidentNumber.Trim();
             var uniqueReportPrefix = incident.Admin.ORINumber + "-" + incident.IncidentNumber + "-";
 
             //Build the report
 
             rpt.Header = ReportHeaderBuilder.Build(
                 offenses: incident.Offense,
-                actionType: incident.ActionType,
+                actionType: incident.Admin.ActionType,
                 admin: incident.Admin);
             rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
 
@@ -151,7 +153,7 @@ namespace NibrsXml.Builder
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCategoryCode: drugCatCode,
-                        measureDecimalValue: prop.EstimatedDrugQty,
+                        measureDecimalValue: prop.EstimatedDrugQty.TrimNullIfEmpty(),
                         substanceUnitCode: prop.TypeDrugMeas));
                 }
                 else
@@ -195,10 +197,11 @@ namespace NibrsXml.Builder
                     {
                         TransactionNumber = arrest.ArrTransactionNumber,
                         ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
-                        Charge = lrs.AgencyAssignedNibrs,
+                        Charge = lrs.AgencyAssignedNibrs.HasValue(trim:true) ? lrs.AgencyAssignedNibrs : LarsList.LarsDictionary[lrs.LrsNumber.Trim()].nibr,
                         CategoryCode = arrest.ArrestType,
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
+                        //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCYASSIGNEDNIBRS
                         Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LrsNumber.Trim()].lrank)
                     }
                 ).ToList();

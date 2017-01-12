@@ -17,7 +17,7 @@ namespace NibrsXml.Builder
         public static Incident Build(LIBRSAdmin admin)
         {
             Incident inc = new Incident();
-            inc.ActivityId = new ActivityIdentification(admin.IncidentNumber);
+            inc.ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim());
             inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
             inc.CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false); // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
@@ -36,7 +36,7 @@ namespace NibrsXml.Builder
                 month = admin.IncidentDate.Substring(0, 2);
                 day = admin.IncidentDate.Substring(2, 2);
                 year = admin.IncidentDate.Substring(4, 4);
-                hour = admin.IncidentDate.Substring(9, 2).Trim();
+                hour = admin.IncidentDate.Substring(8, 2).Trim();
                 date = String.Format("{0}-{1}-{2}", year, month, day);
                 time = String.Format("{0}:00:00", hour == String.Empty ? "00" : hour);
             }

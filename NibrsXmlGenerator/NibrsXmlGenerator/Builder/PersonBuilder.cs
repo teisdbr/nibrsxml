@@ -77,7 +77,7 @@ namespace NibrsXml.Builder
                         newVictim = new Victim(
                             officer: newOfficer,
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
-                            justifiableHomicideFactorCode: victim.AdditionalHomicide);
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
                     }
                     else
                     {
