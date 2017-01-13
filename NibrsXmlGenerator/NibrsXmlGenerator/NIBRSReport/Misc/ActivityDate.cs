@@ -52,7 +52,7 @@ namespace NibrsXml.NibrsReport.Misc
             { 
                 if (_date != null)
                     return _date;
-                return _dateTime.Substring(0, _dateTime.IndexOf("T"));
+                return DateTime == null ? _dateTime.Substring(0, _dateTime.IndexOf("T")) : null;
             }
             set 
             { 

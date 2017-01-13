@@ -90,8 +90,30 @@ namespace NibrsXml.Builder
                     }
 
                     //Add related offenders for establishing relationships later on.
-                    newVictim.RelatedOffenders = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
+                    var applicableRelationships = incident.VicOff.Where(vo => vo.VictimSeqNum == victim.VictimSeqNum).ToList();
+                    //Translate {NM : CS, XB : BG, ES : SE} All others remain as is.
+                    if (applicableRelationships.Count > 0)
+                    {
+                        newVictim.RelatedOffenders = applicableRelationships.Select(r =>
+                        {
+                            switch (r.VictimOffenderRelation)
+                            {
+                                case "NM":
+                                    r.VictimOffenderRelation = "CS";
+                                    return r;
+                                case "XB":
+                                    r.VictimOffenderRelation = "BG";
+                                    return r;
+                                case "ES":
+                                    r.VictimOffenderRelation = "SE";
+                                    return r;
+                                default:
+                                    return r;
 
+                            }
+                        }).ToList();
+
+                    }
                     //Add each of the new person objects above to their respective lists
                     persons.Add(newPerson);
                     officers.TryAdd(newOfficer);

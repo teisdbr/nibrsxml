@@ -84,7 +84,8 @@ namespace NibrsXml.NibrsReport.Victim
             this.Role = officer.Role;
             this.SeqNum = officer.VictimSeqNum.ToString();
             this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
-            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
+            //Translate 40 to 09 if applicable.
+            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode.Select(a => a == "40" ? "09" : a).ToList();
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }
     }

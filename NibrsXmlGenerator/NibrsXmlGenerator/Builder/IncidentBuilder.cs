@@ -21,7 +21,7 @@ namespace NibrsXml.Builder
             inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
             inc.CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false); // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
-            inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin), new IncidentExceptionalClearanceDate(ExtractNibrsClearanceDate(admin)));
+            inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin), new IncidentExceptionalClearanceDate(ExtractNibrsClearanceDate(admin).TrimNullIfEmpty()));
             return inc;
         }
 
@@ -59,9 +59,9 @@ namespace NibrsXml.Builder
             string month, day, year;
             try
             {
-                month = admin.IncidentDate.Substring(0, 2);
-                day = admin.IncidentDate.Substring(2, 2);
-                year = admin.IncidentDate.Substring(4, 4);
+                month = admin.ExcpClearDate.Substring(0, 2);
+                day = admin.ExcpClearDate.Substring(2, 2);
+                year = admin.ExcpClearDate.Substring(4, 4);
             }
             catch (Exception e)
             {
