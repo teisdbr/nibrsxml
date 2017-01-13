@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
-using NibrsXml.NibrsSerializer;
 using System.IO;
 using System.Xml;
+using LoadBusinessLayer;
+using NibrsXml.Builder;
 
 namespace NibrsXml.NibrsReport
 {
@@ -26,7 +25,7 @@ namespace NibrsXml.NibrsReport
         public List<Report> Reports = new List<Report>();
 
         [XmlIgnore]
-        private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
+        private static readonly NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlIgnore]
         public string Xml { get { return serializer.Serialize(this); } }
@@ -61,6 +60,29 @@ namespace NibrsXml.NibrsReport
             // Close the file and return
             xmlFile.Close();
             return sub;
+        }
+
+        /// <summary>
+        /// Use to write NIBRS XML for a single agency/WinLIBRS runnumber.
+        /// </summary>
+        /// <param name="list">Incident data to be used</param>
+        /// <param name="fileName">Complete file name with path prefixed</param>
+        public static void WriteXml(IncidentList list, string fileName)
+        {
+            WriteXml(new List<IncidentList> { list }, fileName);
+        }
+
+        /// <summary>
+        /// Use to write NIBRS XML for multiple agencies/WinLIBRS runnumbers.
+        /// </summary>
+        /// <param name="lists">Incident data to be used</param>
+        /// <param name="fileName">Complete file name with path prefixed</param>
+        public static void WriteXml(List<IncidentList> lists, string fileName)
+        {
+            var submission = SubmissionBuilder.Build(lists);
+            var xdoc = new XmlDocument();
+            xdoc.LoadXml(submission.Xml);
+            xdoc.Save(fileName);
         }
     }
 }
