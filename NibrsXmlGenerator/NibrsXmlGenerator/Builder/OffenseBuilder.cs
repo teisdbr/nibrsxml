@@ -114,7 +114,8 @@ namespace NibrsXml.Builder
         {
             if (librsCriminalActivity.Trim() == String.Empty)
                 return null;
-            if (librsCriminalActivity == LIBRSErrorConstants.OthCrim)
+            //Other (X) and Possession with Intent to Sell (I) are only ones translated as P because they are LIBRS only.
+            if (librsCriminalActivity.MatchOne(LIBRSErrorConstants.OthCrim,LIBRSErrorConstants.Int))
                 return LIBRSErrorConstants.Posses;
             return librsCriminalActivity;
         }
