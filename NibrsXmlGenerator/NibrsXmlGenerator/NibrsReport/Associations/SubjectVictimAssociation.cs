@@ -30,7 +30,7 @@ namespace NibrsXml.NibrsReport.Associations
             this.Id = uniquePrefix + "SubjectVictimAssocSP" + id;
             this.SubjectRef = subject.Reference;
             this.VictimRef = victim.Reference;
-            this.RelationshipCode = RelationshipCode;
+            this.RelationshipCode = relationshipCode;
         }
 
         public SubjectVictimAssociation(String uniquePrefix, String id, string subjectRef, string victimRef, string relationshipCode)
