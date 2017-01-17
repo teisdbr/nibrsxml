@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.NibrsReport.Person;
 using NibrsXml.NibrsReport.Victim;
 using NibrsXml.NibrsReport.Subject;
 using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.Arrest;
 using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Constants;
 using LoadBusinessLayer;
-using LoadBusinessLayer.LIBRSVictim;
 using LoadBusinessLayer.LIBRSErrorConstants;
-using LoadBusinessLayer.LIBRSArrestee;
-using System.Text.RegularExpressions;
 using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -100,17 +95,15 @@ namespace NibrsXml.Builder
                             {
                                 case "NM":
                                     r.VictimOffenderRelation = "CS";
-                                    return r;
+                                    break;
                                 case "XB":
                                     r.VictimOffenderRelation = "BG";
-                                    return r;
+                                    break;
                                 case "ES":
                                     r.VictimOffenderRelation = "SE";
-                                    return r;
-                                default:
-                                    return r;
-
+                                    break;
                             }
+                            return r;
                         }).ToList();
 
                     }
@@ -160,29 +153,34 @@ namespace NibrsXml.Builder
 
             #region SubjectVictimAssociations
             //Match victims to subjects and create relationships
-            foreach (var victim in victims.Where(victim => victim.CategoryCode == LIBRSErrorConstants.VTIndividual || victim.CategoryCode == LIBRSErrorConstants.VTLawEnfOfficer).ToList())
+            if (victims.Any(v => v.CategoryCode.MatchOne(LIBRSErrorConstants.VTIndividual, LIBRSErrorConstants.VTLawEnfOfficer)))
             {
-                foreach (var relatedOffender in victim.RelatedOffenders)
+                var humanVictims = victims.Where(victim => victim.CategoryCode.MatchOne(LIBRSErrorConstants.VTIndividual, LIBRSErrorConstants.VTLawEnfOfficer));
+                foreach (var victim in humanVictims)
                 {
-                    //Find matching subjects
-                    var matchingSubjects = subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated);
-
-                    //Create relationships
-                    foreach (var subject in matchingSubjects)
+                    foreach (var relatedOffender in victim.RelatedOffenders)
                     {
-                        //Create association
-                        var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
-                                                                                            uniquePrefix: uniquePrefix,
-                                                                                            id: (subjectVictimAssocs.Count() + 1).ToString(),
-                                                                                            subject: subject,
-                                                                                            victim: victim,
-                                                                                            relationshipCode: relatedOffender.VictimOffenderRelation);
+                        //Find matching subjects
+                        var matchingSubjects = subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated);
 
-                        //Add Association to list
-                        subjectVictimAssocs.Add(subVicAssoc);
+                        //Create relationships
+                        foreach (var subject in matchingSubjects)
+                        {
+                            //Create association
+                            var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
+                                                                                                uniquePrefix: uniquePrefix,
+                                                                                                id: (subjectVictimAssocs.Count() + 1).ToString(),
+                                                                                                subject: subject,
+                                                                                                victim: victim,
+                                                                                                relationshipCode: relatedOffender.VictimOffenderRelation);
+
+                            //Add Association to list
+                            subjectVictimAssocs.Add(subVicAssoc);
+                        }
                     }
                 }
             }
+            
             #endregion
 
             #region Arrestees

@@ -49,7 +49,7 @@ namespace NibrsXml.NibrsReport.Victim
             this.RelatedOffenders = new List<LIBRSVictimOffenderRelation>();
         }
 
-        public Victim(string victimId)
+        public Victim(string victimId) : this()
         {
             this.VictimRef = victimId;
         }
@@ -60,7 +60,7 @@ namespace NibrsXml.NibrsReport.Victim
             String seqNum,
             string categoryCode,
             List<String> aggravatedAssaultHomicideFactorCode,
-            string justifiableHomicideFactorCode) : base()
+            string justifiableHomicideFactorCode) : this()
         {
             //Initialize required properties
             if (person != null)
@@ -78,7 +78,7 @@ namespace NibrsXml.NibrsReport.Victim
         public Victim(
             EnforcementOfficial.EnforcementOfficial officer,
             List<String> aggravatedAssaultHomicideFactorCode,
-            string justifiableHomicideFactorCode) : base()
+            string justifiableHomicideFactorCode) : this()
         {
             this.Person = officer.Person;
             this.Role = officer.Role;
