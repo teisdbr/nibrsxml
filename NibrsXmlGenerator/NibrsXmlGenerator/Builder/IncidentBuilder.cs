@@ -9,6 +9,7 @@ using NibrsXml.Utility;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSAdmin;
 using LoadBusinessLayer.LIBRSErrorConstants;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -21,7 +22,7 @@ namespace NibrsXml.Builder
             inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
             inc.CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false); // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
-            inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin), new IncidentExceptionalClearanceDate(ExtractNibrsClearanceDate(admin).TrimNullIfEmpty()));
+            inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin),  ExtractIncidentExceptionalClearanceDate(admin));
             return inc;
         }
 
@@ -54,8 +55,11 @@ namespace NibrsXml.Builder
             return admin.ClearedExceptionally;
         }
 
-        private static string ExtractNibrsClearanceDate(LIBRSAdmin admin)
+        private static IncidentExceptionalClearanceDate ExtractIncidentExceptionalClearanceDate(LIBRSAdmin admin)
         {
+            //If empty return null
+            if (admin.ExcpClearDate.IsNullBlankOrEmpty()) return null;
+
             string month, day, year;
             try
             {
@@ -67,7 +71,7 @@ namespace NibrsXml.Builder
             {
                 throw new Exception("There was an error parsing the LIBRS incident date.", e);
             }
-            return String.Format("{0}-{1}-{2}", year, month, day);
+            return new IncidentExceptionalClearanceDate(String.Format("{0}-{1}-{2}", year, month, day));
         }
     }
 }
