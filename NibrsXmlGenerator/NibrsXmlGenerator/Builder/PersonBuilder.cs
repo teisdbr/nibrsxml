@@ -188,7 +188,7 @@ namespace NibrsXml.Builder
                                 id: (subjectVictimAssocs.Count() + 1).ToString(),
                                 subject: subject,
                                 victim: victim,
-                                relationshipCode: relatedOffender.VictimOffenderRelation);
+                                relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelation.TrimNullIfEmpty()));
 
                             //Add Association to list
                             subjectVictimAssocs.Add(subVicAssoc);
@@ -323,6 +323,152 @@ namespace NibrsXml.Builder
             return range;
         }
 
+        private static string TranslateRelationship(Victim victim,string relationship)
+        {
+            if (relationship.IsNullBlankOrEmpty()) return null;
+
+            //Derived relationship
+            String derivedVicOffRelationship = relationship;
+
+            //If boyfriend or girlfriend related, add gender for specific translation
+            if (relationship.MatchOne("XB", "BG"))
+            {
+                //Append the sex for dictionary lookup.
+                derivedVicOffRelationship = derivedVicOffRelationship + victim.Person.SexCode;
+            }
+
+            return VictimOffenderRelationshipLibrsNibrsTranslation[derivedVicOffRelationship];
+        }
+
         #endregion
+
+        #region Static Dictionaries
+        private static Dictionary<String, String> VictimOffenderRelationshipLibrsNibrsTranslation = new Dictionary
+            <string, string>()
+            {
+                {"SE", "Family Member_Spouse"},
+                {
+                    "CS",
+                    "Family Member_Spouse_Common Law"
+                },
+
+                {
+                    "PA",
+                    "Family Member_Parent"
+                },
+                {
+                    "SB",
+                    "Family Member_Sibling"
+                },
+                {
+                    "CH",
+                    "Family Member_Child"
+                },
+                {
+                    "GP",
+                    "Family Member_Grandparent"
+                },
+                {
+                    "GC",
+                    "Family Member_Grandchild"
+                },
+                {
+                    "IL",
+                    "Family Member_In-Law"
+                },
+                {
+                    "SP",
+                    "Family Member_Stepparent"
+                },
+                {
+                    "SC",
+                    "Family Member_Stepchild"
+                },
+                {
+                    "SS",
+                    "Family Member_Stepsibling"
+                },
+                {
+                    "OF",
+                    "Family Member"
+                },
+                {
+                    "NM",
+                    "Family Member_Spouse_Common Law"
+                },
+                {
+                    "VO",
+                    "Victim Was Offender"
+                },
+                {
+                    "AQ",
+                    "Acquaintance"
+                },
+                {
+                    "FR",
+                    "Friend"
+                },
+                {
+                    "NE",
+                    "Neighbor"
+                },
+                {
+                    "BE",
+                    "Babysittee"
+                },
+                {
+                    "BGM",
+                    "Boyfriend"
+                },
+                {
+                    "BGF",
+                    "Girlfriend"
+                },
+                {
+                    "XBM",
+                    "Boyfriend"
+                },
+                {
+                    "XBF",
+                    "Girlfriend"
+                },
+                {
+                    "CF",
+                    "Child of Boyfriend_Girlfriend"
+                },
+                {
+                    "HR",
+                    "Homosexual relationship"
+                },
+                {
+                    "XS",
+                    "Ex_Spouse"
+                },
+                {
+                    "EE",
+                    "Employee"
+                },
+                {
+                    "ER",
+                    "Employer"
+                },
+                {
+                    "OK",
+                    "NonFamily_Otherwise Known"
+                },
+                {
+                    "ES",
+                    "Family Member_Spouse"
+                },
+                {
+                    "RU",
+                    "Relationship Unknown"
+                },
+                {
+                    "ST",
+                    "Stranger"
+                }
+            };
     }
+        #endregion
 }
