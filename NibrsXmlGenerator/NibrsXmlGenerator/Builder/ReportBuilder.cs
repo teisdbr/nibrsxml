@@ -153,7 +153,7 @@ namespace NibrsXml.Builder
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCategoryCode: drugCatCode,
-                        measureDecimalValue: prop.EstimatedDrugQty.TrimNullIfEmpty(),
+                        measureDecimalValue: prop.EstimatedDrugQty.Trim().TrimStart('0').TrimNullIfEmpty(),
                         substanceUnitCode: prop.TypeDrugMeas));
                 }
                 else
@@ -177,8 +177,8 @@ namespace NibrsXml.Builder
                     // Instantiate and add a new Item object to the list of items
                     nibrsItems.Add(new Item(
                         statusCode: nibrsItemStatusCode,
-                        valueAmount: prop.PropertyValue.Trim() == String.Empty ? null : prop.PropertyValue.Trim(),
-                        valueDate: prop.DateRecovered.Trim() == String.Empty ? null : prop.DateRecovered.ConvertToNibrsYearMonthDay(),
+                        valueAmount: prop.PropertyValue.Trim().TrimStart('0').TrimNullIfEmpty(),
+                        valueDate: prop.DateRecovered.IsNullBlankOrEmpty() ? null : prop.DateRecovered.ConvertToNibrsYearMonthDay(),
                         nibrsPropCategCode: prop.PropertyDescription.TrimNullIfEmpty(),
                         quantity: null)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
                 }

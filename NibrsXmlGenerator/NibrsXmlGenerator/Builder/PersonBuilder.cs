@@ -296,6 +296,7 @@ namespace NibrsXml.Builder
                 case "NB":
                 case "BB":
                 case "NN":
+                case "00":
                     return new PersonAugmentation(age);
             }
 
