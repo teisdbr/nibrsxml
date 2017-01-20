@@ -334,7 +334,7 @@ namespace NibrsXml.Builder
             if (relationship.MatchOne("XB", "BG"))
             {
                 //Append the sex for dictionary lookup.
-                derivedVicOffRelationship = derivedVicOffRelationship + victim.Person.SexCode;
+                derivedVicOffRelationship = victim.Person.SexCode == "U" ? "OK" : derivedVicOffRelationship + victim.Person.SexCode;
             }
 
             return VictimOffenderRelationshipLibrsNibrsTranslation[derivedVicOffRelationship];
