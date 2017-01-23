@@ -46,7 +46,7 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
             this.Role = new RoleOfPerson(this.Person.Id);
             this.ActivityCategoryCode = activityCategoryCode;
             this.AssignmentCategoryCode = assignmentCategoryCode;
-            this.Unit = new EnforcementOfficialUnit(new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
+            if (agencyOri != null) this.Unit = new EnforcementOfficialUnit(new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
         }
     }
 }

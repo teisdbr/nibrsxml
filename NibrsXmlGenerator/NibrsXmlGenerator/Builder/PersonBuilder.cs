@@ -71,7 +71,7 @@ namespace NibrsXml.Builder
                             victimSeqNum: victim.VictimSeqNum,
                             activityCategoryCode: victim.OfficerActivityCircumstance.TrimNullIfEmpty(),
                             assignmentCategoryCode: victim.OfficerAssignmentType.TrimNullIfEmpty(),
-                            agencyOri: incident.Admin.ORINumber);
+                            agencyOri: victim.OfficerOri != incident.Admin.ORINumber ? victim.OfficerOri : null);
 
                         //Add each of the new objects above to their respective lists
                         newVictim = new Victim(

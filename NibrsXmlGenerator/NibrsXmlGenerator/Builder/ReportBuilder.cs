@@ -143,6 +143,8 @@ namespace NibrsXml.Builder
 
         private static void BuildItemsAndSubstances(List<Item> nibrsItems, List<Substance> nibrsSubstances, List<LIBRSPropertyDescription> librsProperties)
         {
+
+
             foreach (LIBRSPropertyDescription prop in librsProperties)
             {
                 if (prop.PropertyDescription == drugNarcoticLibrsPropDesc && prop.PropertyLossType == LIBRSErrorConstants.PLSeiz)
@@ -195,7 +197,7 @@ namespace NibrsXml.Builder
                     innerKeySelector: arrlrs => arrlrs.ArrestSeqNum,
                     resultSelector: (arrest, lrs) => new
                     {
-                        TransactionNumber = arrest.ArrTransactionNumber,
+                        TransactionNumber = arrest.ArrestNumber,
                         ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
                         Charge = lrs.AgencyAssignedNibrs.HasValue(trim:true) ? lrs.AgencyAssignedNibrs : LarsList.LarsDictionary[lrs.LrsNumber.Trim()].nibr,
                         CategoryCode = arrest.ArrestType,
