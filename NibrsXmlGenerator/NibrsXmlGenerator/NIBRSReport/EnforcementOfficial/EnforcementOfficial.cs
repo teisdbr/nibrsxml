@@ -41,7 +41,7 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
             String agencyOri)
         {
             this.Person = person;
-            this.Person.Id += "PersonVictim" + victimSeqNum.ToString();
+            this.Person.Id += "PersonVictim" + victimSeqNum.TrimStart('0').ToString();
             this.VictimSeqNum = victimSeqNum;
             this.Role = new RoleOfPerson(this.Person.Id);
             this.ActivityCategoryCode = activityCategoryCode;

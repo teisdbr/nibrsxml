@@ -31,13 +31,16 @@ namespace NibrsXml.NibrsReport.Victim
         [XmlElement("VictimSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
         public string SeqNum { get; set; }
 
-        [XmlElement("VictimCategoryCode", Namespace = Namespaces.justice, Order = 3)]
+        [XmlElement("VictimInjury", Namespace = Namespaces.justice, Order = 3)]
+        public List<VictimInjury> VictimInjuries { get; set; }
+
+        [XmlElement("VictimCategoryCode", Namespace = Namespaces.justice, Order = 4)]
         public string CategoryCode { get; set; }
 
-        [XmlElement("VictimAggravatedAssaultHomicideFactorCode", Namespace = Namespaces.justice, Order = 4)]
+        [XmlElement("VictimAggravatedAssaultHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
         public List<String> AggravatedAssaultHomicideFactorCode { get; set; }
 
-        [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
+        [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 6)]
         public string JustifiableHomicideFactorCode { get; set; }
 
         [XmlIgnore]
@@ -54,10 +57,10 @@ namespace NibrsXml.NibrsReport.Victim
             this.VictimRef = victimId;
         }
 
-
         public Victim(
             Person.Person person,
             String seqNum,
+            List<VictimInjury> injuries,
             string categoryCode,
             List<String> aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode) : this()
@@ -69,7 +72,8 @@ namespace NibrsXml.NibrsReport.Victim
                 this.Person.Id += "PersonVictim" + seqNum.TrimStart('0');
                 this.Role = new RoleOfPerson(this.Person.Id);
             }
-            this.SeqNum = seqNum.ToString();
+            this.SeqNum = seqNum.TrimStart('0').ToString();
+            this.VictimInjuries = injuries;
             this.CategoryCode = categoryCode;
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
@@ -77,12 +81,14 @@ namespace NibrsXml.NibrsReport.Victim
 
         public Victim(
             EnforcementOfficial.EnforcementOfficial officer,
+            List<VictimInjury> injuries,
             List<String> aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode) : this()
         {
             this.Person = officer.Person;
             this.Role = officer.Role;
-            this.SeqNum = officer.VictimSeqNum.ToString();
+            this.SeqNum = officer.VictimSeqNum.TrimStart('0').ToString();
+            this.VictimInjuries = injuries;
             this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
             //Translate 40 to 09 if applicable.
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode.Select(a => a == "40" ? "09" : a).ToList();

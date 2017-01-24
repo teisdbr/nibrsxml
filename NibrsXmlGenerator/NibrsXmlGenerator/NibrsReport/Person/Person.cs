@@ -21,9 +21,6 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("PersonEthnicityCode", Namespace = Namespaces.justice, Order = 2)]
         public string EthnicityCode { get; set; }
 
-        [XmlElement("PersonInjury", Namespace = Namespaces.niemCore, Order = 3)]
-        public PersonInjury Injury { get; set; }
-
         [XmlElement("PersonRaceNDExCode", Namespace = Namespaces.justice, Order = 4)]
         public string RaceCode { get; set; }
 
@@ -51,7 +48,6 @@ namespace NibrsXml.NibrsReport.Person
         public Person(
             PersonAgeMeasure ageMeasure,
             string ethnicityCode,
-            PersonInjury injury,
             string raceCode,
             string residentCode,
             string sexCode,
@@ -60,7 +56,6 @@ namespace NibrsXml.NibrsReport.Person
                 "",
                 ageMeasure,
                 ethnicityCode,
-                injury,
                 raceCode,
                 residentCode,
                 sexCode,
@@ -70,7 +65,6 @@ namespace NibrsXml.NibrsReport.Person
             string id,
             PersonAgeMeasure ageMeasure,
             string ethnicityCode,
-            PersonInjury injury,
             string raceCode,
             string residentCode,
             string sexCode,
@@ -79,7 +73,6 @@ namespace NibrsXml.NibrsReport.Person
             this.Id = id;
             this.AgeMeasure = ageMeasure;
             this.EthnicityCode = ethnicityCode == null ? null : ethnicityCode.TrimNullIfEmpty();
-            this.Injury = injury;
             this.RaceCode = raceCode == null ? null : raceCode.TrimNullIfEmpty();
             this.ResidentCode = residentCode == null ? null : residentCode.TrimNullIfEmpty();
             this.SexCode = sexCode == null ? null : sexCode.TrimNullIfEmpty();

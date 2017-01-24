@@ -46,7 +46,7 @@ namespace NibrsXml.NibrsReport.Subject
             this.Person = person;
             this.Person.Id += "PersonSubject" + seqNum.TrimStart('0');
             this.Role = new RoleOfPerson(this.Person.Id);
-            this.SeqNum = seqNum;
+            this.SeqNum = seqNum.TrimStart('0');
         }
     }
 }

@@ -29,24 +29,19 @@ namespace NibrsXml.Builder
                 Victim newVictim = null;
 
                 //Get injury if applicable for current victim
-                var victimInjury = incident.VicInjury.Where(injury => injury.VictimSeqNum == victim.VictimSeqNum);
-                PersonInjury newInjury = null;
-
-                //Only instantiate newInjury if one exists.
-                //Todo: ??? Do we want to handle multiple injuries per victim.
-                if (victimInjury.Count() > 0)
-                    newInjury = victimInjury.First().InjuryType.TrimNullIfEmpty() == null
-                        ? null
-                        : new PersonInjury(victimInjury.First().InjuryType);
-
-                if (victim.VictimType == LIBRSErrorConstants.VTIndividual ||
-                    victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
+                var librsVictimInjuries = incident.VicInjury.Where(injury => injury.VictimSeqNum == victim.VictimSeqNum);
+                
+                //Only instantiate injuries if at least one exists.
+                List<VictimInjury> nibrsVictimInjuries = null;
+                if (librsVictimInjuries != null && librsVictimInjuries.Count() > 0)
+                    nibrsVictimInjuries = librsVictimInjuries.Select(i => new VictimInjury(i.InjuryType)).ToList();
+                
+                if (victim.VictimType == LIBRSErrorConstants.VTIndividual || victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
                 {
                     var newPerson = new Person(
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(victim.Age),
                         ethnicityCode: victim.Ethnicity,
-                        injury: newInjury,
                         raceCode: victim.Race,
                         residentCode: victim.ResidentStatus,
                         sexCode: victim.Sex,
@@ -76,6 +71,7 @@ namespace NibrsXml.Builder
                         //Add each of the new objects above to their respective lists
                         newVictim = new Victim(
                             officer: newOfficer,
+                            injuries: nibrsVictimInjuries,
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
                     }
@@ -84,6 +80,7 @@ namespace NibrsXml.Builder
                         newVictim = new Victim(
                             person: newPerson,
                             seqNum: victim.VictimSeqNum,
+                            injuries: nibrsVictimInjuries,
                             categoryCode: victim.VictimType,
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
@@ -121,6 +118,7 @@ namespace NibrsXml.Builder
                     newVictim = new Victim(
                         person: null,
                         seqNum: victim.VictimSeqNum,
+                        injuries: nibrsVictimInjuries,
                         categoryCode: victim.VictimType,
                         aggravatedAssaultHomicideFactorCode: null,
                         justifiableHomicideFactorCode: null);
@@ -142,7 +140,6 @@ namespace NibrsXml.Builder
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(offender.Age),
                         ethnicityCode: null,
-                        injury: null, //Injury is not collected for offenders
                         raceCode: offender.Race,
                         residentCode: null,
                         sexCode: offender.Sex,
@@ -230,7 +227,6 @@ namespace NibrsXml.Builder
                             id: uniquePrefix,
                             ageMeasure: LibrsAgeMeasureParser(librsArrestee.Age),
                             ethnicityCode: librsArrestee.Ethnicity,
-                            injury: null,
                             raceCode: librsArrestee.Race,
                             residentCode: librsArrestee.ResidentStatus,
                             sexCode: librsArrestee.Sex,
