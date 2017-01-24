@@ -66,7 +66,7 @@ namespace NibrsXml.NibrsReport.Victim
             if (person != null)
             {
                 this.Person = person;
-                this.Person.Id += "PersonVictim" + seqNum;
+                this.Person.Id += "PersonVictim" + seqNum.TrimStart('0');
                 this.Role = new RoleOfPerson(this.Person.Id);
             }
             this.SeqNum = seqNum.ToString();

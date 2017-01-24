@@ -3288,28 +3288,28 @@ namespace NibrsXml.Constants
 		/// <summary>
 		/// Under 24 Hours
 		/// </summary>
-		[NibrsCode("NN")]
+        [NibrsCode("NEONATAL")]
 		[CodeDescription("Under 24 Hours")]
 		NEONATAL,
 
 		/// <summary>
 		/// 1-6 Days Old
 		/// </summary>
-		[NibrsCode("NB")]
+        [NibrsCode("NEWBORN")]
 		[CodeDescription("1-6 Days Old")]
 		NEWBORN,
 
 		/// <summary>
 		/// 7-364 Days Old
 		/// </summary>
-		[NibrsCode("BB")]
+        [NibrsCode("BABY")]
 		[CodeDescription("7-364 Days Old")]
 		BABY,
 
 		/// <summary>
 		/// Unknown
 		/// </summary>
-		[NibrsCode("00")]
+        [NibrsCode("UNKNOWN")]
 		[CodeDescription("Unknown")]
 		UNKNOWN
 	}

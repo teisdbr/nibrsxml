@@ -30,7 +30,7 @@ namespace NibrsXml.NibrsReport.Arrest
         [XmlElement("ArrestCategoryCode", Namespace = Namespaces.justice, Order = 4)]
         public string CategoryCode { get; set; }
 
-        [XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 5)]
+        [XmlIgnore]//[XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 5)]
         public string SubjectCountCode { get; set; }
 
         [XmlIgnore]
@@ -48,7 +48,7 @@ namespace NibrsXml.NibrsReport.Arrest
 
         public Arrest(String uniquePrefix,String arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
         {
-            this.Id = uniquePrefix + "Arrest" + arrestId;
+            this.Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0');
             this.ActivityId = activityId;
             this.Date = date;
             this.Charge = charge;

@@ -42,6 +42,9 @@ namespace NibrsXml.NibrsReport.Arrestee
         [XmlElement("ArresteeJuvenileDispositionCode", Namespace = Namespaces.justice, Order = 5)]
         public string JuvenileDispositionCode { get; set; }
 
+        [XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 6)]
+        public string SubjectCountCode { get; set; }
+
         public Arrestee Reference { get { return new Arrestee(Person.Id); } }
 
         public Arrestee() { }
@@ -56,17 +59,18 @@ namespace NibrsXml.NibrsReport.Arrestee
             string seqId,
             string clearanceIndicator,
             List<String> armedWithCode,
-            string juvenileDispositionCode)
+            string juvenileDispositionCode,
+            string subjectCountCode)
         {
             this.Person = person;
-            this.Id = this.Person.Id; //Since person should already contain a unique prefix by now, we can reuse it here for the arrestee id
-            this.Person.Id += "PersonArrestee" + seqId.ToString();
-            this.Id += "Arrestee" + seqId.ToString();
+            this.Id = this.Person.Id + "Arrestee" + seqId.TrimStart('0'); //Since person should already contain a unique prefix by now, we can reuse it here for the arrestee id
+            this.Person.Id += "PersonArrestee" + seqId.TrimStart('0');
             this.Role = new RoleOfPerson(this.Person.Id);
             this.SeqId = seqId;
             this.ClearanceIndicator = clearanceIndicator.ToLower().TrimNullIfEmpty();
             this.ArmedWithCodes = armedWithCode;
             this.JuvenileDispositionCode = juvenileDispositionCode;
+            this.SubjectCountCode = subjectCountCode;
         }
     }
 }

@@ -246,7 +246,8 @@ namespace NibrsXml.Builder
                         incident.ArrArm.Where(armm => armm.ArrestSeqNum == librsArrestee.ArrestSeqNum)
                             .Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty())
                             .ToList(),
-                        juvenileDispositionCode: juvenileDispositionCode);
+                        juvenileDispositionCode: juvenileDispositionCode,
+                        subjectCountCode: librsArrestee.MultipleArresteeIndicator);
                 }).ToList();
 
             //var removedDupArrestees = nibrsArrestees.GroupBy(
@@ -293,11 +294,10 @@ namespace NibrsXml.Builder
         {
             switch (age)
             {
-                case "NB":
-                case "BB":
-                case "NN":
-                case "00":
-                    return new PersonAugmentation(age);
+                case "NN": return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
+                case "NB": return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
+                case "BB": return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
+                case "00": return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
             }
 
             return null;
