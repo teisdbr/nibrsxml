@@ -99,7 +99,7 @@
     <Compile Include="NibrsReport\Person\MeasureIntegerRange.cs" />
     <Compile Include="NibrsReport\Person\PersonAgeMeasure.cs" />
     <Compile Include="NibrsReport\Person\PersonAugmentation.cs" />
-    <Compile Include="NibrsReport\Person\PersonInjury.cs" />
+    <Compile Include="NibrsReport\Victim\VictimInjury.cs" />
     <Compile Include="NibrsReport\Misc\OrganizationAugmentation.cs" />
     <Compile Include="NibrsReport\Misc\OrganizationORIIdentification.cs" />
     <Compile Include="NibrsReport\ReportHeader\ReportDate.cs" />

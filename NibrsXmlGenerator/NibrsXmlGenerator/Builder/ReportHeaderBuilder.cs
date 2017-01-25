@@ -45,11 +45,11 @@ namespace NibrsXml.Builder
                 
                 if (offense.OffenseGroup == groupAIncidentReport)
                 {
-                    return NIBRSReportCategoryCode.A.NibrsCode();
+                    return NibrsReportCategoryCode.A.NibrsCode();
                 }
             }
             // If there are no group A offenses, this is a group B incident report
-            return NIBRSReportCategoryCode.B.NibrsCode();
+            return NibrsReportCategoryCode.B.NibrsCode();
         }
     }
 }

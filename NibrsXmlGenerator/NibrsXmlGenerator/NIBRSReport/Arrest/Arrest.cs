@@ -46,9 +46,9 @@ namespace NibrsXml.NibrsReport.Arrest
             this.ArrestRef = arrestId;
         }
 
-        public Arrest(String uniquePrefix,String arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
+        public Arrest(String uniquePrefix, String arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
         {
-            this.Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0');
+            this.Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0') + "-" + activityId.Id.Trim();
             this.ActivityId = activityId;
             this.Date = date;
             this.Charge = charge;
@@ -56,7 +56,7 @@ namespace NibrsXml.NibrsReport.Arrest
             this.SubjectCountCode = subjectCountCode;
 
             //Save the sequence number for matching to arrestee later on
-            this.SequenceNumber = arrestId;
+            this.SequenceNumber = arrestId.TrimStart('0');
         }
     }
 }

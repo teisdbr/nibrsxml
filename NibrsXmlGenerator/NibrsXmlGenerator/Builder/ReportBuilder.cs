@@ -33,7 +33,7 @@ namespace NibrsXml.Builder
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
             //Initialize a new report
-            Report rpt = new Report();
+            var rpt = new Report();
 
             //Determine the unique report prefix to be used for all items that are to be identified within the report
             incident.IncidentNumber = incident.IncidentNumber.Trim();
@@ -41,11 +41,34 @@ namespace NibrsXml.Builder
 
             //Build the report
 
+            //Depending on the Nibrs report category and the action type code,
+            //this function may return early when the minimal amount of data required is met for delete action types
+
             rpt.Header = ReportHeaderBuilder.Build(
                 offenses: incident.Offense,
                 actionType: incident.Admin.ActionType,
                 admin: incident.Admin);
-            rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
+
+            if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode()) {
+                rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
+                
+                //Send only the incident for group A deletes
+                if (incident.Admin.ActionType == "D") return rpt;
+            }
+
+            BuildArrests(
+                arrests: rpt.Arrests,
+                incident: incident,
+                uniquePrefix: uniqueReportPrefix);
+
+            if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
+            {
+                //Do not send any group B reports if there are no accompanying arrests
+                if (rpt.Arrests.Count == 0) return null;
+
+                //Send only the arrests for group B deletes
+                if (incident.Admin.ActionType == "D") return rpt;
+            }
 
             rpt.Offenses = OffenseBuilder.Build(
                 offenses: incident.Offense,
@@ -53,8 +76,7 @@ namespace NibrsXml.Builder
                 uniqueSuspectedOfUsingCodes: UniqueSuspectedOfUsingCodes(incident.OffUsing),
                 uniqueReportPrefix: uniqueReportPrefix);
             
-            //Build list of locations and location associations
-            LocationListBuilder(
+            BuildLocationsAndLocationAssociations(
                 offenses: rpt.Offenses,
                 locations: rpt.Locations,
                 locationAssociations: rpt.OffenseLocationAssocs,
@@ -74,11 +96,6 @@ namespace NibrsXml.Builder
                 arrestees: rpt.Arrestees,
                 subjectVictimAssocs: rpt.SubjectVictimAssocs,
                 incident: incident, 
-                uniquePrefix: uniqueReportPrefix);
-
-            ArrestBuilder(
-                arrests: rpt.Arrests,
-                incident: incident,
                 uniquePrefix: uniqueReportPrefix);
 
             rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
@@ -121,7 +138,7 @@ namespace NibrsXml.Builder
         /// <param name="offenses">List of offenses to build locations from</param>
         /// <param name="locations">List of locations to match with offenses (This is empty, but initialized)</param>
         /// <param name="locationAssociations">List of location associations to match to locations</param>
-        private static void LocationListBuilder(List<Offense> offenses, List<Location> locations, List<OffenseLocationAssociation> locationAssociations, String uniqueReportPrefix)
+        private static void BuildLocationsAndLocationAssociations(List<Offense> offenses, List<Location> locations, List<OffenseLocationAssociation> locationAssociations, String uniqueReportPrefix)
         {
             foreach (var offense in offenses)
             {
@@ -187,9 +204,8 @@ namespace NibrsXml.Builder
             }
         }
 
-        private static void ArrestBuilder(List<Arrest> arrests, LIBRSIncident incident, String uniquePrefix)
+        private static void BuildArrests(List<Arrest> arrests, LIBRSIncident incident, String uniquePrefix)
         {
-
             var arrestList =
                 incident.Arrestee.Join(
                     inner: incident.ArrStatute,
@@ -215,9 +231,9 @@ namespace NibrsXml.Builder
                                                         var arrest = arrList.Where(arr => arr.Rank == minRank).First();
                                                         return
                                                         new Arrest(
-                                                            uniquePrefix: uniquePrefix,
+                                                            uniquePrefix: uniquePrefix + incident.Admin.ActionType + "-",
                                                             arrestId: arrest.SeqNum,
-                                                            activityId: arrest.TransactionNumber.TrimNullIfEmpty() != null ? new NibrsReport.Misc.ActivityIdentification() : null,
+                                                            activityId: new NibrsReport.Misc.ActivityIdentification(arrest.TransactionNumber.Trim()),
                                                             date: new ActivityDate(arrest.ActivityDate),
                                                             charge: new ArrestCharge(arrest.Charge),
                                                             categoryCode: arrest.CategoryCode,
@@ -228,7 +244,7 @@ namespace NibrsXml.Builder
             foreach (var arr in groupedArrests)
             {
                 arrests.Add(arr);
-            }            
+            }
         }
 
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims)

@@ -3241,7 +3241,7 @@ namespace NibrsXml.Constants
 	 /// A data type for a kind of report contained in the NIBRS submission
 	/// </summary>
 	[Description("A data type for a kind of report contained in the NIBRS submission")]
-	enum NIBRSReportCategoryCode
+	enum NibrsReportCategoryCode
 	{
 		/// <summary>
 		/// Group A Incident Report

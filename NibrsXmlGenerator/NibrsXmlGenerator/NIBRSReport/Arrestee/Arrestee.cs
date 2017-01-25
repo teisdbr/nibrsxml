@@ -66,7 +66,7 @@ namespace NibrsXml.NibrsReport.Arrestee
             this.Id = this.Person.Id + "Arrestee" + seqId.TrimStart('0'); //Since person should already contain a unique prefix by now, we can reuse it here for the arrestee id
             this.Person.Id += "PersonArrestee" + seqId.TrimStart('0');
             this.Role = new RoleOfPerson(this.Person.Id);
-            this.SeqId = seqId;
+            this.SeqId = seqId.TrimStart('0');
             this.ClearanceIndicator = clearanceIndicator.ToLower().TrimNullIfEmpty();
             this.ArmedWithCodes = armedWithCode;
             this.JuvenileDispositionCode = juvenileDispositionCode;
