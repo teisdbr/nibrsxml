@@ -262,6 +262,7 @@
           <xs:element ref="nc:RoleOfPerson" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="nc:RoleOfOrganization" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="j:VictimSequenceNumberText" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="j:VictimInjury" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="j:VictimCategory" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="j:VictimAggravatedAssaultHomicideFactor" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="j:VictimJustifiableHomicideFactor" minOccurs="0" maxOccurs="unbounded"/>
@@ -682,6 +683,11 @@
   <xs:element name="VictimCategoryCode" type="ucr:VictimCategoryCodeType" substitutionGroup="j:VictimCategory">
     <xs:annotation>
       <xs:documentation>A kind of victim an offense was committed against.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="VictimInjury" type="nc:InjuryType">
+    <xs:annotation>
+      <xs:documentation>An injury received by a victim due to an incident.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:element name="VictimJustifiableHomicideFactor" abstract="true">

@@ -86,7 +86,7 @@
     <xsd:element name="IncidentReportDateIndicator" type="xsd:boolean" nillable="true"/>
     <xsd:element name="ItemStatusCode" type="cjiscodes:ItemStatusCodeType" substitutionGroup="nc:StatusDesignator" nillable="true"/>
     <xsd:element name="OrganizationAugmentation" type="cjis:OrganizationAugmentationType" substitutionGroup="nc:OrganizationAugmentationPoint" nillable="true"/>
-    <xsd:element name="SubjectAugmenatation" type="cjis:SubjectAugmentationType" substitutionGroup="j:SubjectAugmentationPoint"/>
+    <xsd:element name="SubjectAugmentation" type="cjis:SubjectAugmentationType" substitutionGroup="j:SubjectAugmentationPoint"/>
     
     
 </xsd:schema>

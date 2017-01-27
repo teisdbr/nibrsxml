@@ -558,22 +558,22 @@
       </xsd:appinfo>
     </xsd:annotation>
     <xsd:restriction base="xsd:token">
-      <xsd:enumeration value="NN">
+      <xsd:enumeration value="NEONATAL">
         <xsd:annotation>
           <xsd:documentation>Under 24 Hours</xsd:documentation>
         </xsd:annotation>
       </xsd:enumeration>
-      <xsd:enumeration value="NB">
+      <xsd:enumeration value="NEWBORN">
         <xsd:annotation>
           <xsd:documentation>1-6 Days Old</xsd:documentation>
         </xsd:annotation>
       </xsd:enumeration>
-      <xsd:enumeration value="BB">
+      <xsd:enumeration value="BABY">
         <xsd:annotation>
           <xsd:documentation>7-364 Days Old</xsd:documentation>
         </xsd:annotation>
       </xsd:enumeration>
-      <xsd:enumeration value="00">
+      <xsd:enumeration value="UNKNOWN">
         <xsd:annotation>
           <xsd:documentation>Unknown</xsd:documentation>
         </xsd:annotation>
