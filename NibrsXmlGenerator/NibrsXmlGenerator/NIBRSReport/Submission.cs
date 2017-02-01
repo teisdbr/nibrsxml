@@ -77,9 +77,11 @@ namespace NibrsXml.NibrsReport
         /// </summary>
         /// <param name="lists">Incident data to be used</param>
         /// <param name="fileName">Complete file name with path prefixed</param>
-        public static void WriteXml(List<IncidentList> lists, string fileName)
+        public static void WriteXml(List<IncidentList> lists, string fileName, string nibrsSchemaLocation = NibrsXml.Constants.Misc.schemaLocation)
         {
             var submission = SubmissionBuilder.Build(lists);
+            //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
+            submission.XsiSchemaLocation = nibrsSchemaLocation; 
             var xdoc = new XmlDocument();
             xdoc.LoadXml(submission.Xml);
             xdoc.Save(fileName);

@@ -136,6 +136,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="NibrsXsd\docs\nibrsCodesTables.xlsx" />
+    <None Include="NibrsXsd\docs\nibrsNIEM_Mapping.xlsx" />
+    <None Include="NibrsXsd\docs\nibrsUML.vsd" />
+    <None Include="NibrsXsd\xsd\cjis\1.0\cjis-codes.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\cjis\1.0\cjis.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ncic\3.1\fbi_ncic.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ndex\3.1\fbi_ndex.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\conformanceTargets\3.0\conformanceTargets.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\structures\3.0\structures.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitWinLIBRS\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
@@ -156,10 +204,18 @@
     <Folder Include="Ucr\ReportBuilder\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NibrsXsd\xml\nibrs.xml" />
+    <Content Include="NibrsXsd\xml\nibrs2.xml" />
+    <Content Include="NibrsXsd\xml\wantlist.xml" />
+    <Content Include="NibrsXsd\xml\xml-catalog.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -8,12 +8,15 @@ namespace NibrsXml.Constants
     /// <summary>
     /// A listing of miscellaneous constants used for generating NIBRSXML reports
     /// </summary>
-    class Misc
+    public class Misc
     {
         /// <summary>
         /// "http://fbi.gov/cjis/nibrs/4.0 ../xsd/nibrs/4.0/nibrs.xsd"
         /// </summary>
         public const string schemaLocation = "http://fbi.gov/cjis/nibrs/4.0 ../xsd/nibrs/4.0/nibrs.xsd";
+
+        //To be used only by the individual ORI xml generation.
+        public const string rootNibrsSchemaLocation = "http://fbi.gov/cjis/nibrs/4.0 ../../xsd/nibrs/4.0/nibrs.xsd";
     }
 
     /// <summary>
