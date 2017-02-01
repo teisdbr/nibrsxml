@@ -242,7 +242,7 @@ namespace NibrsXml.Builder
                         incident.ArrArm.Where(armm => armm.ArrestSeqNum == librsArrestee.ArrestSeqNum)
                             .Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty())
                             .ToList(),
-                        juvenileDispositionCode: juvenileDispositionCode,
+                        juvenileDispositionCode: TranslateJuvenileDispositionCode(juvenileDispositionCode),
                         subjectCountCode: librsArrestee.MultipleArresteeIndicator);
                 }).ToList();
 
@@ -320,6 +320,18 @@ namespace NibrsXml.Builder
             return range;
         }
 
+        private static string TranslateJuvenileDispositionCode(string librsJuvenileDisposition)
+        {
+            if (librsJuvenileDisposition.IsNullBlankOrEmpty())
+                return null;
+
+            if (JuvenileDispositionCodeLibrsNibrsTranslations.ContainsKey(librsJuvenileDisposition))
+                return JuvenileDispositionCodeLibrsNibrsTranslations[librsJuvenileDisposition];
+
+            //Intentionally return the input value as a last resort so that the xml validator can pick up the error and report it at the end
+            return librsJuvenileDisposition;
+        }
+
         private static string TranslateRelationship(Victim victim,string relationship)
         {
             if (relationship.IsNullBlankOrEmpty()) return null;
@@ -343,7 +355,16 @@ namespace NibrsXml.Builder
 
         #endregion
 
-        #region Static Dictionaries
+        #region Shared Variables
+        private static Dictionary<String, String> JuvenileDispositionCodeLibrsNibrsTranslations = new Dictionary<string, string>
+        {
+            {LIBRSErrorConstants.DispDepartment, JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode()},
+            {LIBRSErrorConstants.DispJuvenileCourt, JuvenileDispositionCode.JUVENILE_COURT.NibrsCode()},
+            {LIBRSErrorConstants.DispWelfareAgency, JuvenileDispositionCode.WELFARE.NibrsCode()},
+            {LIBRSErrorConstants.DispPoliceAgency, JuvenileDispositionCode.OTHER_AUTHORITIES.NibrsCode()},
+            {LIBRSErrorConstants.DispAdultCourt, JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode()}
+        };
+
         private static Dictionary<String, String> VictimOffenderRelationshipLibrsNibrsTranslation = new Dictionary
             <string, string>()
             {

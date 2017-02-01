@@ -32,81 +32,91 @@ namespace NibrsXml.Builder
         
         public static NibrsReport.Report Build(LIBRSIncident incident)
         {
-            //Initialize a new report
-            var rpt = new Report();
-
-            //Determine the unique report prefix to be used for all items that are to be identified within the report
-            incident.IncidentNumber = incident.IncidentNumber.Trim();
-            var uniqueReportPrefix = incident.Admin.ORINumber + "-" + incident.IncidentNumber + "-";
-
-            //Build the report
-
-            //Depending on the Nibrs report category and the action type code,
-            //this function may return early when the minimal amount of data required is met for delete action types
-
-            rpt.Header = ReportHeaderBuilder.Build(
-                offenses: incident.Offense,
-                actionType: incident.Admin.ActionType,
-                admin: incident.Admin);
-
-            if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode()) {
-                rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
-                
-                //Send only the incident for group A deletes
-                if (incident.Admin.ActionType == "D") return rpt;
-            }
-
-            BuildArrests(
-                arrests: rpt.Arrests,
-                incident: incident,
-                uniquePrefix: uniqueReportPrefix);
-
-            if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
+            try
             {
-                //Do not send any group B reports if there are no accompanying arrests
-                if (rpt.Arrests.Count == 0) return null;
+                //Initialize a new report
+                var rpt = new Report();
 
-                //Send only the arrests for group B deletes
-                if (incident.Admin.ActionType == "D") return rpt;
+                //Determine the unique report prefix to be used for all items that are to be identified within the report
+                incident.IncidentNumber = incident.IncidentNumber.Trim();
+                var uniqueReportPrefix = incident.Admin.ORINumber + "-" + incident.IncidentNumber + "-";
+
+                //Build the report
+
+                //Depending on the Nibrs report category and the action type code,
+                //this function may return early when the minimal amount of data required is met for delete action types
+
+                rpt.Header = ReportHeaderBuilder.Build(
+                    offenses: incident.Offense,
+                    actionType: incident.Admin.ActionType,
+                    admin: incident.Admin);
+
+                if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode())
+                {
+                    rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
+
+                    //Send only the incident for group A deletes
+                    if (incident.Admin.ActionType == "D") return rpt;
+                }
+
+                BuildArrests(
+                    arrests: rpt.Arrests,
+                    incident: incident,
+                    uniquePrefix: uniqueReportPrefix);
+
+                if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
+                {
+                    //Do not send any group B reports if there are no accompanying arrests
+                    if (rpt.Arrests.Count == 0) return null;
+
+                    //Send only the arrests for group B deletes
+                    if (incident.Admin.ActionType == "D") return rpt;
+                }
+
+                rpt.Offenses = OffenseBuilder.Build(
+                    offenses: incident.Offense,
+                    uniqueBiasMotivationCodes: UniqueBiasMotivationCodes(incident.Offender),
+                    uniqueSuspectedOfUsingCodes: UniqueSuspectedOfUsingCodes(incident.OffUsing),
+                    uniqueReportPrefix: uniqueReportPrefix);
+
+                BuildLocationsAndLocationAssociations(
+                    offenses: rpt.Offenses,
+                    locations: rpt.Locations,
+                    locationAssociations: rpt.OffenseLocationAssocs,
+                    uniqueReportPrefix: uniqueReportPrefix);
+
+                BuildItemsAndSubstances(
+                    nibrsItems: rpt.Items,
+                    nibrsSubstances: rpt.Substances,
+                    librsProperties: incident.PropDesc);
+
+                //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
+                PersonBuilder.Build(
+                    persons: rpt.Persons,
+                    victims: rpt.Victims,
+                    officers: rpt.Officers,
+                    subjects: rpt.Subjects,
+                    arrestees: rpt.Arrestees,
+                    subjectVictimAssocs: rpt.SubjectVictimAssocs,
+                    incident: incident,
+                    uniquePrefix: uniqueReportPrefix);
+
+                rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
+                    arrests: rpt.Arrests,
+                    arrestees: rpt.Arrestees);
+
+                rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
+                    offenses: rpt.Offenses,
+                    victims: rpt.Victims);
+
+                return rpt;
             }
-
-            rpt.Offenses = OffenseBuilder.Build(
-                offenses: incident.Offense,
-                uniqueBiasMotivationCodes: UniqueBiasMotivationCodes(incident.Offender),
-                uniqueSuspectedOfUsingCodes: UniqueSuspectedOfUsingCodes(incident.OffUsing),
-                uniqueReportPrefix: uniqueReportPrefix);
-            
-            BuildLocationsAndLocationAssociations(
-                offenses: rpt.Offenses,
-                locations: rpt.Locations,
-                locationAssociations: rpt.OffenseLocationAssocs,
-                uniqueReportPrefix: uniqueReportPrefix);
-            
-            BuildItemsAndSubstances(
-                nibrsItems: rpt.Items,
-                nibrsSubstances: rpt.Substances,
-                librsProperties: incident.PropDesc);
-            
-            //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
-            PersonBuilder.Build(
-                persons: rpt.Persons, 
-                victims: rpt.Victims,
-                officers: rpt.Officers,
-                subjects: rpt.Subjects,
-                arrestees: rpt.Arrestees,
-                subjectVictimAssocs: rpt.SubjectVictimAssocs,
-                incident: incident, 
-                uniquePrefix: uniqueReportPrefix);
-
-            rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
-                arrests: rpt.Arrests,
-                arrestees: rpt.Arrestees);
-
-            rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
-                offenses: rpt.Offenses,
-                victims: rpt.Victims);
-            
-            return rpt;
+            catch (Exception ex)
+            {
+                //todo: make log writing shared or something
+                Console.WriteLine(String.Format("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}", incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace));
+                return null;
+            }
         }
 
         #region Helper Functions
