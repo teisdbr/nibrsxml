@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HumanTraffickingSummary>
+  <Classification name="1">
+    <Actual>1</Actual>
+    <ClearedByArrest>2</ClearedByArrest>
+    <ClearedByJuvArrest>3</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="1a">
+    <Actual>1</Actual>
+    <ClearedByArrest>2</ClearedByArrest>
+    <ClearedByJuvArrest>3</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="1b">
+    <Actual>1</Actual>
+    <ClearedByArrest>2</ClearedByArrest>
+    <ClearedByJuvArrest>3</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="Grand Total">
+    <Actual>1</Actual>
+    <ClearedByArrest>2</ClearedByArrest>
+    <ClearedByJuvArrest>3</ClearedByJuvArrest>
+  </Classification>
+</HumanTraffickingSummary>
