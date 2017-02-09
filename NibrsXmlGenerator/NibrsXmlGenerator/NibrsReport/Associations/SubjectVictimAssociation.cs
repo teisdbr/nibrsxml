@@ -24,6 +24,12 @@ namespace NibrsXml.NibrsReport.Associations
         [XmlElement("VictimToSubjectRelationshipCode", Namespace = Namespaces.justice, Order = 3)]
         public string RelationshipCode { get; set; }
 
+        [XmlIgnore]
+        public Subject.Subject RelatedSubject { get; set; }
+
+        [XmlIgnore]
+        public Victim.Victim RelatedVictim { get; set; }
+
         public SubjectVictimAssociation()
         {
         }
@@ -35,6 +41,8 @@ namespace NibrsXml.NibrsReport.Associations
             this.SubjectRef = subject.Reference;
             this.VictimRef = victim.Reference;
             this.RelationshipCode = relationshipCode;
+            this.RelatedVictim = victim;
+            this.RelatedSubject = subject;
         }
 
         public SubjectVictimAssociation(String uniquePrefix, String id, string subjectRef, string victimRef,

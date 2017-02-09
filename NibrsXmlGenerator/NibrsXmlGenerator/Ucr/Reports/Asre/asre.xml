@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="asre.xsl"?>
-<ASRSummary xmlns="http://www.tei.org/test/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tei.org/test/1.0 asre.xsd">
+<ASRSummary>
 	<UcrCodeDictionary>
     <UCRDescription value="09A">Murder &amp; Nonnegligent Manslaughter</UCRDescription>
     <UCRDescription value="09B">Negligent Manslaughter</UCRDescription>

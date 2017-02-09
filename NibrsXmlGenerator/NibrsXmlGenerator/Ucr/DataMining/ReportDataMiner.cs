@@ -22,6 +22,9 @@ namespace NibrsXml.Ucr.DataMining
 
                 //Mine data
                 AsreMiner.MineAdd(monthlyOriReportData, report);
+
+                //Mine Human Trafficking Data
+                HumanTraffickingMiner.Mine(monthlyOriReportData, report);
             }
 
             return monthlyOriReportData;

@@ -79,7 +79,7 @@ namespace NibrsXml.Builder
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
                 // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
                 offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
-                offenseReport.librsVictimSequenceNumber = offense.OffConnecttoVic;
+                offenseReport.librsVictimSequenceNumber = offense.OffConnecttoVic.TrimStart('0');
                 offenseReports.Add(offenseReport);
             }
             return offenseReports;

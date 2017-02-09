@@ -17,12 +17,20 @@ namespace NibrsXml.NibrsReport.Associations
         [XmlElement("Location", Namespace = Namespaces.niemCore, Order = 2)]
         public Location.Location LocationRef { get; set; }
 
+        [XmlIgnore]
+        public Offense.Offense RelatedOffense { get; set; }
+
+        [XmlIgnore]
+        public Location.Location RelatedLocation { get; set; }
+
         public OffenseLocationAssociation() { }
 
         public OffenseLocationAssociation(Offense.Offense offense, Location.Location location)
         {
             this.OffenseRef = offense.Reference;
             this.LocationRef = location.Reference;
+            this.RelatedOffense = offense;
+            this.RelatedLocation = location;
         }
 
         public OffenseLocationAssociation(string offenseRef, string locationRef)

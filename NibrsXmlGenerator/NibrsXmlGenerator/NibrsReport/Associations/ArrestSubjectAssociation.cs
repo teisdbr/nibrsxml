@@ -17,12 +17,20 @@ namespace NibrsXml.NibrsReport.Associations
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 2)]
         public Arrestee.Arrestee SubjectRef { get; set; }
 
+        [XmlIgnore]
+        public Arrest.Arrest RelatedArrest { get; set; }
+
+        [XmlIgnore]
+        public Arrestee.Arrestee RelatedArrestee { get; set; }
+
         public ArrestSubjectAssociation() { }
 
         public ArrestSubjectAssociation(Arrest.Arrest arrest, Arrestee.Arrestee arrestee)
         {
             this.ActivityRef = arrest.Reference;
             this.SubjectRef = arrestee.Reference;
+            this.RelatedArrestee = arrestee;
+            this.RelatedArrest = arrest;
         }
 
         public ArrestSubjectAssociation(string arrestRef, string arresteeRef)
