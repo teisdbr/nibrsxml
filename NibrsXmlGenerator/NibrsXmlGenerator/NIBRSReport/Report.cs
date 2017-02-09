@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using System.Text.RegularExpressions;
+using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport
 {
@@ -207,6 +206,48 @@ namespace NibrsXml.NibrsReport
         {
             foreach (Associations.SubjectVictimAssociation association in associations)
                 this.SubjectVictimAssocs.Add(association);
+        }
+
+        /// <summary>
+        /// To be called only after deserialization occurs. Because of the nature of deserialization, the full context of
+        /// the associations, arrestees, enforcement officials, subjects, and victims is missing. Person objects only
+        /// have the person ref and the association objects only have the refs of the objects they associate.
+        /// </summary>
+        public void RebuildCrossReferencedRelationships()
+        {
+            //Get all person victims so that these loops/lambdas do not try to match victims that are business, gov't, religious org, etc.
+            var personVictims = Victims.Where(v => v.CategoryCode.MatchOne(VictimCategoryCode.INDIVIDUAL.NibrsCode(), VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())).ToArray();
+
+            //Rebuild persons
+            foreach (var arrestee in Arrestees) arrestee.Person = Persons.First(p => p.Id == arrestee.Role.PersonId);
+            foreach (var leo in Officers) leo.Person = Persons.First(p => p.Id == leo.Role.PersonId);
+            foreach (var subject in Subjects) subject.Person = Persons.First(p => p.Id == subject.Role.PersonId);
+            foreach (var victim in personVictims) victim.Person = Persons.First(p => p.Id == victim.Role.PersonId);
+
+            //Rebuild associations
+            foreach (var assoc in ArrestSubjectAssocs)
+            {
+                assoc.RelatedArrest = Arrests.First(a => a.Id == assoc.ActivityRef.ArrestRef);
+                assoc.RelatedArrestee = Arrestees.First(a => a.Role.PersonId == assoc.SubjectRef.PersonRef);
+            }
+
+            foreach (var assoc in OffenseLocationAssocs)
+            {
+                assoc.RelatedOffense = Offenses.First(o => o.Id == assoc.OffenseRef.OffenseRef);
+                assoc.RelatedLocation = Locations.First(l => l.Id == assoc.LocationRef.LocationRef);
+            }
+
+            foreach (var assoc in OffenseVictimAssocs)
+            {
+                assoc.RelatedOffense = Offenses.First(o => o.Id == assoc.OffenseRef.OffenseRef);
+                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+            }
+
+            foreach (var assoc in SubjectVictimAssocs)
+            {
+                assoc.RelatedSubject = Subjects.First(s => s.Role.PersonId == assoc.SubjectRef.SubjectRef);
+                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+            }
         }
     }
 }

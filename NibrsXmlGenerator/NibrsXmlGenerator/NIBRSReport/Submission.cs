@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using System.IO;
@@ -50,7 +49,17 @@ namespace NibrsXml.NibrsReport
             Submission sub;
             try
             {
+
+                //When deserializing, associations and persons do not have the full context of their complex elements.
+                //Deserialization of XML nodes does not cross check the other XML nodes to give the original full context of the data involved;
+                //It will create objects for only what is present within the node being deserialized.
+
+                //For example, if you deseriablize an OffenseVictimAssociation you only have the context of the IDs of the associated offense and victim.
+                //Further, you would not have the full context of the victim either because the victim is composed of a person, so you need to use the victim's ID
+                //and retrieve the person data for that victim.
+
                 sub = (Submission)serializer.Deserialize(xmlReader);
+                foreach (var report in sub.Reports) report.RebuildCrossReferencedRelationships();
             }
             catch (Exception e)
             {
@@ -81,7 +90,7 @@ namespace NibrsXml.NibrsReport
         {
             var submission = SubmissionBuilder.Build(lists);
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
-            submission.XsiSchemaLocation = nibrsSchemaLocation; 
+            submission.XsiSchemaLocation = nibrsSchemaLocation;
             var xdoc = new XmlDocument();
             xdoc.LoadXml(submission.Xml);
             xdoc.Save(fileName);
