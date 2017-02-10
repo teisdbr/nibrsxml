@@ -17,5 +17,10 @@ namespace NibrsXml.Ucr.DataCollections
         {
             get { return "ht.xsl"; }
         }
+
+        public HumanTrafficking() : base()
+        {
+            
+        }
     }
 }

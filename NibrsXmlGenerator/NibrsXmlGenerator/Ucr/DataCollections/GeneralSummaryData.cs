@@ -11,59 +11,42 @@ namespace NibrsXml.Ucr.DataCollections
     public abstract class GeneralSummaryData
     {
         #region Configuration
+
         public abstract String XmlRootName { get; }
         public abstract String XslFileName { get; }
+
         #endregion
 
         #region Properties
-        public Dictionary<String, Counts> ClassificationCounts { get; set; }
+
+        public Dictionary<String, GeneralSummaryCounts> ClassificationCounts { get; set; }
+
         #endregion
+
+        public GeneralSummaryData()
+        {
+            this.ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
+        }
 
         public XDocument Serialize()
         {
             return new XDocument(
-                    new XProcessingInstruction(
-                        "xml-stylesheet",
-                        "type=\"text/xsl\" href=\"" + XslFileName + "\""),
-                        new XElement(XmlRootName,
-                            this.ClassificationCounts.Select(classif => new XElement("Classification",
-                                                                                new XAttribute("name", classif.Key),
-                                                                                new XElement("Actual", classif.Value.ActualOffenses),
-                                                                                new XElement("ClearedByArrest", classif.Value.ClearedByArrestOrExcepMeans),
-                                                                                new XElement("ClearedByJuvArrest", classif.Value.ClearencesInvolvingJuveniles)))));
+                new XProcessingInstruction(
+                    "xml-stylesheet",
+                    "type=\"text/xsl\" href=\"" + XslFileName + "\""),
+                new XElement(XmlRootName,
+                    new XElement("UcrCodeDictionary", new XElement("UCRDescription", new XAttribute("value", "A"), "A. Commercial Sex Acts"), new XElement("UCRDescription", new XAttribute("value", "B"), "B. Involuntary Servitude")),
+                    this.ClassificationCounts.Select(classif => new XElement("Classification",
+                        new XAttribute("name", classif.Key),
+                        classif.Value.ActualOffenses.HasValue
+                            ? new XElement("Actual", classif.Value.ActualOffenses)
+                            : null,
+                        classif.Value.ClearedByArrestOrExcepMeans.HasValue
+                            ? new XElement("ClearedByArrest", classif.Value.ClearedByArrestOrExcepMeans)
+                            : null,
+                        classif.Value.ClearencesInvolvingJuveniles.HasValue
+                            ? new XElement("ClearedByJuvArrest", classif.Value.ClearencesInvolvingJuveniles)
+                            : null))));
         }
     }
-
-    #region Public Structs
-    public struct Counts
-    {
-        public int? ActualOffenses { get; private set; }
-        public int? ClearedByArrestOrExcepMeans { get; private set; }
-        public int? ClearencesInvolvingJuveniles { get; private set; }
-
-        public void IncrementActualOffense(int byValue = 1)
-        {
-            //Verify not null before adding
-            if (this.ActualOffenses.HasValue == false) { this.ActualOffenses = 0; }
-
-            this.ActualOffenses += byValue;
-        }
-
-        public void IncrementAllClearences(int byValue = 1)
-        {
-            //Verify not null before adding
-            if (this.ActualOffenses.HasValue == false) { this.ActualOffenses = 0; }
-
-            this.ClearedByArrestOrExcepMeans += byValue;
-        }
-
-        public void IncrementJuvenileClearences(int byValue = 1)
-        {
-            //Verify not null before adding
-            if (this.ActualOffenses.HasValue == false) { this.ActualOffenses = 0; }
-
-            this.ClearencesInvolvingJuveniles += byValue;
-        }
-    }
-    #endregion
 }

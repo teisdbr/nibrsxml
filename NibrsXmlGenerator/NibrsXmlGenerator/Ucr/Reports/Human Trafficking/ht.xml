@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ht.xsl"?>
+<HumanTraffickingSummary>
+  <UcrCodeDictionary>
+    <UCRDescription value="A">A. Commercial Sex Acts</UCRDescription>
+    <UCRDescription value="B">B. Involuntary Servitude</UCRDescription>
+  </UcrCodeDictionary>
+  <Classification name="A">
+    <Actual>1</Actual>
+    <ClearedByArrest>2</ClearedByArrest>
+    <ClearedByJuvArrest>3</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="B">
+    <Actual>4</Actual>
+    <ClearedByArrest>5</ClearedByArrest>
+    <ClearedByJuvArrest>6</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="GRAND TOTAL">
+    <Actual>5</Actual>
+    <ClearedByArrest>7</ClearedByArrest>
+    <ClearedByJuvArrest>9</ClearedByJuvArrest>
+  </Classification>
+</HumanTraffickingSummary>

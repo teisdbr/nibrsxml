@@ -114,6 +114,7 @@
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\UcrReportTypes.cs" />
+    <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
     <Compile Include="Ucr\DataCollections\HumanTrafficking.cs" />
     <Compile Include="Ucr\DataMining\AsreMiner.cs" />
@@ -213,6 +214,8 @@
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xsl" />
+    <Content Include="Ucr\Reports\Human Trafficking\ht.xml" />
+    <Content Include="Ucr\Reports\Human Trafficking\ht.xsl" />
     <Content Include="Ucr\Reports\Human Trafficking\humantrafficking.xml" />
     <Content Include="Ucr\Reports\ReturnA\returna.xml" />
   </ItemGroup>
