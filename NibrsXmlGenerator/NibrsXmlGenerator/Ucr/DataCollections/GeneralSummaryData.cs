@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using LoadBusinessLayer.Rs;
 using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr.DataCollections
@@ -27,11 +24,11 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Properties
 
-        public Dictionary<String, GeneralSummaryCounts> ClassificationCounts { get; set; }
+        protected Dictionary<String, GeneralSummaryCounts> ClassificationCounts { get; set; }
 
         #endregion
 
-        public GeneralSummaryData()
+        protected GeneralSummaryData()
         {
             this.ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
 
@@ -60,5 +57,28 @@ namespace NibrsXml.Ucr.DataCollections
                             : null))));
         }
 
+        public virtual void IncrementActualOffense(String key, int byValue = 1)
+        {
+            ClassificationCounts.TryAdd(key).IncrementActualOffense(byValue);
+            ClassificationCounts[GrandTotal].IncrementActualOffense(byValue);
+        }
+
+        public virtual void IncrementAllClearences(String key, int byValue = 1)
+        {
+            ClassificationCounts.TryAdd(key).IncrementAllClearences(byValue);
+            ClassificationCounts[GrandTotal].IncrementAllClearences(byValue);
+        }
+
+        public virtual void IncrementJuvenileClearences(String key, int byValue = 1)
+        {
+            ClassificationCounts.TryAdd(key).IncrementJuvenileClearences(byValue);
+            ClassificationCounts[GrandTotal].IncrementJuvenileClearences(byValue);
+        }
+
+        public virtual void IncrementEstimatedValueOfPropertyDamage(String key, long byValue = 1)
+        {
+            ClassificationCounts.TryAdd(key).IncrementEstimatedValueOfPropertyDamage(byValue);
+            ClassificationCounts[GrandTotal].IncrementEstimatedValueOfPropertyDamage(byValue);
+        }
     }
 }

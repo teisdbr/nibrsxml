@@ -2,10 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using LoadBusinessLayer;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
@@ -17,9 +13,6 @@ namespace NibrsXml.Ucr.DataMining
 {
     class ArsonMiner
     {
-        private const string TotalStructure = "Total Structure";
-        private const string TotalMobile = "Total Mobile";
-
         private static readonly String[] VehicleProperties = {
             PropertyCategoryCode.AUTOMOBILE.NibrsCode(),
             PropertyCategoryCode.BUSES.NibrsCode(),
@@ -99,121 +92,38 @@ namespace NibrsXml.Ucr.DataMining
             PropertyCategoryCode.OTHER_WEAPONS.NibrsCode(),
         };
 
-
-        /// <summary>
-        /// Function that returns a report specific Grand Total Classification Counts
-        /// </summary>
-        private static Func<ConcurrentDictionary<string, ReportData>, Report, string, GeneralSummaryCounts> totalIncrementer =
-                (monthlyReportData, report, key) =>
-                {
-                    return monthlyReportData[report.UcrKey].ArsonData.ClassificationCounts.TryAdd(key);
-                };
-
-        /// <summary>
-        /// It returns a property based on the highest value and hierarchical requirements.
-        /// </summary>
-        public static Item GetPropertyToUse(List<Item> reportItems)
-        {
-            //Get at most one property per offense.
-            //----Gather only one structure property with the highest value. Given OrderBy sorts in ascending, Last() provides desired property.
-            var structureProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(StructureProperties))
-                    .OrderBy(i => i.Value).ToList().LastOrDefault();
-            //--------If structureProperty is not null, return it
-            if (structureProperty != null) return structureProperty;
-
-
-            //----Gather only one vehicle as above.
-            var vehicleProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(VehicleProperties))
-                    .OrderBy(i => i.Value)
-                    .ToList()
-                    .LastOrDefault();
-
-            //--------If structureProperty is not null, return it
-            if (vehicleProperty != null) return vehicleProperty;
-
-            //----Gather all other mobile properties
-            var otherMobileProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(OtherMobileProperties))
-                    .OrderBy(i => i.Value)
-                    .ToList()
-                    .LastOrDefault();
-
-            //--------If structureProperty is not null, return it
-            if (otherMobileProperty != null) return otherMobileProperty;
-
-            //----Gather Total Other Property
-            var totalOtherProperty =
-                reportItems.Where(
-                    i =>
-                        i.NibrsPropertyCategoryCode.MatchOne(TotalOtherProperties));
-
-            //--------Return Total other property or null if code reached this point.
-            return totalOtherProperty;
-        }
-
         public static void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             // Return if no arson data to query
-            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(ArsonUcrCode)) || report.Items.Count == 0)
+            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode)) || report.Items.Count == 0)
                 return;
 
             //Get Classification Counts to operate on for this report
-            var classificationCounts = monthlyReportData[report.UcrKey].ArsonData.ClassificationCounts;
+            var arsonData = monthlyReportData[report.UcrKey].ArsonData;
 
             //Get all arson offenses in report.
             var offenses =
-                report.Offenses.Where(offense => offense.UcrCode.Matches(ArsonUcrCode) && offense.AttemptedIndicator == "false").ToList();
+                report.Offenses.Where(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode) && offense.AttemptedIndicator == "false").ToList();
 
-            #region Column 4
+            //Determine property to use based on ucr hierarchy: structure -> mobile -> other
             var selectedProperty = GetPropertyToUse(report.Items);
+            if (selectedProperty == null) return;
 
             //Identify key to use based on identified property and score actual counts
             var keyForScoring = GetPropertyClassification(selectedProperty.NibrsPropertyCategoryCode);
 
+            #region Column 4
+            
             //Use the corresponding key to increment the count of actual offenses.
-            classificationCounts.TryAdd(keyForScoring).IncrementActualOffense();
-
-            if (selectedProperty)
-            {
-                keyForScoring = GetPropertyClassification(structureProperty.NibrsPropertyCategoryCode);
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementActualOffense(
-                        incrementHandlers: 
-                            totalIncrementer(monthlyReportData,report,TotalStructure).IncrementActualOffense,
-                            totalIncrementer(monthlyReportData, report, Arson.GrandTotal).IncrementActualOffense
-                    );
-            }
-            else if (vehicleProperty != null)
-            {
-                keyForScoring = GetPropertyClassification(vehicleProperty.NibrsPropertyCategoryCode);
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementActualOffense(incrementHandlers: totalIncrementer(monthlyReportData, report, TotalMobile).IncrementActualOffense);
-            }
-            else if (otherMobileProperty != null)
-            {
-                keyForScoring = GetPropertyClassification(otherMobileProperty.NibrsPropertyCategoryCode);
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementActualOffense(incrementHandlers: totalIncrementer(monthlyReportData, report, TotalMobile).IncrementActualOffense);
-            }
-            else
-            {
-                keyForScoring = "J";
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementActualOffense(incrementHandlers: totalIncrementer(monthlyReportData, report,GrandTotal).IncrementActualOffense);
-            }
-
+            arsonData.IncrementActualOffense(keyForScoring);
             #endregion
 
             #region Column 5
 
             //Clearances - Count one if exceptional clearance or arrest exists.
-            if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null ||
-                report.Arrests.Count() > 0)
+            if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null || report.Arrests.Any())
             {
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementAllClearences(incrementHandlers: totalIncrementer(monthlyReportData, report,GrandTotal).IncrementAllClearences);
+                arsonData.IncrementAllClearences(keyForScoring);
             }
 
             #endregion
@@ -221,10 +131,9 @@ namespace NibrsXml.Ucr.DataMining
             #region Column 6
 
             //Clearances Involving Juveniles - Count only one if arrest exists.
-            if (report.Arrestees.Count(a => a.Person.AgeMeasure.IsJuvenile) > 0)
+            if (report.Arrestees.Any(a => a.Person.AgeMeasure.IsJuvenile))
             {
-                classificationCounts.TryAdd(keyForScoring)
-                    .IncrementJuvenileClearences(incrementHandlers:);
+                arsonData.IncrementJuvenileClearences(keyForScoring);
             }
 
             #endregion
@@ -235,29 +144,18 @@ namespace NibrsXml.Ucr.DataMining
             #region Column 8
 
             //Add value of all properties stolen regardless of description, priorities, etc. It may not be necessary to filter only by properties that apply.
-            var totalValueOfBurnedProperties =
-                report.Items.Sum(item => Convert.ToDecimal(item.Value.ValueAmount.Amount));
+            var totalValueOfBurnedProperties = report.Items.Sum(item => Convert.ToInt64(item.Value.ValueAmount.Amount));
+            arsonData.IncrementEstimatedValueOfPropertyDamage(keyForScoring, totalValueOfBurnedProperties);
 
             #endregion
         }
 
         /// <summary>
-        /// Figure out which additional classifications to increment such as Structure Totals or Grand Total.
+        /// Translates the property classification from a property description.
+        /// Property classification is synonymous to the row header of the arson report.
         /// </summary>
-        /// <param name="monthlyReportData"></param>
-        /// <param name="report"></param>
-        /// <param name="classificationKey"></param>
+        /// <param name="propertyDescription"></param>
         /// <returns></returns>
-        private static Action<int>[] IncrementAdditionalClassificationCountByKey(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report, String classificationKey)
-        {
-            Action<int>[] actions = new Action<int>[2];
-
-            //Identify what subtotal to use.
-            if classificationKey
-
-            actions[1] = totalIncrementer(monthlyReportData, report, GrandTotal).IncrementJuvenileClearences;
-        }
-
         private static String GetPropertyClassification(String propertyDescription)
         {
             switch (propertyDescription)
@@ -345,6 +243,39 @@ namespace NibrsXml.Ucr.DataMining
                 default:
                     return "J";
             }
+        }
+
+        /// <summary>
+        /// It returns a property based on the highest value and hierarchical requirements.
+        /// </summary>
+        public static Item GetPropertyToUse(List<Item> reportItems)
+        {
+            //Get at most one property per offense.
+            //----Gather only one structure property with the highest value. Given OrderBy sorts in ascending, Last() provides desired property.
+            var structureProperty =
+                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(StructureProperties)).Max();
+            //--------If structureProperty is not null, return it
+            if (structureProperty != null) return structureProperty;
+
+            //----Gather only one vehicle as above.
+            var vehicleProperty =
+                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(VehicleProperties)).Max();
+
+            //--------If structureProperty is not null, return it
+            if (vehicleProperty != null) return vehicleProperty;
+
+            //----Gather all other mobile properties
+            var otherMobileProperty =
+                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(OtherMobileProperties)).Max();
+
+            //--------If structureProperty is not null, return it
+            if (otherMobileProperty != null) return otherMobileProperty;
+
+            //----Gather Total Other Property
+            var totalOtherProperty = reportItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(TotalOtherProperties));
+
+            //--------Return Total other property or null if code reached this point.
+            return totalOtherProperty;
         }
     }
 }

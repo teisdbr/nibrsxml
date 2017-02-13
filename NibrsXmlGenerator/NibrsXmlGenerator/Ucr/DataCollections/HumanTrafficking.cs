@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -27,11 +22,6 @@ namespace NibrsXml.Ucr.DataCollections
                     new XElement("UCRDescription", new XAttribute("value", "A"), "A. Commercial Sex Acts"),
                     new XElement("UCRDescription", new XAttribute("value", "B"), "B. Involuntary Servitude"));
             }
-        }
-
-        public HumanTrafficking() : base()
-        {
-            
         }
     }
 }

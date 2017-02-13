@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace NibrsXml.NibrsReport.Item
 {
     [XmlRoot("Item", Namespace = Namespaces.niemCore)]
-    public class Item
+    public class Item : IComparable
     {
         [XmlElement("ItemStatus", Namespace = Namespaces.niemCore, Order = 1)]
         public ItemStatus Status { get; set; }
@@ -39,6 +39,18 @@ namespace NibrsXml.NibrsReport.Item
             this.Value = new ItemValue(valueAmount, valueDate);
             this.NibrsPropertyCategoryCode = nibrsPropCategCode;
             this.Quantity = quantity;
+        }
+
+        public int CompareTo(object b)
+        {
+            if (b == null)
+                throw new ArgumentNullException();
+
+            Item otherItem = b as Item;
+            if (otherItem != null)
+                return Convert.ToInt32(Value.ValueAmount.Amount) - Convert.ToInt32(otherItem.Value.ValueAmount.Amount);
+            else
+                throw new ArgumentException("Object is not an Item.");
         }
     }
 }
