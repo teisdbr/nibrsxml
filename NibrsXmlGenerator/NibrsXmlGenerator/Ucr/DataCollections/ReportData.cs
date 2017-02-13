@@ -11,12 +11,14 @@ namespace NibrsXml.Ucr.DataCollections
         public Asra AsraData { get; set; }
         public OffenseReturn OffenseReturnData { get; set; }
         public HumanTrafficking HumanTraffickingData { get; set; }
+        public Arson ArsonData { get; set; }
 
         public ReportData()
         {
             this.AsraData = new Asra();
             this.OffenseReturnData = new OffenseReturn();
             this.HumanTraffickingData = new HumanTrafficking();
+            this.ArsonData = new Arson();
         }
     }
 }

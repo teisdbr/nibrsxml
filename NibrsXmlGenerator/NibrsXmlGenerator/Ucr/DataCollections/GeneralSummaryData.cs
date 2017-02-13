@@ -5,15 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using LoadBusinessLayer.Rs;
+using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr.DataCollections
 {
     public abstract class GeneralSummaryData
     {
+        #region Constants
+
+        public const String GrandTotal = "Grand Total";
+
+        #endregion
+
         #region Configuration
 
         public abstract String XmlRootName { get; }
         public abstract String XslFileName { get; }
+        public abstract XElement MappingDictionary { get; }
 
         #endregion
 
@@ -26,6 +34,9 @@ namespace NibrsXml.Ucr.DataCollections
         public GeneralSummaryData()
         {
             this.ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
+
+            //Define the basic shared "Grand Total" row of all reports.
+            this.ClassificationCounts.Add(GrandTotal, new GeneralSummaryCounts());
         }
 
         public XDocument Serialize()
@@ -35,7 +46,7 @@ namespace NibrsXml.Ucr.DataCollections
                     "xml-stylesheet",
                     "type=\"text/xsl\" href=\"" + XslFileName + "\""),
                 new XElement(XmlRootName,
-                    new XElement("UcrCodeDictionary", new XElement("UCRDescription", new XAttribute("value", "A"), "A. Commercial Sex Acts"), new XElement("UCRDescription", new XAttribute("value", "B"), "B. Involuntary Servitude")),
+                    MappingDictionary,
                     this.ClassificationCounts.Select(classif => new XElement("Classification",
                         new XAttribute("name", classif.Key),
                         classif.Value.ActualOffenses.HasValue
@@ -48,5 +59,6 @@ namespace NibrsXml.Ucr.DataCollections
                             ? new XElement("ClearedByJuvArrest", classif.Value.ClearencesInvolvingJuveniles)
                             : null))));
         }
+
     }
 }

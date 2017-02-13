@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.Ucr.DataCollections;
@@ -41,7 +42,7 @@ namespace NibrsXml.Ucr.DataMining
                 monthlyReportData[report.UcrKey].HumanTraffickingData.ClassificationCounts.TryAdd(
                         offense.UcrCode.Substring(2, 1))
                     .IncrementActualOffense(
-                        incrementHandler:
+                        incrementHandlers:
                         i => grandTotalIncrementer(monthlyReportData, report).IncrementActualOffense(i));
             }
 

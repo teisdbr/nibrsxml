@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using NibrsXml.Constants;
+using NibrsXml.NibrsReport.Item;
+using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr.DataCollections
 {
-    public class HumanTrafficking : GeneralSummaryData
+    public class Arson : GeneralSummaryData
     {
         public override string XmlRootName
         {
-            get { return "HumanTraffickingSummary"; }
+            get { return "ArsonSummary"; }
         }
 
         public override string XslFileName
         {
-            get { return "ht.xsl"; }
+            get { return "arson.xsl"; }
         }
 
         public override XElement MappingDictionary
@@ -29,7 +32,18 @@ namespace NibrsXml.Ucr.DataCollections
             }
         }
 
-        public HumanTrafficking() : base()
+        public Arson() : base()
+        {
+            
+        }
+
+        #region Constants
+
+        private const String ArsonUcrCode = "200";
+
+        #endregion
+
+        public void CalculateTotalStructures()
         {
             
         }

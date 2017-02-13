@@ -114,9 +114,11 @@
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\UcrReportTypes.cs" />
+    <Compile Include="Ucr\DataCollections\Arson.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
     <Compile Include="Ucr\DataCollections\HumanTrafficking.cs" />
+    <Compile Include="Ucr\DataMining\ArsonMiner.cs" />
     <Compile Include="Ucr\DataMining\AsreMiner.cs" />
     <Compile Include="Ucr\DataMining\HumanTraffickingMiner.cs" />
     <Compile Include="Ucr\DataMining\ReportDataMiner.cs" />
