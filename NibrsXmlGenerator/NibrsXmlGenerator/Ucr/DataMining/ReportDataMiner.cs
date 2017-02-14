@@ -28,6 +28,9 @@ namespace NibrsXml.Ucr.DataMining
 
                 //Arson Data
                 ArsonMiner.Mine(monthlyOriReportData, report);
+
+                //Return A Data
+                ReturnAMiner.Mine(monthlyOriReportData, report);
             }
 
             return monthlyOriReportData;
