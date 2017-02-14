@@ -16,20 +16,20 @@ namespace NibrsXml.Ucr.DataCollections
             get { return "arson.xsl"; }
         }
 
-        public override XElement MappingDictionary
+        protected override void ClassificationCountEntryInstantiations()
         {
-            get
-            {
-                return new XElement("UcrCodeDictionary",
-                    new XElement("UCRDescription", new XAttribute("value", "A"), "A. Commercial Sex Acts"),
-                    new XElement("UCRDescription", new XAttribute("value", "B"), "B. Involuntary Servitude"));
-            }
-        }
-
-        public Arson() : base()
-        {
+            ClassificationCounts.Add("A", new GeneralSummaryCounts());
+            ClassificationCounts.Add("B", new GeneralSummaryCounts());
+            ClassificationCounts.Add("C", new GeneralSummaryCounts());
+            ClassificationCounts.Add("D", new GeneralSummaryCounts());
+            ClassificationCounts.Add("E", new GeneralSummaryCounts());
+            ClassificationCounts.Add("F", new GeneralSummaryCounts());
+            ClassificationCounts.Add("G", new GeneralSummaryCounts());
             ClassificationCounts.Add(TotalStructure, new GeneralSummaryCounts());
+            ClassificationCounts.Add("H", new GeneralSummaryCounts());
+            ClassificationCounts.Add("I", new GeneralSummaryCounts());
             ClassificationCounts.Add(TotalMobile, new GeneralSummaryCounts());
+            ClassificationCounts.Add("J", new GeneralSummaryCounts());
         }
 
         #region Constants

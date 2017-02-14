@@ -18,7 +18,6 @@ namespace NibrsXml.Ucr.DataCollections
 
         public abstract String XmlRootName { get; }
         public abstract String XslFileName { get; }
-        public abstract XElement MappingDictionary { get; }
 
         #endregion
 
@@ -32,9 +31,13 @@ namespace NibrsXml.Ucr.DataCollections
         {
             this.ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
 
+            ClassificationCountEntryInstantiations();
+
             //Define the basic shared "Grand Total" row of all reports.
             this.ClassificationCounts.Add(GrandTotal, new GeneralSummaryCounts());
         }
+
+        protected virtual void ClassificationCountEntryInstantiations() { }
 
         public XDocument Serialize()
         {
@@ -43,7 +46,6 @@ namespace NibrsXml.Ucr.DataCollections
                     "xml-stylesheet",
                     "type=\"text/xsl\" href=\"" + XslFileName + "\""),
                 new XElement(XmlRootName,
-                    MappingDictionary,
                     this.ClassificationCounts.Select(classif => new XElement("Classification",
                         new XAttribute("name", classif.Key),
                         classif.Value.ActualOffenses.HasValue
