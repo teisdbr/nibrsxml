@@ -26,6 +26,12 @@ namespace NibrsXml.Ucr.DataCollections
             }
         }
 
+        public Arson() : base()
+        {
+            ClassificationCounts.Add(TotalStructure, new GeneralSummaryCounts());
+            ClassificationCounts.Add(TotalMobile, new GeneralSummaryCounts());
+        }
+
         #region Constants
 
         public const String ArsonUcrCode = "200";
@@ -53,7 +59,7 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementActualOffense(key, byValue);
 
             if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[key].IncrementActualOffense(byValue);
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementActualOffense(byValue);
         }
 
         public override void IncrementAllClearences(String key, int byValue = 1)
@@ -61,7 +67,7 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementAllClearences(key, byValue);
 
             if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[key].IncrementAllClearences(byValue);
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementAllClearences(byValue);
         }
 
         public override void IncrementJuvenileClearences(String key, int byValue = 1)
@@ -69,7 +75,7 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementJuvenileClearences(key, byValue);
 
             if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[key].IncrementJuvenileClearences(byValue);
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementJuvenileClearences(byValue);
         }
     }
 }

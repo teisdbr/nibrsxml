@@ -95,7 +95,7 @@ namespace NibrsXml.Ucr.DataMining
         public static void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             // Return if no arson data to query
-            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode)) || report.Items.Count == 0)
+            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode)) || !report.Items.Any(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()))
                 return;
 
             //Get Classification Counts to operate on for this report
@@ -106,7 +106,7 @@ namespace NibrsXml.Ucr.DataMining
                 report.Offenses.Where(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode) && offense.AttemptedIndicator == "false").ToList();
 
             //Determine property to use based on ucr hierarchy: structure -> mobile -> other
-            var selectedProperty = GetPropertyToUse(report.Items);
+            var selectedProperty = GetPropertyToUse(report.Items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList());
             if (selectedProperty == null) return;
 
             //Identify key to use based on identified property and score actual counts
@@ -248,31 +248,31 @@ namespace NibrsXml.Ucr.DataMining
         /// <summary>
         /// It returns a property based on the highest value and hierarchical requirements.
         /// </summary>
-        public static Item GetPropertyToUse(List<Item> reportItems)
+        public static Item GetPropertyToUse(List<Item> burnedItems)
         {
             //Get at most one property per offense.
             //----Gather only one structure property with the highest value. Given OrderBy sorts in ascending, Last() provides desired property.
             var structureProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(StructureProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(StructureProperties)).Max();
             //--------If structureProperty is not null, return it
             if (structureProperty != null) return structureProperty;
 
             //----Gather only one vehicle as above.
             var vehicleProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(VehicleProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(VehicleProperties)).Max();
 
             //--------If structureProperty is not null, return it
             if (vehicleProperty != null) return vehicleProperty;
 
             //----Gather all other mobile properties
             var otherMobileProperty =
-                reportItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(OtherMobileProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(OtherMobileProperties)).Max();
 
             //--------If structureProperty is not null, return it
             if (otherMobileProperty != null) return otherMobileProperty;
 
             //----Gather Total Other Property
-            var totalOtherProperty = reportItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(TotalOtherProperties));
+            var totalOtherProperty = burnedItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(TotalOtherProperties));
 
             //--------Return Total other property or null if code reached this point.
             return totalOtherProperty;
