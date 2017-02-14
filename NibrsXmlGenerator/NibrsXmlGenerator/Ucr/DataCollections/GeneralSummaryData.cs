@@ -56,6 +56,9 @@ namespace NibrsXml.Ucr.DataCollections
                             : null,
                         classif.Value.ClearencesInvolvingJuveniles.HasValue
                             ? new XElement("ClearedByJuvArrest", classif.Value.ClearencesInvolvingJuveniles)
+                            : null,
+                        classif.Value.EstimatedValueOfPropertyDamage.HasValue
+                            ? new XElement("EstimatedValueOfDamage", classif.Value.EstimatedValueOfPropertyDamage)
                             : null))));
         }
 

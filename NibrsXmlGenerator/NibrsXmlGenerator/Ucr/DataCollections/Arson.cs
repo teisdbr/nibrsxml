@@ -77,5 +77,13 @@ namespace NibrsXml.Ucr.DataCollections
             if (ClassificationToSubtotalDictionary.ContainsKey(key))
                 ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementJuvenileClearences(byValue);
         }
+
+        public override void IncrementEstimatedValueOfPropertyDamage(string key, long byValue = 1)
+        {
+            base.IncrementEstimatedValueOfPropertyDamage(key, byValue);
+
+            if (ClassificationToSubtotalDictionary.ContainsKey(key))
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementEstimatedValueOfPropertyDamage(byValue);
+        }
     }
 }
