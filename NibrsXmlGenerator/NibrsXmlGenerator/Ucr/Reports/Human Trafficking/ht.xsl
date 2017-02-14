@@ -48,13 +48,16 @@
           </thead>
           <tbody>
             <xsl:for-each select="HumanTraffickingSummary/Classification">
-              <xsl:sort select="./@name"/>
+              <xsl:sort select="@name"/>
               <tr>
+                <!--The row header-->
                 <th>
-                  <xsl:variable name="ucrCode" select="./@name"/>
                   <xsl:choose>
-                    <xsl:when test="//UCRDescription[@value=$ucrCode]">
-                      <xsl:value-of select="//UCRDescription[@value=$ucrCode]"/>
+                    <xsl:when test="@name='A'">
+                      <xsl:value-of select="'A. Commercial Sex Acts'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='B'">
+                      <xsl:value-of select="'B. Involuntary Servitude'"/>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:value-of select="@name"/>
@@ -63,14 +66,26 @@
                 </th>
 
                 <!-- Offenses Reported is same as Actual -->
-                <td><xsl:if test="not(Actual)">0</xsl:if><xsl:value-of select="Actual"/></td>
+                <td>
+                  <xsl:if test="not(Actual)">0</xsl:if>
+                  <xsl:value-of select="Actual"/>
+                </td>
 
                 <!-- Unfounded Offenses will always be 0 -->
                 <td>0</td>
 
-                <td><xsl:if test="not(Actual)">0</xsl:if><xsl:value-of select="Actual"/></td>
-                <td><xsl:if test="not(ClearedByArrest)">0</xsl:if><xsl:value-of select="ClearedByArrest"/></td>
-                <td><xsl:if test="not(ClearedByJuvArrest)">0</xsl:if><xsl:value-of select="ClearedByJuvArrest"/></td>
+                <td>
+                  <xsl:if test="not(Actual)">0</xsl:if>
+                  <xsl:value-of select="Actual"/>
+                </td>
+                <td>
+                  <xsl:if test="not(ClearedByArrest)">0</xsl:if>
+                  <xsl:value-of select="ClearedByArrest"/>
+                </td>
+                <td>
+                  <xsl:if test="not(ClearedByJuvArrest)">0</xsl:if>
+                  <xsl:value-of select="ClearedByJuvArrest"/>
+                </td>
               </tr>
             </xsl:for-each>
           </tbody>
