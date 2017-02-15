@@ -66,6 +66,7 @@
     <Compile Include="Builder\SubmissionBuilder.cs" />
     <Compile Include="Constants\AgeGroup.cs" />
     <Compile Include="Constants\Namespace.cs" />
+    <Compile Include="Constants\NibrsCodeGroups.cs" />
     <Compile Include="Constants\NibrsCodes.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />

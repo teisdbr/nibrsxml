@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LoadBusinessLayer;
 using NibrsXml.Ucr.DataCollections;
 using TeUtil.Extensions;
 
@@ -24,25 +25,24 @@ namespace NibrsXml.Ucr.DataMining
 
             var mostImportantOffenseForReport = new UcrHierarchyMiner(applicableOffenses).HighestRatedOffense;
 
-            //Score Homicide Offenses
             var returnA = new ReturnA();
 
             //Assign the ReturnA to the ORI month and year key of the monthlyOriReportData dictionary.
 
+            //Score Homicide Offense
+            returnA.ScoreHomicide(mostImportantOffenseForReport);
 
-            returnA.ScoreHomicides(homicideOffenses: report.Offenses);
+            //Score Rape Offense
+            returnA.ScoreRape(mostImportantOffenseForReport);
 
-            //Score Rape Offenses
-            returnA.ScoreRapeFunctions(rapeOffenses: report.Offenses);
+            //Score Assault Offense
+            returnA.ScoreAssault(mostImportantOffenseForReport);
 
-            //Score Assault Offenses
-            returnA.ScoreAssaultOffenses(assaultOffenses: report.Offenses);
+            //Score Vehicle Offense
+            returnA.ScoreVehicleTheft(mostImportantOffenseForReport);
 
-            //Score Vehicle Offenses
-            returnA.ScoreVehicleOffenses(vehicularOffenses: report.Offenses);
-
-            //Score Burglaries
-            returnA.ScoreBurglaries(robberyOffense: mostImportantOffenseForReport);
+            //Score Burglary
+            returnA.ScoreBurglary(robberyOffense: mostImportantOffenseForReport);
             
             returnA.ScoreClearances(report.Arrests,report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id);
         }
