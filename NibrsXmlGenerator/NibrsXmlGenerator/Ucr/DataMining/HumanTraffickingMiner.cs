@@ -1,14 +1,38 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    internal class HumanTraffickingMiner
+    internal class HumanTraffickingMiner : GeneralSummaryMiner
     {
-        public static void Mine(ConcurrentDictionary<String, ReportData> monthlyReportData, NibrsReport.Report report)
+        private static readonly Dictionary<string, string> HumanTraffickingClearanceClassificationDictionary = new Dictionary<string, string>
+        {
+            {"64A", "A"},
+            {"64B", "B"}
+        };
+
+        public HumanTraffickingMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report) : base(monthlyReportData, report)
+        {
+            //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
+            //No additional calls need to be made because the base constructor is making the appropriate calls already.
+        }
+
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get { return HumanTraffickingClearanceClassificationDictionary; }
+        }
+
+        protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList)
+        {
+            monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());
+            monthlyReportData[clearanceDetailsList.UcrReportKey].HumanTraffickingData.IncrementAllClearences(clearanceDetailsList.ClassificationKey, clearanceDetailsList.AllScoresIncrementStep);
+        }
+
+        protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             // Return if no human trafficking data to query
             if (!report.OffenseVictimAssocs.Any(ov => ov.RelatedOffense.UcrCode.Matches("64[AB]")))
@@ -23,33 +47,9 @@ namespace NibrsXml.Ucr.DataMining
 
             //Gather counts for Column 4 for Line A or B.
             foreach (var offense in actualOffenses)
-            {
                 humanTraffickingData.IncrementActualOffense(offense.UcrCode.Substring(2, 1));
-            }
 
-            //Gather counts for Column 5 for Line A or B.
-            if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null)
-            {
-                humanTraffickingData.IncrementAllClearences("A", actualOffenses.Count(o => o.UcrCode == "64A"));
-                humanTraffickingData.IncrementAllClearences("B", actualOffenses.Count(o => o.UcrCode == "64B"));
-            }
-            else
-            {
-                humanTraffickingData.IncrementAllClearences("A", report.Arrests.Count(a => a.Charge.UcrCode == "64A"));
-                humanTraffickingData.IncrementAllClearences("B", report.Arrests.Count(a => a.Charge.UcrCode == "64B"));
-            }
-
-            //Gather counts for Column 6 for Line A or B.
-            var juvenileLineAClearanceCount =
-                report.ArrestSubjectAssocs.Count(
-                    a => a.RelatedArrestee.Person.AgeMeasure.IsJuvenile && a.RelatedArrest.Charge.UcrCode == "64A");
-
-            var juvenileLineBClearanceCount =
-                report.ArrestSubjectAssocs.Count(
-                    a => a.RelatedArrestee.Person.AgeMeasure.IsJuvenile && a.RelatedArrest.Charge.UcrCode == "64B");
-
-            humanTraffickingData.IncrementJuvenileClearences("A", juvenileLineAClearanceCount);
-            humanTraffickingData.IncrementJuvenileClearences("B", juvenileLineBClearanceCount);
+            //Columns 5 and 6 (All/Juvenile Clearances) will be handled by GeneralSummaryMiner
         }
     }
 }

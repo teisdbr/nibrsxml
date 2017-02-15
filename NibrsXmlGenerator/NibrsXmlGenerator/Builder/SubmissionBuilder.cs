@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NibrsXml.NibrsReport;
 using LoadBusinessLayer;
 using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {

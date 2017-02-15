@@ -7,6 +7,7 @@ using NibrsXml.NibrsReport.Arrestee;
 using NibrsXml.NibrsReport.Incident;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {

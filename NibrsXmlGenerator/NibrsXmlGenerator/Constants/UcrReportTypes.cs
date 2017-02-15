@@ -8,14 +8,14 @@ namespace NibrsXml.Constants
 {
     public enum UcrReportType
     {
-        arson,
-        asra,
-        asrj,
-        hateCrime,
-        homicide,
-        humanTrafficking,
-        leoka,
-        returnA,
-        returnASupplement
+        Arson,
+        Asra,
+        Asrj,
+        HateCrime,
+        Homicide,
+        HumanTrafficking,
+        Leoka,
+        ReturnA,
+        ReturnASupplement
     }
 }

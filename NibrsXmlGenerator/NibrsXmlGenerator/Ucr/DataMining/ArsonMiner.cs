@@ -2,108 +2,56 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using NibrsXml.Ucr.DataCollections;
-using NibrsXml.Utility;
-using TeUtil.Extensions;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Item;
+using NibrsXml.Ucr.DataCollections;
+using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    class ArsonMiner
+    internal class ArsonMiner : GeneralSummaryMiner
     {
-        private static readonly String[] VehicleProperties = {
-            PropertyCategoryCode.AUTOMOBILE.NibrsCode(),
-            PropertyCategoryCode.BUSES.NibrsCode(),
-            PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode(),
-            PropertyCategoryCode.TRUCKS.NibrsCode()
-        };
-
-        private static readonly String[] StructureProperties = {
-            PropertyCategoryCode.SINGLE_OCCUPANCY_DWELLING_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.OTHER_DWELLING_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.OTHER_COMMERCIAL_BUSINESS_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.INDUSTRIAL_MANUFACTURING_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.PUBLIC_COMMUNITY_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.STORAGE_STRUCTURE.NibrsCode(),
-            PropertyCategoryCode.OTHER_STRUCTURE.NibrsCode(),
-        };
-
-        private static readonly String[] OtherMobileProperties = {
-            PropertyCategoryCode.AIRCRAFT.NibrsCode(),
-            PropertyCategoryCode.FARM_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.CONSTRUCTION_INDUSTRIAL_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode(),
-            PropertyCategoryCode.WATERCRAFT.NibrsCode(),
-            PropertyCategoryCode.TRAILERS.NibrsCode(),
-        };
-
-        private static readonly String[] TotalOtherProperties =
+        private static readonly Dictionary<string, string> ArsonClearanceClassificationDictionary = new Dictionary<string, string>
         {
-            PropertyCategoryCode.ALCOHOL.NibrsCode(),
-            PropertyCategoryCode.BICYCLES.NibrsCode(),
-            PropertyCategoryCode.CLOTHING.NibrsCode(),
-            PropertyCategoryCode.COMPUTER_HARDWARE_SOFTWARE.NibrsCode(),
-            PropertyCategoryCode.CONSUMABLES.NibrsCode(),
-            PropertyCategoryCode.CREDIT_DEBIT_CARDS.NibrsCode(),
-            PropertyCategoryCode.DRUGS_NARCOTICS.NibrsCode(),
-            PropertyCategoryCode.DRUG_NARCOTIC_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.FIREARMS.NibrsCode(),
-            PropertyCategoryCode.GAMBLING_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.HOUSEHOLD_GOODS.NibrsCode(),
-            PropertyCategoryCode.JEWELRY_PRECIOUS_METALS_GEMS.NibrsCode(),
-            PropertyCategoryCode.LIVESTOCK.NibrsCode(),
-            PropertyCategoryCode.MERCHANDISE.NibrsCode(),
-            PropertyCategoryCode.MONEY.NibrsCode(),
-            PropertyCategoryCode.NEGOTIABLE_INSTRUMENTS.NibrsCode(),
-            PropertyCategoryCode.NONNEGOTIABLE_INSTRUMENTS.NibrsCode(),
-            PropertyCategoryCode.OFFICE_TYPE_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.PURSES_HANDBAGS_WALLETS.NibrsCode(),
-            PropertyCategoryCode.RADIOS_TVS_VCRS_DVD_PLAYERS.NibrsCode(),
-            PropertyCategoryCode.AUDIO_VISUAL_RECORDINGS.NibrsCode(),
-            PropertyCategoryCode.TOOLS.NibrsCode(),
-            PropertyCategoryCode.VEHICLE_PARTS_ACCESSORIES.NibrsCode(),
-            PropertyCategoryCode.AIRCRAFT_PARTS_ACCESSORIES.NibrsCode(),
-            PropertyCategoryCode.ARTISTIC_SUPPLIES_ACCESSORIES.NibrsCode(),
-            PropertyCategoryCode.BUILDING_MATERIALS.NibrsCode(),
-            PropertyCategoryCode.CAMPING_HUNTING_FISHING_EQUIPMENT_SUPPLIES.NibrsCode(),
-            PropertyCategoryCode.CHEMICALS.NibrsCode(),
-            PropertyCategoryCode.COLLECTIONS_COLLECTIBLES.NibrsCode(),
-            PropertyCategoryCode.CROPS.NibrsCode(),
-            PropertyCategoryCode.PERSONAL_BUSINESS_DOCUMENTS.NibrsCode(),
-            PropertyCategoryCode.EXPLOSIVES.NibrsCode(),
-            PropertyCategoryCode.FIREARM_ACCESSORIES.NibrsCode(),
-            PropertyCategoryCode.FUEL.NibrsCode(),
-            PropertyCategoryCode.IDENTITY_DOCUMENTS.NibrsCode(),
-            PropertyCategoryCode.IDENTITY.NibrsCode(),
-            PropertyCategoryCode.LAW_ENFORCEMENT_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.LAWN_YARD_GARDEN_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.LOGGING_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.MEDICAL_OR_MEDICAL_LAB_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.METALS.NibrsCode(),
-            PropertyCategoryCode.MUSICAL_INSTRUMENTS.NibrsCode(),
-            PropertyCategoryCode.PETS.NibrsCode(),
-            PropertyCategoryCode.PHOTOGRAPHIC_OPTICAL_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.PORTABLE_ELECTRONIC_COMMUNICATIONS.NibrsCode(),
-            PropertyCategoryCode.RECREATIONAL_SPORTS_EQUIPMENT.NibrsCode(),
-            PropertyCategoryCode.OTHER.NibrsCode(),
-            PropertyCategoryCode.WATERCRAFT_EQUIPMENT_PARTS_ACCESSORIES.NibrsCode(),
-            PropertyCategoryCode.OTHER_WEAPONS.NibrsCode(),
+            {"200A", "A"},
+            {"200B", "B"},
+            {"200C", "C"},
+            {"200D", "D"},
+            {"200E", "E"},
+            {"200F", "F"},
+            {"200G", "G"},
+            {"200H", "H"},
+            {"200I", "I"},
+            {"200J", "J"}
         };
 
-        public static void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
+        public ArsonMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report) : base(monthlyReportData, report)
+        {
+            //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
+            //No additional calls need to be made because the base constructor is making the appropriate calls already.
+        }
+
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get { return ArsonClearanceClassificationDictionary; }
+        }
+
+        protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList)
+        {
+            monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());
+            monthlyReportData[clearanceDetailsList.UcrReportKey].ArsonData.IncrementAllClearences(clearanceDetailsList.ClassificationKey, clearanceDetailsList.AllScoresIncrementStep);
+        }
+
+        protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             // Return if no arson data to query
-            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode)) || !report.Items.Any(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()))
+            if (!report.Offenses.Any(offense => offense.UcrCode.Matches(OffenseCode.ARSON.NibrsCode())) || report.Items.All(i => i.Status.Code != ItemStatusCode.BURNED.NibrsCode()))
                 return;
 
             //Get Classification Counts to operate on for this report
             var arsonData = monthlyReportData[report.UcrKey].ArsonData;
-
-            //Get all arson offenses in report.
-            var offenses =
-                report.Offenses.Where(offense => offense.UcrCode.Matches(Arson.ArsonUcrCode) && offense.AttemptedIndicator == "false").ToList();
 
             //Determine property to use based on ucr hierarchy: structure -> mobile -> other
             var selectedProperty = GetPropertyToUse(report.Items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList());
@@ -113,30 +61,13 @@ namespace NibrsXml.Ucr.DataMining
             var keyForScoring = GetPropertyClassification(selectedProperty.NibrsPropertyCategoryCode);
 
             #region Column 4
-            
+
             //Use the corresponding key to increment the count of actual offenses.
             arsonData.IncrementActualOffense(keyForScoring);
-            #endregion
-
-            #region Column 5
-
-            //Clearances - Count one if exceptional clearance or arrest exists.
-            if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null || report.Arrests.Any())
-            {
-                arsonData.IncrementAllClearences(keyForScoring);
-            }
 
             #endregion
 
-            #region Column 6
-
-            //Clearances Involving Juveniles - Count only one if arrest exists.
-            if (report.Arrestees.Any(a => a.Person.AgeMeasure.IsJuvenile))
-            {
-                arsonData.IncrementJuvenileClearences(keyForScoring);
-            }
-
-            #endregion
+            //Columns 5 and 6 (All/Juvenile Clearances) will be handled by GeneralSummaryMiner
 
             //Column 7 is not available in NIBRS per the documentation. This needs to be verified given that other data in a similar fashion has since been 
             //been incorporated into NIBRS.
@@ -151,12 +82,24 @@ namespace NibrsXml.Ucr.DataMining
         }
 
         /// <summary>
-        /// Translates the property classification from a property description.
-        /// Property classification is synonymous to the row header of the arson report.
+        ///     Takes in a list of items, determines which of the items to use, then extracts the classification from that property
+        ///     Property classification is synonymous to the row header of the arson report.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static string GetPropertyClassification(List<Item> items)
+        {
+            var selectedProperty = GetPropertyToUse(items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList());
+            return selectedProperty == null ? null : GetPropertyClassification(selectedProperty.NibrsPropertyCategoryCode);
+        }
+
+        /// <summary>
+        ///     Translates the property classification from a property description.
+        ///     Property classification is synonymous to the row header of the arson report.
         /// </summary>
         /// <param name="propertyDescription"></param>
         /// <returns></returns>
-        private static String GetPropertyClassification(String propertyDescription)
+        private static string GetPropertyClassification(string propertyDescription)
         {
             switch (propertyDescription)
             {
@@ -246,33 +189,33 @@ namespace NibrsXml.Ucr.DataMining
         }
 
         /// <summary>
-        /// It returns a property based on the highest value and hierarchical requirements.
+        ///     It returns a property based on the highest value and hierarchical requirements.
         /// </summary>
-        public static Item GetPropertyToUse(List<Item> burnedItems)
+        private static Item GetPropertyToUse(List<Item> burnedItems)
         {
             //Get at most one property per offense.
             //----Gather only one structure property with the highest value. Given OrderBy sorts in ascending, Last() provides desired property.
             var structureProperty =
-                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(StructureProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.StructureProperties)).Max();
             //--------If structureProperty is not null, return it
             if (structureProperty != null) return structureProperty;
 
             //----Gather only one vehicle as above.
             var vehicleProperty =
-                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(VehicleProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties)).Max();
 
             //--------If structureProperty is not null, return it
             if (vehicleProperty != null) return vehicleProperty;
 
             //----Gather all other mobile properties
             var otherMobileProperty =
-                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(OtherMobileProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.OtherMobileProperties)).Max();
 
             //--------If structureProperty is not null, return it
             if (otherMobileProperty != null) return otherMobileProperty;
 
             //----Gather Total Other Property
-            var totalOtherProperty = burnedItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(TotalOtherProperties));
+            var totalOtherProperty = burnedItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.TotalOtherProperties));
 
             //--------Return Total other property or null if code reached this point.
             return totalOtherProperty;

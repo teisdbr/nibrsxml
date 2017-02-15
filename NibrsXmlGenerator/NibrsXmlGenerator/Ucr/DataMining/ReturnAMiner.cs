@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
@@ -15,9 +16,36 @@ namespace NibrsXml.Ucr.DataMining
 {
     internal class ReturnAMiner : GeneralSummaryMiner
     {
-        internal static void Mine(
-            ConcurrentDictionary<string, ReportData> monthlyOriReportData,
-            Report report)
+        private static readonly Dictionary<string, string> ReturnAClearanceClassificationDictionary = new Dictionary<string, string>
+        {
+            {"09A", "1a"},
+            {"09B", "1b"},
+            {"11A", "2a"},
+            {"120", "3d"},
+            {"13A", "4d"},
+            {"13B", "4e"},
+            {"13C", "4e"},
+            {"220", "5a"},
+            {"23A", "6"},
+            {"23B", "6"},
+            {"23C", "6"},
+            {"23D", "6"},
+            {"23E", "6"},
+            {"23F", "6"},
+            {"23G", "6"},
+            {"23H", "6"},
+            {"240", "7a"},
+            {"240", "7a"},
+            {"240", "7a"}
+        };
+
+        public ReturnAMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report)
+        {
+            //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
+            //No additional calls need to be made because the base constructor is making the appropriate calls already.
+        }
+
+        protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
             try
             {
@@ -54,8 +82,13 @@ namespace NibrsXml.Ucr.DataMining
             }
         }
 
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get { return ReturnAClearanceClassificationDictionary; }
+        }
         private static void ScoreHighestRatedOffenseGroup(ReturnA returnA, Offense highestRatedOffense, List<OffenseVictimAssociation> victimsOfMostImportantOffense, List<Item> items)
         {
+            
             switch (highestRatedOffense.UcrCode)
             {
                 //Score Homicide Offense by counting victims via Data element 24 - Could be more than one per report.
@@ -108,11 +141,10 @@ namespace NibrsXml.Ucr.DataMining
             }
         }
 
-        internal struct ClearanceDetails
+        protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList)
         {
-            private string UcrReportKey;
-            private int AllScores;
-            private int JuvenileScores;
+            monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());
+            monthlyReportData[clearanceDetailsList.UcrReportKey].ReturnAData.IncrementAllClearences(clearanceDetailsList.ClassificationKey, clearanceDetailsList.AllScoresIncrementStep);
         }
     }
 }

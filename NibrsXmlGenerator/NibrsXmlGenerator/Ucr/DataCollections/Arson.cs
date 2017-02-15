@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -33,8 +32,6 @@ namespace NibrsXml.Ucr.DataCollections
         }
 
         #region Constants
-
-        public const String ArsonUcrCode = "200";
 
         private const string TotalStructure = "Total Structure";
         private const string TotalMobile = "Total Mobile";

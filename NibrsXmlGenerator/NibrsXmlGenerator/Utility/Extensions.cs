@@ -1,97 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NibrsXml.Utility
 {
     public static class Extensions
     {
         #region Dictionary Extensions
+
         public static Dictionary<string, int> TryAdd(this Dictionary<string, Dictionary<string, int>> dictionary, string key)
         {
             if (!dictionary.ContainsKey(key))
-            {
                 dictionary.Add(key, new Dictionary<string, int>());
-            }
             return dictionary[key];
         }
-        public static TValue TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new()
+
+        public static void TryIncrement(this Dictionary<string, int> dictionary, string key, bool force = true)
         {
-            if (!dictionary.ContainsKey(key))
-            {
-                dictionary.Add(key, new TValue());
-            }
-            return dictionary[key];
-        }
-        public static void TryIncrement(this Dictionary<string, int> dictionary, string key, Boolean force = true)
-        {
-            if (key == null || (!force && key != null && !dictionary.ContainsKey(key))){
-                return;
-            }
-            else if (dictionary.ContainsKey(key))
-            {
+            if (key == null || !force && !dictionary.ContainsKey(key)) return;
+            if (dictionary.ContainsKey(key))
                 dictionary[key] += 1;
-            }
             else if (force)
-            {
                 dictionary.Add(key, 1);
-            }
-        }
-        #endregion
-        #region List Extensions
-        public static void TryAdd<T>(this List<T> list, T item)
-        {
-            if (item != null)
-            {
-                list.Add(item);
-            }
         }
 
-        public static void TryAdd<T>(this List<T> list, params T[] items)
-        {
-            foreach (T item in items)
-            {
-                list.TryAdd(item);
-            }
-        }
-
-        public static void UniqueAdd<T>(this List<T> list, params T[] items)
-        {
-            foreach (T item in items)
-            {
-                if (!list.Contains(item))
-                {
-                    list.TryAdd(item);
-                }
-            }
-        } 
         #endregion
 
         #region String Extensions
-        public static string TrimNullIfEmpty(this String input)
+
+        public static string TrimNullIfEmpty(this string input)
         {
-            return input.Trim() == String.Empty ? null : input.Trim();
+            return input.Trim() == string.Empty ? null : input.Trim();
         }
 
         // String Extensions
-        public static T TryBuild<T>(this String input)
+        public static T TryBuild<T>(this string input)
         {
-            if (input.Trim() != String.Empty)
-                return (T)Activator.CreateInstance(typeof(T), input);
+            if (input.Trim() != string.Empty)
+                return (T) Activator.CreateInstance(typeof(T), input);
             return default(T);
         }
 
-        public static T TryBuild<T>(this String input, params string[] args)
+        public static T TryBuild<T>(this string input, params string[] args)
         {
-            if (input.Trim() != String.Empty)
-                return (T)Activator.CreateInstance(typeof(T), input, args);
+            if (input.Trim() != string.Empty)
+                return (T) Activator.CreateInstance(typeof(T), input, args);
             return default(T);
-        } 
+        }
+
         #endregion
 
         #region Enum Extensions
+
         public static string NibrsCode(this Enum e)
         {
             return NibrsCodeAttribute.GetDescription(e);
@@ -106,6 +65,7 @@ namespace NibrsXml.Utility
         {
             return UcrElementName.GetDescription(e);
         }
+
         #endregion
     }
 }

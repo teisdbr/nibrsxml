@@ -52,13 +52,14 @@ namespace NibrsXml.Ucr.DataMining
                 //AsreMiner.MineAdd(monthlyOriReportData, report);
 
                 //Mine Human Trafficking Data
-                HumanTraffickingMiner.Mine(monthlyOriReportData, report);
+                new HumanTraffickingMiner(monthlyOriReportData, report);
 
                 //Arson Data
-                ArsonMiner.Mine(monthlyOriReportData, report);
+                new ArsonMiner(monthlyOriReportData, report);
 
                 //Return A Data
-                if (report.Offenses.Count(o => o.UcrCode.MatchOne(ApplicableReturnAUcrCodes)) > 0) ReturnAMiner.Mine(monthlyOriReportData, report);
+                if (report.Offenses.Count(o => o.UcrCode.MatchOne(ApplicableReturnAUcrCodes)) > 0) //ReturnAMiner.Mine(monthlyOriReportData, report);
+                new ReturnAMiner(monthlyOriReportData, report);
             }
             return monthlyOriReportData;
         }
