@@ -32,7 +32,6 @@ namespace NibrsXml.Ucr.DataMining
                 //Return A Data
                 ReturnAMiner.Mine(monthlyOriReportData, report);
             }
-
             return monthlyOriReportData;
         }
     }

@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using NibrsXml.Constants;
+using NibrsXml.NibrsReport.Arrestee;
+using NibrsXml.NibrsReport.Incident;
+using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr.DataCollections
 {
+    using ExceptionalClearances = Int32;
+    using ExceptionalClearanceOfJuveniles = Int32;
+
     public abstract class GeneralSummaryData
     {
         #region Constants
@@ -84,6 +91,23 @@ namespace NibrsXml.Ucr.DataCollections
         {
             ClassificationCounts.TryAdd(key).IncrementEstimatedValueOfPropertyDamage(byValue);
             ClassificationCounts[GrandTotal].IncrementEstimatedValueOfPropertyDamage(byValue);
+        }
+
+        public virtual Tuple<ExceptionalClearances, ExceptionalClearanceOfJuveniles> DetermineClearanceCounts(Incident incident, List<Arrestee> arrestees)
+        {
+            //Determine if incident is exceptionally cleared or not.
+            if (incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null)
+            {
+                //Determine if any arrests occurred that cleared this incident.
+
+                //Determine if any juvenile were arrested.
+            }
+            else
+            {
+                
+            }
+
+            return Tuple.Create(1, 2);
         }
     }
 }

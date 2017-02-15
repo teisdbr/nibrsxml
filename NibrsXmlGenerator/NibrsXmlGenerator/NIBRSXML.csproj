@@ -121,11 +121,11 @@
     <Compile Include="Ucr\DataCollections\ReturnA.cs" />
     <Compile Include="Ucr\DataMining\ArsonMiner.cs" />
     <Compile Include="Ucr\DataMining\AsreMiner.cs" />
+    <Compile Include="Ucr\DataMining\GeneralSummaryMiner.cs" />
     <Compile Include="Ucr\DataMining\HumanTraffickingMiner.cs" />
     <Compile Include="Ucr\DataMining\ReportDataMiner.cs" />
     <Compile Include="Ucr\DataMining\HateCrimeMiner.cs" />
     <Compile Include="Ucr\DataMining\LeokaMiner.cs" />
-    <Compile Include="Ucr\DataMining\OffenseReturnMiner.cs" />
     <Compile Include="Ucr\DataMining\ReturnAMiner.cs" />
     <Compile Include="Ucr\DataMining\ReturnASupplementMiner.cs" />
     <Compile Include="Ucr\DataMining\SupplementaryHomicideMiner.cs" />
@@ -137,6 +137,8 @@
     <Compile Include="Ucr\DataCollections\OffenseReturn.cs" />
     <Compile Include="Ucr\DataCollections\ReturnASupplement.cs" />
     <Compile Include="Ucr\DataCollections\SupplementaryHomicide.cs" />
+    <Compile Include="Ucr\DataMining\UcrHierarchyMiner.cs" />
+    <Compile Include="Ucr\Extensions.cs" />
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
     <Compile Include="Utility\Extensions.cs" />

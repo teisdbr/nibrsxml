@@ -9,7 +9,7 @@ using NibrsXml.Constants;
 
 namespace NibrsXml.Ucr.DataCollections
 {
-    public class OffenseReturn : Data
+    public class ReturnAOld : Data
     {
         public XDocument Serialize() { 
             return new XDocument(

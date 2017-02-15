@@ -16,7 +16,7 @@ namespace NibrsXml.Ucr.DataMining
 {
     class OffenseReturnMiner
     {
-        public static DataCollections.OffenseReturn Mine(NibrsReport.Submission submission)
+        public static DataCollections.ReturnAOld Mine(NibrsReport.Submission submission)
         {
             return new DataCollections.OffenseReturn();
         }
@@ -33,7 +33,7 @@ namespace NibrsXml.Ucr.DataMining
                 //Count Offenses
                 if (record.OffenseRef.UcrCode == "09A")
                 {
-                    monthlyReportData[nibrsIncidentReport.UcrKey].OffenseReturnData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementActualOffense();
+                    monthlyReportData[nibrsIncidentReport.UcrKey].ReturnAData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementActualOffense();
                 }
             }
             
@@ -55,10 +55,10 @@ namespace NibrsXml.Ucr.DataMining
                 if (arrInfo.ArrestSubjectAssociation.ActivityRef.Date.YearMonthDate == nibrsIncidentReport.Header.ReportDate.YearMonthDate || (nibrsIncidentReport.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceCode != null && nibrsIncidentReport.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate == nibrsIncidentReport.Header.ReportDate.YearMonthDate ))
                 {
                     //Increment Arrest Clearance
-                    monthlyReportData[nibrsIncidentReport.UcrKey].OffenseReturnData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementAllClearences();
+                    monthlyReportData[nibrsIncidentReport.UcrKey].ReturnAData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementAllClearences();
 
                     //Increment Juvenile Clearance if applicable
-                    if (arrInfo.Arrestee.Person.AgeMeasure.IsJuvenile) { monthlyReportData[nibrsIncidentReport.UcrKey].OffenseReturnData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementJuvenileClearences(); }
+                    if (arrInfo.Arrestee.Person.AgeMeasure.IsJuvenile) { monthlyReportData[nibrsIncidentReport.UcrKey].ReturnAData.OffenseTotals.TryAdd(OffenseReturn.NibrsCode.Murder).IncrementJuvenileClearences(); }
                 }
             }
         }
