@@ -33,6 +33,24 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("PersonAugmentation", Namespace = Namespaces.justice, Order = 7)]
         public PersonAugmentation Augmentation { get; set; }
 
+        [XmlIgnore]
+        public bool AgeIsUnknown
+        {
+            get
+            {
+                return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
+            }
+        }
+
+        [XmlIgnore]
+        public bool IsJuvenile
+        {
+            get
+            {
+                return AgeMeasure != null && AgeMeasure.IsJuvenile;
+            }
+        }
+
         public Person() { }
 
         /// <summary>

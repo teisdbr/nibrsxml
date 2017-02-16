@@ -1,14 +1,24 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
+using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Ucr.DataCollections;
+using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
     internal class HumanTraffickingMiner : GeneralSummaryMiner
     {
+        private static readonly string[] ApplicableHumanTraffickingUcrCodes =
+        {
+            OffenseCode.HUMAN_TRAFFICKING_COMMERCIAL_SEX_ACTS.NibrsCode(),
+            OffenseCode.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE.NibrsCode()
+        };
+
         private static readonly Dictionary<string, string> HumanTraffickingClearanceClassificationDictionary = new Dictionary<string, string>
         {
             {"64A", "A"},
@@ -19,6 +29,11 @@ namespace NibrsXml.Ucr.DataMining
         {
             //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
+        }
+
+        protected override string[] ApplicableUcrCodes
+        {
+            get { return ApplicableHumanTraffickingUcrCodes; }
         }
 
         protected override Dictionary<string, string> ClearanceClassificationDictionary
@@ -48,8 +63,25 @@ namespace NibrsXml.Ucr.DataMining
             //Gather counts for Column 4 for Line A or B.
             foreach (var offense in actualOffenses)
                 humanTraffickingData.IncrementActualOffense(offense.UcrCode.Substring(2, 1));
+        }
 
-            //Columns 5 and 6 (All/Juvenile Clearances) will be handled by GeneralSummaryMiner
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
+        {
+            throw new NotImplementedException();
+
+            //This is the data that pertains to the report of the clearance date of the arrest/incident
+            monthlyReportData.TryAdd(ucrReportKey, new ReportData());
+            var humanTraffickingData = monthlyReportData[ucrReportKey].HumanTraffickingData;
+
+            var clearedOffenses = fauxReport.OffenseVictimAssocs.Select(ov => ov.RelatedOffense);
+
+            foreach (var offense in clearedOffenses)
+                humanTraffickingData.IncrementAllClearences(offense.UcrCode.Substring(2, 1));
+        }
+
+        protected override List<OffenseVictimAssociation> CreateFauxOffenseVictimAssociations(Report report, string ucrClearanceCode)
+        {
+            return report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode.MatchOne(ApplicableUcrCodes)).ToList();
         }
     }
 }

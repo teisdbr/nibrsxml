@@ -4,6 +4,7 @@ using System.Linq;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Arrest;
+using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Ucr.DataCollections;
@@ -12,13 +13,21 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    internal struct ClearanceDetails
-    {
-        public string UcrReportKey;
-        public string ClassificationKey;
-        public int AllScoresIncrementStep;
-        public int JuvenileScoresIncrementStep;
-    }
+    /** !!IMPORTANT!! ** CLEARANCE SCORING PROCESS (shared among ReturnA, Arson, and HumanTrafficking)
+     * 1. Incident contains arrests
+     *      a. Check arrestees' ages to see if incident involves only juveniles
+     *      b. Use only the arrest with the highest ranked ucr charge
+     *      c. Based on ucr charge, collect the following data element(s)
+     *          i.   Corresponding offense
+     *          ii.  Corresponding offense-victim associations
+     *          iii. Corresponding offense, corresponding items
+     *      d. Pass data elements to lower level for scoring.
+     * 2. Incident has no arrests
+     *      a. Incident has exceptional clearance date
+     *          i.   Use offenders to check if incident involves only juveniles (reuse allArresteesAreJuvenile boolean)
+     *          ii.  Score column 5 as you would for column 4 with the additional allArresteesAreJuvenile boolean
+     * 3. No clearance scores applicable
+    */
 
     internal abstract class GeneralSummaryMiner
     {
@@ -28,12 +37,87 @@ namespace NibrsXml.Ucr.DataMining
             ScoreClearances(monthlyReportData, report);
         }
 
-        #region Abstract Functions
+        protected abstract string[] ApplicableUcrCodes { get; }
+
+        protected abstract void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report);
+
+        private void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
+        {
+            var clearanceUcrCode = report.ClearanceUcrCode();
+            if (clearanceUcrCode == null || !clearanceUcrCode.MatchOne(ApplicableUcrCodes))
+                //Do not score clearances if there's no applicable clearance code avaiable
+                return;
+
+            //Move forward with assumption that the report contains a valid clearance
+
+            if (report.Offenses.All(o => o.UcrCode != clearanceUcrCode))
+                ScoreClearancesWithAssumptions(monthlyReportData, report);
+
+            //Create ucrReportKey
+            var clearanceDate = ConvertNibrsDateToDateKeyPrefix(report.ClearanceDate());
+            var ucrReportKey = clearanceDate + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+
+            //A faux report will have to be created, but at the discretion of the derived classes because the faux
+            //report may be created differently depending on the ucr report type
+            var fauxReport = CreateFauxClearanceReport(report, clearanceUcrCode);
+            ScoreClearances(monthlyReportData, ucrReportKey, fauxReport, report.DoScoreColumn6ForGeneralSummaryData());
+        }
+
+        protected abstract void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6);
+
+        private Report CreateFauxClearanceReport(Report report, string ucrClearanceCode)
+        {
+            //Faux report objects should only contain data we need to score the clearance for the original report
+            var fauxOffense = CreateFauxOffense(report, ucrClearanceCode);
+            var fauxItems = CreateFauxItems(report, ucrClearanceCode);
+            var fauxOffenseVictimAssocs = CreateFauxOffenseVictimAssociations(report, ucrClearanceCode);
+
+            return new Report
+            {
+                Offenses = fauxOffense == null ? null : new List<Offense> {fauxOffense},
+                Items = fauxItems,
+                OffenseVictimAssocs = fauxOffenseVictimAssocs
+            };
+        }
+
+        protected virtual Offense CreateFauxOffense(Report report, string ucrClearanceCode)
+        {
+            return null;
+        }
+
+        protected virtual List<OffenseVictimAssociation> CreateFauxOffenseVictimAssociations(Report report, string ucrClearanceCode)
+        {
+            return null;
+        }
+
+        protected virtual List<Item> CreateFauxItems(Report report, string ucrClearanceCode)
+        {
+            return null;
+        }
+
+        #region Clearance Scoring Implementation With Assumptions
+
+        internal struct ClearanceDetails
+        {
+            public string UcrReportKey;
+            public string ClassificationKey;
+            public int AllScoresIncrementStep;
+            public int JuvenileScoresIncrementStep;
+        }
+
+        /// <summary>
+        ///     Converts the YYYY-MM-DD date to a YYYYMM format
+        /// </summary>
+        private static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
+        {
+            return nibrsDate.Replace("-", "").Remove(6);
+        }
+
         /// <summary>
         ///     Every derived class (ReturnA, Arson, HumanTrafficking) needs to define this dictionary of psuedo-keys
         ///     that map to real keys that are used in the xml output.
-        ///
-        ///     This is because the determination of the classifications to score clearances on are different across the three reports.
+        ///     This is because the determination of the classifications to score clearances on are different across the three
+        ///     reports.
         /// </summary>
         protected abstract Dictionary<string, string> ClearanceClassificationDictionary { get; }
 
@@ -44,18 +128,6 @@ namespace NibrsXml.Ucr.DataMining
         /// <param name="monthlyReportData"></param>
         /// <param name="clearanceDetailsList"></param>
         protected abstract void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList);
-
-        protected abstract void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report);
-        #endregion
-
-        #region Static Functions (Helpers)
-        /// <summary>
-        ///     Converts the YYYY-MM-DD date to a YYYYMM format
-        /// </summary>
-        private static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
-        {
-            return nibrsDate.Replace("-", "").Remove(6);
-        }
 
         private static string GetClearanceClassificationPsuedoKey(Arrest fromArrest, List<Item> burnedItems)
         {
@@ -68,9 +140,7 @@ namespace NibrsXml.Ucr.DataMining
         {
             return fromOffense.UcrCode;
         }
-        #endregion
 
-        #region Clearance Scoring Functions
         private string GetClassificationKey(Arrest fromArrest, List<Item> burnedItems = null)
         {
             return ClearanceClassificationDictionary.ContainsKey(GetClearanceClassificationPsuedoKey(fromArrest, burnedItems))
@@ -115,7 +185,7 @@ namespace NibrsXml.Ucr.DataMining
             };
         }
 
-        private void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
+        private void ScoreClearancesWithAssumptions(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             //GET CLEARANCE DETAILS
 
@@ -124,23 +194,25 @@ namespace NibrsXml.Ucr.DataMining
 
             if (!report.Arrests.Any())
             {
-                var incidentDate = report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate;
+                var incidentClearanceDate = report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate;
                 //No arrests available, so check if incident is cleared
-                if (incidentDate != null)
+                if (incidentClearanceDate != null)
                 {
                     //Incident is cleared so we must clear all offenses of this incident
                     //Because there are no arrests, we cannot tell if only juveniles were involved. Score only for column 5
 
                     //Construct the UcrReportKey since it will be shared amongst all offenses here
-                    incidentDate = ConvertNibrsDateToDateKeyPrefix(incidentDate);
-                    var ucrReportKey = incidentDate + ori;
+                    incidentClearanceDate = ConvertNibrsDateToDateKeyPrefix(incidentClearanceDate);
+                    var ucrReportKey = incidentClearanceDate + ori;
 
                     foreach (var offense in report.Offenses)
                         clearanceDetailsList.TryAdd(GetClearanceDetails(offense, ucrReportKey));
                 }
                 else
                     //Incident is not cleared means no scoring
+                {
                     return;
+                }
             }
             else
             {
@@ -155,8 +227,7 @@ namespace NibrsXml.Ucr.DataMining
             foreach (var clearance in clearanceDetailsList)
                 IncrementClearances(monthlyReportData, clearance);
         }
+
         #endregion
-
     }
-
 }

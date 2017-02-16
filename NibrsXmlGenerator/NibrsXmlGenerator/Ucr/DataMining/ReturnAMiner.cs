@@ -16,6 +16,27 @@ namespace NibrsXml.Ucr.DataMining
 {
     internal class ReturnAMiner : GeneralSummaryMiner
     {
+        private static readonly string[] ApplicableReturnAUcrCodes =
+        {
+            OffenseCode.MURDER_NONNEGLIGENT.NibrsCode(),
+            OffenseCode.NEGLIGENT_MANSLAUGHTER.NibrsCode(),
+            OffenseCode.RAPE.NibrsCode(),
+            OffenseCode.ROBBERY.NibrsCode(),
+            OffenseCode.AGGRAVATED_ASSAULT.NibrsCode(),
+            OffenseCode.SIMPLE_ASSAULT.NibrsCode(),
+            OffenseCode.INTIMIDATION.NibrsCode(),
+            OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode(),
+            OffenseCode.PICKPOCKETING.NibrsCode(),
+            OffenseCode.PURSE_SNATCHING.NibrsCode(),
+            OffenseCode.SHOPLIFTING.NibrsCode(),
+            OffenseCode.THEFT_FROM_BUILDING.NibrsCode(),
+            OffenseCode.THEFT_FROM_COIN_OPERATED_MACHINE.NibrsCode(),
+            OffenseCode.THEFT_FROM_MOTOR_VEHICLE.NibrsCode(),
+            OffenseCode.THEFT_OF_MOTOR_VEHICLE_PARTS_OR_ACCESSORIES.NibrsCode(),
+            OffenseCode.OTHER_LARCENY.NibrsCode(),
+            OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode()
+        };
+
         private static readonly Dictionary<string, string> ReturnAClearanceClassificationDictionary = new Dictionary<string, string>
         {
             {"09A", "1a"},
@@ -45,6 +66,10 @@ namespace NibrsXml.Ucr.DataMining
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
         }
 
+        protected override string[] ApplicableUcrCodes
+        {
+            get { return ApplicableReturnAUcrCodes; }
+        }
         protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
             try
@@ -145,6 +170,91 @@ namespace NibrsXml.Ucr.DataMining
         {
             monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());
             monthlyReportData[clearanceDetailsList.UcrReportKey].ReturnAData.IncrementAllClearences(clearanceDetailsList.ClassificationKey, clearanceDetailsList.AllScoresIncrementStep);
+        }
+
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     If the ucrClearanceCode is of one of the offenses where victim data is not required
+        /// </summary>
+        /// <param name="report"></param>
+        /// <param name="ucrClearanceCode"></param>
+        /// <returns></returns>
+        protected override Offense CreateFauxOffense(Report report, string ucrClearanceCode)
+        {
+            if (ucrClearanceCode.MatchOne(
+                //120
+                OffenseCode.ROBBERY.NibrsCode(),
+                //220
+                OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode(),
+                //23[A-H]
+                OffenseCode.PICKPOCKETING.NibrsCode(),
+                OffenseCode.PURSE_SNATCHING.NibrsCode(),
+                OffenseCode.SHOPLIFTING.NibrsCode(),
+                OffenseCode.THEFT_FROM_BUILDING.NibrsCode(),
+                OffenseCode.THEFT_FROM_COIN_OPERATED_MACHINE.NibrsCode(),
+                OffenseCode.THEFT_FROM_MOTOR_VEHICLE.NibrsCode(),
+                OffenseCode.THEFT_OF_MOTOR_VEHICLE_PARTS_OR_ACCESSORIES.NibrsCode(),
+                OffenseCode.OTHER_LARCENY.NibrsCode(),
+                OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode()))
+            {
+                var clearedOffenses = report.Offenses.Where(o => o.UcrCode == ucrClearanceCode).ToArray();
+                if (clearedOffenses.Any())
+                {
+                    var clearanceOffense = clearedOffenses.First();
+                    if (ucrClearanceCode == OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode())
+                    {
+                        //Additional logic to affix the returned offense to contain numbers for number of premises entered if any of burglaries were of rental storage facilities
+                        //This is required because 1) location type & 2) number of prem. entered may affect the number of scores an offense can count towards
+                        var rentalStorageFacilityBurglaries = clearedOffenses.Where(o => o.Location.CategoryCode == LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode()).ToArray();
+                        if (rentalStorageFacilityBurglaries.Any())
+                        {
+                            var totalPremisesEntered = rentalStorageFacilityBurglaries.Aggregate(0, (total, offense) => Convert.ToInt32(offense.StructuresEnteredQuantity));
+                            clearanceOffense.Location.CategoryCode = LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode();
+                            clearanceOffense.StructuresEnteredQuantity = totalPremisesEntered.ToString();
+                        }
+                    }
+
+                    return clearanceOffense;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///     If the ucrClearanceCode requires victim data, this returns the context of all offenses and victim data of that ucr
+        ///     code
+        /// </summary>
+        /// <param name="report"></param>
+        /// <param name="ucrClearanceCode"></param>
+        /// <returns></returns>
+        protected override List<OffenseVictimAssociation> CreateFauxOffenseVictimAssociations(Report report, string ucrClearanceCode)
+        {
+            if (ucrClearanceCode.MatchOne(
+                OffenseCode.MURDER_NONNEGLIGENT.NibrsCode(),
+                OffenseCode.NEGLIGENT_MANSLAUGHTER.NibrsCode(),
+                OffenseCode.RAPE.NibrsCode(),
+                OffenseCode.AGGRAVATED_ASSAULT.NibrsCode(),
+                OffenseCode.SIMPLE_ASSAULT.NibrsCode(),
+                OffenseCode.INTIMIDATION.NibrsCode()))
+            {
+                var clearedOffVicAssocs = report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode == ucrClearanceCode).ToList();
+                if (clearedOffVicAssocs.Any())
+                    return clearedOffVicAssocs;
+            }
+
+            return null;
+        }
+
+        protected override List<Item> CreateFauxItems(Report report, string ucrClearanceCode)
+        {
+            return ucrClearanceCode == OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode()
+                ? report.Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList()
+                : null;
         }
     }
 }

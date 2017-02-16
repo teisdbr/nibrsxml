@@ -13,6 +13,8 @@ namespace NibrsXml.Ucr.DataMining
 {
     internal class ArsonMiner : GeneralSummaryMiner
     {
+        private static readonly string[] ApplicableArsonUcrCodes = {OffenseCode.ARSON.NibrsCode()};
+
         private static readonly Dictionary<string, string> ArsonClearanceClassificationDictionary = new Dictionary<string, string>
         {
             {"200A", "A"},
@@ -31,6 +33,11 @@ namespace NibrsXml.Ucr.DataMining
         {
             //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
+        }
+
+        protected override string[] ApplicableUcrCodes
+        {
+            get { return ApplicableArsonUcrCodes; }
         }
 
         protected override Dictionary<string, string> ClearanceClassificationDictionary
@@ -219,6 +226,22 @@ namespace NibrsXml.Ucr.DataMining
 
             //--------Return Total other property or null if code reached this point.
             return totalOtherProperty;
+        }
+
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
+        {
+            throw new NotImplementedException();
+
+            //This is the data that pertains to the report of the clearance date of the arrest/incident
+            monthlyReportData.TryAdd(ucrReportKey, new ReportData());
+            var arsonData = monthlyReportData[ucrReportKey].ArsonData;
+            var keyForScoring = GetPropertyClassification(fauxReport.Items);
+            arsonData.IncrementAllClearences(keyForScoring);
+        }
+
+        protected override List<Item> CreateFauxItems(Report report, string ucrClearanceCode)
+        {
+            return report.Items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList();
         }
     }
 }
