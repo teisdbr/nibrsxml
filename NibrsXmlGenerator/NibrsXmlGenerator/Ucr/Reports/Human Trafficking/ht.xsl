@@ -20,6 +20,9 @@
           td {
             text-align:right;
           }
+          .rowheader {
+            text-align: left;
+          }
         </style>
       </head>
       <body>
@@ -51,7 +54,7 @@
               <xsl:sort select="@name"/>
               <tr>
                 <!--The row header-->
-                <th>
+                <th class="rowheader">
                   <xsl:choose>
                     <xsl:when test="@name='A'">
                       <xsl:value-of select="'A. Commercial Sex Acts'"/>
