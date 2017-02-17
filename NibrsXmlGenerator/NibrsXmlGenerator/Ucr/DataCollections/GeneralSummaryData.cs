@@ -75,13 +75,16 @@ namespace NibrsXml.Ucr.DataCollections
             ClassificationCounts[GrandTotal].IncrementActualOffense(byValue);
         }
 
-        public virtual void IncrementAllClearences(String key, int byValue = 1)
+        public virtual void IncrementAllClearences(String key, int byValue = 1, Boolean allArresteesAreJuvenile = false)
         {
             ClassificationCounts.TryAdd(key).IncrementAllClearences(byValue);
             ClassificationCounts[GrandTotal].IncrementAllClearences(byValue);
+
+            //Only increment whenever the caller 
+            if (allArresteesAreJuvenile) IncrementJuvenileClearences(key, byValue);
         }
 
-        public virtual void IncrementJuvenileClearences(String key, int byValue = 1)
+        protected virtual void IncrementJuvenileClearences(String key, int byValue = 1)
         {
             ClassificationCounts.TryAdd(key).IncrementJuvenileClearences(byValue);
             ClassificationCounts[GrandTotal].IncrementJuvenileClearences(byValue);

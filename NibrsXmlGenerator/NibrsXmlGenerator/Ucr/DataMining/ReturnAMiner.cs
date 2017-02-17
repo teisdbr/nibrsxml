@@ -1,50 +1,118 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LoadBusinessLayer;
+using NibrsXml.Constants;
+using NibrsXml.NibrsReport;
+using NibrsXml.NibrsReport.Associations;
+using NibrsXml.NibrsReport.Item;
+using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Ucr.DataCollections;
+using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    class ReturnAMiner : GeneralSummaryMiner
+    internal class ReturnAMiner : GeneralSummaryMiner
     {
-        internal struct ClearanceDetails
+        internal static void Mine(
+            ConcurrentDictionary<string, ReportData> monthlyOriReportData,
+            Report report)
         {
-            private String UcrReportKey;
-            private int AllScores;
-            private int JuvenileScores;
+            try
+            {
+                #region Hierarchy Data Determination
+
+                //UCR Hierarchy Rules to return only the offense to score.
+                //--Select all offenses that match any of the UCR reportable offenses
+                var applicableOffenses =
+                    report.Offenses.Where(o => o.UcrCode.MatchOne(UcrHierarchyMiner.UcrHierarchyOrderArray.ToArray()))
+                        .ToList();
+                //--Gather data based on highest rated offense
+                var ucrHierarchyData = new UcrHierarchyMiner(applicableOffenses, report.OffenseVictimAssocs);
+                //--Select the highest rated offense
+                var highestRatedOffense = ucrHierarchyData.HighestRatedOffense;
+                //--Selected victims related to highest rated offense
+                var victimsOfMostImportantOffense = ucrHierarchyData.VictimsRelatedToHighestRatedOffense;
+
+                //Report Offenses and Victims not considered for UCR Report.
+                var ignoredOffenses = report.Offenses.Where(o => o.UcrCode != highestRatedOffense.UcrCode).ToList();
+                var ignoredVictimAssociations =
+                    report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode != highestRatedOffense.UcrCode).ToList();
+
+                #endregion
+
+                var returnA = monthlyOriReportData[report.UcrKey].ReturnAData ?? new ReturnA();
+
+                //Assign the ReturnA to the ORI month and year key of the monthlyOriReportData dictionary.
+                //Call one of the scoring functions per report.
+                ScoreHighestRatedOffenseGroup(returnA, highestRatedOffense, victimsOfMostImportantOffense, report.Items);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        internal static void Mine(System.Collections.Concurrent.ConcurrentDictionary<string, DataCollections.ReportData> monthlyOriReportData, NibrsReport.Report report)
+        private static void ScoreHighestRatedOffenseGroup(ReturnA returnA, Offense highestRatedOffense, List<OffenseVictimAssociation> victimsOfMostImportantOffense, List<Item> items)
         {
-            //UCR Hierarchy Rules to return only the offense to score.
-            var applicableOffenses = report.Offenses.Where(o => o.UcrCode.MatchOne(UcrHierarchyMiner.UcrHierarchyOrderArray.ToArray())).ToList();
+            switch (highestRatedOffense.UcrCode)
+            {
+                //Score Homicide Offense by counting victims via Data element 24 - Could be more than one per report.
+                case "09A":
+                case "09B":
+                    returnA.ScoreHomicide(victimsOfMostImportantOffense);
+                    break;
 
-            var mostImportantOffenseForReport = new UcrHierarchyMiner(applicableOffenses).HighestRatedOffense;
+                //Score Rape Offense by counting victims via Data element 24 - Could be more than one per report.
+                case "11A":
+                    returnA.ScoreRape(victimsOfMostImportantOffense);
+                    break;
 
-            var returnA = new ReturnA();
+                //Score Robberies via Data Element 6
+                case "120":
+                    returnA.ScoreRobbery(highestRatedOffense);
+                    break;
 
-            //Assign the ReturnA to the ORI month and year key of the monthlyOriReportData dictionary.
+                //Score Assault Offense by counting victims via Data element 24 - Could be more than one per report.
+                case "13A":
+                case "13B":
+                case "13C":
+                    returnA.ScoreAssault(victimsOfMostImportantOffense);
+                    break;
 
-            //Score Homicide Offense
-            returnA.ScoreHomicide(mostImportantOffenseForReport);
+                //Score Burglary by counting Data Element 6 - At most one per report.
+                case "220":
+                    returnA.ScoreBurglary(highestRatedOffense);
+                    break;
 
-            //Score Rape Offense
-            returnA.ScoreRape(mostImportantOffenseForReport);
+                //Score Larceny by counting Data Element 6
+                case "23A":
+                case "23B":
+                case "23C":
+                case "23D":
+                case "23E":
+                case "23F":
+                case "23G":
+                case "23H":
+                    returnA.ScoreLarcenyThefts(highestRatedOffense);
+                    break;
 
-            //Score Assault Offense
-            returnA.ScoreAssault(mostImportantOffenseForReport);
+                //Score Vehicle Offense by counting vehicle properties for 240 offense - Could be more than one per report.
+                case "240":
+                    returnA.ScoreVehicleTheft(highestRatedOffense,
+                        items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList());
+                    break;
+                default:
+                    break;
+            }
+        }
 
-            //Score Vehicle Offense
-            returnA.ScoreVehicleTheft(mostImportantOffenseForReport);
-
-            //Score Burglary
-            returnA.ScoreBurglary(robberyOffense: mostImportantOffenseForReport);
-            
-            returnA.ScoreClearances(report.Arrests,report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id);
+        internal struct ClearanceDetails
+        {
+            private string UcrReportKey;
+            private int AllScores;
+            private int JuvenileScores;
         }
     }
 }

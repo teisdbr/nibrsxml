@@ -62,15 +62,15 @@ namespace NibrsXml.Ucr.DataCollections
                 ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementActualOffense(byValue);
         }
 
-        public override void IncrementAllClearences(String key, int byValue = 1)
+        public override void IncrementAllClearences(String key, int byValue = 1, Boolean allArresteesAreJuvenile = false)
         {
-            base.IncrementAllClearences(key, byValue);
+            base.IncrementAllClearences(key, byValue,allArresteesAreJuvenile);
 
             if (ClassificationToSubtotalDictionary.ContainsKey(key))
                 ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementAllClearences(byValue);
         }
 
-        public override void IncrementJuvenileClearences(String key, int byValue = 1)
+        protected override void IncrementJuvenileClearences(String key, int byValue = 1)
         {
             base.IncrementJuvenileClearences(key, byValue);
 

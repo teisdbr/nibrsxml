@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.IO;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Ucr.DataMining;
+using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr
 {
@@ -21,7 +23,7 @@ namespace NibrsXml.Ucr
             XmlValidator validator = new XmlValidator(xmlFilepath);
             if (!validator.HasErrors)
             {
-                Reports = Submission.Deserialize(xmlFilepath).Reports;
+                Reports = Submission.Deserialize(xmlFilepath).Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
                 MonthlyOriReportData = ReportDataMiner.Mine(Reports);
             }
         }
@@ -32,7 +34,7 @@ namespace NibrsXml.Ucr
             XmlValidator validator = new XmlValidator(new StringReader(submission.Xml));
             if (!validator.HasErrors)
             {
-                Reports = submission.Reports;
+                Reports = submission.Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
                 MonthlyOriReportData = ReportDataMiner.Mine(Reports);
             }
         }

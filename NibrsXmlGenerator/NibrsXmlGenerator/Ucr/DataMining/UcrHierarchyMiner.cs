@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Offense;
+using NibrsXml.NibrsReport.Victim;
+using NibrsXml.Utility;
 
 
 namespace NibrsXml.Ucr.DataMining
@@ -14,24 +17,29 @@ namespace NibrsXml.Ucr.DataMining
         {
             get
             {
-                //Reverse the list of offenses as found in spec to make sure the highest index belongs to the first (09A).
-                return new List<string>() {"09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H","240","200"};
+                //Reverse the list of offenses as found in spec to make sure the highest index belongs to the first (09A). 13B & 13C had to be added so that there is a priority for them as well even though
+                //they are not part of the hierarchy rule.
+                return new List<string>() {"09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C"};
             }
         }
 
         public Offense HighestRatedOffense { get; private set; }
+        public List<OffenseVictimAssociation> VictimsRelatedToHighestRatedOffense { get; private set; }
 
         /// <summary>
         /// Returns the offense (or offenses if applicable) to count for this report
         /// </summary>
         /// <param name="offenses">List of Offenses for the Incident</param>
-        public UcrHierarchyMiner(List<Offense> offenses)
+        public UcrHierarchyMiner(List<Offense> offenses, List<OffenseVictimAssociation> victimAssociations)
         {
             //Make sure there are offenses to mine.
             if (!offenses.Any()) return;
 
             //Select the highest ranking offense based on the reversed index of the array.
             this.HighestRatedOffense = offenses.OrderBy(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode)).FirstOrDefault();
+
+            this.VictimsRelatedToHighestRatedOffense = victimAssociations.Where(ov => ov.RelatedOffense.UcrCode == HighestRatedOffense.UcrCode)
+                .ToList();
         }
     }
 }
