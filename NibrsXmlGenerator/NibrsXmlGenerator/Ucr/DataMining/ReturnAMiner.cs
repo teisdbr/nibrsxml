@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
@@ -16,7 +15,7 @@ namespace NibrsXml.Ucr.DataMining
 {
     internal class ReturnAMiner : GeneralSummaryMiner
     {
-        private static readonly string[] ApplicableReturnAUcrCodes =
+        public static readonly string[] ApplicableReturnAUcrCodes =
         {
             OffenseCode.MURDER_NONNEGLIGENT.NibrsCode(),
             OffenseCode.NEGLIGENT_MANSLAUGHTER.NibrsCode(),
@@ -55,8 +54,6 @@ namespace NibrsXml.Ucr.DataMining
             {"23F", "6"},
             {"23G", "6"},
             {"23H", "6"},
-            {"240", "7a"},
-            {"240", "7a"},
             {"240", "7a"}
         };
 
@@ -70,6 +67,12 @@ namespace NibrsXml.Ucr.DataMining
         {
             get { return ApplicableReturnAUcrCodes; }
         }
+
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get { return ReturnAClearanceClassificationDictionary; }
+        }
+
         protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
             try
@@ -95,11 +98,12 @@ namespace NibrsXml.Ucr.DataMining
 
                 #endregion
 
-                var returnA = monthlyOriReportData[report.UcrKey].ReturnAData ?? new ReturnA();
+                monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
+                var returnA = monthlyOriReportData[report.UcrKey()].ReturnAData;
 
                 //Assign the ReturnA to the ORI month and year key of the monthlyOriReportData dictionary.
                 //Call one of the scoring functions per report.
-                ScoreHighestRatedOffenseGroup(returnA, highestRatedOffense, victimsOfMostImportantOffense, report.Items);
+                ScoreHighestRatedOffenseGroup(returnA, highestRatedOffense, victimsOfMostImportantOffense, report.StolenVehicles);
             }
             catch (Exception ex)
             {
@@ -107,41 +111,36 @@ namespace NibrsXml.Ucr.DataMining
             }
         }
 
-        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        private static void ScoreHighestRatedOffenseGroup(ReturnA returnA, Offense highestRatedOffense, List<OffenseVictimAssociation> victimsOfMostImportantOffense, List<Item> stolenVehicles, bool? doScoreColumn6 = null)
         {
-            get { return ReturnAClearanceClassificationDictionary; }
-        }
-        private static void ScoreHighestRatedOffenseGroup(ReturnA returnA, Offense highestRatedOffense, List<OffenseVictimAssociation> victimsOfMostImportantOffense, List<Item> items)
-        {
-            
             switch (highestRatedOffense.UcrCode)
             {
                 //Score Homicide Offense by counting victims via Data element 24 - Could be more than one per report.
                 case "09A":
                 case "09B":
-                    returnA.ScoreHomicide(victimsOfMostImportantOffense);
+                    returnA.ScoreHomicide(victimsOfMostImportantOffense, doScoreColumn6);
                     break;
 
                 //Score Rape Offense by counting victims via Data element 24 - Could be more than one per report.
                 case "11A":
-                    returnA.ScoreRape(victimsOfMostImportantOffense);
+                    returnA.ScoreRape(victimsOfMostImportantOffense, doScoreColumn6);
                     break;
 
                 //Score Robberies via Data Element 6
                 case "120":
-                    returnA.ScoreRobbery(highestRatedOffense);
+                    returnA.ScoreRobbery(highestRatedOffense, doScoreColumn6);
                     break;
 
                 //Score Assault Offense by counting victims via Data element 24 - Could be more than one per report.
                 case "13A":
                 case "13B":
                 case "13C":
-                    returnA.ScoreAssault(victimsOfMostImportantOffense);
+                    returnA.ScoreAssault(victimsOfMostImportantOffense, doScoreColumn6);
                     break;
 
                 //Score Burglary by counting Data Element 6 - At most one per report.
                 case "220":
-                    returnA.ScoreBurglary(highestRatedOffense);
+                    returnA.ScoreBurglary(highestRatedOffense, doScoreColumn6);
                     break;
 
                 //Score Larceny by counting Data Element 6
@@ -153,13 +152,12 @@ namespace NibrsXml.Ucr.DataMining
                 case "23F":
                 case "23G":
                 case "23H":
-                    returnA.ScoreLarcenyThefts(highestRatedOffense);
+                    returnA.ScoreLarcenyThefts(highestRatedOffense, doScoreColumn6);
                     break;
 
                 //Score Vehicle Offense by counting vehicle properties for 240 offense - Could be more than one per report.
                 case "240":
-                    returnA.ScoreVehicleTheft(highestRatedOffense,
-                        items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList());
+                    returnA.ScoreVehicleTheft(highestRatedOffense, stolenVehicles, doScoreColumn6);
                     break;
                 default:
                     break;
@@ -174,7 +172,13 @@ namespace NibrsXml.Ucr.DataMining
 
         protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
         {
-            throw new NotImplementedException();
+            monthlyReportData.TryAdd(ucrReportKey, new ReportData());
+            ScoreHighestRatedOffenseGroup(
+                monthlyReportData[ucrReportKey].ReturnAData,
+                fauxReport.Offenses[0],
+                fauxReport.OffenseVictimAssocs,
+                fauxReport.Items, //ReturnAMiner.CreateFauxItems returns a list of stolen vehicles
+                doScoreColumn6);
         }
 
         /// <summary>
@@ -185,41 +189,24 @@ namespace NibrsXml.Ucr.DataMining
         /// <returns></returns>
         protected override Offense CreateFauxOffense(Report report, string ucrClearanceCode)
         {
-            if (ucrClearanceCode.MatchOne(
-                //120
-                OffenseCode.ROBBERY.NibrsCode(),
-                //220
-                OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode(),
-                //23[A-H]
-                OffenseCode.PICKPOCKETING.NibrsCode(),
-                OffenseCode.PURSE_SNATCHING.NibrsCode(),
-                OffenseCode.SHOPLIFTING.NibrsCode(),
-                OffenseCode.THEFT_FROM_BUILDING.NibrsCode(),
-                OffenseCode.THEFT_FROM_COIN_OPERATED_MACHINE.NibrsCode(),
-                OffenseCode.THEFT_FROM_MOTOR_VEHICLE.NibrsCode(),
-                OffenseCode.THEFT_OF_MOTOR_VEHICLE_PARTS_OR_ACCESSORIES.NibrsCode(),
-                OffenseCode.OTHER_LARCENY.NibrsCode(),
-                OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode()))
+            var clearedOffenses = report.Offenses.Where(o => o.UcrCode == ucrClearanceCode).ToArray();
+            if (clearedOffenses.Any())
             {
-                var clearedOffenses = report.Offenses.Where(o => o.UcrCode == ucrClearanceCode).ToArray();
-                if (clearedOffenses.Any())
+                var clearanceOffense = clearedOffenses.First();
+                if (ucrClearanceCode == OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode())
                 {
-                    var clearanceOffense = clearedOffenses.First();
-                    if (ucrClearanceCode == OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode())
+                    //Additional logic to affix the returned offense to contain numbers for number of premises entered if any of burglaries were of rental storage facilities
+                    //This is required because 1) location type & 2) number of prem. entered may affect the number of scores an offense can count towards
+                    var rentalStorageFacilityBurglaries = clearedOffenses.Where(o => o.Location.CategoryCode == LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode()).ToArray();
+                    if (rentalStorageFacilityBurglaries.Any())
                     {
-                        //Additional logic to affix the returned offense to contain numbers for number of premises entered if any of burglaries were of rental storage facilities
-                        //This is required because 1) location type & 2) number of prem. entered may affect the number of scores an offense can count towards
-                        var rentalStorageFacilityBurglaries = clearedOffenses.Where(o => o.Location.CategoryCode == LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode()).ToArray();
-                        if (rentalStorageFacilityBurglaries.Any())
-                        {
-                            var totalPremisesEntered = rentalStorageFacilityBurglaries.Aggregate(0, (total, offense) => Convert.ToInt32(offense.StructuresEnteredQuantity));
-                            clearanceOffense.Location.CategoryCode = LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode();
-                            clearanceOffense.StructuresEnteredQuantity = totalPremisesEntered.ToString();
-                        }
+                        var totalPremisesEntered = rentalStorageFacilityBurglaries.Aggregate(0, (total, offense) => Convert.ToInt32(offense.StructuresEnteredQuantity));
+                        clearanceOffense.Location.CategoryCode = LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode();
+                        clearanceOffense.StructuresEnteredQuantity = totalPremisesEntered.ToString();
                     }
-
-                    return clearanceOffense;
                 }
+
+                return clearanceOffense;
             }
 
             return null;
@@ -253,7 +240,7 @@ namespace NibrsXml.Ucr.DataMining
         protected override List<Item> CreateFauxItems(Report report, string ucrClearanceCode)
         {
             return ucrClearanceCode == OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode()
-                ? report.Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList()
+                ? report.StolenVehicles
                 : null;
         }
     }

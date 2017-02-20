@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -31,6 +30,38 @@ namespace NibrsXml.Ucr.DataCollections
             ClassificationCounts.Add("J", new GeneralSummaryCounts());
         }
 
+        public override void IncrementActualOffense(string key, int byValue = 1)
+        {
+            base.IncrementActualOffense(key, byValue);
+
+            if (ClassificationToSubtotalDictionary.ContainsKey(key))
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementActualOffense(byValue);
+        }
+
+        public override void IncrementAllClearences(string key, int byValue = 1, bool allArresteesAreJuvenile = false)
+        {
+            base.IncrementAllClearences(key, byValue, allArresteesAreJuvenile);
+
+            if (ClassificationToSubtotalDictionary.ContainsKey(key))
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementAllClearences(byValue);
+        }
+
+        protected override void IncrementJuvenileClearences(string key, int byValue = 1)
+        {
+            base.IncrementJuvenileClearences(key, byValue);
+
+            if (ClassificationToSubtotalDictionary.ContainsKey(key))
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementJuvenileClearences(byValue);
+        }
+
+        public override void IncrementEstimatedValueOfPropertyDamage(string key, long byValue = 1)
+        {
+            base.IncrementEstimatedValueOfPropertyDamage(key, byValue);
+
+            if (ClassificationToSubtotalDictionary.ContainsKey(key))
+                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementEstimatedValueOfPropertyDamage(byValue);
+        }
+
         #region Constants
 
         private const string TotalStructure = "Total Structure";
@@ -50,37 +81,5 @@ namespace NibrsXml.Ucr.DataCollections
         };
 
         #endregion
-
-        public override void IncrementActualOffense(String key, int byValue = 1)
-        {
-            base.IncrementActualOffense(key, byValue);
-
-            if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementActualOffense(byValue);
-        }
-
-        public override void IncrementAllClearences(String key, int byValue = 1, Boolean allArresteesAreJuvenile = false)
-        {
-            base.IncrementAllClearences(key, byValue,allArresteesAreJuvenile);
-
-            if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementAllClearences(byValue);
-        }
-
-        protected override void IncrementJuvenileClearences(String key, int byValue = 1)
-        {
-            base.IncrementJuvenileClearences(key, byValue);
-
-            if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementJuvenileClearences(byValue);
-        }
-
-        public override void IncrementEstimatedValueOfPropertyDamage(string key, long byValue = 1)
-        {
-            base.IncrementEstimatedValueOfPropertyDamage(key, byValue);
-
-            if (ClassificationToSubtotalDictionary.ContainsKey(key))
-                ClassificationCounts[ClassificationToSubtotalDictionary[key]].IncrementEstimatedValueOfPropertyDamage(byValue);
-        }
     }
 }

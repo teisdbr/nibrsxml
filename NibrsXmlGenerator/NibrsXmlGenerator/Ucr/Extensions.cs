@@ -15,8 +15,8 @@ namespace NibrsXml.Ucr
 
         public static String ArrestUcrKey(this List<Arrest> arrests, String ori)
         {
-            var earliestArrest = arrests.OrderBy(a => a.Date.YearMonthDate).FirstOrDefault();
-            return earliestArrest.Date.YearMonthDate.Replace("-", "").Substring(0,6) + ori;
+            var earliestArrest = arrests.OrderBy(a => a.Date.Date).FirstOrDefault();
+            return earliestArrest == null ? null : earliestArrest.Date.Date.Replace("-", "").Substring(0,6) + ori;
         }
 
         #endregion
@@ -30,31 +30,37 @@ namespace NibrsXml.Ucr
         /// <returns></returns>
         public static string ClearanceUcrCode(this Report report)
         {
-            if (report.ArrestSubjectAssocs.Any(assoc => assoc.RelatedArrest.Date.YearMonthDate != null))
+            if (report.ArrestSubjectAssocs.Any(assoc => assoc.RelatedArrest.Date.Date != null))
             {
                 var suggestedClearanceUcrCode = report.ArrestSubjectAssocs.Select(assoc => assoc.RelatedArrest).OrderBy(a => UcrHierarchyMiner.UcrHierarchyOrderArray.IndexOf(a.Charge.UcrCode)).First().Charge.UcrCode;
-                return report.Offenses.Any(o => o.UcrCode == suggestedClearanceUcrCode) ? suggestedClearanceUcrCode : null;
+                return  suggestedClearanceUcrCode;
             }
 
+            var highestRatedOffense = new UcrHierarchyMiner(report.Offenses, report.OffenseVictimAssocs).HighestRatedOffense;
+
             //If incident is cleared, use highest ranking offense in incident
-            return report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate == null ? null : new UcrHierarchyMiner(report.Offenses).HighestRatedOffense.UcrCode;
+            return report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate == null ||
+                report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.Date == null ||
+                highestRatedOffense == null
+                ? null
+                : highestRatedOffense.UcrCode;
         }
 
         public static string ClearanceDate(this Report report)
         {
             string nibrsDate = null;
 
-            if (report.ArrestSubjectAssocs.Any(assoc => assoc.RelatedArrest.Date.YearMonthDate != null))
+            if (report.ArrestSubjectAssocs.Any(assoc => assoc.RelatedArrest.Date.Date != null))
             {
-                var clearedArrests = report.ArrestSubjectAssocs.Where(assoc => assoc.RelatedArrest.Date.YearMonthDate != null);
-                var arrestDates = clearedArrests.Select(assoc => assoc.RelatedArrest.Date.YearMonthDate);
+                var clearedArrests = report.ArrestSubjectAssocs.Where(assoc => assoc.RelatedArrest.Date.Date != null);
+                var arrestDates = clearedArrests.Select(assoc => assoc.RelatedArrest.Date.Date);
                 nibrsDate = arrestDates.Min();
             }
             else if (report.Incident.JxdmIncidentAugmentation != null &&
                 report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null &&
-                report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate != null)
+                report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.Date != null)
             {
-                nibrsDate = report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate;
+                nibrsDate = report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.Date;
             }
 
             return nibrsDate;
@@ -86,6 +92,17 @@ namespace NibrsXml.Ucr
             allAreJuvenileOrUnknownAge = report.Subjects.All(s => s.Person.IsJuvenile || s.Person.AgeIsUnknown);
             return allAreJuvenile || (hasAtLeastOneJuvenile && allAreJuvenileOrUnknownAge);
         }
+
+        /// <summary>
+        /// A composite key comprised of the report date and the agency ori
+        /// </summary>
+        public static string UcrKey(this Report report)
+        {
+            {
+                return report.Incident.ActivityDate.DateTime.Replace("-", "").Substring(0, 6) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+            }
+        }
+
         #endregion
     }
 }

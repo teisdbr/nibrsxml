@@ -58,7 +58,7 @@ namespace NibrsXml.Ucr.DataMining
                 return;
 
             //Get Classification Counts to operate on for this report
-            var arsonData = monthlyReportData[report.UcrKey].ArsonData;
+            var arsonData = monthlyReportData[report.UcrKey()].ArsonData;
 
             //Determine property to use based on ucr hierarchy: structure -> mobile -> other
             var selectedProperty = GetPropertyToUse(report.Items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList());
@@ -230,13 +230,11 @@ namespace NibrsXml.Ucr.DataMining
 
         protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
         {
-            throw new NotImplementedException();
-
             //This is the data that pertains to the report of the clearance date of the arrest/incident
             monthlyReportData.TryAdd(ucrReportKey, new ReportData());
             var arsonData = monthlyReportData[ucrReportKey].ArsonData;
             var keyForScoring = GetPropertyClassification(fauxReport.Items);
-            arsonData.IncrementAllClearences(keyForScoring);
+            arsonData.IncrementAllClearences(keyForScoring, 1, doScoreColumn6);
         }
 
         protected override List<Item> CreateFauxItems(Report report, string ucrClearanceCode)

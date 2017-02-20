@@ -62,11 +62,13 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore]
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
 
-        /// <summary>
-        /// A composite key comprised of the report date and the agency ori
-        /// </summary>
         [XmlIgnore]
-        public string UcrKey { get { return Header.ReportDate.YearMonthDate + Header.ReportingAgency.OrgAugmentation.OrgOriId.Id; } }
+        public List<Item.Item> StolenVehicles {
+            get
+            {
+                return Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
+            }
+        }
 
         [XmlIgnore]
         public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
@@ -235,6 +237,7 @@ namespace NibrsXml.NibrsReport
             {
                 assoc.RelatedOffense = Offenses.First(o => o.Id == assoc.OffenseRef.OffenseRef);
                 assoc.RelatedLocation = Locations.First(l => l.Id == assoc.LocationRef.LocationRef);
+                assoc.RelatedOffense.Location = assoc.RelatedLocation;
             }
 
             foreach (var assoc in OffenseVictimAssocs)

@@ -36,7 +36,9 @@ namespace NibrsXml.Ucr.DataMining
             if (!offenses.Any()) return;
 
             //Select the highest ranking offense based on the reversed index of the array.
-            this.HighestRatedOffense = offenses.OrderBy(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode)).FirstOrDefault();
+            this.HighestRatedOffense = offenses.OrderBy(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode)).FirstOrDefault(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode) >= 0);
+
+            if (this.HighestRatedOffense == null) return;
 
             this.VictimsRelatedToHighestRatedOffense = victimAssociations.Where(ov => ov.RelatedOffense.UcrCode == HighestRatedOffense.UcrCode)
                 .ToList();

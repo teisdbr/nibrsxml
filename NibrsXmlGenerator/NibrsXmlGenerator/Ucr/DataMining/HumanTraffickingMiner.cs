@@ -53,7 +53,7 @@ namespace NibrsXml.Ucr.DataMining
             if (!report.OffenseVictimAssocs.Any(ov => ov.RelatedOffense.UcrCode.Matches("64[AB]")))
                 return;
 
-            var humanTraffickingData = monthlyReportData[report.UcrKey].HumanTraffickingData;
+            var humanTraffickingData = monthlyReportData[report.UcrKey()].HumanTraffickingData;
 
             var actualOffenses =
                 report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode.Matches("64[AB]"))
@@ -67,8 +67,6 @@ namespace NibrsXml.Ucr.DataMining
 
         protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
         {
-            throw new NotImplementedException();
-
             //This is the data that pertains to the report of the clearance date of the arrest/incident
             monthlyReportData.TryAdd(ucrReportKey, new ReportData());
             var humanTraffickingData = monthlyReportData[ucrReportKey].HumanTraffickingData;
@@ -76,7 +74,7 @@ namespace NibrsXml.Ucr.DataMining
             var clearedOffenses = fauxReport.OffenseVictimAssocs.Select(ov => ov.RelatedOffense);
 
             foreach (var offense in clearedOffenses)
-                humanTraffickingData.IncrementAllClearences(offense.UcrCode.Substring(2, 1));
+                humanTraffickingData.IncrementAllClearences(offense.UcrCode.Substring(2, 1), 1, doScoreColumn6);
         }
 
         protected override List<OffenseVictimAssociation> CreateFauxOffenseVictimAssociations(Report report, string ucrClearanceCode)

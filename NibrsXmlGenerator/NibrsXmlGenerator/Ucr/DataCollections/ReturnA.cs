@@ -97,6 +97,7 @@ namespace NibrsXml.Ucr.DataCollections
         ///     Scores counts for 1, 1a, and 1b offense classifications
         /// </summary>
         /// <param name="homicideVictimAssociations"></param>
+        /// <param name="allArresteesAreJuvenile"></param>
         internal void ScoreHomicide(List<OffenseVictimAssociation> homicideVictimAssociations, bool? allArresteesAreJuvenile = null)
         {
             if (allArresteesAreJuvenile.HasValue)

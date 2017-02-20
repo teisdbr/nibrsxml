@@ -41,7 +41,7 @@ namespace NibrsXml.Ucr.DataMining
             //Use query results to add ASRA and ASRJ counts
             foreach (var arrest in associationsToPersonsToArrests)
             {
-                monthlyReportData[nibrsIncidentReport.UcrKey].AsraData.AddCounts(
+                monthlyReportData[nibrsIncidentReport.UcrKey()].AsraData.AddCounts(
                     offenseUcrCode: arrest.OffenseUcrCode,
                     age: arrest.Person.AgeMeasure.RangeOrValue,
                     sex: arrest.Person.SexCode,

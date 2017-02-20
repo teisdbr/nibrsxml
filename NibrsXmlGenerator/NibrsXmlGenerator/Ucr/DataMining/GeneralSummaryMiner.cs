@@ -31,6 +31,11 @@ namespace NibrsXml.Ucr.DataMining
 
     internal abstract class GeneralSummaryMiner
     {
+        /// <summary>
+        /// Calling the constructor of any general summary report will automatically increment the appropriate reports' columns 4, 5, 6, and 8.
+        /// </summary>
+        /// <param name="monthlyReportData"></param>
+        /// <param name="report"></param>
         protected GeneralSummaryMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             Mine(monthlyReportData, report);
@@ -41,6 +46,11 @@ namespace NibrsXml.Ucr.DataMining
 
         protected abstract void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report);
 
+        /// <summary>
+        /// This function handles incrementing the counters for columns 5 and 6 of general summary reports
+        /// </summary>
+        /// <param name="monthlyReportData"></param>
+        /// <param name="report"></param>
         private void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             var clearanceUcrCode = report.ClearanceUcrCode();
@@ -51,8 +61,11 @@ namespace NibrsXml.Ucr.DataMining
             //Move forward with assumption that the report contains a valid clearance
 
             if (report.Offenses.All(o => o.UcrCode != clearanceUcrCode))
+            {
                 ScoreClearancesWithAssumptions(monthlyReportData, report);
-
+                return;
+            }
+            
             //Create ucrReportKey
             var clearanceDate = ConvertNibrsDateToDateKeyPrefix(report.ClearanceDate());
             var ucrReportKey = clearanceDate + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
@@ -155,15 +168,21 @@ namespace NibrsXml.Ucr.DataMining
                 : null;
         }
 
-        private ClearanceDetails GetClearanceDetails(Arrest forArrest, bool allArresteesAreJuvenile, string ori, List<Item> burnedItems)
+        private ClearanceDetails? GetClearanceDetails(Arrest forArrest, bool allArresteesAreJuvenile, string ori, List<Item> burnedItems)
         {
-            var arrestDate = ConvertNibrsDateToDateKeyPrefix(forArrest.Date.YearMonthDate);
+            var classificationKey = forArrest.Charge.UcrCode == OffenseCode.ARSON.NibrsCode()
+                ? GetClassificationKey(forArrest, burnedItems)
+                : GetClassificationKey(forArrest);
+
+            if (classificationKey == null)
+                return null;
+
+            var arrestDate = ConvertNibrsDateToDateKeyPrefix(forArrest.Date.Date);
+
             return new ClearanceDetails
             {
                 UcrReportKey = arrestDate + ori,
-                ClassificationKey = forArrest.Charge.UcrCode == OffenseCode.ARSON.NibrsCode()
-                    ? GetClassificationKey(forArrest, burnedItems)
-                    : GetClassificationKey(forArrest),
+                ClassificationKey = classificationKey,
                 AllScoresIncrementStep = 1,
                 JuvenileScoresIncrementStep = allArresteesAreJuvenile ? 1 : 0
             };
@@ -219,7 +238,8 @@ namespace NibrsXml.Ucr.DataMining
                 var burnedItems = report.Items.Where(i => i.Status.Code == ItemStatusCode.BURNED.NibrsCode()).ToList();
                 var allArresteesAreJuvenile = report.ArrestSubjectAssocs.All(assoc => assoc.RelatedArrestee.Person.AgeMeasure.IsJuvenile);
                 var arrestsWithAssociations = report.ArrestSubjectAssocs.Select(assoc => assoc.RelatedArrest);
-                clearanceDetailsList.AddRange(arrestsWithAssociations.Select(arrest => GetClearanceDetails(arrest, allArresteesAreJuvenile, ori, burnedItems)));
+                foreach (var arrest in arrestsWithAssociations)
+                    clearanceDetailsList.TryAdd(GetClearanceDetails(arrest, allArresteesAreJuvenile, ori, burnedItems));
             }
 
             //BEGIN SCORING

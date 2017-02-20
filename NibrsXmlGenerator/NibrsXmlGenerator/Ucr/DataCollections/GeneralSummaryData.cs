@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Arrestee;
 using NibrsXml.NibrsReport.Incident;
-using NibrsXml.NibrsReport.Offense;
-using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
@@ -18,34 +15,29 @@ namespace NibrsXml.Ucr.DataCollections
     {
         #region Constants
 
-        public const String GrandTotal = "Grand Total";
-
-        #endregion
-
-        #region Configuration
-
-        public abstract String XmlRootName { get; }
-        public abstract String XslFileName { get; }
-
-        #endregion
-
-        #region Properties
-
-        protected Dictionary<String, GeneralSummaryCounts> ClassificationCounts { get; set; }
+        public const string GrandTotal = "Grand Total";
 
         #endregion
 
         protected GeneralSummaryData()
         {
-            this.ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
+            ClassificationCounts = new Dictionary<string, GeneralSummaryCounts>();
 
             ClassificationCountEntryInstantiations();
 
             //Define the basic shared "Grand Total" row of all reports.
-            this.ClassificationCounts.Add(GrandTotal, new GeneralSummaryCounts());
+            ClassificationCounts.Add(GrandTotal, new GeneralSummaryCounts());
         }
 
-        protected virtual void ClassificationCountEntryInstantiations() { }
+        #region Properties
+
+        protected Dictionary<string, GeneralSummaryCounts> ClassificationCounts { get; set; }
+
+        #endregion
+
+        protected virtual void ClassificationCountEntryInstantiations()
+        {
+        }
 
         public XDocument Serialize()
         {
@@ -54,7 +46,7 @@ namespace NibrsXml.Ucr.DataCollections
                     "xml-stylesheet",
                     "type=\"text/xsl\" href=\"" + XslFileName + "\""),
                 new XElement(XmlRootName,
-                    this.ClassificationCounts.Select(classif => new XElement("Classification",
+                    ClassificationCounts.Select(classif => new XElement("Classification",
                         new XAttribute("name", classif.Key),
                         classif.Value.ActualOffenses.HasValue
                             ? new XElement("Actual", classif.Value.ActualOffenses)
@@ -70,13 +62,13 @@ namespace NibrsXml.Ucr.DataCollections
                             : null))));
         }
 
-        public virtual void IncrementActualOffense(String key, int byValue = 1)
+        public virtual void IncrementActualOffense(string key, int byValue = 1)
         {
             ClassificationCounts.TryAdd(key).IncrementActualOffense(byValue);
             ClassificationCounts[GrandTotal].IncrementActualOffense(byValue);
         }
 
-        public virtual void IncrementAllClearences(String key, int byValue = 1, Boolean allArresteesAreJuvenile = false)
+        public virtual void IncrementAllClearences(string key, int byValue = 1, bool allArresteesAreJuvenile = false)
         {
             ClassificationCounts.TryAdd(key).IncrementAllClearences(byValue);
             ClassificationCounts[GrandTotal].IncrementAllClearences(byValue);
@@ -85,19 +77,19 @@ namespace NibrsXml.Ucr.DataCollections
             if (allArresteesAreJuvenile) IncrementJuvenileClearences(key, byValue);
         }
 
-        protected virtual void IncrementJuvenileClearences(String key, int byValue = 1)
+        protected virtual void IncrementJuvenileClearences(string key, int byValue = 1)
         {
             ClassificationCounts.TryAdd(key).IncrementJuvenileClearences(byValue);
             ClassificationCounts[GrandTotal].IncrementJuvenileClearences(byValue);
         }
 
-        public virtual void IncrementEstimatedValueOfPropertyDamage(String key, long byValue = 1)
+        public virtual void IncrementEstimatedValueOfPropertyDamage(string key, long byValue = 1)
         {
             ClassificationCounts.TryAdd(key).IncrementEstimatedValueOfPropertyDamage(byValue);
             ClassificationCounts[GrandTotal].IncrementEstimatedValueOfPropertyDamage(byValue);
         }
 
-        public virtual Tuple<ExceptionalClearances, ExceptionalClearanceOfJuveniles> DetermineClearanceCounts(Incident incident, List<Arrestee> arrestees)
+        public virtual Tuple<int, int> DetermineClearanceCounts(Incident incident, List<Arrestee> arrestees)
         {
             //Determine if incident is exceptionally cleared or not.
             if (incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate != null)
@@ -106,12 +98,15 @@ namespace NibrsXml.Ucr.DataCollections
 
                 //Determine if any juvenile were arrested.
             }
-            else
-            {
-                
-            }
 
             return Tuple.Create(1, 2);
         }
+
+        #region Configuration
+
+        public abstract string XmlRootName { get; }
+        public abstract string XslFileName { get; }
+
+        #endregion
     }
 }
