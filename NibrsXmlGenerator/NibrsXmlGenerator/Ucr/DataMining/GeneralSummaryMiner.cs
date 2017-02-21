@@ -32,7 +32,8 @@ namespace NibrsXml.Ucr.DataMining
     internal abstract class GeneralSummaryMiner
     {
         /// <summary>
-        /// Calling the constructor of any general summary report will automatically increment the appropriate reports' columns 4, 5, 6, and 8.
+        ///     Calling the constructor of any general summary report will automatically increment the appropriate reports' columns
+        ///     4, 5, 6, and 8.
         /// </summary>
         /// <param name="monthlyReportData"></param>
         /// <param name="report"></param>
@@ -47,7 +48,7 @@ namespace NibrsXml.Ucr.DataMining
         protected abstract void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report);
 
         /// <summary>
-        /// This function handles incrementing the counters for columns 5 and 6 of general summary reports
+        ///     This function handles incrementing the counters for columns 5 and 6 of general summary reports
         /// </summary>
         /// <param name="monthlyReportData"></param>
         /// <param name="report"></param>
@@ -65,7 +66,7 @@ namespace NibrsXml.Ucr.DataMining
                 ScoreClearancesWithAssumptions(monthlyReportData, report);
                 return;
             }
-            
+
             //Create ucrReportKey
             var clearanceDate = ConvertNibrsDateToDateKeyPrefix(report.ClearanceDate());
             var ucrReportKey = clearanceDate + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
@@ -121,7 +122,7 @@ namespace NibrsXml.Ucr.DataMining
         /// <summary>
         ///     Converts the YYYY-MM-DD date to a YYYYMM format
         /// </summary>
-        private static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
+        protected static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
         {
             return nibrsDate.Replace("-", "").Remove(6);
         }

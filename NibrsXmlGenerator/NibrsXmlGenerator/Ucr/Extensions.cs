@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Arrest;
 using NibrsXml.NibrsReport;
+using NibrsXml.NibrsReport.Item;
 using NibrsXml.Ucr.DataMining;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Utility;
@@ -20,6 +21,11 @@ namespace NibrsXml.Ucr
         {
             var earliestArrest = arrests.OrderBy(a => a.Date.Date).FirstOrDefault();
             return earliestArrest == null ? null : earliestArrest.Date.Date.Replace("-", "").Substring(0,6) + ori;
+        }
+
+        public static int TotalItemValue(this List<Item> items)
+        {
+            return items == null || items.Count == 0 ? 0 : items.Aggregate(0, (i, item) => Convert.ToInt32(item.Value.ValueAmount.Amount));
         }
 
         /// <summary>
@@ -63,6 +69,7 @@ namespace NibrsXml.Ucr
         #endregion
 
         #region Ucr Extensions
+
         /// <summary>
         /// Returns the suggested offense to be used for scoring of columns 5 and 6 of the ReturnA, Arson, and HumanTrafficking reports.
         /// Returns null if no clearances are to be scored for this report.
