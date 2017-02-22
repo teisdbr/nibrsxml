@@ -216,20 +216,25 @@
   <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
-    <Folder Include="Ucr\Reports\Leoka\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
     <Content Include="NibrsXsd\xml\nibrs2.xml" />
     <Content Include="NibrsXsd\xml\wantlist.xml" />
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
+    <Content Include="Ucr\Reports\Arson\arson.xml" />
+    <Content Include="Ucr\Reports\Arson\arson.xsl" />
     <Content Include="Ucr\Reports\Asre\asre.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xsl" />
     <Content Include="Ucr\Reports\Human Trafficking\ht.xml" />
     <Content Include="Ucr\Reports\Human Trafficking\ht.xsl" />
     <Content Include="Ucr\Reports\Human Trafficking\humantrafficking.xml" />
+    <Content Include="Ucr\Reports\Leoka\leoka.xml" />
+    <Content Include="Ucr\Reports\Leoka\leoka.xsl" />
     <Content Include="Ucr\Reports\ReturnA\returna.xml" />
     <Content Include="Ucr\Reports\ReturnA\returna.xsl" />
+    <Content Include="Ucr\Reports\ReturnA\returnasupp.xml" />
+    <Content Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

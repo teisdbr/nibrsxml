@@ -1,0 +1,63 @@
+<?xml-stylesheet type="text/xsl" href="leoka.xsl"?>
+<LeokaSummary>
+  <Killed>
+    <Feloneously/>
+    <ByAccident/>
+  </Killed>
+  <Assaults>
+    <Classification name="1">
+      <A>6</A>
+      <C>1</C>
+      <D>1</D>
+      <E>4</E>
+      <H>6</H>
+    </Classification>
+    <Classification name="2" />
+    <Classification name="3" />
+    <Classification name="4" />
+    <Classification name="5" />
+    <Classification name="6" />
+    <Classification name="7" />
+    <Classification name="8" />
+    <Classification name="9" />
+    <Classification name="10">
+      <A>1</A>
+      <E>1</E>
+      <H>1</H>
+    </Classification>
+    <Classification name="11">
+      <A>2</A>
+      <B>1</B>
+      <E>1</E>
+      <H>2</H>
+    </Classification>
+    <Classification name="12">
+      <A>9</A>
+      <B>1</B>
+      <C>1</C>
+      <D>1</D>
+      <E>6</E>
+      <H>9</H>
+    </Classification>
+    <Classification name="13">
+      <A>0</A>
+      <B>0</B>
+      <C>0</C>
+      <D>0</D>
+      <E>0</E>
+    </Classification>
+    <Classification name="14">
+      <A>9</A>
+      <B>1</B>
+      <C>1</C>
+      <D>1</D>
+      <E>6</E>
+    </Classification>
+  </Assaults>
+  <AssaultsTime>
+    <H00-01>1</H00-01>
+    <H10-11>1</H10-11>
+    <H14-15>1</H14-15>
+    <H22-23>6</H22-23>
+  </AssaultsTime>
+</LeokaSummary>
