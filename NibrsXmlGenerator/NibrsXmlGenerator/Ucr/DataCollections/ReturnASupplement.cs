@@ -140,13 +140,13 @@ namespace NibrsXml.Ucr.DataCollections
                     new XElement("StolenAndRecoveredProperties",
                         PropertyByTypeAndValue.Select(tuple => new XElement("Property",
                             new XAttribute("entry", tuple.Item1),
-                            new XElement("Stolen", tuple.Item2),
-                            new XElement("Recovered", tuple.Item3)))),
+                            tuple.Item2 == 0 ? null : new XElement("Stolen", tuple.Item2),
+                            tuple.Item3 == 0 ? null : new XElement("Recovered", tuple.Item3)))),
                     new XElement("StolenPropertiesByClassification",
                         PropertyStolenByClassification.Select(tuple => new XElement("OffenseClassification",
                             new XAttribute("entry", tuple.Item1),
-                            new XElement("Actual", tuple.Item2),
-                            new XElement("Stolen", tuple.Item3))))));
+                            tuple.Item2 == 0 ? null : new XElement("Actual", tuple.Item2),
+                            tuple.Item3 == 0 ? null : new XElement("Stolen", tuple.Item3))))));
         }
 
         private void IncrementValues(string dataEntryKey, int a, int b)

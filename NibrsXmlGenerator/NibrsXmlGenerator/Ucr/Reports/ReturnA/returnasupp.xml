@@ -1,0 +1,145 @@
+<?xml-stylesheet type="text/xsl" href="returnasupp.xsl"?>
+<ReturnASupplement>
+  <StolenAndRecoveredProperties>
+    <Property entry="01">
+      <Stolen>16287</Stolen>
+    </Property>
+    <Property entry="02">
+      <Stolen>6475</Stolen>
+      <Recovered>275</Recovered>
+    </Property>
+    <Property entry="03">
+      <Stolen>855</Stolen>
+      <Recovered>100</Recovered>
+    </Property>
+    <Property entry="04">
+      <Stolen>63212</Stolen>
+      <Recovered>23880</Recovered>
+    </Property>
+    <Property entry="05">
+      <Stolen>1503</Stolen>
+      <Recovered>300</Recovered>
+    </Property>
+    <Property entry="06">
+      <Stolen>1024</Stolen>
+      <Recovered>1425</Recovered>
+    </Property>
+    <Property entry="07" />
+    <Property entry="08">
+      <Stolen>1551</Stolen>
+    </Property>
+    <Property entry="09">
+      <Stolen>526</Stolen>
+      <Recovered>134</Recovered>
+    </Property>
+    <Property entry="10" />
+    <Property entry="11">
+      <Stolen>10627</Stolen>
+      <Recovered>3419</Recovered>
+    </Property>
+    <Property entry="00">
+      <Stolen>102060</Stolen>
+      <Recovered>29533</Recovered>
+    </Property>
+  </StolenAndRecoveredProperties>
+  <StolenPropertiesByClassification>
+    <OffenseClassification entry="12">
+      <Actual>1</Actual>
+    </OffenseClassification>
+    <OffenseClassification entry="20" />
+    <OffenseClassification entry="31">
+      <Actual>1</Actual>
+      <Stolen>1000</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="32">
+      <Actual>1</Actual>
+      <Stolen>500</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="33" />
+    <OffenseClassification entry="34" />
+    <OffenseClassification entry="35" />
+    <OffenseClassification entry="36" />
+    <OffenseClassification entry="37">
+      <Actual>1</Actual>
+      <Stolen>130</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="30">
+      <Actual>3</Actual>
+      <Stolen>1630</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="51">
+      <Actual>753</Actual>
+      <Stolen>5</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="52">
+      <Actual>11</Actual>
+      <Stolen>2</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="53" />
+    <OffenseClassification entry="54">
+      <Actual>101</Actual>
+      <Stolen>4</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="55">
+      <Actual>3600</Actual>
+      <Stolen>2</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="56" />
+    <OffenseClassification entry="50">
+      <Actual>4465</Actual>
+      <Stolen>13</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="61">
+      <Actual>18</Actual>
+      <Stolen>22422</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="62">
+      <Actual>20</Actual>
+      <Stolen>2183</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="63">
+      <Actual>31</Actual>
+      <Stolen>486</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="60">
+      <Actual>69</Actual>
+      <Stolen>25091</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="70">
+      <Actual>5</Actual>
+      <Stolen>63212</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="77" />
+    <OffenseClassification entry="81" />
+    <OffenseClassification entry="82" />
+    <OffenseClassification entry="83">
+      <Actual>2</Actual>
+      <Stolen>1493</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="84">
+      <Actual>6</Actual>
+      <Stolen>904</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="85">
+      <Actual>1</Actual>
+      <Stolen>35</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="86" />
+    <OffenseClassification entry="87" />
+    <OffenseClassification entry="88" />
+    <OffenseClassification entry="89">
+      <Actual>60</Actual>
+      <Stolen>22659</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="80">
+      <Actual>69</Actual>
+      <Stolen>25091</Stolen>
+    </OffenseClassification>
+    <OffenseClassification entry="91" />
+    <OffenseClassification entry="92" />
+    <OffenseClassification entry="90">
+      <Actual>2</Actual>
+    </OffenseClassification>
+    <OffenseClassification entry="93" />
+  </StolenPropertiesByClassification>
+</ReturnASupplement>
