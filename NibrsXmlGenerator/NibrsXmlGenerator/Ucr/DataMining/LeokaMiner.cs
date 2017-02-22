@@ -24,7 +24,9 @@ namespace NibrsXml.Ucr.DataMining
             return Convert.ToChar(Encoding.ASCII.GetBytes(offenseForces.ExtractWeaponGroup()).First() + 1).ToString().ToUpper();
         }
 
-        public LeokaMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report) { }
+        public LeokaMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report)
+        {
+        }
 
         protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
@@ -49,7 +51,7 @@ namespace NibrsXml.Ucr.DataMining
                 leoka.OfficersKilled.IncrementCount("09B", leokaWithEnforcement.Count(v => v.Item2.UcrCode == "09B"));
 
                 //********************************************************************************************Get Officers Assaulted Information
-                foreach (var tuple in leokaWithEnforcement)
+                foreach (var tuple in leokaWithEnforcement.Where(l => l.Item2.UcrCode.MatchOne("13A", "13B")).ToList())
                 {
                     //Score Weapons and Assignments for the first 11 classification lines (Activities)
                     leoka.ScoreActivityCounts(Leoka.ActivityTranslatorDictionary[tuple.Item3.ActivityCategoryCode], ExtractLeokaWeapons(tuple.Item2.Forces), tuple.Item3.AssignmentCategoryCode);
@@ -59,8 +61,7 @@ namespace NibrsXml.Ucr.DataMining
                     leoka.ScoreActivityCounts("14", ExtractLeokaWeapons(tuple.Item2.Forces), null, tuple.Item1.VictimInjuries.Count(i => i.CategoryCode == "N"));
 
                     //Score Timing of Assaults
-                    if (tuple.Item2.UcrCode.MatchOne("13A", "13B"))
-                        leoka.ScoreAssaultTime(report.Incident.ActivityDate.DateTime);
+                    leoka.ScoreAssaultTime(report.Incident.ActivityDate.DateTime);
                 }
             }
             catch (Exception ex)
