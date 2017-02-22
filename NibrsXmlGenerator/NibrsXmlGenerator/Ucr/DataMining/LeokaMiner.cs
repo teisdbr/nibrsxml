@@ -12,20 +12,20 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    internal class LeokaMiner : GeneralSummaryMiner
+    internal class LeokaMiner : ClearanceMiner
     {
+        public LeokaMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report) { }
+
+        private static readonly string[] ApplicableLeokaUcrCodes = { "09A", "09B", "13A", "13B" };
+
         protected override string[] ApplicableUcrCodes
         {
-            get { return new[] {"09A", "09B", "13A", "13B"}; }
+            get { return ApplicableLeokaUcrCodes; }
         }
 
-        private string ExtractLeokaWeapons(List<OffenseForce> offenseForces)
+        private static string ExtractLeokaWeapons(List<OffenseForce> offenseForces)
         {
             return Convert.ToChar(Encoding.ASCII.GetBytes(offenseForces.ExtractWeaponGroup()).First() + 1).ToString().ToUpper();
-        }
-
-        public LeokaMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report)
-        {
         }
 
         protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
@@ -42,7 +42,8 @@ namespace NibrsXml.Ucr.DataMining
                 var leokaVictims =
                     report.OffenseVictimAssocs.Where(
                         ov => ov.RelatedVictim.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode() && ov.RelatedOffense.UcrCode.MatchOne(ApplicableUcrCodes)).ToList();
-                var leokaWithEnforcement = leokaVictims.Join(report.Officers, l => l.RelatedVictim.Person.Id, o => o.Person.Id,
+                var officersOfReportingAgency = report.Officers.Where(leo => leo.Unit == null);
+                var leokaWithEnforcement = leokaVictims.Join(officersOfReportingAgency, l => l.RelatedVictim.Person.Id, o => o.Person.Id,
                     (v, o) => Tuple.Create(v.RelatedVictim, v.RelatedOffense, o)).ToList();
 
                 //--Get Officers Killed Feloneously
@@ -71,19 +72,69 @@ namespace NibrsXml.Ucr.DataMining
             }
         }
 
-        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
+        /// <summary>
+        ///     Leoka scores clearances differently from ReturnA, Arson, and HT because Leoka data is exceptional to the offense hierarchy rule.
+        ///     All homicides and assaults on officers must be scored, not the highest ranking one.
+        ///     This function will score one clearance per victim, assuming all clearance requirements are met.
+        /// </summary>
+        /// <param name="monthlyReportData"></param>
+        /// <param name="report"></param>
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
-            throw new NotImplementedException();
-        }
+            string[] clearanceUcrCodes;
+            string clearanceYearMonth;
 
-        protected override Dictionary<string, string> ClearanceClassificationDictionary
-        {
-            get { throw new NotImplementedException(); }
-        }
+            if (report.ArrestSubjectAssocs.Any())
+            {
+                //Filter the available arrests to contain only leoka-qualified charges
+                var leokaArrests = report.ArrestSubjectAssocs
+                    .Where(assoc => assoc.RelatedArrest.Charge.UcrCode.MatchOne(ApplicableUcrCodes))
+                    .Select(assoc => assoc.RelatedArrest)
+                    .ToList();
 
-        protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, GeneralSummaryMiner.ClearanceDetails clearanceDetailsList)
-        {
-            throw new NotImplementedException();
+                if (!leokaArrests.Any())
+                    //Cannot score clearances if there are arrests, but none relate to killings or assaults
+                    return;
+
+                clearanceUcrCodes = leokaArrests
+                    .Select(a => a.Charge.UcrCode)
+                    .Distinct()
+                    .ToArray(); //ToArray here in order for this variable to be used as a variadic parameter
+
+                clearanceYearMonth = ConvertNibrsDateToDateKeyPrefix(leokaArrests.Min(a => a.Date.Date));
+            }
+            else
+            {
+                //No arrests means check if the incident is cleared
+                if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate == null || report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.Date == null)
+                    //Incident is not cleared, no clearances to score
+                    return;
+
+                //Incident is cleared, use incident clearance date
+                clearanceYearMonth = ConvertNibrsDateToDateKeyPrefix(report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.Date);
+
+                //All offenses are cleared, so all ucr codes applicable for leoka data are fair game
+                clearanceUcrCodes = ApplicableUcrCodes;
+            }
+            
+            //Get leoka data
+            var leokaVictims = report.OffenseVictimAssocs
+                .Where(ov => ov.RelatedVictim.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode() && ov.RelatedOffense.UcrCode.MatchOne(clearanceUcrCodes))
+                .ToList();
+            var officersOfReportingAgency = report.Officers
+                .Where(leo => leo.Unit == null);
+            var leokaWithEnforcement = leokaVictims
+                .Join(officersOfReportingAgency, l => l.RelatedVictim.Person.Id, o => o.Person.Id, (v, o) => Tuple.Create(v.RelatedVictim, v.RelatedOffense, o))
+                .ToList();
+
+            //Create the ucr report key based off of the earliest arrest date
+            var ucrReportKey = clearanceYearMonth + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+            monthlyReportData.TryAdd(ucrReportKey, new ReportData());
+            var leokaData = monthlyReportData[ucrReportKey].LeokaData;
+            
+            //Begin scoring clearances
+            foreach (var leoka in leokaWithEnforcement)
+                leokaData.ScoreClearanceCounts(leoka.Item3.ActivityCategoryCode);
         }
     }
 }

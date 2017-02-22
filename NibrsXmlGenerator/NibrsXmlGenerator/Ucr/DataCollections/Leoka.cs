@@ -38,7 +38,7 @@ namespace NibrsXml.Ucr.DataCollections
             AssaultTimesCountsDictionary = new Dictionary<string, int>();
         }
 
-        public static Dictionary<String, String> ActivityTranslatorDictionary
+        public static Dictionary<string, string> ActivityTranslatorDictionary
         {
             get
             {
@@ -71,28 +71,18 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Serialization Properties
 
-        //public override string XmlRootName
-        //{
-        //    get { return "LeokaSummary"; }
-        //}
-
-        //public override string XslFileName
-        //{
-        //    get { return "leoka.xsl"; }
-        //}
-
         public XDocument Serialize()
         {
             return new XDocument(
                 new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"leoka.xsl\""),
                 new XElement("LeokaSummary",
                     new XElement("Killed", new XElement("Feloneously", OfficersKilled.Feloniously), new XElement("ByAccident", OfficersKilled.ByAccident)),
-                    fetchClassifications(),
+                    FetchClassifications(),
                     new XElement("AssaultsTime", AssaultTimesCountsDictionary.OrderBy(a => a.Key).Select(a => new XElement(a.Key, a.Value)).ToArray()))
             );
         }
 
-        private XElement fetchClassifications()
+        private XElement FetchClassifications()
         {
             //Classification Element
             List<XElement> classificationXElement = new List<XElement>();
@@ -144,7 +134,19 @@ namespace NibrsXml.Ucr.DataCollections
 
             //Increment Total Assaults by Weapon
             activity.IncrementClassificationCounters("A", byValue);
+        }
 
+        public void ScoreClearanceCounts(string activity)
+        {
+            var activityKey = ActivityTranslatorDictionary[activity];
+
+            //Create the dictionary entry if it doesn't exist, then increment the clearance counter for the appropriate row's column M
+            var leokaCounts = ActivityCounts.TryAdd(activityKey);
+            leokaCounts.IncrementClassificationCounters("M");
+
+            //Create the dictionary entry if it doesn't exist, then increment the clearance counter for grand totals
+            var grandTotalActivity = ActivityCounts.TryAdd("12");
+            grandTotalActivity.IncrementClassificationCounters("M");
         }
 
         #endregion

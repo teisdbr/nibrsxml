@@ -29,7 +29,7 @@ namespace NibrsXml.Ucr.DataMining
      * 3. No clearance scores applicable
     */
 
-    internal abstract class GeneralSummaryMiner
+    internal abstract class GeneralSummaryMiner : ClearanceMiner
     {
         /// <summary>
         ///     Calling the constructor of any general summary report will automatically increment the appropriate reports' columns
@@ -37,22 +37,14 @@ namespace NibrsXml.Ucr.DataMining
         /// </summary>
         /// <param name="monthlyReportData"></param>
         /// <param name="report"></param>
-        protected GeneralSummaryMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
-        {
-            Mine(monthlyReportData, report);
-            ScoreClearances(monthlyReportData, report);
-        }
-
-        protected abstract string[] ApplicableUcrCodes { get; }
-
-        protected abstract void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report);
+        protected GeneralSummaryMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report) : base(monthlyReportData, report) { }
 
         /// <summary>
         ///     This function handles incrementing the counters for columns 5 and 6 of general summary reports
         /// </summary>
         /// <param name="monthlyReportData"></param>
         /// <param name="report"></param>
-        private void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             var clearanceUcrCode = report.ClearanceUcrCode();
             if (clearanceUcrCode == null || !clearanceUcrCode.MatchOne(ApplicableUcrCodes))
@@ -117,14 +109,6 @@ namespace NibrsXml.Ucr.DataMining
             public string ClassificationKey;
             public int AllScoresIncrementStep;
             public int JuvenileScoresIncrementStep;
-        }
-
-        /// <summary>
-        ///     Converts the YYYY-MM-DD date to a YYYYMM format
-        /// </summary>
-        protected static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
-        {
-            return nibrsDate.Replace("-", "").Remove(6);
         }
 
         /// <summary>

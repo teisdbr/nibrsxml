@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Person;
+using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport.EnforcementOfficial
 {
@@ -46,7 +47,7 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
             this.Role = new RoleOfPerson(this.Person.Id);
             this.ActivityCategoryCode = activityCategoryCode;
             this.AssignmentCategoryCode = assignmentCategoryCode;
-            if (agencyOri != null) this.Unit = new EnforcementOfficialUnit(new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
+            if (agencyOri != null && agencyOri.HasValue(trim: true)) this.Unit = new EnforcementOfficialUnit(new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
         }
     }
 }
