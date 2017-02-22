@@ -14,7 +14,7 @@ namespace NibrsXml.Ucr.DataMining
 {
     internal class LeokaMiner : GeneralSummaryMiner
     {
-        public string[] ApplicableUcrCodes
+        protected override string[] ApplicableUcrCodes
         {
             get { return new[] {"09A", "09B", "13A", "13B"}; }
         }
@@ -24,15 +24,17 @@ namespace NibrsXml.Ucr.DataMining
             return Convert.ToChar(Encoding.ASCII.GetBytes(offenseForces.ExtractWeaponGroup()).First() + 1).ToString().ToUpper();
         }
 
-        internal void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
+        public LeokaMiner(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report) : base(monthlyOriReportData, report) { }
+
+        protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
             try
             {
                 //Make sure the UCR Report to which this report would belong exists.
-                monthlyOriReportData.TryAdd(report.UcrKey, new ReportData());
+                monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
 
                 //Instance of the Leoka report to modify
-                var leoka = monthlyOriReportData[report.UcrKey].LeokaData;
+                var leoka = monthlyOriReportData[report.UcrKey()].LeokaData;
 
                 //********************************************************************************************Get Officers Killed or Assaulted Information
                 var leokaVictims =
@@ -66,6 +68,21 @@ namespace NibrsXml.Ucr.DataMining
                 Console.WriteLine(ex);
                 throw;
             }
+        }
+
+        protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, GeneralSummaryMiner.ClearanceDetails clearanceDetailsList)
+        {
+            throw new NotImplementedException();
         }
     }
 }

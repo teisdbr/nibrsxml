@@ -33,8 +33,8 @@ namespace NibrsXml.Ucr.DataMining
                     new ReturnAMiner(monthlyOriReportData, report);
 
                 //Leoka Data
-                LeokaMiner leokaMiner = new LeokaMiner();
-                if (report.Victims.Any(v => v.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())) leokaMiner.Mine(monthlyOriReportData, report);
+                if (report.Victims.Any(v => v.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()))
+                    new LeokaMiner(monthlyOriReportData, report);
             }
             return monthlyOriReportData;
         }

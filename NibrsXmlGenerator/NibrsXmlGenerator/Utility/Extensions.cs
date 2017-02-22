@@ -8,26 +8,6 @@ namespace NibrsXml.Utility
 {
     public static class Extensions
     {
-        #region Dictionary Extensions
-
-        public static Dictionary<string, int> TryAdd(this Dictionary<string, Dictionary<string, int>> dictionary, string key)
-        {
-            if (!dictionary.ContainsKey(key))
-                dictionary.Add(key, new Dictionary<string, int>());
-            return dictionary[key];
-        }
-
-        public static void TryIncrement(this Dictionary<string, int> dictionary, string key, bool force = true)
-        {
-            if (key == null || !force && !dictionary.ContainsKey(key)) return;
-            if (dictionary.ContainsKey(key))
-                dictionary[key] += 1;
-            else if (force)
-                dictionary.Add(key, 1);
-        }
-
-        #endregion
-
         #region String Extensions
 
         public static string TrimNullIfEmpty(this string input)

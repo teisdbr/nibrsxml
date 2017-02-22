@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NibrsXml.Utility;
 using NibrsXml.Constants;
 using System.Xml.Linq;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {

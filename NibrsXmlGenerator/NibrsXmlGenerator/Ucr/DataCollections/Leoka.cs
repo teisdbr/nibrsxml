@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using NibrsXml.Utility;
 using NibrsXml.Constants;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {
