@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Arrest;
 using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataMining;
+using NibrsXml.NibrsReport.Offense;
+using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr
 {
@@ -17,6 +20,44 @@ namespace NibrsXml.Ucr
         {
             var earliestArrest = arrests.OrderBy(a => a.Date.Date).FirstOrDefault();
             return earliestArrest == null ? null : earliestArrest.Date.Date.Replace("-", "").Substring(0,6) + ori;
+        }
+
+        /// <summary>
+        ///     Applies a weapon hierarchy over all offense forces applicable
+        ///     Weapon classes are as follows:
+        ///     "a" - Firearms
+        ///     "b" - Knife or Cutting Instrument
+        ///     "c" - Other Dangerous Weapon
+        ///     "d" - Strong-Arm (Hands, Fists, Feet, Etc.)
+        /// </summary>
+        /// <param name="offenseForces"></param>
+        /// <returns>The weapon class of the most dangerous weapon in this list</returns>
+        public static string ExtractWeaponGroup(this List<OffenseForce> offenseForces)
+        {
+            //Extract force codes and sort because they codes are generally already hierarchically ordered,
+            //with the exception of personal weapons (40)
+            var offenseForceCodes = offenseForces.Select(o => o.CategoryCode).OrderBy(f => f);
+            var mostDangerousWeapon = offenseForceCodes.FirstOrDefault();
+
+            //Make sure a weapon exists, otherwise classify it as e.
+            if (mostDangerousWeapon == null) return "e";
+
+            //Handle the personal weapons (40) exception
+            //Because of the sorting, it is implied there are no "a" or "b" class weapons
+            //Therefore, if there are any "c" class weapons, "c" is returned regardless if personal weapons is first in the list
+            //because personal weapons are in the "d" class
+            if (mostDangerousWeapon == ForceCategoryCode.PERSONAL_WEAPONS.NibrsCode() &&
+                offenseForceCodes.Any(f => NibrsCodeGroups.OtherDangerousWeapons.Contains(f)))
+                return "c";
+
+            //Return based on hierarchy
+            return NibrsCodeGroups.Firearms.Contains(mostDangerousWeapon)
+                ? "a"
+                : mostDangerousWeapon == ForceCategoryCode.LETHAL_CUTTING_INSTRUMENT.NibrsCode()
+                    ? "b"
+                    : NibrsCodeGroups.OtherDangerousWeapons.Contains(mostDangerousWeapon)
+                        ? "c"
+                        : "d";
         }
 
         #endregion

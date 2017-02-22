@@ -12,6 +12,7 @@ namespace NibrsXml.Ucr.DataCollections
         public ReturnA ReturnAData { get; set; }
         public HumanTrafficking HumanTraffickingData { get; set; }
         public Arson ArsonData { get; set; }
+        public Leoka LeokaData { get; set; }
 
         public ReportData()
         {
@@ -19,6 +20,7 @@ namespace NibrsXml.Ucr.DataCollections
             this.ReturnAData = new ReturnA();
             this.HumanTraffickingData = new HumanTrafficking();
             this.ArsonData = new Arson();
+            this.LeokaData = new Leoka();
         }
     }
 }

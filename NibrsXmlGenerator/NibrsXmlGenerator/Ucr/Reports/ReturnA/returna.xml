@@ -1,24 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="returna.xsl"?>
 <ReturnASummary>
   <Classification name="1">
-    <Actual>5</Actual>
-    <ClearedByArrest>7</ClearedByArrest>
-    <ClearedByJuvArrest>9</ClearedByJuvArrest>
+    <Actual>3</Actual>
   </Classification>
   <Classification name="1a">
+    <Actual>3</Actual>
+  </Classification>
+  <Classification name="1b" />
+  <Classification name="2">
+    <Actual>2</Actual>
+  </Classification>
+  <Classification name="2a">
+    <Actual>2</Actual>
+  </Classification>
+  <Classification name="2b" />
+  <Classification name="3">
+    <Actual>15</Actual>
+  </Classification>
+  <Classification name="3a">
+    <Actual>9</Actual>
+  </Classification>
+  <Classification name="3b" />
+  <Classification name="3c">
     <Actual>1</Actual>
-    <ClearedByArrest>2</ClearedByArrest>
-    <ClearedByJuvArrest>3</ClearedByJuvArrest>
   </Classification>
-  <Classification name="1b">
-    <Actual>4</Actual>
-    <ClearedByArrest>5</ClearedByArrest>
-    <ClearedByJuvArrest>6</ClearedByJuvArrest>
-  </Classification>
-  <Classification name="GRAND TOTAL">
+  <Classification name="3d">
     <Actual>5</Actual>
-    <ClearedByArrest>7</ClearedByArrest>
-    <ClearedByJuvArrest>9</ClearedByJuvArrest>
+  </Classification>
+  <Classification name="4">
+    <Actual>65</Actual>
+  </Classification>
+  <Classification name="4a">
+    <Actual>21</Actual>
+  </Classification>
+  <Classification name="4b">
+    <Actual>15</Actual>
+  </Classification>
+  <Classification name="4c">
+    <Actual>22</Actual>
+  </Classification>
+  <Classification name="4d">
+    <Actual>7</Actual>
+  </Classification>
+  <Classification name="4e" />
+  <Classification name="5">
+    <Actual>197</Actual>
+  </Classification>
+  <Classification name="5a">
+    <Actual>91</Actual>
+  </Classification>
+  <Classification name="5b">
+    <Actual>97</Actual>
+  </Classification>
+  <Classification name="5c">
+    <Actual>9</Actual>
+  </Classification>
+  <Classification name="6">
+    <Actual>689</Actual>
+  </Classification>
+  <Classification name="7">
+    <Actual>31</Actual>
+  </Classification>
+  <Classification name="7a">
+    <Actual>30</Actual>
+  </Classification>
+  <Classification name="7b" />
+  <Classification name="7c">
+    <Actual>1</Actual>
+  </Classification>
+  <Classification name="Grand Total">
+    <Actual>1315</Actual>
   </Classification>
 </ReturnASummary>

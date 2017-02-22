@@ -1707,14 +1707,14 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("I")]
         [CodeDescription("Detective or Special Assignment (Alone) - non-uniformed officers")]
-        DETECTIVE_OR_SPECIAL_ASSIGNLENT_ALONE,
+        DETECTIVE_OR_SPECIAL_ASSIGNMENT_ALONE,
 
         /// <summary>
         /// Detective or Special Assignment (Assisted) - non-uniformed officers
         /// </summary>
         [NibrsCode("J")]
         [CodeDescription("Detective or Special Assignment (Assisted) - non-uniformed officers")]
-        DETECTIVE_OR_SPECIAL_ASSIGNLENT_ASSISTED,
+        DETECTIVE_OR_SPECIAL_ASSIGNMENT_ASSISTED,
 
         /// <summary>
         /// Other (Alone) - law enforcement officers serving in other capacities (foot patrol, off duty, etc)

@@ -31,6 +31,10 @@ namespace NibrsXml.Ucr.DataMining
                 //Return A Data
                 if (report.Offenses.Count(o => o.UcrCode.MatchOne(ReturnAMiner.ApplicableReturnAUcrCodes)) > 0)
                     new ReturnAMiner(monthlyOriReportData, report);
+
+                //Leoka Data
+                LeokaMiner leokaMiner = new LeokaMiner();
+                if (report.Victims.Any(v => v.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())) leokaMiner.Mine(monthlyOriReportData, report);
             }
             return monthlyOriReportData;
         }

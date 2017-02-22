@@ -27,7 +27,7 @@ namespace NibrsXml.Ucr.DataMining
 
         public HumanTraffickingMiner(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report) : base(monthlyReportData, report)
         {
-            //All derived classes of GeneralSummaryMiner must implement this constructor that calls the base constructor.
+            // Return if no human trafficking data to query
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
         }
 
@@ -67,7 +67,7 @@ namespace NibrsXml.Ucr.DataMining
 
         protected override void ScoreClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, string ucrReportKey, Report fauxReport, bool doScoreColumn6)
         {
-            //This is the data that pertains to the report of the clearance date of the arrest/incident
+            //Gather counts for Column 5 for Line A or B.
             monthlyReportData.TryAdd(ucrReportKey, new ReportData());
             var humanTraffickingData = monthlyReportData[ucrReportKey].HumanTraffickingData;
 

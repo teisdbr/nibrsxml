@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template match="/">
     <html>
       <head>
         <style>
           body {
-            font-size: 10px;
+          font-size: 10px;
           }
           th, td {
-            border: 1px solid black;
+          border: 1px solid black;
           }
           th {
-            text-align:center;
+          text-align:center;
           }
           table {
-            border-spacing: 0px;
-            border-collapse: separate;
+          border-spacing: 0px;
+          border-collapse: separate;
           }
           td {
-            text-align:right;
+          text-align:right;
           }
           .rowheader {
-            text-align: left;
+          text-align: left;
           }
         </style>
       </head>

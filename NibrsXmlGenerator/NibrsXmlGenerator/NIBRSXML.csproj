@@ -119,6 +119,8 @@
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
     <Compile Include="Ucr\DataCollections\HumanTrafficking.cs" />
+    <Compile Include="Ucr\DataCollections\LeokaCounts.cs" />
+    <Compile Include="Ucr\DataCollections\LeokaOfficersKilledCounts.cs" />
     <Compile Include="Ucr\DataCollections\ReturnA.cs" />
     <Compile Include="Ucr\DataMining\ArsonMiner.cs" />
     <Compile Include="Ucr\DataMining\AsreMiner.cs" />
@@ -213,6 +215,7 @@
   <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
+    <Folder Include="Ucr\Reports\Leoka\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
@@ -225,6 +228,7 @@
     <Content Include="Ucr\Reports\Human Trafficking\ht.xsl" />
     <Content Include="Ucr\Reports\Human Trafficking\humantrafficking.xml" />
     <Content Include="Ucr\Reports\ReturnA\returna.xml" />
+    <Content Include="Ucr\Reports\ReturnA\returna.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
