@@ -71,6 +71,8 @@ namespace NibrsXml.Builder
 
                     //Send only the arrests for group B deletes
                     if (incident.Admin.ActionType == "D") return rpt;
+
+                    rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
                 }
 
                 rpt.Offenses = OffenseBuilder.Build(
