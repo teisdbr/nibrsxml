@@ -116,8 +116,12 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementActualOffense(key, byValue);
 
             if (key.Length == 2)
+            {
                 //Increment subtotals
-                base.IncrementActualOffense(key.Substring(0, 1), byValue);
+                var subtotalKey = key.Substring(0, 1);
+                ClassificationCounts.TryAdd(subtotalKey).IncrementActualOffense(byValue);
+            }
+                
         }
 
         public override void IncrementAllClearences(string key, int byValue = 1, bool allArresteesAreJuvenile = false)
@@ -125,8 +129,11 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementAllClearences(key, byValue, allArresteesAreJuvenile);
 
             if (key.Length == 2)
+            {
                 //Increment subtotals
-                IncrementAllClearences(key.Substring(0, 1), byValue);
+                var subtotalKey = key.Substring(0, 1);
+                ClassificationCounts.TryAdd(subtotalKey).IncrementAllClearences(byValue);
+            }
         }
 
         protected override void IncrementJuvenileClearences(string key, int byValue = 1)
@@ -134,8 +141,11 @@ namespace NibrsXml.Ucr.DataCollections
             base.IncrementJuvenileClearences(key, byValue);
 
             if (key.Length == 2)
+            {
                 //Increment subtotals
-                IncrementJuvenileClearences(key.Substring(0, 1), byValue);
+                var subtotalKey = key.Substring(0, 1);
+                ClassificationCounts.TryAdd(subtotalKey).IncrementJuvenileClearences(byValue);
+            }
         }
 
         #endregion
