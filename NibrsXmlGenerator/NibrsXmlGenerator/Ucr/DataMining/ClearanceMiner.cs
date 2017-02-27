@@ -19,7 +19,7 @@ namespace NibrsXml.Ucr.DataMining
         /// <summary>
         ///     Converts the YYYY-MM-DD date to a YYYYMM format
         /// </summary>
-        protected static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
+        public static string ConvertNibrsDateToDateKeyPrefix(string nibrsDate)
         {
             return nibrsDate.Replace("-", "").Remove(6);
         }

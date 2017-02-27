@@ -4,14 +4,14 @@
     {
         public ReportData()
         {
-            AsraData = new Asra();
+            AsreData = new Asre();
             ReturnAData = new ReturnA();
             HumanTraffickingData = new HumanTrafficking();
             ArsonData = new Arson();
             LeokaData = new Leoka();
         }
 
-        public Asra AsraData { get; set; }
+        public Asre AsreData { get; set; }
         public ReturnA ReturnAData { get; set; }
         public HumanTrafficking HumanTraffickingData { get; set; }
         public Arson ArsonData { get; set; }

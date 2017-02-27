@@ -483,39 +483,39 @@ namespace NibrsXml.Constants
         /// <summary>
         /// ASIAN:  A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam
         /// </summary>
-        [NibrsCode("A"), UcrElementName("Asian")]
+        [NibrsCode("A")]
         [CodeDescription("ASIAN:  A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.")]
         ASIAN,
 
         /// <summary>
         /// BLACK:  A person having origins in any of the black racial groups of Africa
         /// </summary>
-        [NibrsCode("B"), UcrElementName("Black")]
+        [NibrsCode("B")]
         [CodeDescription("BLACK:  A person having origins in any of the black racial groups of Africa.")]
         BLACK,
 
         /// <summary>
         /// AMERICAN INDIAN or ALASKAN NATIVE:  A person having origins in any of the original peoples of the Americas and maintaining cultural identification through tribal affiliations or community recognition
         /// </summary>
-        [NibrsCode("I"), UcrElementName("AmericanIndian")]
+        [NibrsCode("I")]
         [CodeDescription("AMERICAN INDIAN or ALASKAN NATIVE:  A person having origins in any of the original peoples of the Americas and maintaining cultural identification through tribal affiliations or community recognition.")]
         AMERICAN_INDIAN_OR_ALASKAN_NATIVE,
 
-        [NibrsCode("P"), UcrElementName("NativeHawaiianOrOther")]
+        [NibrsCode("P")]
         [CodeDescription(@"NATIVE HAWAIIAN or OTHER PACIFIC ISLANDER:  A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands.  The term ""Native Hawaiian"" does not include individuals who are native to the State of Hawaii by virtue of being born there.  However, the following Pacific Islander groups are included:  Carolinian, Fijian, Kosraean, Melanesian, Micronesian, Northern Mariana Islander, Palauan, Papua New Guinean, Ponapean (Pohnpelan), Polynesian, Solomon Islander, Tahitian, Tarawa Islander, Tokelauan, Tongan, Trukese (Chuukese), and Yapese.")]
         HAWAIIAN_OR_PACIFIC_ISLANDER,
 
         /// <summary>
         /// UNKNOWN
         /// </summary>
-        [NibrsCode("U")] // todo: ??? How does ucr interpret unknown races?
+        [NibrsCode("U")]
         [CodeDescription("UNKNOWN")]
         UNKNOWN,
 
         /// <summary>
         /// WHITE:  A person having origins in any of the original peoples of Europe, North Africa, or Middle East
         /// </summary>
-        [NibrsCode("W"), UcrElementName("White")]
+        [NibrsCode("W")]
         [CodeDescription("WHITE:  A person having origins in any of the original peoples of Europe, North Africa, or Middle East.")]
         WHITE
     }
@@ -1208,21 +1208,21 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Hispanic or Latino
         /// </summary>
-        [NibrsCode("H"), UcrElementName("Hispanic")]
+        [NibrsCode("H")]
         [CodeDescription("Hispanic or Latino")]
         HISPANIC_OR_LATINO,
 
         /// <summary>
         /// Not Hispanic or Latino
         /// </summary>
-        [NibrsCode("N"), UcrElementName("Non-Hispanic")]
+        [NibrsCode("N")]
         [CodeDescription("Not Hispanic or Latino")]
         NOT_HISPANIC_OR_LATINO,
 
         /// <summary>
         /// Unknown
         /// </summary>
-        [NibrsCode("U")] // todo: ??? How does ucr interpret unknown ethnicities?
+        [NibrsCode("U")]
         [CodeDescription("Unknown")]
         UNKNOWN
     }

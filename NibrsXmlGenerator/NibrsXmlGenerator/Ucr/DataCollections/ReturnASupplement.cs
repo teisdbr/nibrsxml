@@ -10,7 +10,7 @@ using TeUtil.Extensions;
 namespace NibrsXml.Ucr.DataCollections
 {
     /// <summary>
-    ///     Unlike Asra and GeneralSummaryData reports, the ReturnASupplement report defines both :
+    ///     Unlike Asre and GeneralSummaryData reports, the ReturnASupplement report defines both :
     ///     1) the structure to hold data,
     ///     2) the functions to manipulate that structure.
     ///     Note: Burglaries in our system will never be scored as unknown because the xml that is fed in will always have

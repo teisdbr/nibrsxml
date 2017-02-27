@@ -14,13 +14,14 @@ namespace NibrsXml.Ucr.DataMining
         public static ConcurrentDictionary<string, ReportData> Mine(List<Report> nibrsIncidentReports)
         {
             var monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
+
             foreach (var report in nibrsIncidentReports)
             {
                 //Make sure there is at least an empty ReportData structure for this report
                 monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
 
-                //Mine data
-                //AsreMiner.MineAdd(monthlyOriReportData, report);
+                //Asre Data
+                AsreMiner.MineAdd(monthlyOriReportData, report);
 
                 //Mine Human Trafficking Data
                 new HumanTraffickingMiner(monthlyOriReportData, report);
@@ -36,6 +37,7 @@ namespace NibrsXml.Ucr.DataMining
                 if (report.Victims.Any(v => v.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()))
                     new LeokaMiner(monthlyOriReportData, report);
             }
+
             return monthlyOriReportData;
         }
     }

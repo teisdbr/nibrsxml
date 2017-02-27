@@ -128,5 +128,77 @@ namespace NibrsXml.Constants
             PropertyCategoryCode.WATERCRAFT_EQUIPMENT_PARTS_ACCESSORIES.NibrsCode(),
             PropertyCategoryCode.OTHER_WEAPONS.NibrsCode()
         };
+
+        public static readonly string[] OpiumCocaineAndDerivedDrugs =
+        {
+
+            DrugCategoryCode.CRACK_COCAINE.NibrsCode(),
+            DrugCategoryCode.COCAINE.NibrsCode(),
+            DrugCategoryCode.HEROIN.NibrsCode(),
+            DrugCategoryCode.MORPHINE.NibrsCode(),
+            DrugCategoryCode.OPIUM.NibrsCode()
+        };
+
+        public static readonly string[] OtherDangerousNonnarcoticDrugs =
+        {
+            DrugCategoryCode.LSD.NibrsCode(),
+            DrugCategoryCode.PCP.NibrsCode(),
+            DrugCategoryCode.OTHER_HALLUCINOGEN.NibrsCode(),
+            DrugCategoryCode.AMPHETAMINES_METHAPHETAMINES.NibrsCode(),
+            DrugCategoryCode.OTHER_STIMULANT.NibrsCode(),
+            DrugCategoryCode.BARBITURATES.NibrsCode(),
+            DrugCategoryCode.OTHER_DEPRESSANT.NibrsCode(),
+            DrugCategoryCode.OTHER_DRUG.NibrsCode(),
+            DrugCategoryCode.UNKNOWN_DRUG_TYPE.NibrsCode(),
+            DrugCategoryCode.OVER_THREE_DRUG_TYPES.NibrsCode()
+        };
+
+        public static readonly string[] SyntheticNarcotics =
+        {
+            DrugCategoryCode.OTHER_NARCOTIC.NibrsCode()
+        };
+
+        public static readonly string[] Marijuana =
+        {
+            DrugCategoryCode.HASHISH.NibrsCode(),
+            DrugCategoryCode.MARIJUANA.NibrsCode()
+        };
+
+        public static readonly string[] SaleOrManufacturingCriminalActivities =
+        {
+            CriminalActivityCategoryCode.C.NibrsCode(),
+            CriminalActivityCategoryCode.D.NibrsCode(),
+            CriminalActivityCategoryCode.E.NibrsCode(),
+            CriminalActivityCategoryCode.O.NibrsCode(),
+            CriminalActivityCategoryCode.T.NibrsCode()
+        };
+
+        public static readonly string[] PossessionCriminalActivities =
+        {
+            CriminalActivityCategoryCode.B.NibrsCode(),
+            CriminalActivityCategoryCode.P.NibrsCode(),
+            CriminalActivityCategoryCode.U.NibrsCode()
+        };
+
+        public static readonly string[] KnownSexCodes =
+        {
+            SexCode.MALE.NibrsCode(),
+            SexCode.FEMALE.NibrsCode()
+        };
+
+        public static readonly string[] KnownRaceCodes =
+        {
+            RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.NibrsCode(),
+            RACCode.ASIAN.NibrsCode(),
+            RACCode.BLACK.NibrsCode(),
+            RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(),
+            RACCode.WHITE.NibrsCode()
+        };
+
+        public static readonly string[] KnownEthnicityCodes =
+        {
+            EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(),
+            EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode()
+        };
     }
 }

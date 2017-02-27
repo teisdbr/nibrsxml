@@ -133,7 +133,6 @@
     <Compile Include="Ucr\DataMining\ReturnAMiner.cs" />
     <Compile Include="Ucr\DataMining\ReturnASupplementMiner.cs" />
     <Compile Include="Ucr\DataMining\SupplementaryHomicideMiner.cs" />
-    <Compile Include="Ucr\DataCollections\Asra.cs" />
     <Compile Include="Ucr\DataCollections\Asre.cs" />
     <Compile Include="Ucr\DataCollections\Data.cs" />
     <Compile Include="Ucr\DataCollections\HateCrime.cs" />
