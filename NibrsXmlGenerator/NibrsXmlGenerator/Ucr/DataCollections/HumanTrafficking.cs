@@ -13,5 +13,11 @@ namespace NibrsXml.Ucr.DataCollections
         {
             get { return "ht.xsl"; }
         }
+
+        protected override void ClassificationCountEntryInstantiations()
+        {
+            ClassificationCounts.Add("A", new GeneralSummaryCounts());
+            ClassificationCounts.Add("B", new GeneralSummaryCounts());
+        }
     }
 }
