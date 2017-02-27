@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Item;
@@ -339,8 +340,7 @@ namespace NibrsXml.Ucr.DataCollections
             //55 - non-residence, day
             //56 - non-residence, unknown
             //From the nibrs data that we collect, we always have the incident hour, therefore 53 and 56 will never be incremented.
-
-            var incidentHour = Convert.ToInt32(incidentTime.Substring(0, 2));
+           var incidentHour = Convert.ToInt32(incidentTime.Substring(0, 2));
             var incidentOccuredDuringNight = incidentHour < 6 || incidentHour >= 18;
             if (locationType == LocationCategoryCode.RESIDENCE_HOME.NibrsCode())
                 IncrementValues(

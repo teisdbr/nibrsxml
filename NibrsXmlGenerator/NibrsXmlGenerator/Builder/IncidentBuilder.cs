@@ -39,7 +39,7 @@ namespace NibrsXml.Builder
                 year = admin.IncidentDate.Substring(4, 4);
                 hour = admin.IncidentDate.Substring(8, 2).Trim();
                 date = String.Format("{0}-{1}-{2}", year, month, day);
-                time = String.Format("{0}:00:00", hour == String.Empty ? "00" : hour);
+                time = String.Format("{0}:00:00", hour == String.Empty ? "00" : hour.PadLeft(2,'0'));
             }
             catch (Exception e)
             {

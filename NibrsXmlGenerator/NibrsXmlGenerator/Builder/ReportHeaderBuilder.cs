@@ -10,6 +10,7 @@ using NibrsXml.Utility;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.ReportHeader;
 using NibrsXml.NibrsReport.Misc;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -23,7 +24,7 @@ namespace NibrsXml.Builder
             //Make sure all agency assigned nibrs values are filled in regardless of the original Flat file contents/spec
             offenses = offenses.Select(o =>
             {
-                o.AgencyAssignedNibrs = LarsList.LarsDictionary[o.LrsNumber.Trim()].nibr;
+                o.AgencyAssignedNibrs = o.AgencyAssignedNibrs.IsNullBlankOrEmpty() ? LarsList.LarsDictionary[o.LrsNumber.Trim()].nibr : o.AgencyAssignedNibrs;
                 return o;
             }).ToList();
 

@@ -222,17 +222,17 @@
     <Content Include="NibrsXsd\xml\wantlist.xml" />
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
     <Content Include="Ucr\Reports\Arson\arson.xml" />
-    <Content Include="Ucr\Reports\Arson\arson.xsl" />
+    <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
     <Content Include="Ucr\Reports\Asre\asre.xml" />
     <Content Include="Ucr\Reports\Asre\asre.xsl" />
-    <Content Include="Ucr\Reports\Human Trafficking\ht.xml" />
-    <Content Include="Ucr\Reports\Human Trafficking\ht.xsl" />
-    <Content Include="Ucr\Reports\Human Trafficking\humantrafficking.xml" />
+    <Content Include="Ucr\Reports\HumanTrafficking\ht.xml" />
+    <EmbeddedResource Include="Ucr\Reports\HumanTrafficking\ht.xsl" />
+    <Content Include="Ucr\Reports\HumanTrafficking\humantrafficking.xml" />
     <Content Include="Ucr\Reports\Leoka\leoka.xml" />
-    <Content Include="Ucr\Reports\Leoka\leoka.xsl" />
+    <EmbeddedResource Include="Ucr\Reports\Leoka\leoka.xsl" />
     <Content Include="Ucr\Reports\ReturnA\returna.xml" />
-    <Content Include="Ucr\Reports\ReturnA\returna.xsl" />
-    <Content Include="Ucr\Reports\ReturnA\returnasupp.xml" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returna.xsl" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xml" />
     <Content Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
