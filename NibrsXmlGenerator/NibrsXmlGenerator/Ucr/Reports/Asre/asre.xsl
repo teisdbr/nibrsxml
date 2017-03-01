@@ -30,6 +30,9 @@
           .rowheader {
           text-align: left;
           }
+          .ages {
+            background-color: yellow;
+          }
         </style>
       </head>
       <body>
@@ -41,15 +44,13 @@
           <colgroup span="4"></colgroup>
           <thead>
             <tr>
-              <td class="no-border"></td>
-              <td class="no-border"></td>
+              <th rowspan="3" scope="col">Classification of Offenses</th>
+              <th rowspan="3" scope="col">Sex</th>
               <th colspan="23" scope="colgroup">Ages</th>
               <th colspan="10" scope="colgroup">Race</th>
               <th colspan="4" scope="colgroup">Ethnicity</th>
             </tr>
             <tr>
-              <th rowspan="2" scope="col">Classification of Offenses</th>
-              <th rowspan="2" scope="col">Sex</th>
               <th rowspan="2" scope="col">Under<br />10</th>
               <th rowspan="2" scope="col">10-12</th>
               <th rowspan="2" scope="col">13-14</th>
