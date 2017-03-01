@@ -223,8 +223,10 @@
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
     <Content Include="Ucr\Reports\Arson\arson.xml" />
     <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
-    <Content Include="Ucr\Reports\Asre\asre.xml" />
-    <Content Include="Ucr\Reports\Asre\asre.xsl" />
+    <Content Include="Ucr\Reports\Asre\asre.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Ucr\Reports\Asre\asre.xsl" />
     <Content Include="Ucr\Reports\HumanTrafficking\ht.xml" />
     <EmbeddedResource Include="Ucr\Reports\HumanTrafficking\ht.xsl" />
     <Content Include="Ucr\Reports\HumanTrafficking\humantrafficking.xml" />
