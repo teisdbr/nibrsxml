@@ -33,16 +33,22 @@
           .ages {
             background-color: yellow;
           }
+          .table-pad-bot {
+            padding-bottom: 10px;
+          }
         </style>
       </head>
       <body>
-        <table>
+        <table class="table-pad-bot">
           <col />
           <col />
           <colgroup span="23"></colgroup>
           <colgroup span="10"></colgroup>
           <colgroup span="4"></colgroup>
           <thead>
+            <tr>
+              <th colspan="39">Age, Sex, Race, and Ethnicity of Persons Arrested</th>
+            </tr>
             <tr>
               <th rowspan="3" scope="col">Classification of Offenses</th>
               <th rowspan="3" scope="col">Sex</th>
@@ -614,15 +620,43 @@
               <td>
                 <xsl:value-of select="sum(//Juvenile/Ethnicities/Non-Hispanic)" />
               </td>
-
-              <!--              <td rowspan="2"><xsl:if test="not(Races/White)">0</xsl:if><xsl:value-of select="Races/White"/></td>
-          <td rowspan="2"><xsl:if test="not(Races/Black)">0</xsl:if><xsl:value-of select="Races/Black"/></td>
-          <td rowspan="2"><xsl:if test="not(Races/AmericanIndian)">0</xsl:if><xsl:value-of select="Races/AmericanIndian"/></td>
-          <td rowspan="2"><xsl:if test="not(Races/Asian)">0</xsl:if><xsl:value-of select="Races/Asian"/></td>
-          <td rowspan="2"><xsl:if test="not(Races/NativeHawaiianOrOther)">0</xsl:if><xsl:value-of select="Races/NativeHawaiianOrOther"/></td>
-          <td rowspan="2"><xsl:if test="not(Ethnicities/Hispanic)">0</xsl:if><xsl:value-of select="Ethnicities/Hispanic"/></td>
-          <td rowspan="2"><xsl:if test="not(Ethnicities/Non-Hispanic)">0</xsl:if><xsl:value-of select="Ethnicities/Non-Hispanic"/></td>
-        -->
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">Police Disposition of Juveniles</th>
+            </tr>
+            <tr>
+              <th>Disposition Category</th>
+              <th>Number Handled/Referred</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="rowheader">Handled Within Department</th>
+              <td><xsl:if test="not(//JuvenileDispositions/Department[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Department[1]" /></td>
+            </tr>
+            <tr>
+              <th class="rowheader">Referred to Juvenile Court</th>
+              <td><xsl:if test="not(//JuvenileDispositions/Court[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Court[1]" /></td>
+            </tr>
+            <tr>
+              <th class="rowheader">Referred to Welfare Agency</th>
+              <td><xsl:if test="not(//JuvenileDispositions/WelfareAgency[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/WelfareAgency[1]" /></td>
+            </tr>
+            <tr>
+              <th class="rowheader">Referred to Other Police Agency</th>
+              <td><xsl:if test="not(//JuvenileDispositions/OtherPoliceAgency[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/OtherPoliceAgency[1]" /></td>
+            </tr>
+            <tr>
+              <th class="rowheader">Referred to Criminal (Adult) Court</th>
+              <td><xsl:if test="not(//JuvenileDispositions/CriminalOrAdultCourt[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/CriminalOrAdultCourt[1]" /></td>
+            </tr>
+            <tr>
+              <th class="rowheader">Total</th>
+              <td><xsl:if test="not(//JuvenileDispositions/Total[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Total[1]" /></td>
             </tr>
           </tbody>
         </table>

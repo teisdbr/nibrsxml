@@ -1,16 +1,59 @@
 <?xml-stylesheet type="text/xsl" href="asre.xsl"?>
 <ASRSummary>
-  <UCR value="11b">
-    <Age value="40-44">
-      <F>1</F>
-    </Age>
+  <UCR value="01A">
     <Adult>
-      <Races>
-        <Black>1</Black>
-      </Races>
-      <Ethnicities>
-        <Non-Hispanic>1</Non-Hispanic>
-      </Ethnicities>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="01B">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="02b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="03b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="04b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="05b">
+    <Adult>
+      <Races />
+      <Ethnicities />
     </Adult>
     <Juvenile>
       <Races />
@@ -34,7 +77,154 @@
       <Ethnicities />
     </Juvenile>
   </UCR>
-  <UCR value="185">
+  <UCR value="07b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="08b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="09b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="10b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="11b">
+    <Age value="40-44">
+      <F>1</F>
+    </Age>
+    <Adult>
+      <Races>
+        <Black>1</Black>
+      </Races>
+      <Ethnicities>
+        <Non-Hispanic>1</Non-Hispanic>
+      </Ethnicities>
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="12b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="13b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="14b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="15b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="16b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="16A">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="16B">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="16C">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="17b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18b">
     <Age value="35-39">
       <M>2</M>
     </Age>
@@ -55,7 +245,57 @@
       <Ethnicities />
     </Juvenile>
   </UCR>
+  <UCR value="180">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18A">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18B">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
   <UCR value="18C">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18D">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="185">
     <Age value="35-39">
       <M>1</M>
     </Age>
@@ -89,4 +329,202 @@
       <Ethnicities />
     </Juvenile>
   </UCR>
+  <UCR value="18F">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18G">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="18H">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="19b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="19A">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="19B">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="19C">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="20b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="21b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="22b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="23b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="24b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="25b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="26b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="27b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="28b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="29b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="30b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <UCR value="31b">
+    <Adult>
+      <Races />
+      <Ethnicities />
+    </Adult>
+    <Juvenile>
+      <Races />
+      <Ethnicities />
+    </Juvenile>
+  </UCR>
+  <JuvenileDispositions>
+    <Department>1</Department>
+    <Court>2</Court>
+    <WelfareAgency>3</WelfareAgency>
+    <OtherPoliceAgency>4</OtherPoliceAgency>
+    <CriminalOrAdultCourt>5</CriminalOrAdultCourt>
+    <Total>15</Total>
+  </JuvenileDispositions>
 </ASRSummary>

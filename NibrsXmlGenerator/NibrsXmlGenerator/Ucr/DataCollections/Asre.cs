@@ -12,36 +12,407 @@ namespace NibrsXml.Ucr.DataCollections
 {
     public class Asre : Data
     {
+        public Asre()
+        {
+            OffenseToAsreCounts = new Dictionary<string, AsreCounts>
+            {
+                {"01A", new AsreCounts()},
+                {"01B", new AsreCounts()},
+                {"02b", new AsreCounts()},
+                {"03b", new AsreCounts()},
+                {"04b", new AsreCounts()},
+                {"05b", new AsreCounts()},
+                {"06b", new AsreCounts()},
+                {"07b", new AsreCounts()},
+                {"08b", new AsreCounts()},
+                {"09b", new AsreCounts()},
+                {"10b", new AsreCounts()},
+                {"11b", new AsreCounts()},
+                {"12b", new AsreCounts()},
+                {"13b", new AsreCounts()},
+                {"14b", new AsreCounts()},
+                {"15b", new AsreCounts()},
+                {"16b", new AsreCounts()},
+                {"16A", new AsreCounts()},
+                {"16B", new AsreCounts()},
+                {"16C", new AsreCounts()},
+                {"17b", new AsreCounts()},
+                {"18b", new AsreCounts()},
+                {"180", new AsreCounts()},
+                {"18A", new AsreCounts()},
+                {"18B", new AsreCounts()},
+                {"18C", new AsreCounts()},
+                {"18D", new AsreCounts()},
+                {"185", new AsreCounts()},
+                {"18E", new AsreCounts()},
+                {"18F", new AsreCounts()},
+                {"18G", new AsreCounts()},
+                {"18H", new AsreCounts()},
+                {"19b", new AsreCounts()},
+                {"19A", new AsreCounts()},
+                {"19B", new AsreCounts()},
+                {"19C", new AsreCounts()},
+                {"20b", new AsreCounts()},
+                {"21b", new AsreCounts()},
+                {"22b", new AsreCounts()},
+                {"23b", new AsreCounts()},
+                {"24b", new AsreCounts()},
+                {"25b", new AsreCounts()},
+                {"26b", new AsreCounts()},
+                {"27b", new AsreCounts()},
+                {"28b", new AsreCounts()},
+                {"29b", new AsreCounts()},
+                {"30b", new AsreCounts()},
+                {"31b", new AsreCounts()}
+            };
+
+            JuvenileDispositionDepartment = 0;
+            JuvenileDispositionCourt = 0;
+            JuvenileDispositionWelfareAgency = 0;
+            JuvenileDispositionOtherPoliceAgency = 0;
+            JuvenileDispositionCriminalOrAdultCourt = 0;
+            JuvenileDispositionTotal = 0;
+        }
+
+        private Dictionary<string, AsreCounts> OffenseToAsreCounts { get; set; }
+        private int JuvenileDispositionDepartment { get; set; }
+        private int JuvenileDispositionCourt { get; set; }
+        private int JuvenileDispositionWelfareAgency { get; set; }
+        private int JuvenileDispositionOtherPoliceAgency { get; set; }
+        private int JuvenileDispositionCriminalOrAdultCourt { get; set; }
+        private int JuvenileDispositionTotal { get; set; }
+
+        /* Remove getters and aggregation functions?
+        #region Getters
+        // Get individual counts
+        public int GetAgeSexCount(string offenseUcrCode, string age, string sex)
+        {
+            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetAgeSexCount(age, sex) : 0;
+        }
+
+        public int GetRaceCount(string offenseUcrCode, string race)
+        {
+            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetRaceCount(race) : 0;
+        }
+
+        public int GetEthnicityCount(string offenseUcrCode, string ethnicity)
+        {
+            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetEthnicityCount(ethnicity) : 0;
+        }
+        #endregion
+
+        #region Aggregate Functions
+        // Get subtotals
+        public int GetAgeTotal(string age)
+        {
+            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].GetAgeTotal(age));
+        }
+
+        public int GetOffenseSexTotal(string offenseUcrCode, string sex)
+        {
+            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetSexTotal(sex) : 0;
+        }
+
+        public int GetSexTotal(string sex)
+        {
+            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].GetSexTotal(sex));
+        }
+
+        public int GetRaceTotal(string race)
+        {
+            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + (OffenseToAsreCounts[offense].GetRaceCount(race)));
+        }
+
+        public int GetEthnicityTotal(string ethnicity)
+        {
+            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + (OffenseToAsreCounts[offense].GetEthnicityCount(ethnicity)));
+        }
+
+        // Get grandtotal
+        public int GetGrandTotal(string age)
+        {
+            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].TotalAdultCount);
+        }
+        #endregion
+        */
+
+        public XDocument Serialize()
+        {
+            return new XDocument(
+                new XProcessingInstruction(
+                    "xml-stylesheet",
+                    "type=\"text/xsl\" href=\"asre.xsl\""),
+                new XElement(
+                    "ASRSummary",
+                    OffenseToAsreCounts.Select(offenseToCountsPair =>
+                        new XElement(
+                            "UCR",
+                            new XAttribute("value", offenseToCountsPair.Key),
+                            offenseToCountsPair.Value.Serialize())),
+                    new XElement(
+                        "JuvenileDispositions",
+                        new XElement("Department", JuvenileDispositionDepartment),
+                        new XElement("Court", JuvenileDispositionCourt),
+                        new XElement("WelfareAgency", JuvenileDispositionWelfareAgency),
+                        new XElement("OtherPoliceAgency", JuvenileDispositionOtherPoliceAgency),
+                        new XElement("CriminalOrAdultCourt", JuvenileDispositionCriminalOrAdultCourt),
+                        new XElement("Total", JuvenileDispositionTotal))));
+        }
+
+        private void AddCounts(string age, string sex, string race, string ethnicity, params string[] offenseClassificationKeys)
+        {
+            foreach (var key in offenseClassificationKeys)
+                OffenseToAsreCounts.TryAdd(key).AddCounts(age, sex, race, ethnicity);
+        }
+
+        public void AddJuvenileDispositionCounts(string juvenileDispositionCode)
+        {
+            switch (juvenileDispositionCode)
+            {
+                case "C":
+                    JuvenileDispositionCriminalOrAdultCourt++;
+                    break;
+                case "H":
+                    JuvenileDispositionDepartment++;
+                    break;
+                case "J":
+                    JuvenileDispositionCourt++;
+                    break;
+                case "R":
+                    JuvenileDispositionOtherPoliceAgency++;
+                    break;
+                case "w":
+                    JuvenileDispositionWelfareAgency++;
+                    break;
+                default:
+                    return;
+            }
+
+            JuvenileDispositionTotal++;
+        }
+
+        public void AddDrugOffenseCounts(List<Substance> drugs, List<Offense> drugOffenses, string age, string sex, string race, string ethnicity)
+        {
+            //Always increment the totals. Since more specific data is not always provided, at least the scores for totals will be more accurate
+            AddCounts(age, sex, race, ethnicity, "18b");
+
+            if (drugs.IsNothingOrEmpty() || drugOffenses.IsNothingOrEmpty())
+                return;
+
+            //Criminal Activity Hierarchy is as follows
+            //1: Sale/Manufacturing(NibrsCodeGroups.SaleOrManufacturingCriminalActivities)
+            //2: Possession(NibrsCodeGroups.PossessionCriminalActivities)
+            var criminalActivityTypes = drugOffenses.SelectMany(o => o.CriminalActivityCategoryCodes).Where(criminalActivityCode => criminalActivityCode != null).ToArray();
+            var mostDangerousCriminalActivityType = criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.SaleOrManufacturingCriminalActivities))
+                ? 1
+                : criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.PossessionCriminalActivities))
+                    ? 2
+                    : 0;
+            if (mostDangerousCriminalActivityType == 0)
+                return;
+
+            //Drug Category Hierarchy is as follows
+            //1: NibrsCodeGroups.OpiumCocaineAndDerivedDrugs
+            //2: NibrsCodeGroups.OtherDangerousNonnarcoticDrugs
+            //3: NibrsCodeGroups.SyntheticNarcotics
+            //4: NibrsCodeGroups.Marijuana
+            var mostDangerousSuspectedDrugType = drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OpiumCocaineAndDerivedDrugs))
+                ? 1
+                : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OtherDangerousNonnarcoticDrugs))
+                    ? 2
+                    : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.SyntheticNarcotics))
+                        ? 3
+                        : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.Marijuana))
+                            ? 4
+                            : 0;
+            if (mostDangerousSuspectedDrugType == 0)
+                return;
+
+            //Determine what keys to add to
+            var offenseClassificationKeys = new string[2];
+            if (mostDangerousCriminalActivityType == 1)
+            {
+                offenseClassificationKeys[0] = "180";
+
+                switch (mostDangerousSuspectedDrugType)
+                {
+                    case 1:
+                        offenseClassificationKeys[1] = "18A";
+                        break;
+                    case 2:
+                        offenseClassificationKeys[1] = "18D";
+                        break;
+                    case 3:
+                        offenseClassificationKeys[1] = "18C";
+                        break;
+                    case 4:
+                        offenseClassificationKeys[1] = "18B";
+                        break;
+                }
+            }
+            else
+            {
+                offenseClassificationKeys[0] = "185";
+
+                switch (mostDangerousSuspectedDrugType)
+                {
+                    case 1:
+                        offenseClassificationKeys[1] = "18E";
+                        break;
+                    case 2:
+                        offenseClassificationKeys[1] = "18H";
+                        break;
+                    case 3:
+                        offenseClassificationKeys[1] = "18G";
+                        break;
+                    case 4:
+                        offenseClassificationKeys[1] = "18F";
+                        break;
+                }
+            }
+
+            //Add counts for the subtotal category (offenseClassificationKeys[0]) and the specific category based on criminal activity and drug type (offenseClassificationKeys[1])
+            AddCounts(age, sex, race, ethnicity, offenseClassificationKeys);
+        }
+
+        public void AddNonDrugOffenseCounts(string offenseUcrCode, string age, string sex, string race, string ethnicity)
+        {
+            //Determine offense classification with offenseUcrCode
+            var offenseClassificationKeys = new List<string>();
+            var arresteeIsJuvenile = Convert.ToInt32(age) < 18;
+            switch (offenseUcrCode)
+            {
+                case "09A":
+                    offenseClassificationKeys.Add("01A");
+                    break;
+                case "09B":
+                    offenseClassificationKeys.Add("01B");
+                    break;
+                case "11A":
+                case "11B":
+                case "11C":
+                    offenseClassificationKeys.Add("02b");
+                    break;
+                case "120":
+                    offenseClassificationKeys.Add("03b");
+                    break;
+                case "13A":
+                    offenseClassificationKeys.Add("04b");
+                    break;
+                case "220":
+                    offenseClassificationKeys.Add("05b");
+                    break;
+                case "23A":
+                case "23B":
+                case "23C":
+                case "23D":
+                case "23E":
+                case "23F":
+                case "23G":
+                case "23H":
+                    offenseClassificationKeys.Add("06b");
+                    break;
+                case "240":
+                    offenseClassificationKeys.Add("07b");
+                    break;
+                case "13B":
+                case "13C":
+                    offenseClassificationKeys.Add("08b");
+                    break;
+                case "200":
+                    offenseClassificationKeys.Add("09b");
+                    break;
+                case "250":
+                    offenseClassificationKeys.Add("10b");
+                    break;
+                case "26A":
+                case "26B":
+                case "26C":
+                case "26D":
+                case "26E":
+                case "90A":
+                    offenseClassificationKeys.Add("11b");
+                    break;
+                case "270":
+                    offenseClassificationKeys.Add("12b");
+                    break;
+                case "280":
+                    offenseClassificationKeys.Add("13b");
+                    break;
+                case "290":
+                    offenseClassificationKeys.Add("14b");
+                    break;
+                case "520":
+                    offenseClassificationKeys.Add("15b");
+                    break;
+                case "40A":
+                case "40B":
+                case "40C":
+                    offenseClassificationKeys.Add("16b");
+                    offenseClassificationKeys.Add("16" + offenseUcrCode.ToUpper()[2]);
+                    break;
+                case "11D":
+                case "36A":
+                case "36B":
+                    offenseClassificationKeys.Add("17b");
+                    break;
+                //Line 18. Drug Abuse Violations all counts handled in its own function Asre.AddDrugOffenseCounts
+                case "39A":
+                case "39B":
+                case "39C":
+                case "39D":
+                    offenseClassificationKeys.Add("19b");
+                    break;
+                //Lines 19[abc] are not available in nibrs
+                case "90F":
+                    offenseClassificationKeys.Add("20b");
+                    break;
+                case "90D":
+                    offenseClassificationKeys.Add("21b");
+                    break;
+                case "90G":
+                    offenseClassificationKeys.Add("22b");
+                    break;
+                case "90E":
+                    offenseClassificationKeys.Add("23b");
+                    break;
+                case "90C":
+                    offenseClassificationKeys.Add("24b");
+                    break;
+                case "90B":
+                    //This offense is classified as Vagrancy or Curfer/Loitering based on arrestee age
+                    offenseClassificationKeys.Add(arresteeIsJuvenile ? "28b" : "25b");
+                    break;
+                case "35B":
+                case "100":
+                case "210":
+                case "370":
+                case "510":
+                case "90H":
+                case "90J":
+                case "90Z":
+                    offenseClassificationKeys.Add("26b");
+                    break;
+                //Line 27 Suspicion is not available in nibrs
+                case "90I":
+                    if (arresteeIsJuvenile)
+                        offenseClassificationKeys.Add("29b");
+                    break;
+                case "64A":
+                    offenseClassificationKeys.Add("30b");
+                    break;
+                case "64B":
+                    offenseClassificationKeys.Add("31b");
+                    break;
+                default:
+                    //No counts are added if the offense does not fall in any category
+                    return;
+            }
+            AddCounts(age, sex, race, ethnicity, offenseClassificationKeys.ToArray());
+        }
+
         private class AsreCounts
         {
-            #region Class Dictionaries for Serialization
-            private static readonly Dictionary<string, string> NibrsRaceCodeToUcrElementName = new Dictionary<string, string>()
-        {
-            { RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.NibrsCode(), "AmericanIndian" },
-            { RACCode.ASIAN.NibrsCode(), "Asian" },
-            { RACCode.BLACK.NibrsCode(), "Black" },
-            { RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(), "NativeHawaiianOrOther" },
-            { RACCode.WHITE.NibrsCode(), "White" }
-        };
-            private static readonly Dictionary<string, string> NibrsEthnicityCodeToUcrElementName = new Dictionary<string, string>()
-        {
-            { EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), "Hispanic" },
-            { EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode(), "Non-Hispanic" }
-        };
-            #endregion
-
-            #region Instance Variables and Properties
-
-            private Dictionary<string, Dictionary<string, int>> AgeSexCounts { get; set; }
-            private Dictionary<string, int> AdultRaceCounts { get; set; }
-            private Dictionary<string, int> AdultEthnicityCounts { get; set; }
-            private Dictionary<string, int> JuvenileRaceCounts { get; set; }
-            private Dictionary<string, int> JuvenileEthnicityCounts { get; set; }
-            public int TotalAdultCount { get; private set; }
-            public int TotalJuvenileCount { get; private set; }
-
-            #endregion
-
             public AsreCounts()
             {
                 AgeSexCounts = new Dictionary<string, Dictionary<string, int>>();
@@ -186,7 +557,6 @@ namespace NibrsXml.Ucr.DataCollections
                         break;
                     default:
                         return;
-
                 }
                 AgeSexCounts.TryAdd(ageGroup).TryIncrement(sex);
 
@@ -253,7 +623,10 @@ namespace NibrsXml.Ucr.DataCollections
             public XElement[] Serialize()
             {
                 // Create XElements for ages, sexes, races, and ethnicities
-                var ageElements = AgeSexCounts.Select(ageSexdictionaryPair => new XElement("Age", new XAttribute("value", ageSexdictionaryPair.Key), ageSexdictionaryPair.Value.Select(sexCountPair => new XElement(sexCountPair.Key, sexCountPair.Value))));
+                var ageElements =
+                    AgeSexCounts.Select(
+                        ageSexdictionaryPair =>
+                            new XElement("Age", new XAttribute("value", ageSexdictionaryPair.Key), ageSexdictionaryPair.Value.Select(sexCountPair => new XElement(sexCountPair.Key, sexCountPair.Value))));
                 var adultElement = new XElement("Adult",
                     new XElement("Races", AdultRaceCounts.Select(raceCountPair => new XElement(raceCountPair.Key, raceCountPair.Value))),
                     new XElement("Ethnicities", AdultEthnicityCounts.Select(ethnicityCountPair => new XElement(ethnicityCountPair.Key, ethnicityCountPair.Value))));
@@ -262,313 +635,42 @@ namespace NibrsXml.Ucr.DataCollections
                     new XElement("Ethnicities", JuvenileEthnicityCounts.Select(ethnicityCountPair => new XElement(ethnicityCountPair.Key, ethnicityCountPair.Value))));
 
                 // Concatenate all XElements into a list
-                var xelements = new List<XElement>(ageElements) { adultElement, juvenileElement };
+                var xelements = new List<XElement>(ageElements) {adultElement, juvenileElement};
 
                 // Convert the list of XElements to an array and return
                 return xelements.ToArray();
             }
-        }
 
-        private Dictionary<string, AsreCounts> OffenseToAsreCounts { get; set; }
+            #region Class Dictionaries for Serialization
 
-        public Asre()
-        {
-            OffenseToAsreCounts = new Dictionary<string, AsreCounts>();
-        }
-
-        private void AddCounts(string age, string sex, string race, string ethnicity, params string[] offenseClassificationKeys)
-        {
-            foreach (var key in offenseClassificationKeys)
-                OffenseToAsreCounts.TryAdd(key).AddCounts(age, sex, race, ethnicity);
-        }
-
-        public void AddDrugOffenseCounts(List<Substance> drugs, List<Offense> drugOffenses, string age, string sex, string race, string ethnicity)
-        {
-            //Always increment the totals. Since more specific data is not always provided, at least the scores for totals will be more accurate
-            AddCounts(age, sex, race, ethnicity, "18");
-
-            if (drugs.IsNothingOrEmpty() || drugOffenses.IsNothingOrEmpty())
-                return;
-
-            //Criminal Activity Hierarchy is as follows
-            //1: Sale/Manufacturing(NibrsCodeGroups.SaleOrManufacturingCriminalActivities)
-            //2: Possession(NibrsCodeGroups.PossessionCriminalActivities)
-            var criminalActivityTypes = drugOffenses.SelectMany(o => o.CriminalActivityCategoryCodes).Where(criminalActivityCode => criminalActivityCode != null).ToArray();
-            var mostDangerousCriminalActivityType = criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.SaleOrManufacturingCriminalActivities))
-                ? 1
-                : criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.PossessionCriminalActivities))
-                    ? 2
-                    : 0;
-            if (mostDangerousCriminalActivityType == 0)
-                return;
-
-            //Drug Category Hierarchy is as follows
-            //1: NibrsCodeGroups.OpiumCocaineAndDerivedDrugs
-            //2: NibrsCodeGroups.OtherDangerousNonnarcoticDrugs
-            //3: NibrsCodeGroups.SyntheticNarcotics
-            //4: NibrsCodeGroups.Marijuana
-            var mostDangerousSuspectedDrugType = drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OpiumCocaineAndDerivedDrugs))
-                ? 1
-                : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OtherDangerousNonnarcoticDrugs))
-                    ? 2
-                    : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.SyntheticNarcotics))
-                        ? 3
-                        : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.Marijuana))
-                            ? 4
-                            : 0;
-            if (mostDangerousSuspectedDrugType == 0)
-                return;
-
-            //Determine what keys to add to
-            var offenseClassificationKeys = new string[2];
-            if (mostDangerousCriminalActivityType == 1)
+            private static readonly Dictionary<string, string> NibrsRaceCodeToUcrElementName = new Dictionary<string, string>
             {
-                offenseClassificationKeys[0] = "180";
+                {RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.NibrsCode(), "AmericanIndian"},
+                {RACCode.ASIAN.NibrsCode(), "Asian"},
+                {RACCode.BLACK.NibrsCode(), "Black"},
+                {RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(), "NativeHawaiianOrOther"},
+                {RACCode.WHITE.NibrsCode(), "White"}
+            };
 
-                switch (mostDangerousSuspectedDrugType)
-                {
-                    case 1:
-                        offenseClassificationKeys[1] = "18a";
-                        break;
-                    case 2:
-                        offenseClassificationKeys[1] = "18d";
-                        break;
-                    case 3:
-                        offenseClassificationKeys[1] = "18c";
-                        break;
-                    case 4:
-                        offenseClassificationKeys[1] = "18b";
-                        break;
-                }
-            }
-            else
+            private static readonly Dictionary<string, string> NibrsEthnicityCodeToUcrElementName = new Dictionary<string, string>
             {
-                offenseClassificationKeys[0] = "185";
+                {EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), "Hispanic"},
+                {EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode(), "Non-Hispanic"}
+            };
 
-                switch (mostDangerousSuspectedDrugType)
-                {
-                    case 1:
-                        offenseClassificationKeys[1] = "18e";
-                        break;
-                    case 2:
-                        offenseClassificationKeys[1] = "18h";
-                        break;
-                    case 3:
-                        offenseClassificationKeys[1] = "18g";
-                        break;
-                    case 4:
-                        offenseClassificationKeys[1] = "18f";
-                        break;
-                }
-            }
+            #endregion
 
-            //Add counts for the subtotal category (offenseClassificationKeys[0]) and the specific category based on criminal activity and drug type (offenseClassificationKeys[1])
-            AddCounts(age, sex, race, ethnicity, offenseClassificationKeys);
-        }
+            #region Instance Variables and Properties
 
-        public void AddNonDrugOffenseCounts(string offenseUcrCode, string age, string sex, string race, string ethnicity)
-        {
-            //Determine offense classification with offenseUcrCode
-            var offenseClassificationKeys = new List<string>();
-            var arresteeIsJuvenile = Convert.ToInt32(age) < 18;
-            switch (offenseUcrCode)
-            {
-                case "09A":
-                    offenseClassificationKeys.Add("01a");
-                    break;
-                case "09B":
-                    offenseClassificationKeys.Add("01b");
-                    break;
-                case "11A":
-                case "11B":
-                case "11C":
-                    offenseClassificationKeys.Add("02");
-                    break;
-                case "120":
-                    offenseClassificationKeys.Add("03");
-                    break;
-                case "13A":
-                    offenseClassificationKeys.Add("04");
-                    break;
-                case "220":
-                    offenseClassificationKeys.Add("05");
-                    break;
-                case "23A":
-                case "23B":
-                case "23C":
-                case "23D":
-                case "23E":
-                case "23F":
-                case "23G":
-                case "23H":
-                    offenseClassificationKeys.Add("06");
-                    break;
-                case "240":
-                    offenseClassificationKeys.Add("07");
-                    break;
-                case "13B":
-                case "13C":
-                    offenseClassificationKeys.Add("08");
-                    break;
-                case "200":
-                    offenseClassificationKeys.Add("09");
-                    break;
-                case "250":
-                    offenseClassificationKeys.Add("10");
-                    break;
-                case "26A":
-                case "26B":
-                case "26C":
-                case "26D":
-                case "26E":
-                case "90A":
-                    offenseClassificationKeys.Add("11");
-                    break;
-                case "270":
-                    offenseClassificationKeys.Add("12");
-                    break;
-                case "280":
-                    offenseClassificationKeys.Add("13");
-                    break;
-                case "290":
-                    offenseClassificationKeys.Add("14");
-                    break;
-                case "520":
-                    offenseClassificationKeys.Add("15");
-                    break;
-                case "40A":
-                case "40B":
-                case "40C":
-                    offenseClassificationKeys.Add("16");
-                    offenseClassificationKeys.Add("16" + offenseUcrCode.ToLower()[2]);
-                    break;
-                case "11D":
-                case "36A":
-                case "36B":
-                    offenseClassificationKeys.Add("17");
-                    break;
-                //Line 18. Drug Abuse Violations all counts handled in its own function Asre.AddDrugOffenseCounts
-                case "39A":
-                case "39B":
-                case "39C":
-                case "39D":
-                    offenseClassificationKeys.Add("19");
-                    break;
-                //Lines 19[abc] are not available in nibrs
-                case "90F":
-                    offenseClassificationKeys.Add("20");
-                    break;
-                case "90D":
-                    offenseClassificationKeys.Add("21");
-                    break;
-                case "90G":
-                    offenseClassificationKeys.Add("22");
-                    break;
-                case "90E":
-                    offenseClassificationKeys.Add("23");
-                    break;
-                case "90C":
-                    offenseClassificationKeys.Add("24");
-                    break;
-                case "90B":
-                    //This offense is classified as Vagrancy or Curfer/Loitering based on arrestee age
-                    offenseClassificationKeys.Add(arresteeIsJuvenile ? "28" : "25");
-                    break;
-                case "35B":
-                case "100":
-                case "210":
-                case "370":
-                case "510":
-                case "90H":
-                case "90J":
-                case "90Z":
-                    offenseClassificationKeys.Add("26");
-                    break;
-                //Line 27 Suspicion is not available in nibrs
-                case "90I":
-                    if (arresteeIsJuvenile)
-                        offenseClassificationKeys.Add("29");
-                    break;
-                case "64A":
-                    offenseClassificationKeys.Add("30");
-                    break;
-                case "64B":
-                    offenseClassificationKeys.Add("31");
-                    break;
-                default:
-                    //No counts are added if the offense does not fall in any category
-                    return;
-            }
-            AddCounts(age, sex, race, ethnicity, offenseClassificationKeys.ToArray());
-        }
+            private Dictionary<string, Dictionary<string, int>> AgeSexCounts { get; set; }
+            private Dictionary<string, int> AdultRaceCounts { get; set; }
+            private Dictionary<string, int> AdultEthnicityCounts { get; set; }
+            private Dictionary<string, int> JuvenileRaceCounts { get; set; }
+            private Dictionary<string, int> JuvenileEthnicityCounts { get; set; }
+            public int TotalAdultCount { get; private set; }
+            public int TotalJuvenileCount { get; private set; }
 
-        /* Remove getters and aggregation functions?
-        #region Getters
-        // Get individual counts
-        public int GetAgeSexCount(string offenseUcrCode, string age, string sex)
-        {
-            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetAgeSexCount(age, sex) : 0;
-        }
-
-        public int GetRaceCount(string offenseUcrCode, string race)
-        {
-            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetRaceCount(race) : 0;
-        }
-
-        public int GetEthnicityCount(string offenseUcrCode, string ethnicity)
-        {
-            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetEthnicityCount(ethnicity) : 0;
-        }
-        #endregion
-
-        #region Aggregate Functions
-        // Get subtotals
-        public int GetAgeTotal(string age)
-        {
-            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].GetAgeTotal(age));
-        }
-
-        public int GetOffenseSexTotal(string offenseUcrCode, string sex)
-        {
-            return OffenseToAsreCounts.ContainsKey(offenseUcrCode) ? OffenseToAsreCounts[offenseUcrCode].GetSexTotal(sex) : 0;
-        }
-
-        public int GetSexTotal(string sex)
-        {
-            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].GetSexTotal(sex));
-        }
-
-        public int GetRaceTotal(string race)
-        {
-            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + (OffenseToAsreCounts[offense].GetRaceCount(race)));
-        }
-
-        public int GetEthnicityTotal(string ethnicity)
-        {
-            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + (OffenseToAsreCounts[offense].GetEthnicityCount(ethnicity)));
-        }
-
-        // Get grandtotal
-        public int GetGrandTotal(string age)
-        {
-            return OffenseToAsreCounts.Keys.Aggregate(0, (total, offense) => total + OffenseToAsreCounts[offense].TotalAdultCount);
-        }
-        #endregion
-        */
-        
-        public XDocument Serialize() 
-        {
-            return new XDocument(
-                new XProcessingInstruction(
-                    "xml-stylesheet",
-                    "type=\"text/xsl\" href=\"asre.xsl\""),
-                new XElement(
-                    "ASRSummary",
-                    OffenseToAsreCounts.Select(offenseToCountsPair => 
-                        new XElement(
-                            "UCR",
-                            new XAttribute("value", offenseToCountsPair.Key),
-                            offenseToCountsPair.Value.Serialize()))));
+            #endregion
         }
     }
 }

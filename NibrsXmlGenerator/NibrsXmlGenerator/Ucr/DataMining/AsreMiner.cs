@@ -31,8 +31,15 @@ namespace NibrsXml.Ucr.DataMining
                 var arresteeSex = assoc.RelatedArrestee.Person.SexCode;
                 var arresteeRace = assoc.RelatedArrestee.Person.RaceCode;
                 var arresteeEthnicity = assoc.RelatedArrestee.Person.EthnicityCode;
+                var arresteeJuvDispCode = assoc.RelatedArrestee.JuvenileDispositionCode;
 
+                //Ensure object is instantiated before being operated on
                 monthlyReportData.TryAdd(ucrReportKey, new ReportData());
+                var asreData = monthlyReportData[ucrReportKey].AsreData;
+                //Begin scoring
+
+                if (arresteeJuvDispCode != null)
+                    asreData.AddJuvenileDispositionCounts(arresteeJuvDispCode);
 
                 if (chargeUcrCode == "35A")
                 {
@@ -40,10 +47,10 @@ namespace NibrsXml.Ucr.DataMining
                     var drugs = report.Substances.ToList();
                     var drugOffenses = report.Offenses.Where(o => o.UcrCode == "35A").ToList();
 
-                    monthlyReportData[ucrReportKey].AsreData.AddDrugOffenseCounts(drugs, drugOffenses, arresteeAge, arresteeSex, arresteeRace, arresteeEthnicity);
+                    asreData.AddDrugOffenseCounts(drugs, drugOffenses, arresteeAge, arresteeSex, arresteeRace, arresteeEthnicity);
                 }
                 else
-                    monthlyReportData[ucrReportKey].AsreData.AddNonDrugOffenseCounts(chargeUcrCode, arresteeAge, arresteeSex, arresteeRace, arresteeEthnicity);
+                    asreData.AddNonDrugOffenseCounts(chargeUcrCode, arresteeAge, arresteeSex, arresteeRace, arresteeEthnicity);
             }
         }
     }
