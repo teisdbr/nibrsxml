@@ -145,7 +145,7 @@
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
     <Compile Include="Utility\Extensions.cs" />
-    <Compile Include="Utility\NibrsDescriptionAttributes.cs" />
+    <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
