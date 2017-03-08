@@ -646,9 +646,9 @@ namespace NibrsXml.Ucr.DataCollections
             private static readonly Dictionary<string, string> NibrsRaceCodeToUcrElementName = new Dictionary<string, string>
             {
                 {RACCode.AMERICAN_INDIAN_OR_ALASKAN_NATIVE.NibrsCode(), "AmericanIndian"},
-                {RACCode.ASIAN.NibrsCode(), "Asian"},
+                {RACCode.ASIAN.NibrsCode(), "AsianOrPacificIslander"},
                 {RACCode.BLACK.NibrsCode(), "Black"},
-                {RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(), "NativeHawaiianOrOther"},
+                {RACCode.HAWAIIAN_OR_PACIFIC_ISLANDER.NibrsCode(), "AsianOrPacificIslander"},
                 {RACCode.WHITE.NibrsCode(), "White"}
             };
 

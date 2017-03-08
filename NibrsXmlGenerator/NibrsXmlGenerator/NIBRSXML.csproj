@@ -235,7 +235,7 @@
     <Content Include="Ucr\Reports\ReturnA\returna.xml" />
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returna.xsl" />
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xml" />
-    <Content Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
