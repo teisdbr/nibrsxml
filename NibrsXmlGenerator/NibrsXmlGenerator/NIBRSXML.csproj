@@ -199,7 +199,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\gitWinLIBRS\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
+    <ProjectReference Include="..\..\..\LOADNEW\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
     </ProjectReference>
