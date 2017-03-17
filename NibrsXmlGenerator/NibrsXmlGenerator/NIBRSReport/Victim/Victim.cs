@@ -73,7 +73,7 @@ namespace NibrsXml.NibrsReport.Victim
                 this.Role = new RoleOfPerson(this.Person.Id);
             }
             this.SeqNum = seqNum.TrimStart('0').ToString();
-            this.VictimInjuries = injuries;
+            this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = categoryCode;
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
@@ -88,7 +88,7 @@ namespace NibrsXml.NibrsReport.Victim
             this.Person = officer.Person;
             this.Role = officer.Role;
             this.SeqNum = officer.VictimSeqNum.TrimStart('0').ToString();
-            this.VictimInjuries = injuries;
+            this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
             //Translate 40 to 09 if applicable.
             this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode.Select(a => a == "40" ? "09" : a).ToList();

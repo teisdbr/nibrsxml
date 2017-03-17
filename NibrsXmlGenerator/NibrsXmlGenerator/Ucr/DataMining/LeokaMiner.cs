@@ -46,13 +46,17 @@ namespace NibrsXml.Ucr.DataMining
                 var leokaWithEnforcement = leokaVictims.Join(officersOfReportingAgency, l => l.RelatedVictim.Person.Id, o => o.Person.Id,
                     (v, o) => Tuple.Create(v.RelatedVictim, v.RelatedOffense, o)).ToList();
 
+                //Ensure matched/found leoka victims do not have a null assignment or activity type
+                //todo: this is a temporary fix given bad data in database and using bad data to test.
+                var leokaWithEnforcementWithValidData = leokaWithEnforcement.Where(l => l.Item3.ActivityCategoryCode != null && l.Item3.AssignmentCategoryCode != null).ToList();
+
                 //--Get Officers Killed Feloneously
                 leoka.OfficersKilled.IncrementCount("09A", leokaWithEnforcement.Count(v => v.Item2.UcrCode == "09A"));
                 //--Get Officers Killed By Accident
                 leoka.OfficersKilled.IncrementCount("09B", leokaWithEnforcement.Count(v => v.Item2.UcrCode == "09B"));
 
                 //********************************************************************************************Get Officers Assaulted Information
-                foreach (var tuple in leokaWithEnforcement.Where(l => l.Item2.UcrCode.MatchOne("13A", "13B")).ToList())
+                foreach (var tuple in leokaWithEnforcementWithValidData.Where(l => l.Item2.UcrCode.MatchOne("13A", "13B")).ToList())
                 {
                     //Score Weapons and Assignments for the first 11 classification lines (Activities)
                     leoka.ScoreActivityCounts(Leoka.ActivityTranslatorDictionary[tuple.Item3.ActivityCategoryCode], ExtractLeokaWeapons(tuple.Item2.Forces), tuple.Item3.AssignmentCategoryCode);
