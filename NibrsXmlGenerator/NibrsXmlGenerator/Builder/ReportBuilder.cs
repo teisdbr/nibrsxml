@@ -227,12 +227,12 @@ namespace NibrsXml.Builder
                     {
                         TransactionNumber = arrest.ArrestNumber,
                         ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
-                        Charge = lrs.AgencyAssignedNibrs.HasValue(trim:true) ? lrs.AgencyAssignedNibrs : LarsList.LarsDictionary[lrs.LrsNumber.Trim()].nibr,
+                        Charge = lrs.AgencyAssignedNibrs.HasValue(trim:true) ? lrs.AgencyAssignedNibrs : LarsList.LarsDictionary[lrs.LrsNumber.Trim()].Nibr,
                         CategoryCode = arrest.ArrestType,
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
                         //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCYASSIGNEDNIBRS
-                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LrsNumber.Trim()].lrank)
+                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LrsNumber.Trim()].Lrank)
                     }
                 ).ToList();
 

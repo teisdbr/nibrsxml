@@ -92,7 +92,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsCode(LIBRSOffense offense)
         {
-            return offense.AgencyAssignedNibrs.HasValue(trim: true) ? offense.AgencyAssignedNibrs : LarsList.LarsDictionary[offense.LrsNumber.Trim()].nibr;
+            return offense.AgencyAssignedNibrs.HasValue(trim: true) ? offense.AgencyAssignedNibrs : LarsList.LarsDictionary[offense.LrsNumber.Trim()].Nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
