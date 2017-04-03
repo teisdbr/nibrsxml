@@ -201,20 +201,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\LOADNEW\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
-      <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
-      <Name>LoadBusinessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
-      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
-      <Name>TeUtil</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\XmlValidator\XMLValidatorUtility.csproj">
-      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
-      <Name>XMLValidatorUtility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
   </ItemGroup>
@@ -238,6 +224,20 @@
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returna.xsl" />
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xml" />
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
+      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
+      <Name>TeUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
+      <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
+      <Name>LoadBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\XmlValidator\XmlValidator.csproj">
+      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
+      <Name>XmlValidator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
