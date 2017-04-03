@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NIBRSXML", "NibrsXmlGenerator\NIBRSXML.csproj", "{60A3E206-C3FF-4DEF-A1C1-C03E54505D97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NibrsXml", "NibrsXmlGenerator\NibrsXml.csproj", "{60A3E206-C3FF-4DEF-A1C1-C03E54505D97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
