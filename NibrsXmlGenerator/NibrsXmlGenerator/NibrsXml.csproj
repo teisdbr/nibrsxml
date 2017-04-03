@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{60A3E206-C3FF-4DEF-A1C1-C03E54505D97}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NibrsXml</RootNamespace>
+    <AssemblyName>NIBRSXML</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UCR|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\UCR\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Builder\LibrsExtensions.cs" />
+    <Compile Include="Builder\IncidentBuilder.cs" />
+    <Compile Include="Builder\OffenseBuilder.cs" />
+    <Compile Include="Builder\PersonBuilder.cs" />
+    <Compile Include="Builder\ReportBuilder.cs" />
+    <Compile Include="Builder\ReportHeaderBuilder.cs" />
+    <Compile Include="Builder\SubmissionBuilder.cs" />
+    <Compile Include="Constants\AgeGroup.cs" />
+    <Compile Include="Constants\Namespace.cs" />
+    <Compile Include="Constants\NibrsCodeGroups.cs" />
+    <Compile Include="Constants\NibrsCodes.cs" />
+    <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
+    <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
+    <Compile Include="NibrsReport\Arrest\Arrest.cs" />
+    <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
+    <Compile Include="NibrsReport\Associations\Association.cs" />
+    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
+    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
+    <Compile Include="NibrsReport\NibrsSerializable.cs" />
+    <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
+    <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
+    <Compile Include="NibrsReport\Person\Person.cs" />
+    <Compile Include="NibrsReport\Subject\Subject.cs" />
+    <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />
+    <Compile Include="NibrsReport\Misc\ActivityDate.cs" />
+    <Compile Include="NibrsReport\Misc\ActivityIdentification.cs" />
+    <Compile Include="NibrsReport\Incident\Incident.cs" />
+    <Compile Include="NibrsReport\Incident\CjisIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Incident\IncidentExceptionalClearanceDate.cs" />
+    <Compile Include="NibrsReport\Incident\JxdmIncidentAugmentation.cs" />
+    <Compile Include="NibrsReport\Item\Item.cs" />
+    <Compile Include="NibrsReport\Item\ItemStatus.cs" />
+    <Compile Include="NibrsReport\Item\ItemValue.cs" />
+    <Compile Include="NibrsReport\Item\ItemValueAmount.cs" />
+    <Compile Include="NibrsReport\Item\ItemValueDate.cs" />
+    <Compile Include="NibrsReport\Location\Location.cs" />
+    <Compile Include="NibrsReport\Offense\Offense.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseEntryPoint.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseFactor.cs" />
+    <Compile Include="NibrsReport\Offense\OffenseForce.cs" />
+    <Compile Include="NibrsReport\Person\MeasureIntegerRange.cs" />
+    <Compile Include="NibrsReport\Person\PersonAgeMeasure.cs" />
+    <Compile Include="NibrsReport\Person\PersonAugmentation.cs" />
+    <Compile Include="NibrsReport\Victim\VictimInjury.cs" />
+    <Compile Include="NibrsReport\Misc\OrganizationAugmentation.cs" />
+    <Compile Include="NibrsReport\Misc\OrganizationORIIdentification.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportDate.cs" />
+    <Compile Include="NibrsReport\Report.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportHeader.cs" />
+    <Compile Include="NibrsReport\ReportHeader\ReportingAgency.cs" />
+    <Compile Include="NibrsReport\Associations\SubjectVictimAssociation.cs" />
+    <Compile Include="NibrsReport\Submission.cs" />
+    <Compile Include="NibrsReport\Substance\Substance.cs" />
+    <Compile Include="NibrsReport\Substance\SubstanceQuantityMeasure.cs" />
+    <Compile Include="NibrsReport\Victim\Victim.cs" />
+    <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Constants\UcrReportTypes.cs" />
+    <Compile Include="Ucr\DataCollections\Arson.cs" />
+    <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
+    <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
+    <Compile Include="Ucr\DataCollections\HumanTrafficking.cs" />
+    <Compile Include="Ucr\DataCollections\LeokaCounts.cs" />
+    <Compile Include="Ucr\DataCollections\LeokaOfficersKilledCounts.cs" />
+    <Compile Include="Ucr\DataCollections\ReturnA.cs" />
+    <Compile Include="Ucr\DataMining\ArsonMiner.cs" />
+    <Compile Include="Ucr\DataMining\AsreMiner.cs" />
+    <Compile Include="Ucr\DataMining\ClearanceMiner.cs" />
+    <Compile Include="Ucr\DataMining\GeneralSummaryMiner.cs" />
+    <Compile Include="Ucr\DataMining\HumanTraffickingMiner.cs" />
+    <Compile Include="Ucr\DataMining\ReportDataMiner.cs" />
+    <Compile Include="Ucr\DataMining\HateCrimeMiner.cs" />
+    <Compile Include="Ucr\DataMining\LeokaMiner.cs" />
+    <Compile Include="Ucr\DataMining\ReturnAMiner.cs" />
+    <Compile Include="Ucr\DataMining\ReturnASupplementMiner.cs" />
+    <Compile Include="Ucr\DataMining\SupplementaryHomicideMiner.cs" />
+    <Compile Include="Ucr\DataCollections\Asre.cs" />
+    <Compile Include="Ucr\DataCollections\Data.cs" />
+    <Compile Include="Ucr\DataCollections\HateCrime.cs" />
+    <Compile Include="Ucr\DataCollections\Leoka.cs" />
+    <Compile Include="Ucr\DataCollections\OffenseReturn.cs" />
+    <Compile Include="Ucr\DataCollections\ReturnASupplement.cs" />
+    <Compile Include="Ucr\DataCollections\SupplementaryHomicide.cs" />
+    <Compile Include="Ucr\DataMining\UcrHierarchyMiner.cs" />
+    <Compile Include="Ucr\Extensions.cs" />
+    <Compile Include="Ucr\NibrsImport.cs" />
+    <Compile Include="Ucr\DataCollections\ReportData.cs" />
+    <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
+    <Compile Include="Utility\UcrReportAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="NibrsXsd\docs\nibrsCodesTables.xlsx" />
+    <None Include="NibrsXsd\docs\nibrsNIEM_Mapping.xlsx" />
+    <None Include="NibrsXsd\docs\nibrsUML.vsd" />
+    <None Include="NibrsXsd\xsd\cjis\1.0\cjis-codes.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\cjis\1.0\cjis.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ncic\3.1\fbi_ncic.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ndex\3.1\fbi_ndex.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\conformanceTargets\3.0\conformanceTargets.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NibrsXsd\xsd\niem\structures\3.0\structures.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ucr\QueryBuilder\" />
+    <Folder Include="Ucr\ReportBuilder\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NibrsXsd\xml\nibrs.xml" />
+    <Content Include="NibrsXsd\xml\nibrs2.xml" />
+    <Content Include="NibrsXsd\xml\wantlist.xml" />
+    <Content Include="NibrsXsd\xml\xml-catalog.xml" />
+    <Content Include="Ucr\Reports\Arson\arson.xml" />
+    <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
+    <Content Include="Ucr\Reports\Asre\asre.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Ucr\Reports\Asre\asre.xsl" />
+    <Content Include="Ucr\Reports\HumanTrafficking\ht.xml" />
+    <EmbeddedResource Include="Ucr\Reports\HumanTrafficking\ht.xsl" />
+    <Content Include="Ucr\Reports\HumanTrafficking\humantrafficking.xml" />
+    <Content Include="Ucr\Reports\Leoka\leoka.xml" />
+    <EmbeddedResource Include="Ucr\Reports\Leoka\leoka.xsl" />
+    <Content Include="Ucr\Reports\ReturnA\returna.xml" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returna.xsl" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xml" />
+    <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
+      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
+      <Name>TeUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
+      <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
+      <Name>LoadBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\XmlValidator\XmlValidator.csproj">
+      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
+      <Name>XmlValidator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
