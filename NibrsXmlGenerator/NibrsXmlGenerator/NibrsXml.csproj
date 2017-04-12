@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NibrsXml</RootNamespace>
-    <AssemblyName>NIBRSXML</AssemblyName>
+    <AssemblyName>NibrsXml</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -226,17 +226,17 @@
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
-      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
-      <Name>TeUtil</Name>
+    <ProjectReference Include="..\..\..\util\Util\Util.csproj">
+      <Project>{cb16f8a8-80d0-478e-b459-1f2dc93c5e6f}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\util\XmlValidator\XmlValidator.csproj">
+      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
+      <Name>XmlValidator</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\XmlValidator\XmlValidator.csproj">
-      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
-      <Name>XmlValidator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
