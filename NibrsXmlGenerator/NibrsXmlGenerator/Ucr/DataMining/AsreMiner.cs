@@ -27,7 +27,7 @@ namespace NibrsXml.Ucr.DataMining
                 var chargeUcrCode = assoc.RelatedArrest.Charge.UcrCode;
                 
                 //Gather arrestee data from the association
-                var arresteeAge = assoc.RelatedArrestee.Person.AgeMeasure.Value;
+                var arresteeAge = assoc.RelatedArrestee.Person.AgeMeasure.Value ?? assoc.RelatedArrestee.Person.AgeMeasure.RangeOrValue;
                 var arresteeSex = assoc.RelatedArrestee.Person.SexCode;
                 var arresteeRace = assoc.RelatedArrestee.Person.RaceCode;
                 var arresteeEthnicity = assoc.RelatedArrestee.Person.EthnicityCode;

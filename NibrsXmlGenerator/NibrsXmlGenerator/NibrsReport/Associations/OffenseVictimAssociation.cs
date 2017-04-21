@@ -9,7 +9,7 @@ using NibrsXml.Constants;
 namespace NibrsXml.NibrsReport.Associations
 {
     [XmlRoot("OffenseVictimAssociation", Namespace = Namespaces.justice)]
-    public class OffenseVictimAssociation// : Association
+    public class OffenseVictimAssociation
     {
         [XmlElement("Offense", Namespace = Namespaces.justice, Order = 1)]
         public Offense.Offense OffenseRef { get; set; }

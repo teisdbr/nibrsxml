@@ -21,6 +21,7 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
         public string Value { get; set; }
 
+        [XmlIgnore]
         public string RangeOrValue { get { return Value ?? Range.Min + "-" + Range.Max; } }
 
         [XmlIgnore]

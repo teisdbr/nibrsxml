@@ -10,7 +10,7 @@ using TeUtil.Extensions;
 namespace NibrsXml.NibrsReport.Associations
 {
     [XmlRoot("SubjectVictimAssociation", Namespace = Namespaces.justice)]
-    public class SubjectVictimAssociation // : Association
+    public class SubjectVictimAssociation
     {
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string Id { get; set; }

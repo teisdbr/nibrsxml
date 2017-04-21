@@ -73,7 +73,6 @@
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
     <Compile Include="NibrsReport\Arrest\Arrest.cs" />
     <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
-    <Compile Include="NibrsReport\Associations\Association.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="Ucr\DataMining\HateCrimeMiner.cs" />
     <Compile Include="Ucr\DataMining\LeokaMiner.cs" />
     <Compile Include="Ucr\DataMining\ReturnAMiner.cs" />
-    <Compile Include="Ucr\DataMining\ReturnASupplementMiner.cs" />
     <Compile Include="Ucr\DataMining\SupplementaryHomicideMiner.cs" />
     <Compile Include="Ucr\DataCollections\Asre.cs" />
     <Compile Include="Ucr\DataCollections\Data.cs" />
