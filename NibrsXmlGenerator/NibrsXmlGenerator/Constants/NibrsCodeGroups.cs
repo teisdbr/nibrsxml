@@ -200,5 +200,53 @@ namespace NibrsXml.Constants
             EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(),
             EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode()
         };
+
+        public static readonly string[] BiasMotivationCodes =
+        {
+            BiasMotivationCode.ANTIAMERICAN_INDIAN_ALASKAN_NATIVE.NibrsCode(),
+            BiasMotivationCode.ANTIARAB.NibrsCode(),
+            BiasMotivationCode.ANTIASIAN.NibrsCode(),
+            BiasMotivationCode.ANTIATHEIST_AGNOSTIC.NibrsCode(),
+            BiasMotivationCode.ANTIBISEXUAL.NibrsCode(),
+            BiasMotivationCode.ANTIBLACK_AFRICAN_AMERICAN.NibrsCode(),
+            BiasMotivationCode.ANTIBUDDHIST.NibrsCode(),
+            BiasMotivationCode.ANTICATHOLIC.NibrsCode(),
+            BiasMotivationCode.ANTIDISABLED.NibrsCode(),
+            BiasMotivationCode.ANTIEASTERNORTHODOX.NibrsCode(),
+            BiasMotivationCode.ANTIFEMALE.NibrsCode(),
+            BiasMotivationCode.ANTIFEMALE_HOMOSEXUAL.NibrsCode(),
+            BiasMotivationCode.ANTIGENDER_NONCONFORMING.NibrsCode(),
+            BiasMotivationCode.ANTIHETEROSEXUAL.NibrsCode(),
+            BiasMotivationCode.ANTIHINDU.NibrsCode(),
+            BiasMotivationCode.ANTIHISPANIC_LATINO.NibrsCode(),
+            BiasMotivationCode.ANTIHOMOSEXUAL.NibrsCode(),
+            BiasMotivationCode.ANTIISLAMIC.NibrsCode(),
+            BiasMotivationCode.ANTIJEHOVAHWITNESS.NibrsCode(),
+            BiasMotivationCode.ANTIJEWISH.NibrsCode(),
+            BiasMotivationCode.ANTIMALE.NibrsCode(),
+            BiasMotivationCode.ANTIMALE_HOMOSEXUAL.NibrsCode(),
+            BiasMotivationCode.ANTIMENTAL_DISABILITY.NibrsCode(),
+            BiasMotivationCode.ANTIMORMON.NibrsCode(),
+            BiasMotivationCode.ANTIMULTIRACIAL_GROUP.NibrsCode(),
+            BiasMotivationCode.ANTIMULTIRELIGIOUS_GROUP.NibrsCode(),
+            BiasMotivationCode.ANTINATIVEHAWAIIAN_OTHERPACIFICISLANDER.NibrsCode(),
+            BiasMotivationCode.ANTIOTHER_CHRISTIAN.NibrsCode(),
+            BiasMotivationCode.ANTIOTHER_ETHNICITY_NATIONAL_ORIGIN.NibrsCode(),
+            BiasMotivationCode.ANTIOTHER_RELIGION.NibrsCode(),
+            BiasMotivationCode.ANTIPHYSICAL_DISABILITY.NibrsCode(),
+            BiasMotivationCode.ANTIPROTESTANT.NibrsCode(),
+            BiasMotivationCode.ANTISIKH.NibrsCode(),
+            BiasMotivationCode.ANTITRANSGENDER.NibrsCode(),
+            BiasMotivationCode.ANTIWHITE.NibrsCode(),
+            BiasMotivationCode.GENDER_BIAS.NibrsCode(),
+            BiasMotivationCode.NONE.NibrsCode(),
+            BiasMotivationCode.POLITICAL_AFFILIATION_BIAS.NibrsCode()
+        };
+
+        public static readonly string[] HumanVicitms =
+        {
+            VictimCategoryCode.INDIVIDUAL.NibrsCode(),
+            VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()
+        };
     }
 }

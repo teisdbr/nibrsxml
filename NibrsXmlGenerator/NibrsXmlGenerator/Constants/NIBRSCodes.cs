@@ -49,7 +49,7 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Anti-American Indian or Alaskan Native_race ethnicity bias
         /// </summary>
-        [NibrsCode("ANTIAMERICAN INDIAN_ ALASKAN NATIVE")]
+        [NibrsCode("ANTIAMERICAN INDIAN_ALASKAN NATIVE")]
         [CodeDescription("Anti-American Indian or Alaskan Native_race ethnicity bias")]
         ANTIAMERICAN_INDIAN_ALASKAN_NATIVE,
 
