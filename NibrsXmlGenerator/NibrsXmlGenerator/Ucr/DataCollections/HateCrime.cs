@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using NibrsXml.NibrsReport.Victim;
+using NibrsXml.NibrsReport.Subject;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -33,11 +34,11 @@ namespace NibrsXml.Ucr.DataCollections
             public int AdultVictimCount { get; set; }
             public int JuvenileVictimCount { get; set; }
             public string Location { get; set; }
-            public char? BiasMotivation1 { get; set; }
-            public char? BiasMotivation2 { get; set; }
-            public char? BiasMotivation3 { get; set; }
-            public char? BiasMotivation4 { get; set; }
-            public char? BiasMotivation5 { get; set; }
+            public string BiasMotivation1 { get; set; }
+            public string BiasMotivation2 { get; set; }
+            public string BiasMotivation3 { get; set; }
+            public string BiasMotivation4 { get; set; }
+            public string BiasMotivation5 { get; set; }
             public bool VictimTypeIndividual { get; set; }
             public bool VictimTypeBusiness { get; set; }
             public bool VictimTypeFinancialInstitution { get; set; }
@@ -45,10 +46,15 @@ namespace NibrsXml.Ucr.DataCollections
             public bool VictimTypeReligiousOrg { get; set; }
             public bool VictimTypeOther { get; set; }
             public bool VictimTypeUnknown { get; set; }
-            public List<Report.Subject> Subjects { get; set; }
+            public List<Subject> Offenders { get; set; }
 
-            public Offense(string code, List<Victim> victims, string location, List<string> biases, List<Report.Subject> offenders)
+            public Offense(string code, List<Victim> victims, string location, List<string> biases, List<Subject> offenders)
             {
+                var victimTypes = victims
+                    .Select(v => v.CategoryCode)
+                    .Distinct()
+                    .ToList();
+
                 Code = code;
                 AdultVictimCount = victims.Count(v => v.Person != null && !v.Person.AgeMeasure.IsJuvenile);
                 JuvenileVictimCount = victims.Count(v => v.Person != null && v.Person.AgeMeasure.IsJuvenile);
@@ -58,6 +64,14 @@ namespace NibrsXml.Ucr.DataCollections
                 BiasMotivation3 = TranslateBias(biases.ElementAtOrDefault(2));
                 BiasMotivation4 = TranslateBias(biases.ElementAtOrDefault(3));
                 BiasMotivation5 = TranslateBias(biases.ElementAtOrDefault(4));
+                VictimTypeIndividual = false;
+                VictimTypeBusiness = false;
+                VictimTypeFinancialInstitution = false;
+                VictimTypeGovernment = false;
+                VictimTypeReligiousOrg = false;
+                VictimTypeOther = false;
+                VictimTypeUnknown = false;
+                Offenders = offenders;
             }
         }
 
@@ -83,12 +97,9 @@ namespace NibrsXml.Ucr.DataCollections
             throw new NotImplementedException();
         }
 
-        private static char? TranslateBias(string bias)
+        private static string TranslateBias(string bias)
         {
-            if (bias == null)
-                return null;
-            
-            return null;
+            return Translate.BiasMotivationTranslations_NibrsToUcr.ContainsKey(bias) ? Translate.BiasMotivationTranslations_NibrsToUcr.[bias] : null;
         }
     }
 }

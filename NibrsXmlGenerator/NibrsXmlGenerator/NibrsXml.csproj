@@ -145,6 +145,7 @@
     <Compile Include="Ucr\Extensions.cs" />
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
+    <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />

@@ -201,6 +201,9 @@ namespace NibrsXml.Constants
             EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode()
         };
 
+        /// <summary>
+        /// Exluded from these are UNKNOWN, NONE, ANTIDISABLED, GENDER_BIAS, and POLITICAL_AFFILIATION_BIAS
+        /// </summary>
         public static readonly string[] BiasMotivationCodes =
         {
             BiasMotivationCode.ANTIAMERICAN_INDIAN_ALASKAN_NATIVE.NibrsCode(),
@@ -211,7 +214,6 @@ namespace NibrsXml.Constants
             BiasMotivationCode.ANTIBLACK_AFRICAN_AMERICAN.NibrsCode(),
             BiasMotivationCode.ANTIBUDDHIST.NibrsCode(),
             BiasMotivationCode.ANTICATHOLIC.NibrsCode(),
-            BiasMotivationCode.ANTIDISABLED.NibrsCode(),
             BiasMotivationCode.ANTIEASTERNORTHODOX.NibrsCode(),
             BiasMotivationCode.ANTIFEMALE.NibrsCode(),
             BiasMotivationCode.ANTIFEMALE_HOMOSEXUAL.NibrsCode(),
@@ -237,10 +239,7 @@ namespace NibrsXml.Constants
             BiasMotivationCode.ANTIPROTESTANT.NibrsCode(),
             BiasMotivationCode.ANTISIKH.NibrsCode(),
             BiasMotivationCode.ANTITRANSGENDER.NibrsCode(),
-            BiasMotivationCode.ANTIWHITE.NibrsCode(),
-            BiasMotivationCode.GENDER_BIAS.NibrsCode(),
-            BiasMotivationCode.NONE.NibrsCode(),
-            BiasMotivationCode.POLITICAL_AFFILIATION_BIAS.NibrsCode()
+            BiasMotivationCode.ANTIWHITE.NibrsCode()
         };
 
         public static readonly string[] HumanVicitms =

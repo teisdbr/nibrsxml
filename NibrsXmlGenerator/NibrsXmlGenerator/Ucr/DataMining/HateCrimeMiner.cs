@@ -69,7 +69,7 @@ namespace NibrsXml.Ucr.DataMining
                     .Join(offenseIds, ov => ov.RelatedOffense.Id, id => id, (ov, id) => ov.RelatedVictim)
                     .ToList();
 
-                //question: How do get suspects for victims who are not "I" or "L" since there is no subject victim association for those?
+                //question: How do we get suspects for victims who are not "I" or "L" since there is no subject victim association for those?
                 //temporary solution -> when any victim is not I or L, use all offenders
                 List<Subject> offenders;
                 if (victims.Any(v => NibrsCodeGroups.HumanVicitms.Contains(v.CategoryCode)))
