@@ -1,12 +1,12 @@
-﻿using NibrsXml.NibrsReport;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Victim;
 using NibrsXml.NibrsReport.Subject;
+using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -22,7 +22,7 @@ namespace NibrsXml.Ucr.DataCollections
             public char OffenderEthnicity { get; set; }
             public List<Offense> Offenses { get; set; }
             
-            public void AddOffense(Offense offense)
+            public void AddOffense(Offense offense, List<Subject> offenders)
             {
 
             }
@@ -46,9 +46,8 @@ namespace NibrsXml.Ucr.DataCollections
             public bool VictimTypeReligiousOrg { get; set; }
             public bool VictimTypeOther { get; set; }
             public bool VictimTypeUnknown { get; set; }
-            public List<Subject> Offenders { get; set; }
 
-            public Offense(string code, List<Victim> victims, string location, List<string> biases, List<Subject> offenders)
+            public Offense(string code, List<Victim> victims, string location, List<string> biases)
             {
                 var victimTypes = victims
                     .Select(v => v.CategoryCode)
@@ -59,19 +58,18 @@ namespace NibrsXml.Ucr.DataCollections
                 AdultVictimCount = victims.Count(v => v.Person != null && !v.Person.AgeMeasure.IsJuvenile);
                 JuvenileVictimCount = victims.Count(v => v.Person != null && v.Person.AgeMeasure.IsJuvenile);
                 Location = location;
-                BiasMotivation1 = TranslateBias(biases.ElementAtOrDefault(0));
-                BiasMotivation2 = TranslateBias(biases.ElementAtOrDefault(1));
-                BiasMotivation3 = TranslateBias(biases.ElementAtOrDefault(2));
-                BiasMotivation4 = TranslateBias(biases.ElementAtOrDefault(3));
-                BiasMotivation5 = TranslateBias(biases.ElementAtOrDefault(4));
-                VictimTypeIndividual = false;
-                VictimTypeBusiness = false;
-                VictimTypeFinancialInstitution = false;
-                VictimTypeGovernment = false;
-                VictimTypeReligiousOrg = false;
-                VictimTypeOther = false;
-                VictimTypeUnknown = false;
-                Offenders = offenders;
+                BiasMotivation1 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(0));
+                BiasMotivation2 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(1));
+                BiasMotivation3 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(2));
+                BiasMotivation4 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(3));
+                BiasMotivation5 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(4));
+                VictimTypeIndividual = victimTypes.Contains(VictimCategoryCode.INDIVIDUAL.NibrsCode()) || victimTypes.Contains(VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode());
+                VictimTypeBusiness = victimTypes.Contains(VictimCategoryCode.BUSINESS.NibrsCode());
+                VictimTypeFinancialInstitution = victimTypes.Contains(VictimCategoryCode.FINANCIAL_INSTITUTION.NibrsCode());
+                VictimTypeGovernment = victimTypes.Contains(VictimCategoryCode.GOVERNMENT.NibrsCode());
+                VictimTypeReligiousOrg = victimTypes.Contains(VictimCategoryCode.RELIGIOUS_ORGANIZATION.NibrsCode());
+                VictimTypeOther = victimTypes.Contains(VictimCategoryCode.OTHER.NibrsCode());
+                VictimTypeUnknown = victimTypes.Contains(VictimCategoryCode.UNKNOWN.NibrsCode());
             }
         }
 
@@ -95,11 +93,6 @@ namespace NibrsXml.Ucr.DataCollections
         public XDocument Serialize()
         {
             throw new NotImplementedException();
-        }
-
-        private static string TranslateBias(string bias)
-        {
-            return Translate.BiasMotivationTranslations_NibrsToUcr.ContainsKey(bias) ? Translate.BiasMotivationTranslations_NibrsToUcr.[bias] : null;
         }
     }
 }

@@ -204,7 +204,7 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Exluded from these are UNKNOWN, NONE, ANTIDISABLED, GENDER_BIAS, and POLITICAL_AFFILIATION_BIAS
         /// </summary>
-        public static readonly string[] BiasMotivationCodes =
+        public static readonly string[] HateCrimeBiasMotivationCodes =
         {
             BiasMotivationCode.ANTIAMERICAN_INDIAN_ALASKAN_NATIVE.NibrsCode(),
             BiasMotivationCode.ANTIARAB.NibrsCode(),
@@ -246,6 +246,21 @@ namespace NibrsXml.Constants
         {
             VictimCategoryCode.INDIVIDUAL.NibrsCode(),
             VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()
+        };
+
+        /// <summary>
+        /// HateCrimeVictimTypes does not include "S - Society"
+        /// </summary>
+        public static readonly string[] HateCrimeVictimTypes =
+        {
+            VictimCategoryCode.BUSINESS.NibrsCode(),
+            VictimCategoryCode.FINANCIAL_INSTITUTION.NibrsCode(),
+            VictimCategoryCode.GOVERNMENT.NibrsCode(),
+            VictimCategoryCode.INDIVIDUAL.NibrsCode(),
+            VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode(),
+            VictimCategoryCode.OTHER.NibrsCode(),
+            VictimCategoryCode.RELIGIOUS_ORGANIZATION.NibrsCode(),
+            VictimCategoryCode.UNKNOWN.NibrsCode()
         };
     }
 }

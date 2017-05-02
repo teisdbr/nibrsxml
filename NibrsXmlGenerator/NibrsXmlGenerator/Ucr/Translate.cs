@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.Constants;
 using NibrsXml.Utility;
 
@@ -10,7 +7,7 @@ namespace NibrsXml.Ucr
 {
     public static class Translate
     {
-        public static Dictionary<string, string> BiasMotivationTranslations_NibrsToUcr = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> HateCrimeBiasMotivationTranslations = new Dictionary<string, string>
         {
             { BiasMotivationCode.ANTIAMERICAN_INDIAN_ALASKAN_NATIVE.NibrsCode(), "13" },
             { BiasMotivationCode.ANTIARAB.NibrsCode(), "31" },
@@ -46,6 +43,29 @@ namespace NibrsXml.Ucr
             { BiasMotivationCode.ANTISIKH.NibrsCode(), "85" },
             { BiasMotivationCode.ANTITRANSGENDER.NibrsCode(), "71" },
             { BiasMotivationCode.ANTIWHITE.NibrsCode(), "11" }
+        };
+
+        public static readonly Dictionary<string, string> HateCrimeOffenseCodeTranslations = new Dictionary<string, string>
+        {
+            { OffenseCode.MURDER_NONNEGLIGENT.NibrsCode(), "01" },
+            { OffenseCode.RAPE.NibrsCode(), "02" },
+            { OffenseCode.ROBBERY.NibrsCode(), "03" },
+            { OffenseCode.AGGRAVATED_ASSAULT.NibrsCode(), "04" },
+            { OffenseCode.BURGLARY_BREAKING_AND_ENTERING.NibrsCode(), "05" },
+            { OffenseCode.PICKPOCKETING.NibrsCode(), "06" },
+            { OffenseCode.PURSE_SNATCHING.NibrsCode(), "06" },
+            { OffenseCode.SHOPLIFTING.NibrsCode(), "06" },
+            { OffenseCode.THEFT_FROM_BUILDING.NibrsCode(), "06" },
+            { OffenseCode.THEFT_FROM_COIN_OPERATED_MACHINE.NibrsCode(), "06" },
+            { OffenseCode.THEFT_FROM_MOTOR_VEHICLE.NibrsCode(), "06" },
+            { OffenseCode.THEFT_OF_MOTOR_VEHICLE_PARTS_OR_ACCESSORIES.NibrsCode(), "06" },
+            { OffenseCode.MOTOR_VEHICLE_THEFT.NibrsCode(), "07" },
+            { OffenseCode.ARSON.NibrsCode(), "08" },
+            { OffenseCode.SIMPLE_ASSAULT.NibrsCode(), "09" },
+            { OffenseCode.INTIMIDATION.NibrsCode(), "10" },
+            { OffenseCode.DESTRUCTION_DAMAGE_VANDALISM_OR_PROPERTY.NibrsCode(), "11" },
+            { OffenseCode.HUMAN_TRAFFICKING_COMMERCIAL_SEX_ACTS.NibrsCode(), "12" },
+            { OffenseCode.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE.NibrsCode(), "13" }
         };
     }
 }
