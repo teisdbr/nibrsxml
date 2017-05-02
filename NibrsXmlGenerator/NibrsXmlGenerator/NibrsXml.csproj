@@ -169,36 +169,47 @@
     </None>
     <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ncic\3.1\fbi_ncic.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ndex\3.1\fbi_ndex.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\conformanceTargets\3.0\conformanceTargets.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\structures\3.0\structures.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
