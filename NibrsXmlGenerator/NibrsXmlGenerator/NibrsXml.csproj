@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NibrsXml</RootNamespace>
-    <AssemblyName>NIBRSXML</AssemblyName>
+    <AssemblyName>NibrsXml</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -143,6 +143,7 @@
     <Compile Include="Ucr\Extensions.cs" />
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
+    <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />
@@ -166,36 +167,47 @@
     </None>
     <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ncic\3.1\fbi_ncic.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ndex\3.1\fbi_ndex.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\conformanceTargets\3.0\conformanceTargets.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\structures\3.0\structures.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -224,17 +236,17 @@
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TeUtil\TeUtil.csproj">
-      <Project>{dc4097f1-0b19-40b2-96ae-f57e9ccf85a0}</Project>
-      <Name>TeUtil</Name>
+    <ProjectReference Include="..\..\..\util\Util\Util.csproj">
+      <Project>{cb16f8a8-80d0-478e-b459-1f2dc93c5e6f}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\util\XmlValidator\XmlValidator.csproj">
+      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
+      <Name>XmlValidator</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\XmlValidator\XmlValidator.csproj">
-      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
-      <Name>XmlValidator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

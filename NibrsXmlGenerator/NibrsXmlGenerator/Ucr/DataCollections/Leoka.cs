@@ -38,26 +38,20 @@ namespace NibrsXml.Ucr.DataCollections
             AssaultTimesCountsDictionary = new Dictionary<string, int>();
         }
 
-        public static Dictionary<string, string> ActivityTranslatorDictionary
+        public static Dictionary<string, string> ActivityTranslatorDictionary =new Dictionary<string, string>
         {
-            get
-            {
-                return new Dictionary<string, string>()
-                {
-                    {LEOKAActivityCategoryCode.RESPONDING_TO_DISTURBANCE_CALL.NibrsCode(), "1"},
-                    {LEOKAActivityCategoryCode.BURGLARIES_IN_PROGRESS_OR_PURSUING_BURGLARY_SUSPECTS.NibrsCode(), "2"},
-                    {LEOKAActivityCategoryCode.ROBBERIES_IN_PROGRESS_OR_PURSUING_ROBBERY_SUSPECTS.NibrsCode(), "3"},
-                    {LEOKAActivityCategoryCode.ATTEMPTING_OTHER_ARRESTS.NibrsCode(), "4"},
-                    {LEOKAActivityCategoryCode.CIVIL_DISORDER.NibrsCode(), "5"},
-                    {LEOKAActivityCategoryCode.HANDLING_OR_TRANSPORTING_CUSTODY_OF_PRISONERS.NibrsCode(), "6"},
-                    {LEOKAActivityCategoryCode.INVESTIGATING_SUSPICIOUS_PERSONS_OR_CIRCUMSTANCES.NibrsCode(), "7"},
-                    {LEOKAActivityCategoryCode.AMBUSH.NibrsCode(), "8"},
-                    {LEOKAActivityCategoryCode.HANDLING_PERSONS_WITH_MENTAL_ILLNESS.NibrsCode(), "9"},
-                    {LEOKAActivityCategoryCode.TRAFFIC_PURSUITS_AND_STOPS.NibrsCode(), "10"},
-                    {LEOKAActivityCategoryCode.OTHER.NibrsCode(), "11"},
-                };
-            }
-        }
+            {LEOKAActivityCategoryCode.RESPONDING_TO_DISTURBANCE_CALL.NibrsCode(), "1"},
+            {LEOKAActivityCategoryCode.BURGLARIES_IN_PROGRESS_OR_PURSUING_BURGLARY_SUSPECTS.NibrsCode(), "2"},
+            {LEOKAActivityCategoryCode.ROBBERIES_IN_PROGRESS_OR_PURSUING_ROBBERY_SUSPECTS.NibrsCode(), "3"},
+            {LEOKAActivityCategoryCode.ATTEMPTING_OTHER_ARRESTS.NibrsCode(), "4"},
+            {LEOKAActivityCategoryCode.CIVIL_DISORDER.NibrsCode(), "5"},
+            {LEOKAActivityCategoryCode.HANDLING_OR_TRANSPORTING_CUSTODY_OF_PRISONERS.NibrsCode(), "6"},
+            {LEOKAActivityCategoryCode.INVESTIGATING_SUSPICIOUS_PERSONS_OR_CIRCUMSTANCES.NibrsCode(), "7"},
+            {LEOKAActivityCategoryCode.AMBUSH.NibrsCode(), "8"},
+            {LEOKAActivityCategoryCode.HANDLING_PERSONS_WITH_MENTAL_ILLNESS.NibrsCode(), "9"},
+            {LEOKAActivityCategoryCode.TRAFFIC_PURSUITS_AND_STOPS.NibrsCode(), "10"},
+            {LEOKAActivityCategoryCode.OTHER.NibrsCode(), "11"},
+        };
 
         /// <summary>
         ///     Increment either 09A or 09B
@@ -138,6 +132,9 @@ namespace NibrsXml.Ucr.DataCollections
 
         public void ScoreClearanceCounts(string activity)
         {
+            if (activity == null)
+                return;
+
             var activityKey = ActivityTranslatorDictionary[activity];
 
             //Create the dictionary entry if it doesn't exist, then increment the clearance counter for the appropriate row's column M
