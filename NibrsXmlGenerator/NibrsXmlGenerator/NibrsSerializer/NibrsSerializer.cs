@@ -32,7 +32,7 @@ namespace NibrsXml.NibrsSerializer
         /// <summary>
         /// This class allows the serializer to write in UTF-8 formatting
         /// </summary>
-        private class Utf8StringWriter : StringWriter
+        internal class Utf8StringWriter : StringWriter
         {
             public override Encoding Encoding { get { return Encoding.UTF8; } }
         }
