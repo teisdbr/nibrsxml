@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -36,7 +32,7 @@ namespace NibrsXml.Utility
         }
     }
 
-    class NibrsCodeAttribute : NibrsDescriptionAttribute
+    internal class NibrsCodeAttribute : NibrsDescriptionAttribute
     {
         public NibrsCodeAttribute(string description) : base(description) { }
 
@@ -46,7 +42,7 @@ namespace NibrsXml.Utility
         }
     }
 
-    class CodeDescriptionAttribute : NibrsDescriptionAttribute
+    internal class CodeDescriptionAttribute : NibrsDescriptionAttribute
     {
         public CodeDescriptionAttribute(string description) : base(description) { }
 
@@ -56,7 +52,7 @@ namespace NibrsXml.Utility
         }
     }
 
-    class UcrElementName : NibrsDescriptionAttribute
+    internal class UcrElementName : NibrsDescriptionAttribute
     {
         public UcrElementName(string description) : base(description) { }
 

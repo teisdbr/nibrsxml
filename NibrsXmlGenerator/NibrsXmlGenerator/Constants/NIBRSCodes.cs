@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using NibrsXml.Utility;
 
 /**
@@ -16,7 +11,7 @@ namespace NibrsXml.Constants
     /// A data type for Sex
     /// </summary>
     [Description("A data type for Sex.")]
-    enum SexCode
+    internal enum SexCode
     {
         /// <summary>
         /// Female
@@ -44,7 +39,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the type of bias that motivated the offense, if any. Includes all NIBRS codes, plus additional codes
     /// </summary>
     [Description("A data type for a code that identifies the type of bias that motivated the offense, if any. Includes all NIBRS codes, plus additional codes.")]
-    enum BiasMotivationCode
+    internal enum BiasMotivationCode
     {
         /// <summary>
         /// Anti-American Indian or Alaskan Native_race ethnicity bias
@@ -324,7 +319,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies gang involvement of offenders in an offense
     /// </summary>
     [Description("A data type for a code that identifies gang involvement of offenders in an offense.")]
-    enum GangInvolvementCategoryCode
+    internal enum GangInvolvementCategoryCode
     {
         /// <summary>
         /// Other Gang
@@ -352,7 +347,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the current disposition of the incident
     /// </summary>
     [Description("A data type for a code that identifies the current disposition of the incident.")]
-    enum IncidentStatusCode
+    internal enum IncidentStatusCode
     {
         /// <summary>
         /// Active
@@ -436,7 +431,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the disposition of the arrest if the arrestee was a juvenile at the time of arrest
     /// </summary>
     [Description("A data type for a code that identifies the disposition of the arrest if the arrestee was a juvenile at the time of arrest.")]
-    enum JuvenileDispositionCode
+    internal enum JuvenileDispositionCode
     {
         /// <summary>
         /// Referred to Criminal (Adult) Court
@@ -478,7 +473,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the race of the person
     /// </summary>
     [Description("A data type for a code that identifies the race of the person.")]
-    enum RACCode
+    internal enum RACCode
     {
         /// <summary>
         /// ASIAN:  A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam
@@ -524,7 +519,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the victim's relationship to subject who perpetrated a crime against them, depicting who the victim was to the offender
     /// </summary>
     [Description("A data type for a code that identifies the victim's relationship to subject who perpetrated a crime against them, depicting who the victim was to the offender.")]
-    enum VictimToSubjectRelationshipCode
+    internal enum VictimToSubjectRelationshipCode
     {
         /// <summary>
         /// Accomplice
@@ -860,7 +855,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds of arrests that can occur
     /// </summary>
     [Description("A data type for kinds of arrests that can occur.")]
-    enum ArrestCategoryCode
+    internal enum ArrestCategoryCode
     {
         /// <summary>
         /// On-View Arrest
@@ -888,7 +883,7 @@ namespace NibrsXml.Constants
     /// A data type for weapons with which a subject may be armed with upon apprehension
     /// </summary>
     [Description("A data type for weapons with which a subject may be armed with upon apprehension.")]
-    enum ArresteeWeaponCode
+    internal enum ArresteeWeaponCode
     {
         /// <summary>
         /// Unarmed
@@ -986,7 +981,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds of drugs
     /// </summary>
     [Description("A data type for kinds of drugs.")]
-    enum DrugCategoryCode
+    internal enum DrugCategoryCode
     {
         /// <summary>
         /// crack cocaine
@@ -1119,7 +1114,7 @@ namespace NibrsXml.Constants
     /// A data type for the kinds of measurements used to specify a quantity of drugs or narcotics
     /// </summary>
     [Description("A data type for the kinds of measurements used to specify a quantity of drugs or narcotics.")]
-    enum DrugMeasurementCode
+    internal enum DrugMeasurementCode
     {
         /// <summary>
         /// Dosage Units/ Items
@@ -1203,7 +1198,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds of cultural lineages of a person
     /// </summary>
     [Description("A data type for kinds of cultural lineages of a person.")]
-    enum EthnicityCode
+    internal enum EthnicityCode
     {
         /// <summary>
         /// Hispanic or Latino
@@ -1231,7 +1226,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds of weapons or forces used by a subject in committing an offense
     /// </summary>
     [Description("A data type for kinds of weapons or forces used by a subject in committing an offense.")]
-    enum ForceCategoryCode
+    internal enum ForceCategoryCode
     {
         /// <summary>
         /// Firearm (type not stated)
@@ -1392,7 +1387,7 @@ namespace NibrsXml.Constants
     /// A data type for ways in which an incident may be cleared exceptionally
     /// </summary>
     [Description("A data type for ways in which an incident may be cleared exceptionally.")]
-    enum IncidentExceptionalClearanceCode
+    internal enum IncidentExceptionalClearanceCode
     {
         /// <summary>
         /// Death of Offender
@@ -1441,7 +1436,7 @@ namespace NibrsXml.Constants
     /// A data type for factors that may have been involved in or contributed to a subject committing an offense
     /// </summary>
     [Description("A data type for factors that may have been involved in or contributed to a subject committing an offense.")]
-    enum IncidentFactorCode
+    internal enum IncidentFactorCode
     {
         /// <summary>
         /// Alcohol
@@ -1476,7 +1471,7 @@ namespace NibrsXml.Constants
     /// A data type for a general category of harm or injury
     /// </summary>
     [Description("A data type for a general category of harm or injury.")]
-    enum InjuryCategoryCode
+    internal enum InjuryCategoryCode
     {
         /// <summary>
         /// apparent broken bones
@@ -1539,7 +1534,7 @@ namespace NibrsXml.Constants
     /// A data type for circumstances of a justifiable homicide
     /// </summary>
     [Description("A data type for circumstances of a justifiable homicide.")]
-    enum JustifiableHomicideFactorsCode
+    internal enum JustifiableHomicideFactorsCode
     {
         /// <summary>
         /// Criminal Attacked Police Officer and That Officer Killed Criminal
@@ -1595,7 +1590,7 @@ namespace NibrsXml.Constants
     /// A data type for a kind of activity or circumstance in which a law enforcement officer was engaged at the time of assault
     /// </summary>
     [Description("A data type for a kind of activity or circumstance in which a law enforcement officer was engaged at the time of assault.")]
-    enum LEOKAActivityCategoryCode
+    internal enum LEOKAActivityCategoryCode
     {
         /// <summary>
         /// Responding to Disturbance Call (Family Quarrels, Person with Firearm, Etc)
@@ -1679,7 +1674,7 @@ namespace NibrsXml.Constants
     /// A data type for an assignment a law enforcement officer was on when assaulted
     /// </summary>
     [Description("A data type for an assignment a law enforcement officer was on when assaulted.")]
-    enum LEOKAOfficerAssignmentCategoryCode
+    internal enum LEOKAOfficerAssignmentCategoryCode
     {
         /// <summary>
         /// Two-Officer Vehicle - uniformed law enforcement officers
@@ -1735,7 +1730,7 @@ namespace NibrsXml.Constants
     /// A data type for methods of entry into a structure or premises
     /// </summary>
     [Description("A data type for methods of entry into a structure or premises.")]
-    enum MethodOfEntryCode
+    internal enum MethodOfEntryCode
     {
         /// <summary>
         /// Force
@@ -1756,7 +1751,7 @@ namespace NibrsXml.Constants
     /// A data type for the ways in which an arrested subject is counted or scored in a system so that a subject is counted only once despite potentially multiple arrests at a time
     /// </summary>
     [Description("A data type for the ways in which an arrested subject is counted or scored in a system so that a subject is counted only once despite potentially multiple arrests at a time.")]
-    enum MultipleArresteeSegmentsCode
+    internal enum MultipleArresteeSegmentsCode
     {
 
         /// <summary>
@@ -1785,7 +1780,7 @@ namespace NibrsXml.Constants
     /// A data type for categories or classifications of a property item
     /// </summary>
     [Description("A data type for categories or classifications of a property item.")]
-    enum PropertyCategoryCode
+    internal enum PropertyCategoryCode
     {
         /// <summary>
         /// aircraft
@@ -2268,7 +2263,7 @@ namespace NibrsXml.Constants
     /// A data type for whether or not a person was a resident of a town, city, or community in relation to some activity
     /// </summary>
     [Description("A data type for whether or not a person was a resident of a town, city, or community in relation to some activity.")]
-    enum ResidentCode
+    internal enum ResidentCode
     {
         /// <summary>
         /// Nonresident
@@ -2296,7 +2291,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds of victims in an incident
     /// </summary>
     [Description("A data type for kinds of victims in an incident.")]
-    enum VictimCategoryCode
+    internal enum VictimCategoryCode
     {
         /// <summary>
         /// Business
@@ -2366,7 +2361,7 @@ namespace NibrsXml.Constants
     /// A data type for units of time
     /// </summary>
     [Description("A data type for units of time.")]
-    enum TimeCode
+    internal enum TimeCode
     {
         /// <summary>
         /// year
@@ -2457,7 +2452,7 @@ namespace NibrsXml.Constants
     /// A data type for a code that identifies the status of property.  Expands the NIBRS PropertyLoss code list
     /// </summary>
     [Description("A data type for a code that identifies the status of property.  Expands the NIBRS PropertyLoss code list.")]
-    enum ItemStatusCode
+    internal enum ItemStatusCode
     {
         /// <summary>
         /// None
@@ -2632,7 +2627,7 @@ namespace NibrsXml.Constants
 	/// A data type for circumstances of either an aggravated assault or homicide.
 	/// </summary>
 	[Description("A data type for circumstances of either an aggravated assault or homicide.")]
-	enum AggravatedAssaultHomicideFactorsCode
+    internal enum AggravatedAssaultHomicideFactorsCode
 	{
 		/// <summary>
 		/// Argument
@@ -2786,7 +2781,7 @@ namespace NibrsXml.Constants
 	 /// A data type for a kind of action to be taken on the report
 	/// </summary>
 	[Description("A data type for a kind of action to be taken on the report")]
-	enum ReportActionCategoryCode
+	internal enum ReportActionCategoryCode
 	{
 		/// <summary>
 		/// Incident Report
@@ -2807,7 +2802,7 @@ namespace NibrsXml.Constants
 	 /// A data type for a code that identifies additional information on criminal activity of offenders in the offense.
 	/// </summary>
     [Description("A data type for a code that identifies additional information on criminal activity of offenders in the offense.")]
-    enum CriminalActivityCategoryCode
+	internal enum CriminalActivityCategoryCode
     {
         /// <summary>
         /// Simple/Gross Neglect
@@ -2919,7 +2914,7 @@ namespace NibrsXml.Constants
     /// A data type for kinds or functional descriptions of a location
     /// </summary>
     [Description("A data type for kinds or functional descriptions of a location.")]
-    enum LocationCategoryCode
+    internal enum LocationCategoryCode
     {
         /// <summary>
         /// air/ bus/ train terminal
@@ -3241,7 +3236,7 @@ namespace NibrsXml.Constants
 	 /// A data type for a kind of report contained in the NIBRS submission
 	/// </summary>
 	[Description("A data type for a kind of report contained in the NIBRS submission")]
-	enum NibrsReportCategoryCode
+	internal enum NibrsReportCategoryCode
 	{
 		/// <summary>
 		/// Group A Incident Report
@@ -3283,7 +3278,7 @@ namespace NibrsXml.Constants
 	 /// A data type for the NIBRS code for an age of a person
 	/// </summary>
 	[Description("A data type for the NIBRS code for an age of a person")]
-	enum PersonAgeCode
+	internal enum PersonAgeCode
 	{
 		/// <summary>
 		/// Under 24 Hours
@@ -3318,7 +3313,7 @@ namespace NibrsXml.Constants
     /// A data type for Uniform Crime Reporting (UCR) offense codes
     /// </summary>
     [Description("A data type for Uniform Crime Reporting (UCR) offense codes.")]
-    enum OffenseCode
+    internal enum OffenseCode
     {
         /// <summary>
         /// Murder &amp; Nonnegligent Manslaughter

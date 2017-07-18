@@ -1,28 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Arrest;
-using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.Associations;
-using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Incident;
-using NibrsXml.NibrsReport.Item;
-using NibrsXml.NibrsReport.Location;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.Person;
 using NibrsXml.NibrsReport.ReportHeader;
-using NibrsXml.NibrsReport.Subject;
-using NibrsXml.NibrsReport.Substance;
-using NibrsXml.NibrsReport.Victim;
 
 
 namespace NibrsXml.NibrsSerializer
@@ -34,7 +20,7 @@ namespace NibrsXml.NibrsSerializer
         /// </summary>
         internal class Utf8StringWriter : StringWriter
         {
-            public override Encoding Encoding { get { return Encoding.UTF8; } }
+            public override Encoding Encoding => Encoding.UTF8;
         }
 
         // Declare the types of all the objects that shall be serialized by NibrsSerializer
@@ -116,7 +102,7 @@ namespace NibrsXml.NibrsSerializer
             return xml;
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //ReportHeader reportHeader = new ReportHeader(
             //                "GROUP A INCIDENT REPORT",

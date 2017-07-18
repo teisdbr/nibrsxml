@@ -22,7 +22,7 @@ namespace NibrsXml.Ucr
             if (!validator.HasErrors)
             {
                 Reports = Submission.Deserialize(xmlFilepath).Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
-                MonthlyOriReportData = ReportDataMiner.Mine(Reports);
+                MonthlyOriReportData = ReportMiner.Mine(Reports);
             }
         }
 
@@ -48,7 +48,7 @@ namespace NibrsXml.Ucr
             if (!validator.HasErrors)
             {
                 Reports = submission.Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
-                MonthlyOriReportData = ReportDataMiner.Mine(Reports);
+                MonthlyOriReportData = ReportMiner.Mine(Reports);
             }
         }
     }

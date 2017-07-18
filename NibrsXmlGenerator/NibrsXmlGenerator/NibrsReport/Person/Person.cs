@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NibrsXml.Constants;
+﻿using NibrsXml.Constants;
 using System.Xml.Serialization;
 using NibrsXml.Utility;
 
@@ -34,22 +29,10 @@ namespace NibrsXml.NibrsReport.Person
         public PersonAugmentation Augmentation { get; set; }
 
         [XmlIgnore]
-        public bool AgeIsUnknown
-        {
-            get
-            {
-                return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
-            }
-        }
+        public bool AgeIsUnknown => Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
 
         [XmlIgnore]
-        public bool IsJuvenile
-        {
-            get
-            {
-                return AgeMeasure != null && AgeMeasure.IsJuvenile;
-            }
-        }
+        public bool IsJuvenile => AgeMeasure != null && AgeMeasure.IsJuvenile;
 
         public Person() { }
 

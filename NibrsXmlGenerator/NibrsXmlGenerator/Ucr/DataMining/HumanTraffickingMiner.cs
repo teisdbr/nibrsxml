@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
@@ -31,16 +30,8 @@ namespace NibrsXml.Ucr.DataMining
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
         }
 
-        protected override string[] ApplicableUcrCodes
-        {
-            get { return ApplicableHumanTraffickingUcrCodes; }
-        }
-
-        protected override Dictionary<string, string> ClearanceClassificationDictionary
-        {
-            get { return HumanTraffickingClearanceClassificationDictionary; }
-        }
-
+        protected override string[] ApplicableUcrCodes => ApplicableHumanTraffickingUcrCodes;
+        protected override Dictionary<string, string> ClearanceClassificationDictionary => HumanTraffickingClearanceClassificationDictionary;
         protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList)
         {
             monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());

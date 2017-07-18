@@ -7,7 +7,6 @@ using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.Ucr.DataMining;
 using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.Person;
 using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr

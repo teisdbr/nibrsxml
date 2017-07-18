@@ -127,7 +127,7 @@
     <Compile Include="Ucr\DataMining\ClearanceMiner.cs" />
     <Compile Include="Ucr\DataMining\GeneralSummaryMiner.cs" />
     <Compile Include="Ucr\DataMining\HumanTraffickingMiner.cs" />
-    <Compile Include="Ucr\DataMining\ReportDataMiner.cs" />
+    <Compile Include="Ucr\DataMining\ReportMiner.cs" />
     <Compile Include="Ucr\DataMining\HateCrimeMiner.cs" />
     <Compile Include="Ucr\DataMining\LeokaMiner.cs" />
     <Compile Include="Ucr\DataMining\ReturnAMiner.cs" />

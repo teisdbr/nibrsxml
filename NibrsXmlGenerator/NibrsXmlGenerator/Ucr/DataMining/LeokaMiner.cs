@@ -18,11 +18,7 @@ namespace NibrsXml.Ucr.DataMining
 
         private static readonly string[] ApplicableLeokaUcrCodes = { "09A", "09B", "13A", "13B" };
 
-        protected override string[] ApplicableUcrCodes
-        {
-            get { return ApplicableLeokaUcrCodes; }
-        }
-
+        protected override string[] ApplicableUcrCodes => ApplicableLeokaUcrCodes;
         private static string ExtractLeokaWeapons(List<OffenseForce> offenseForces)
         {
             return Convert.ToChar(Encoding.ASCII.GetBytes(offenseForces.ExtractWeaponGroup()).First() + 1).ToString().ToUpper();

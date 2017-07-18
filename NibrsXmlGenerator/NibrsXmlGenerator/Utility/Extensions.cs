@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NibrsXml.NibrsReport;
-using NibrsXml.Ucr.DataMining;
 
 namespace NibrsXml.Utility
 {

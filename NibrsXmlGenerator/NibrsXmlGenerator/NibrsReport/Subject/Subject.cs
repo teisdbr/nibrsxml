@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Person;
 
 namespace NibrsXml.NibrsReport.Subject
 {
@@ -30,8 +25,7 @@ namespace NibrsXml.NibrsReport.Subject
         public string SeqNum { get; set; }
 
         [XmlIgnore]
-        public Subject Reference { get { return new Subject(Person.Id); } }
-
+        public Subject Reference => new Subject(Person.Id);
         public Subject() { }
 
         public Subject(string subjectId)

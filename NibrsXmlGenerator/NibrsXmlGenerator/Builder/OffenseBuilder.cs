@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Utility;
 using LoadBusinessLayer;
-using LoadBusinessLayer.LIBRSAdmin;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
 using LoadBusinessLayer.LIBRSErrorConstants;
-using System.Text.RegularExpressions;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
-    class OffenseBuilder
+    internal class OffenseBuilder
     {
         private static string offenseAttemptedCode = "A";
         private static Dictionary<string, string> biasMotivationCodeTranslations = new Dictionary<string, string>()

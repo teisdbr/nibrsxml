@@ -2,8 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Offense;
@@ -12,12 +10,12 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    class SupplementaryHomicideMiner
+    internal class SupplementaryHomicideMiner
     {
         public static void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
             //Get all homicides
-            var homicideOffenseVicAssocs = report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode.Matches("09[ABC]")).ToList();
+            var homicideOffenseVicAssocs = report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode.MatchOne("09A", "09B", "09C")).ToList();
             if (!homicideOffenseVicAssocs.Any())
                 return;
             
@@ -25,7 +23,8 @@ namespace NibrsXml.Ucr.DataMining
             var homicideVictimSeqNums = homicideOffenseVicAssocs.Select(ov => ov.RelatedVictim.SeqNum);
             var homicideSubjectVictimAssocs = report.SubjectVictimAssocs.Where(sv => homicideVictimSeqNums.Contains(sv.RelatedVictim.SeqNum)).ToArray();
 
-            //Transform filtered result set to get objects we want
+            //Transform filtered result sets to get objects we want
+
             var homicideRelationships = homicideSubjectVictimAssocs
                 .Select(sv => new SupplementaryHomicide.Relationship
                 {
@@ -34,6 +33,7 @@ namespace NibrsXml.Ucr.DataMining
                     RelationshipOfVictimToOffender = sv.RelationshipCode
                 })
                 .ToList();
+
             var homicideVictims = homicideVictimSeqNums
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedVictim.SeqNum == seqNum).RelatedVictim)
                 .Select(victim => new SupplementaryHomicide.Victim
@@ -54,6 +54,7 @@ namespace NibrsXml.Ucr.DataMining
                     Subcircumstance = victim.JustifiableHomicideFactorCode
                 })
                 .ToList();
+
             var homicideSubjects = homicideSubjectVictimAssocs
                 .Select(sv => sv.RelatedSubject.SeqNum)
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedSubject.SeqNum == seqNum).RelatedSubject)
@@ -67,19 +68,22 @@ namespace NibrsXml.Ucr.DataMining
                 })
                 .ToList();
 
+            //Construct the homicide incident with the previous filtered data
             var homicideIncident = new SupplementaryHomicide.Incident{
+                //Incident number is determined by TryAddIncident()
                 Victims = homicideVictims,
                 Offenders = homicideSubjects,
                 Relationships = homicideRelationships,
                 Situation = GetSituation(homicideSubjects, homicideVictims)
             };
 
+            //Use incident date and ORI to determine where to store it in the dictionary
             var incidentDate = DateTime.Parse(report.Incident.ActivityDate.DateTime);
             var ucrReportkey = incidentDate.Year + incidentDate.Month.ToDigitStr(2) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
 
             //Add data to the appropriate SHR
             monthlyReportData.TryAdd(ucrReportkey, new ReportData());
-            monthlyReportData[ucrReportkey].SupplementaryHomicideData.Incidents.Add(homicideIncident);
+            monthlyReportData[ucrReportkey].SupplementaryHomicideData.TryAddIncident(homicideIncident);
         }
 
         private static string GetCircumstance(
@@ -144,11 +148,10 @@ namespace NibrsXml.Ucr.DataMining
                 if (victimAssaultCircumstanceCodes.Contains("05"))
                     return "47"; //Juvenile Gang Killings
 
-                //todo: where is offender suspected of using codes? NIBRS DE 8
-                if (offenses.Any(o => o.UcrCode.MatchOne("")))
+                if (offenses.Any(o => o.Factors.Any(f => f.Code == "A")))
                     return "42"; //Brawl Due to Influence of Alcohol
 
-                if (offenses.Any(o => o.UcrCode.MatchOne("")))
+                if (offenses.Any(o => o.Factors.Any(f => f.Code == "D")))
                     return "43"; //Brawl Due to Influence of Narcotics
 
                 var locations = offenseLocationAssociations.Join(offenses, ol => ol.RelatedOffense.Id, o => o.Id,

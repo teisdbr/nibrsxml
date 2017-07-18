@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Person;
 using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport.EnforcementOfficial

@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.NibrsReport.Incident;
 using NibrsXml.NibrsReport.Misc;
-using NibrsXml.Utility;
-using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSAdmin;
 using LoadBusinessLayer.LIBRSErrorConstants;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
-    class IncidentBuilder
+    internal class IncidentBuilder
     {
         public static Incident Build(LIBRSAdmin admin)
         {

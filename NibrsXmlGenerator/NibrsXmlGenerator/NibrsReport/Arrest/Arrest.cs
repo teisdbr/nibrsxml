@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
@@ -34,8 +30,7 @@ namespace NibrsXml.NibrsReport.Arrest
         public string SubjectCountCode { get; set; }
 
         [XmlIgnore]
-        public Arrest Reference { get { return new Arrest(this.Id); } }
-
+        public Arrest Reference => new Arrest(this.Id);
         [XmlIgnore]
         public String SequenceNumber { get; set; }
 

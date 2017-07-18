@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.Victim;
-using NibrsXml.Utility;
 
 
 namespace NibrsXml.Ucr.DataMining
 {
     public class UcrHierarchyMiner
     {
-        public static List<String> UcrHierarchyOrderArray
-        {
-            get
-            {
+        public static List<String> UcrHierarchyOrderArray =>
                 //Reverse the list of offenses as found in spec to make sure the highest index belongs to the first (09A). 13B & 13C had to be added so that there is a priority for them as well even though
                 //they are not part of the hierarchy rule.
-                return new List<string>() {"09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C"};
-            }
-        }
+                new List<string>() { "09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C" };
 
         public Offense HighestRatedOffense { get; private set; }
         public List<OffenseVictimAssociation> VictimsRelatedToHighestRatedOffense { get; private set; }

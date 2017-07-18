@@ -1,19 +1,9 @@
-﻿using System.Xml.Linq;
-
-namespace NibrsXml.Ucr.DataCollections
+﻿namespace NibrsXml.Ucr.DataCollections
 {
     public class HumanTrafficking : GeneralSummaryData
     {
-        public override string XmlRootName
-        {
-            get { return "HumanTraffickingSummary"; }
-        }
-
-        public override string XslFileName
-        {
-            get { return "ht.xsl"; }
-        }
-
+        public override string XmlRootName => "HumanTraffickingSummary";
+        public override string XslFileName => "ht.xsl";
         protected override void ClassificationCountEntryInstantiations()
         {
             ClassificationCounts.Add("A", new GeneralSummaryCounts());

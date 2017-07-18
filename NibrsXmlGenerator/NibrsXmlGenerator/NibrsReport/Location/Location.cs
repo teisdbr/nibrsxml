@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.Constants;
 using System.Xml.Serialization;
 
@@ -25,8 +21,7 @@ namespace NibrsXml.NibrsReport.Location
         public string CategoryCode { get; set; }
 
         [XmlIgnore]
-        public Location Reference { get { return new Location(Id); } }
-
+        public Location Reference => new Location(Id);
         public Location() { }
 
         public Location(string locationRef)

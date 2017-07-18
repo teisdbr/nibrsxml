@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NibrsXml.Constants;
+﻿using NibrsXml.Constants;
 using System.Xml.Serialization;
 
 namespace NibrsXml.NibrsReport.Person
@@ -22,8 +17,7 @@ namespace NibrsXml.NibrsReport.Person
         public string Value { get; set; }
 
         [XmlIgnore]
-        public string RangeOrValue { get { return Value ?? Range.Min + "-" + Range.Max; } }
-
+        public string RangeOrValue => Value ?? Range.Min + "-" + Range.Max;
         [XmlIgnore]
         public bool IsJuvenile
         {

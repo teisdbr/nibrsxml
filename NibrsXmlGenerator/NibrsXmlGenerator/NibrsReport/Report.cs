@@ -63,16 +63,10 @@ namespace NibrsXml.NibrsReport
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
 
         [XmlIgnore]
-        public List<Item.Item> StolenVehicles {
-            get
-            {
-                return Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
-            }
-        }
+        public List<Item.Item> StolenVehicles => Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
 
         [XmlIgnore]
-        public string Xml { get { return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>"); } }
-
+        public string Xml => Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
         public Report() { 
             //Initialize Locations
             this.Locations = new List<Location.Location>();

@@ -35,16 +35,8 @@ namespace NibrsXml.Ucr.DataMining
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
         }
 
-        protected override string[] ApplicableUcrCodes
-        {
-            get { return ApplicableArsonUcrCodes; }
-        }
-
-        protected override Dictionary<string, string> ClearanceClassificationDictionary
-        {
-            get { return ArsonClearanceClassificationDictionary; }
-        }
-
+        protected override string[] ApplicableUcrCodes => ApplicableArsonUcrCodes;
+        protected override Dictionary<string, string> ClearanceClassificationDictionary => ArsonClearanceClassificationDictionary;
         protected override void IncrementClearances(ConcurrentDictionary<string, ReportData> monthlyReportData, ClearanceDetails clearanceDetailsList)
         {
             monthlyReportData.TryAdd(clearanceDetailsList.UcrReportKey, new ReportData());

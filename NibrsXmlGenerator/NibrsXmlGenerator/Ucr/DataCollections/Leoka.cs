@@ -172,11 +172,7 @@ namespace NibrsXml.Ucr.DataCollections
         ///     The second item contains the highest time from the range.
         ///     The third item contains the corresponding key for the range.
         /// </summary>
-        public List<Tuple<TimeSpan, TimeSpan, string>> AssaultTimeRanges
-        {
-            get
-            {
-                return new List<Tuple<TimeSpan, TimeSpan, string>>
+        public List<Tuple<TimeSpan, TimeSpan, string>> AssaultTimeRanges => new List<Tuple<TimeSpan, TimeSpan, string>>
                 {
                     Tuple.Create(new TimeSpan(0, 1, 0), new TimeSpan(2, 0, 0), "H00-01"),
                     Tuple.Create(new TimeSpan(2, 1, 0), new TimeSpan(4, 0, 0), "H02-03"),
@@ -192,8 +188,6 @@ namespace NibrsXml.Ucr.DataCollections
                     Tuple.Create(new TimeSpan(22, 1, 0), new TimeSpan(23, 59, 59), "H22-23"),
                     Tuple.Create(new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "H22-23")
                 };
-            }
-        }
 
         public Dictionary<string, int> AssaultTimesCountsDictionary { get; set; }
 

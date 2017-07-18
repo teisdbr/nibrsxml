@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using NibrsXml.NibrsReport;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -15,7 +13,7 @@ namespace NibrsXml.Ucr.DataCollections
         ///     functions
         /// </summary>
         [XmlElement]
-        public List<Incident> Incidents { get; set; }
+        private List<Incident> Incidents { get; set; }
 
         public XDocument Serialize()
         {

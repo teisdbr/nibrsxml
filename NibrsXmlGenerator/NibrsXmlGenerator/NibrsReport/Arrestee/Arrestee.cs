@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Person;
 using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Arrestee
@@ -45,8 +41,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         [XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 6)]
         public string SubjectCountCode { get; set; }
 
-        public Arrestee Reference { get { return new Arrestee(Person.Id); } }
-
+        public Arrestee Reference => new Arrestee(Person.Id);
         public Arrestee() { }
 
         public Arrestee(string arresteeId)

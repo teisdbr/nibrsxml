@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Person;
 using LoadBusinessLayer.LIBRSVictim;
 using NibrsXml.Utility;
 
@@ -46,8 +42,7 @@ namespace NibrsXml.NibrsReport.Victim
         [XmlIgnore]
         public List<LIBRSVictimOffenderRelation> RelatedOffenders { get; set; }
 
-        public Victim Reference { get { return new Victim(this.Person.Id); } }
-
+        public Victim Reference => new Victim(this.Person.Id);
         public Victim() {
             this.RelatedOffenders = new List<LIBRSVictimOffenderRelation>();
         }

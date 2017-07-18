@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NibrsXml.NibrsReport;
 using LoadBusinessLayer;
-using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Builder

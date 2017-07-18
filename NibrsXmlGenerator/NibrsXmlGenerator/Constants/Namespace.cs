@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace NibrsXml.Constants
+﻿namespace NibrsXml.Constants
 {
     /// <summary>
     /// A listing of miscellaneous constants used for generating NIBRSXML reports
@@ -22,7 +17,7 @@ namespace NibrsXml.Constants
     /// <summary>
     /// A listing of XML namespaces that will be used for generating NIBRSXML reports
     /// </summary>
-    class Namespaces
+    internal class Namespaces
     {
         /// <summary>
         /// "http://fbi.gov/cjis/nibrs/4.0"
@@ -94,7 +89,7 @@ namespace NibrsXml.Constants
     /// A listing of aliases to use for referencing XML namespaces when generating NIBRSXML reports
     /// Each string constant contains a string of its variable name. Underscores in variable names represent hyphens in its contained string.
     /// </summary>
-    class Aliases
+    internal class Aliases
     {
         /// <summary>
         /// "nibrs"

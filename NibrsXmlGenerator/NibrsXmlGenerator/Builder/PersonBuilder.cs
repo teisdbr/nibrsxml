@@ -15,7 +15,7 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
-    class PersonBuilder
+    internal class PersonBuilder
     {
         public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
             List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,

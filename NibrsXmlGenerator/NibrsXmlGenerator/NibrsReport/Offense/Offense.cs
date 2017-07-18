@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 
@@ -46,8 +43,7 @@ namespace NibrsXml.NibrsReport.Offense
         public string AttemptedIndicator { get; set; }
 
         [XmlIgnore]
-        public Offense Reference { get { return new Offense(this.Id); } }
-
+        public Offense Reference => new Offense(this.Id);
         [XmlIgnore]
         public Location.Location Location { get; set; }
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace NibrsXml.Ucr.DataCollections
 {
     public class GeneralSummaryCounts

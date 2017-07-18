@@ -1,22 +1,19 @@
 ﻿using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Subject;
-using NibrsXml.Ucr.DataCollections;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {
-    class HateCrimeMiner
+    internal class HateCrimeMiner
     {
         public static void Mine(ConcurrentDictionary<string, ReportData> monthlyReportData, Report report)
         {
-            if (report.OffenseLocationAssocs == null || report.OffenseVictimAssocs == null)
+            if (report.OffenseLocationAssocs.IsNothingOrEmpty() || report.OffenseVictimAssocs == null)
                 return;
             
             //Use offense-location-association here because we will need to group the offenses with the same location

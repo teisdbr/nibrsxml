@@ -27,8 +27,7 @@ namespace NibrsXml.NibrsReport
         private static readonly NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlIgnore]
-        public string Xml { get { return serializer.Serialize(this); } }
-
+        public string Xml => serializer.Serialize(this);
         public Submission() { }
 
         public Submission(params Report[] reports)

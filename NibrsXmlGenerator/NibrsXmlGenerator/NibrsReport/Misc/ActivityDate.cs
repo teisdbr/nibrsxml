@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NibrsXml.Constants;
 
@@ -62,8 +58,7 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
-        public string Time { get { return _dateTime.Substring(_dateTime.IndexOf("T") + 1); } }
-
+        public string Time => _dateTime.Substring(_dateTime.IndexOf("T") + 1);
         public ActivityDate() { }
 
         public ActivityDate(string date)
