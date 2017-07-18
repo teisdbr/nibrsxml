@@ -63,7 +63,7 @@ namespace NibrsXml.NibrsReport.Offense
 
         public Offense(
             string id,
-            string offenceUcrCode,
+            string offenseUcrCode,
             List<string> criminalActivityCategoryCodes,
             List<string> offenseFactorBiasMotivationCodes,
             string offenseStructuresEnteredQuantity,
@@ -73,7 +73,7 @@ namespace NibrsXml.NibrsReport.Offense
             string offenseAttemptedIndicator)
         {
             this.Id = "Offense" + id;
-            this.UcrCode = offenceUcrCode;
+            this.UcrCode = offenseUcrCode;
             this.CriminalActivityCategoryCodes = criminalActivityCategoryCodes;
             this.FactorBiasMotivationCodes = offenseFactorBiasMotivationCodes;
             this.StructuresEnteredQuantity = offenseStructuresEnteredQuantity.ToString();

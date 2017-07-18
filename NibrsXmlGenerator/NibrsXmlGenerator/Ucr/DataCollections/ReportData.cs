@@ -9,6 +9,7 @@
             HumanTraffickingData = new HumanTrafficking();
             ArsonData = new Arson();
             LeokaData = new Leoka();
+            SupplementaryHomicideData = new SupplementaryHomicide();
         }
 
         public Asre AsreData { get; set; }
@@ -16,6 +17,7 @@
         public HumanTrafficking HumanTraffickingData { get; set; }
         public Arson ArsonData { get; set; }
         public Leoka LeokaData { get; set; }
+        public SupplementaryHomicide SupplementaryHomicideData { get; set; }
 
         public ReturnASupplement ReturnASupplementData
         {

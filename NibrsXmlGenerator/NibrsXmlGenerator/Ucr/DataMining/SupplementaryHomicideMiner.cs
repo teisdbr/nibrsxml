@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NibrsXml.NibrsReport;
+using NibrsXml.NibrsReport.Associations;
+using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Ucr.DataCollections;
 using TeUtil.Extensions;
 
@@ -24,17 +26,31 @@ namespace NibrsXml.Ucr.DataMining
             var homicideSubjectVictimAssocs = report.SubjectVictimAssocs.Where(sv => homicideVictimSeqNums.Contains(sv.RelatedVictim.SeqNum)).ToArray();
 
             //Transform filtered result set to get objects we want
+            var homicideRelationships = homicideSubjectVictimAssocs
+                .Select(sv => new SupplementaryHomicide.Relationship
+                {
+                    VictimSequenceNumber = sv.RelatedVictim.SeqNum,
+                    OffenderSequenceNumber = sv.RelatedSubject.SeqNum,
+                    RelationshipOfVictimToOffender = sv.RelationshipCode
+                })
+                .ToList();
             var homicideVictims = homicideVictimSeqNums
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedVictim.SeqNum == seqNum).RelatedVictim)
                 .Select(victim => new SupplementaryHomicide.Victim
                 {
-                    SequenceNumber = victim.SeqNum,
-                    Age = null, //todo: translate age
+                    Age = victim.Person.AgeMeasure.Value ?? "00",
                     Sex = victim.Person.SexCode,
                     Ethnicity = victim.Person.EthnicityCode,
                     Race = victim.Person.RaceCode,
                     WasKilledByNegligence = homicideOffenseVicAssocs.Any(ov => ov.RelatedOffense.UcrCode == "09B"),
-                    Circumstance = victim.AggravatedAssaultHomicideFactorCode[0], //todo: translate this code
+                    Circumstance = GetCircumstance(
+                        homicideOffenseVicAssocs.Where(ov => ov.RelatedVictim.Person.Id == victim.Person.Id)
+                        .Select(ov => ov.RelatedOffense)
+                        .ToList(),
+                        victim.AggravatedAssaultHomicideFactorCodes,
+                        homicideRelationships.Where(rel => rel.VictimSequenceNumber == victim.SeqNum).ToList(),
+                        report.OffenseLocationAssocs,
+                        victim.JustifiableHomicideFactorCode),
                     Subcircumstance = victim.JustifiableHomicideFactorCode
                 })
                 .ToList();
@@ -44,22 +60,12 @@ namespace NibrsXml.Ucr.DataMining
                 .Select(subject => new SupplementaryHomicide.Offender
                 {
                     SequenceNumber = subject.SeqNum,
-                    Age = null,
+                    Age = subject.Person.AgeMeasure.Value ?? "00",
                     Sex = subject.Person.SexCode,
                     Ethnicity = subject.Person.EthnicityCode,
                     Race = subject.Person.RaceCode
                 })
                 .ToList();
-            var homicideRelationships = homicideSubjectVictimAssocs
-                .Select(sv => new SupplementaryHomicide.Relationship
-                {
-                    VictimSequenceNumber = sv.RelatedVictim.SeqNum,
-                    OffenderSequenceNumber = sv.RelatedSubject.SeqNum,
-                    RelationshipOfVictimToOffender = sv.RelationshipCode
-                })
-                .ToList();
-
-            //todo: use sequence numbers provided and make new ones that are 1-based. reason is that we want to ensure that seq nums begin at 1 and increment by one for each subsequent seq num
 
             var homicideIncident = new SupplementaryHomicide.Incident{
                 Victims = homicideVictims,
@@ -68,12 +74,105 @@ namespace NibrsXml.Ucr.DataMining
                 Situation = GetSituation(homicideSubjects, homicideVictims)
             };
 
-            //Get the incident date, if incident date is not available, use report date
-            
+            var incidentDate = DateTime.Parse(report.Incident.ActivityDate.DateTime);
+            var ucrReportkey = incidentDate.Year + incidentDate.Month.ToDigitStr(2) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+
             //Add data to the appropriate SHR
+            monthlyReportData.TryAdd(ucrReportkey, new ReportData());
+            monthlyReportData[ucrReportkey].SupplementaryHomicideData.Incidents.Add(homicideIncident);
         }
 
-        private static string GetSituation(List<SupplementaryHomicide.Offender> offenders, List<SupplementaryHomicide.Victim> victims)
+        private static string GetCircumstance(
+            List<Offense> offenses,
+            ICollection<string> victimAssaultCircumstanceCodes,
+            IEnumerable<SupplementaryHomicide.Relationship> relationships,
+            IEnumerable<OffenseLocationAssociation> offenseLocationAssociations,
+            string justifiableHomicideFactorCode)
+        {
+            if (offenses.Any(o => o.UcrCode == "09A"))
+            {
+                //Part I Offenses
+                if (offenses.Any(o => o.UcrCode.MatchOne("11A", "11B", "11C")))
+                    return "02"; //Rape
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("120")))
+                    return "03"; //Robbery
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("220")))
+                    return "05"; //Burglary
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H")))
+                    return "06"; //Larceny
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("240")))
+                    return "07"; //Motor Vehicle Theft
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("200")))
+                    return "09"; //Arson
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("64A")))
+                    return "30"; //Human Trafficking - Commercial Sex Acts
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("64B")))
+                    return "31"; //Human Trafficking - Involuntary Servitude
+
+                //Part II Offenses
+                if (offenses.Any(o => o.UcrCode.MatchOne("35A")) || victimAssaultCircumstanceCodes.Contains("03"))
+                    return "18"; //Narcotic Drug Laws
+                
+                if (offenses.Any(o => o.UcrCode.MatchOne("11D", "36A", "36B")))
+                    return "17"; //Other Sex Offenses
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("40A", "40B", "40C")))
+                    return "10"; //Prostitution and Commercialized Vice
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("39A", "39B", "39C", "39D")))
+                    return "19"; //Gambling
+
+                if (victimAssaultCircumstanceCodes.Contains("08"))
+                    return "26"; //Other-Not Specified
+
+                if (victimAssaultCircumstanceCodes.Contains("09") && relationships.Select(rel => rel.RelationshipOfVictimToOffender).Contains("BE"))
+                    return "41"; //Child Killed by Babysitter
+
+                if (victimAssaultCircumstanceCodes.ContainsAny("01", "06"))
+                    return "45"; //Other Arguments
+
+                if (victimAssaultCircumstanceCodes.Contains("04"))
+                    return "41"; //Gangland Killings
+
+                if (victimAssaultCircumstanceCodes.Contains("05"))
+                    return "47"; //Juvenile Gang Killings
+
+                //todo: where is offender suspected of using codes? NIBRS DE 8
+                if (offenses.Any(o => o.UcrCode.MatchOne("")))
+                    return "42"; //Brawl Due to Influence of Alcohol
+
+                if (offenses.Any(o => o.UcrCode.MatchOne("")))
+                    return "43"; //Brawl Due to Influence of Narcotics
+
+                var locations = offenseLocationAssociations.Join(offenses, ol => ol.RelatedOffense.Id, o => o.Id,
+                    (ol, o) => ol.RelatedLocation.CategoryCode).ToList();
+                if (locations.Contains("15"))
+                    return "48"; //Institutional Killings
+
+                if (victimAssaultCircumstanceCodes.ContainsAny("02", "07", "09"))
+                    return "60"; //Other
+            }
+
+            if (offenses.Any(o => o.UcrCode == "09C"))
+            {
+                if (victimAssaultCircumstanceCodes.Contains("20") && justifiableHomicideFactorCode.MatchOne("C", "D", "E", "F", "G"))
+                    return "80"; //Felon Killed by Private Citizen
+
+                if (victimAssaultCircumstanceCodes.Contains("21") && justifiableHomicideFactorCode.MatchOne("A", "B", "C", "D", "E", "F", "G"))
+                    return "81"; //Felon Killed by Police Officer
+            }
+
+            return "99"; //Unable to determine
+        }
+
+        private static string GetSituation(IReadOnlyList<SupplementaryHomicide.Offender> offenders, IReadOnlyCollection<SupplementaryHomicide.Victim> victims)
         {
             if (victims.Count == 0 || offenders.Count == 0)
                 return null;
@@ -89,7 +188,7 @@ namespace NibrsXml.Ucr.DataMining
                     return "B";
 
                 //Single victim/multiple offenders
-                //Currently, this allows multiple offenders where at least 1 is known and at least 1 is unknown
+                //This allows multiple offenders where at least 1 is known and at least 1 is unknown
                 if (offenders.Count > 1 && offenders.Any(o => o.SequenceNumber != "00"))
                     return "C";
             }
@@ -103,7 +202,11 @@ namespace NibrsXml.Ucr.DataMining
                 return "E";
 
             //Multiple victims/unknown offender(s)
-            return offenders.All(o => o.SequenceNumber == "00") ? "F" : null;
+            if (offenders.All(o => o.SequenceNumber == "00"))
+                return "F";
+
+            //None of the above are valid
+            return null;
         }
     }
 }

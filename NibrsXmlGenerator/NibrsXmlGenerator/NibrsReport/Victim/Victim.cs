@@ -38,7 +38,7 @@ namespace NibrsXml.NibrsReport.Victim
         public string CategoryCode { get; set; }
 
         [XmlElement("VictimAggravatedAssaultHomicideFactorCode", Namespace = Namespaces.justice, Order = 5)]
-        public List<String> AggravatedAssaultHomicideFactorCode { get; set; }
+        public List<string> AggravatedAssaultHomicideFactorCodes { get; set; }
 
         [XmlElement("VictimJustifiableHomicideFactorCode", Namespace = Namespaces.justice, Order = 6)]
         public string JustifiableHomicideFactorCode { get; set; }
@@ -59,10 +59,10 @@ namespace NibrsXml.NibrsReport.Victim
 
         public Victim(
             Person.Person person,
-            String seqNum,
+            string seqNum,
             List<VictimInjury> injuries,
             string categoryCode,
-            List<String> aggravatedAssaultHomicideFactorCode,
+            List<string> aggravatedAssaultHomicideFactorCodes,
             string justifiableHomicideFactorCode) : this()
         {
             //Initialize required properties
@@ -75,14 +75,14 @@ namespace NibrsXml.NibrsReport.Victim
             this.SeqNum = seqNum.TrimStart('0').ToString();
             this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = categoryCode;
-            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode;
+            this.AggravatedAssaultHomicideFactorCodes = aggravatedAssaultHomicideFactorCodes;
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }
 
         public Victim(
             EnforcementOfficial.EnforcementOfficial officer,
             List<VictimInjury> injuries,
-            List<String> aggravatedAssaultHomicideFactorCode,
+            List<string> aggravatedAssaultHomicideFactorCode,
             string justifiableHomicideFactorCode) : this()
         {
             this.Person = officer.Person;
@@ -91,7 +91,7 @@ namespace NibrsXml.NibrsReport.Victim
             this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
             //Translate 40 to 09 if applicable.
-            this.AggravatedAssaultHomicideFactorCode = aggravatedAssaultHomicideFactorCode.Select(a => a == "40" ? "09" : a).ToList();
+            this.AggravatedAssaultHomicideFactorCodes = aggravatedAssaultHomicideFactorCode.Select(a => a == "40" ? "09" : a).ToList();
             this.JustifiableHomicideFactorCode = justifiableHomicideFactorCode;
         }
     }

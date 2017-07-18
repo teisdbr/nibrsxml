@@ -82,7 +82,7 @@ namespace NibrsXml.Builder
                             seqNum: victim.VictimSeqNum,
                             injuries: nibrsVictimInjuries,
                             categoryCode: victim.VictimType,
-                            aggravatedAssaultHomicideFactorCode: aggAssaults,
+                            aggravatedAssaultHomicideFactorCodes: aggAssaults,
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
                     }
 
@@ -120,7 +120,7 @@ namespace NibrsXml.Builder
                         seqNum: victim.VictimSeqNum,
                         injuries: nibrsVictimInjuries,
                         categoryCode: victim.VictimType,
-                        aggravatedAssaultHomicideFactorCode: null,
+                        aggravatedAssaultHomicideFactorCodes: null,
                         justifiableHomicideFactorCode: null);
                 }
 

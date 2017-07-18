@@ -21,11 +21,11 @@ namespace NibrsXml.NibrsReport.Misc
         
         [XmlElement("DateTime", Namespace = Namespaces.niemCore)]
         public string DateTime { 
-            get 
+            get
             { 
                 return _dateTime;
             }
-            set 
+            set
             {
                 if (_date != null)
                     _date = null;
@@ -34,7 +34,7 @@ namespace NibrsXml.NibrsReport.Misc
         }
 
         [XmlIgnore]
-        public String YearMonthDate
+        public string YearMonthDate
         {
             get
             {
@@ -48,13 +48,13 @@ namespace NibrsXml.NibrsReport.Misc
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
         public string Date
         { 
-            get 
+            get
             { 
                 if (_date != null)
                     return _date;
                 return DateTime == null ? _dateTime.Substring(0, _dateTime.IndexOf("T")) : null;
             }
-            set 
+            set
             { 
                if (_dateTime != null)
                     this._dateTime = null;

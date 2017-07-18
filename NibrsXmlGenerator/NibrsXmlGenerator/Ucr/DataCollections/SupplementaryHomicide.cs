@@ -15,7 +15,7 @@ namespace NibrsXml.Ucr.DataCollections
         ///     functions
         /// </summary>
         [XmlElement]
-        private List<Incident> Incidents { get; set; }
+        public List<Incident> Incidents { get; set; }
 
         public XDocument Serialize()
         {
@@ -51,9 +51,6 @@ namespace NibrsXml.Ucr.DataCollections
         [XmlRoot]
         public class Victim
         {
-            [XmlElement]
-            public string SequenceNumber { get; set; }
-
             [XmlElement]
             public string Age { get; set; }
 

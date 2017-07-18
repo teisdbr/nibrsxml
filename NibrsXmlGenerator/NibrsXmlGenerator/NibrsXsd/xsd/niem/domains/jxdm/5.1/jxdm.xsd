@@ -670,7 +670,7 @@
       <xs:documentation>A data concept for a circumstance of either an aggravated assault or homicide.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="VictimAggravatedAssaultHomicideFactorCode" type="ucr:AggravatedAssaultHomicideFactorsCodeType" substitutionGroup="j:VictimAggravatedAssaultHomicideFactor" nillable="true">
+  <xs:element name="VictimAggravatedAssaultHomicideFactorCodes" type="ucr:AggravatedAssaultHomicideFactorsCodeType" substitutionGroup="j:VictimAggravatedAssaultHomicideFactor" nillable="true">
     <xs:annotation>
       <xs:documentation>A circumstance of either an aggravated assault or homicide.</xs:documentation>
     </xs:annotation>
