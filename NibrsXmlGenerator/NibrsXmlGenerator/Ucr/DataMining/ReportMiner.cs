@@ -17,6 +17,7 @@ namespace NibrsXml.Ucr.DataMining
         {
             var monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
 
+            //todo: make parallel
             foreach (var report in nibrsIncidentReports)
             {
                 //Make sure there is at least an empty ReportData structure for this report

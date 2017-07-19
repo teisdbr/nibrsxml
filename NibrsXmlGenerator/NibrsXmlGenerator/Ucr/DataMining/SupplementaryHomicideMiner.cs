@@ -2,10 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.Ucr.DataCollections;
+using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
@@ -93,10 +95,10 @@ namespace NibrsXml.Ucr.DataMining
             IEnumerable<OffenseLocationAssociation> offenseLocationAssociations,
             string justifiableHomicideFactorCode)
         {
-            if (offenses.Any(o => o.UcrCode == "09A"))
+            if (offenses.Any(o => o.UcrCode == OffenseCode.MURDER_NONNEGLIGENT.NibrsCode()))
             {
                 //Part I Offenses
-                if (offenses.Any(o => o.UcrCode.MatchOne("11A", "11B", "11C")))
+                if (offenses.Any(o => o.UcrCode.MatchOne(OffenseCode.RAPE.NibrsCode(), OffenseCode.SODOMY.NibrsCode(), OffenseCode.SEXUAL_ASSAULT_WITH_OBJECT.NibrsCode())))
                     return "02"; //Rape
 
                 if (offenses.Any(o => o.UcrCode.MatchOne("120")))

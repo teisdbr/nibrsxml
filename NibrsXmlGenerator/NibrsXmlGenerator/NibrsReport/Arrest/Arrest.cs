@@ -32,7 +32,7 @@ namespace NibrsXml.NibrsReport.Arrest
         [XmlIgnore]
         public Arrest Reference => new Arrest(this.Id);
         [XmlIgnore]
-        public String SequenceNumber { get; set; }
+        public string SequenceNumber { get; set; }
 
         public Arrest() { }
 
@@ -41,7 +41,7 @@ namespace NibrsXml.NibrsReport.Arrest
             this.ArrestRef = arrestId;
         }
 
-        public Arrest(String uniquePrefix, String arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
+        public Arrest(string uniquePrefix, string arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
         {
             this.Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0') + "-" + activityId.Id.Trim();
             this.ActivityId = activityId;

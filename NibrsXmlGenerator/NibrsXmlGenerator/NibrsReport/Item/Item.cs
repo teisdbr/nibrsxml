@@ -17,7 +17,7 @@ namespace NibrsXml.NibrsReport.Item
         public string NibrsPropertyCategoryCode { get; set; }
 
         [XmlElement("ItemQuantity", Namespace = Namespaces.niemCore, Order = 4)]
-        public String Quantity { get; set; }
+        public string Quantity { get; set; }
 
         public Item() { }
 
@@ -29,7 +29,7 @@ namespace NibrsXml.NibrsReport.Item
             this.Quantity = quantity.ToString();
         }
 
-        public Item(String statusCode, String valueAmount, String valueDate, String nibrsPropCategCode, String quantity)
+        public Item(string statusCode, string valueAmount, string valueDate, string nibrsPropCategCode, string quantity)
         {
             this.Status = new ItemStatus(statusCode);
             this.Value = new ItemValue(valueAmount, valueDate);

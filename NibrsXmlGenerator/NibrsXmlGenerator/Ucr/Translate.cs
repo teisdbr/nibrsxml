@@ -66,5 +66,13 @@ namespace NibrsXml.Ucr
             { OffenseCode.HUMAN_TRAFFICKING_COMMERCIAL_SEX_ACTS.NibrsCode(), "12" },
             { OffenseCode.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE.NibrsCode(), "13" }
         };
+
+        public static string TranslateHateCrimeLocationCode(string locationCategoryCode)
+        {
+            //22 in NIBRS is "SCHOOL_COLLEGE", 52 "SCHOOL_COLLEGE_UNIVERSITY"
+            //Ucr does not have code 22 in its scope, but it does for 52
+            //All other codes are consistent for both systems
+            return locationCategoryCode == "22" ? "52" : locationCategoryCode;
+        }
     }
 }

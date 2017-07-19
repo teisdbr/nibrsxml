@@ -21,18 +21,15 @@ namespace NibrsXml.Ucr.DataCollections
             public char OffenderRace { get; set; }
             public char OffenderEthnicity { get; set; }
             public List<Offense> Offenses { get; set; }
-            
-            public void AddOffense(Offense offense, List<Subject> offenders)
-            {
-
-            }
         }
 
         public class Offense
         {
+            //Offense group properties
             public string Code { get; set; }
             public int AdultVictimCount { get; set; }
             public int JuvenileVictimCount { get; set; }
+            public int TotalVictimCount { get; set; }
             public string Location { get; set; }
             public string BiasMotivation1 { get; set; }
             public string BiasMotivation2 { get; set; }
@@ -46,50 +43,10 @@ namespace NibrsXml.Ucr.DataCollections
             public bool VictimTypeReligiousOrg { get; set; }
             public bool VictimTypeOther { get; set; }
             public bool VictimTypeUnknown { get; set; }
-
-            public Offense(string code, List<Victim> victims, string location, List<string> biases)
-            {
-                var victimTypes = victims
-                    .Select(v => v.CategoryCode)
-                    .Distinct()
-                    .ToList();
-
-                Code = code;
-                AdultVictimCount = victims.Count(v => v.Person != null && !v.Person.AgeMeasure.IsJuvenile);
-                JuvenileVictimCount = victims.Count(v => v.Person != null && v.Person.AgeMeasure.IsJuvenile);
-                Location = location;
-                BiasMotivation1 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(0));
-                BiasMotivation2 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(1));
-                BiasMotivation3 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(2));
-                BiasMotivation4 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(3));
-                BiasMotivation5 = Translate.HateCrimeBiasMotivationTranslations.TryGet(biases.ElementAtOrDefault(4));
-                VictimTypeIndividual = victimTypes.Contains(VictimCategoryCode.INDIVIDUAL.NibrsCode()) || victimTypes.Contains(VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode());
-                VictimTypeBusiness = victimTypes.Contains(VictimCategoryCode.BUSINESS.NibrsCode());
-                VictimTypeFinancialInstitution = victimTypes.Contains(VictimCategoryCode.FINANCIAL_INSTITUTION.NibrsCode());
-                VictimTypeGovernment = victimTypes.Contains(VictimCategoryCode.GOVERNMENT.NibrsCode());
-                VictimTypeReligiousOrg = victimTypes.Contains(VictimCategoryCode.RELIGIOUS_ORGANIZATION.NibrsCode());
-                VictimTypeOther = victimTypes.Contains(VictimCategoryCode.OTHER.NibrsCode());
-                VictimTypeUnknown = victimTypes.Contains(VictimCategoryCode.UNKNOWN.NibrsCode());
-            }
         }
 
-        public List<Incident> Incidents { get; private set; }
-
-        public HateCrime()
-        {
-            Incidents = new List<Incident>();
-        }
-
-        public void AddIncident(Incident incident)
-        {
-            incident.Id = GetNewIncidentId();
-        }
-
-        private string GetNewIncidentId()
-        {
-            return Incidents.Count.ToString().PadLeft(3, '0');
-        }
-
+        public List<Incident> Incidents { get; } = new List<Incident>();
+        
         public XDocument Serialize()
         {
             throw new NotImplementedException();

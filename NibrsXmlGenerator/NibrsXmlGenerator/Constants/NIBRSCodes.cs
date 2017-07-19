@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using NibrsXml.Utility;
+// ReSharper disable InconsistentNaming
 
 /**
  * See the NIBRSCode and CodeDescription classes to see how to extract descriptions from the following enums

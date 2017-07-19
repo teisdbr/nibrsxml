@@ -15,7 +15,7 @@ namespace NibrsXml.Ucr
     {
         #region Nibrs Extensions
 
-        public static String ArrestUcrKey(this List<Arrest> arrests, String ori)
+        public static string ArrestUcrKey(this List<Arrest> arrests, string ori)
         {
             var earliestArrest = arrests.OrderBy(a => a.Date.Date).FirstOrDefault();
             return earliestArrest == null ? null : earliestArrest.Date.Date.Replace("-", "").Substring(0,6) + ori;

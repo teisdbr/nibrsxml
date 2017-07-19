@@ -32,8 +32,8 @@ namespace NibrsXml.Builder
                 day = admin.IncidentDate.Substring(2, 2);
                 year = admin.IncidentDate.Substring(4, 4);
                 hour = admin.IncidentDate.Substring(9, 2).Trim();
-                date = String.Format("{0}-{1}-{2}", year, month, day);
-                time = String.Format("{0}:00:00", hour == String.Empty ? "00" : hour.PadLeft(2,'0'));
+                date = string.Format("{0}-{1}-{2}", year, month, day);
+                time = string.Format("{0}:00:00", hour == string.Empty ? "00" : hour.PadLeft(2,'0'));
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ namespace NibrsXml.Builder
             {
                 throw new Exception("There was an error parsing the LIBRS incident date.", e);
             }
-            return new IncidentExceptionalClearanceDate(String.Format("{0}-{1}-{2}", year, month, day));
+            return new IncidentExceptionalClearanceDate(string.Format("{0}-{1}-{2}", year, month, day));
         }
     }
 }

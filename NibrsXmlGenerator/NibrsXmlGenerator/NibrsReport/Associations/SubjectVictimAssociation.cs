@@ -29,7 +29,7 @@ namespace NibrsXml.NibrsReport.Associations
         {
         }
 
-        public SubjectVictimAssociation(String uniquePrefix, String id, Subject.Subject subject, Victim.Victim victim,
+        public SubjectVictimAssociation(string uniquePrefix, string id, Subject.Subject subject, Victim.Victim victim,
             string relationshipCode)
         {
             this.Id = uniquePrefix + "SubjectVictimAssocSP" + id;
@@ -40,7 +40,7 @@ namespace NibrsXml.NibrsReport.Associations
             this.RelatedSubject = subject;
         }
 
-        public SubjectVictimAssociation(String uniquePrefix, String id, string subjectRef, string victimRef,
+        public SubjectVictimAssociation(string uniquePrefix, string id, string subjectRef, string victimRef,
             string relationshipCode)
         {
             this.Id = "SubjectVictimAssocSP" + id;

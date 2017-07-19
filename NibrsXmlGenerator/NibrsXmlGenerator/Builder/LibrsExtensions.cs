@@ -14,7 +14,7 @@ namespace NibrsXml.Builder
         /// </summary>
         /// <param name="monthDayYear"></param>
         /// <returns></returns>
-        public static string ConvertToNibrsYearMonthDay(this String monthDayYear)
+        public static string ConvertToNibrsYearMonthDay(this string monthDayYear)
         {
             return      monthDayYear.Substring(4, 4)    // year
                 + "-" + monthDayYear.Substring(0, 2)    // month

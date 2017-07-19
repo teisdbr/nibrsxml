@@ -13,7 +13,7 @@ namespace NibrsXml.Ucr.DataCollections
         ///     functions
         /// </summary>
         [XmlElement]
-        private List<Incident> Incidents { get; set; }
+        private List<Incident> Incidents { get; } = new List<Incident>();
 
         public XDocument Serialize()
         {
@@ -39,8 +39,6 @@ namespace NibrsXml.Ucr.DataCollections
             //Define the incident sequence number based on how many homicides have already been recorded
             incident.SequenceNumber = (Incidents.Count + 1).ToString().PadLeft(3, '0');
 
-            if (Incidents == null)
-                Incidents = new List<Incident> {incident};
             if (Incidents.Count == 999)
                 return;
             Incidents.Add(incident);

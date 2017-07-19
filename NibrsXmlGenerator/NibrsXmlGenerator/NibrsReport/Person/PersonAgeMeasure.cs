@@ -23,7 +23,6 @@ namespace NibrsXml.NibrsReport.Person
         {
             get
             {
-                //Todo: Verify this logic is accurate.
                 //Verify there is a value, not a range and if so indicate whether individual is juvenile or not.
                 int ageValue;
                 if (int.TryParse(this.Value, out ageValue)){

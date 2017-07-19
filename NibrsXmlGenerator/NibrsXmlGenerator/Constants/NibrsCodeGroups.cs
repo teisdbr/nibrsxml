@@ -14,7 +14,7 @@ namespace NibrsXml.Constants
             PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode()
         };
 
-        public static String[] Firearms =
+        public static string[] Firearms =
         {
             ForceCategoryCode.FIREARM.NibrsCode(),
             ForceCategoryCode.AUTOMATIC_FIREARM.NibrsCode(),
@@ -203,6 +203,7 @@ namespace NibrsXml.Constants
 
         /// <summary>
         /// Exluded from these are UNKNOWN, NONE, ANTIDISABLED, GENDER_BIAS, and POLITICAL_AFFILIATION_BIAS
+        /// ANTIDISABLED, GENDER_BIAS, & POLITICAL_AFFILIATION_BIAS are excluded because UCR does not have the scope for these codes
         /// </summary>
         public static readonly string[] HateCrimeBiasMotivationCodes =
         {
@@ -242,7 +243,7 @@ namespace NibrsXml.Constants
             BiasMotivationCode.ANTIWHITE.NibrsCode()
         };
 
-        public static readonly string[] HumanVicitms =
+        public static readonly string[] HumanVictims =
         {
             VictimCategoryCode.INDIVIDUAL.NibrsCode(),
             VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()

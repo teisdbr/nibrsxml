@@ -15,7 +15,7 @@ namespace NibrsXml.Builder
     internal class OffenseBuilder
     {
         private static string offenseAttemptedCode = "A";
-        private static Dictionary<string, string> biasMotivationCodeTranslations = new Dictionary<string, string>()
+        private static Dictionary<string, string> biasMotivationCodeTranslations = new Dictionary<string, string>
         {
             { "11", BiasMotivationCode.ANTIWHITE.NibrsCode() },
             { "12", BiasMotivationCode.ANTIBLACK_AFRICAN_AMERICAN.NibrsCode() },
@@ -58,7 +58,7 @@ namespace NibrsXml.Builder
             { "99", BiasMotivationCode.UNKNOWN.NibrsCode() }
         };
 
-        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, String uniqueReportPrefix)
+        public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, string uniqueReportPrefix)
         {
             List<Offense> offenseReports = new List<Offense>();
             foreach (LIBRSOffense offense in offenses)
@@ -81,7 +81,7 @@ namespace NibrsXml.Builder
             return offenseReports;
         }
 
-        private static string ExtractOffenseId(String uniqueReportPrefix, string offenseSeqNum)
+        private static string ExtractOffenseId(string uniqueReportPrefix, string offenseSeqNum)
         {
             return uniqueReportPrefix + "Offense" + offenseSeqNum.Trim().TrimStart('0');
         }
@@ -98,7 +98,7 @@ namespace NibrsXml.Builder
 
         private static List<string> ExtractNibrsCriminalActivityCategoryCodes(LIBRSOffense offense)
         {
-            List<String> nibrsCriminalActivityCategoryCodes = new List<String>();
+            List<string> nibrsCriminalActivityCategoryCodes = new List<string>();
             nibrsCriminalActivityCategoryCodes.TryAdd(
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity1),
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity2),
@@ -108,7 +108,7 @@ namespace NibrsXml.Builder
 
         private static string TranslateCriminalActivityCategoryCode(string librsCriminalActivity)
         {
-            if (librsCriminalActivity.Trim() == String.Empty)
+            if (librsCriminalActivity.Trim() == string.Empty)
                 return null;
             //Other (X) and Possession with Intent to Sell (I) are only ones translated as P because they are LIBRS only.
             if (librsCriminalActivity.MatchOne(LIBRSErrorConstants.OthCrim,LIBRSErrorConstants.Int))
@@ -118,7 +118,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsBiasMotivationCode(LIBRSOffender offender)
         {    
-            HashSet<String> librsOnlyBiasMotivationCodes = new HashSet<string>()
+            HashSet<string> librsOnlyBiasMotivationCodes = new HashSet<string>
             {
                 "70",   //Age
                 "71",   //Ancestry

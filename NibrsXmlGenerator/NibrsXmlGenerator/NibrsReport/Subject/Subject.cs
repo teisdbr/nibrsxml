@@ -35,7 +35,7 @@ namespace NibrsXml.NibrsReport.Subject
 
         public Subject(
             Person.Person person,
-            String seqNum)
+            string seqNum)
         {
             this.Person = person;
             this.Person.Id += "PersonSubject" + seqNum.TrimStart('0');

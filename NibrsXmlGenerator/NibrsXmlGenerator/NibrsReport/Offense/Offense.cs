@@ -22,10 +22,10 @@ namespace NibrsXml.NibrsReport.Offense
         public string UcrCode { get; set; }
 
         [XmlElement("CriminalActivityCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
-        public List<String> CriminalActivityCategoryCodes { get; set; }
+        public List<string> CriminalActivityCategoryCodes { get; set; }
 
         [XmlElement("OffenseFactorBiasMotivationCode", Namespace = Namespaces.justice, Order = 3)]
-        public List<String> FactorBiasMotivationCodes { get; set; }
+        public List<string> FactorBiasMotivationCodes { get; set; }
 
         [XmlElement("OffenseStructuresEnteredQuantity", Namespace = Namespaces.justice, Order = 4)]
         public string StructuresEnteredQuantity { get; set; }
@@ -48,7 +48,7 @@ namespace NibrsXml.NibrsReport.Offense
         public Location.Location Location { get; set; }
 
         [XmlIgnore]
-        public String librsVictimSequenceNumber { get; set; }
+        public string librsVictimSequenceNumber { get; set; }
 
         public Offense() { }
 

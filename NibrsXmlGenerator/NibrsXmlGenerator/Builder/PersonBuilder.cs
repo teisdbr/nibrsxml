@@ -19,7 +19,7 @@ namespace NibrsXml.Builder
     {
         public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
             List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,
-            List<EnforcementOfficial> officers, LIBRSIncident incident, String uniquePrefix)
+            List<EnforcementOfficial> officers, LIBRSIncident incident, string uniquePrefix)
         {
             #region Victims & EnforcementOfficials
 
@@ -48,7 +48,7 @@ namespace NibrsXml.Builder
                         augmentation: LibrsAgeCodeParser(victim.Age));
 
                     //First create the new list of aggravated assault homicide to use when creating the new victim
-                    var aggAssaults = new List<String>();
+                    var aggAssaults = new List<string>();
                     aggAssaults.TryAdd(
                         victim.AggravatedAssault1.TrimNullIfEmpty(),
                         victim.AggravatedAssault2.TrimNullIfEmpty(),
@@ -260,7 +260,7 @@ namespace NibrsXml.Builder
 
         #region Helper Static Methods
 
-        public static PersonAgeMeasure LibrsAgeMeasureParser(String age)
+        public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
             //Integer to hold possible estimated age.
             int calculatedAge;
@@ -337,7 +337,7 @@ namespace NibrsXml.Builder
             if (relationship.IsNullBlankOrEmpty()) return null;
 
             //Derived relationship
-            String derivedVicOffRelationship = relationship;
+            string derivedVicOffRelationship = relationship;
 
             //If boyfriend or girlfriend related, add gender for specific translation
             if (relationship.MatchOne("XB", "BG"))
@@ -356,7 +356,7 @@ namespace NibrsXml.Builder
         #endregion
 
         #region Shared Variables
-        private static Dictionary<String, String> JuvenileDispositionCodeLibrsNibrsTranslations = new Dictionary<string, string>
+        private static Dictionary<string, string> JuvenileDispositionCodeLibrsNibrsTranslations = new Dictionary<string, string>
         {
             {LIBRSErrorConstants.DispDepartment, JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode()},
             {LIBRSErrorConstants.DispJuvenileCourt, JuvenileDispositionCode.JUVENILE_COURT.NibrsCode()},
@@ -365,8 +365,8 @@ namespace NibrsXml.Builder
             {LIBRSErrorConstants.DispAdultCourt, JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode()}
         };
 
-        private static Dictionary<String, String> VictimOffenderRelationshipLibrsNibrsTranslation = new Dictionary
-            <string, string>()
+        private static Dictionary<string, string> VictimOffenderRelationshipLibrsNibrsTranslation = new Dictionary
+            <string, string>
             {
                 {"SE", "Family Member_Spouse"},
                 {

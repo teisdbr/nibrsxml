@@ -33,7 +33,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         public string ClearanceIndicator { get; set; }
 
         [XmlElement("ArresteeArmedWithCode", Namespace = Namespaces.justice, Order = 4)]
-        public List<String> ArmedWithCodes { get; set; }
+        public List<string> ArmedWithCodes { get; set; }
 
         [XmlElement("ArresteeJuvenileDispositionCode", Namespace = Namespaces.justice, Order = 5)]
         public string JuvenileDispositionCode { get; set; }
@@ -53,7 +53,7 @@ namespace NibrsXml.NibrsReport.Arrestee
             Person.Person person,
             string seqId,
             string clearanceIndicator,
-            List<String> armedWithCode,
+            List<string> armedWithCode,
             string juvenileDispositionCode,
             string subjectCountCode)
         {

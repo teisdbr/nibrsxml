@@ -21,7 +21,7 @@ namespace NibrsXml.NibrsReport.Item
             this.ValueDate = valueDate;
         }
 
-        public ItemValue(String itemValueAmount, String itemValueDate)
+        public ItemValue(string itemValueAmount, string itemValueDate)
         {
             this.ValueAmount = new ItemValueAmount(itemValueAmount);
             

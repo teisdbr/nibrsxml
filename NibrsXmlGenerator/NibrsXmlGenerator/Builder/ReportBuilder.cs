@@ -111,13 +111,13 @@ namespace NibrsXml.Builder
             catch (Exception ex)
             {
                 //todo: make log writing shared or something
-                Console.WriteLine(String.Format("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}", incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace));
+                Console.WriteLine(string.Format("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}", incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace));
                 return null;
             }
         }
 
         #region Helper Functions
-        private static List<String> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
+        private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
             List<string> uniqueBiasMotivationCodes = new List<string>();
             foreach (LIBRSOffender offender in offenders)
@@ -127,7 +127,7 @@ namespace NibrsXml.Builder
             return uniqueBiasMotivationCodes;
         }
 
-        private static List<String> UniqueSuspectedOfUsingCodes(List<LIBRSOffenderUsing> offenderUsings)
+        private static List<string> UniqueSuspectedOfUsingCodes(List<LIBRSOffenderUsing> offenderUsings)
         {
             List<string> uniqueSuspectedofUsingCodes = new List<string>();
             foreach (LIBRSOffenderUsing offenderUsing in offenderUsings)
@@ -145,7 +145,7 @@ namespace NibrsXml.Builder
         /// <param name="offenses">List of offenses to build locations from</param>
         /// <param name="locations">List of locations to match with offenses (This is empty, but initialized)</param>
         /// <param name="locationAssociations">List of location associations to match to locations</param>
-        private static void BuildLocationsAndLocationAssociations(List<Offense> offenses, List<Location> locations, List<OffenseLocationAssociation> locationAssociations, String uniqueReportPrefix)
+        private static void BuildLocationsAndLocationAssociations(List<Offense> offenses, List<Location> locations, List<OffenseLocationAssociation> locationAssociations, string uniqueReportPrefix)
         {
             foreach (var offense in offenses)
             {
@@ -174,7 +174,7 @@ namespace NibrsXml.Builder
                 if (prop.PropertyDescription == drugNarcoticLibrsPropDesc && prop.PropertyLossType == LIBRSErrorConstants.PLSeiz)
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
-                    String drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
+                    string drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
 
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
@@ -211,7 +211,7 @@ namespace NibrsXml.Builder
             }
         }
 
-        private static void BuildArrests(List<Arrest> arrests, LIBRSIncident incident, String uniquePrefix)
+        private static void BuildArrests(List<Arrest> arrests, LIBRSIncident incident, string uniquePrefix)
         {
             var arrestList =
                 incident.Arrestee.Join(
