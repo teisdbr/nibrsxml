@@ -276,7 +276,7 @@
             <!-- Element 35, Relationship(s) of Victim To Offender -->
             <j:Subject s:ref="PersonSubject1"/>
             <j:Victim s:ref="PersonVictim1"/>
-			<j:VictimToSubjectRelationshipCode>Acquaintance</j:VictimToSubjectRelationshipCode>
+			      <j:VictimToSubjectRelationshipCode>Acquaintance</j:VictimToSubjectRelationshipCode>
         </j:SubjectVictimAssociation> 
         <!--Element 34, Offender Number(s) to be related -->
         <j:SubjectVictimAssociation s:id="SubjectVictimAssocSP2">

@@ -1,5 +1,12 @@
-﻿namespace NibrsXml.Constants
+﻿namespace NibrsXml.Constants.Ucr
 {
+    public class HateCrimeConstants
+    {
+        public const string HateCrimeMultipleRaceCode = "M";
+        public const string HateCrimeMultipleEthnicityCode = "M";
+        public const string UnknownOffenderSequenceCode = "00";
+    }
+
     public class AgeGroup
     {
         public const string UnderTen = "Under 10";

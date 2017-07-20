@@ -1,6 +1,6 @@
 ﻿using NibrsXml.Utility;
 
-namespace NibrsXml.Constants
+namespace NibrsXml.Constants.Ucr
 {
     public enum UcrReportType
     {

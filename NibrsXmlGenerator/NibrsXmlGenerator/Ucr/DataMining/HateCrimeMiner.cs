@@ -1,11 +1,12 @@
-﻿using NibrsXml.Constants;
+﻿using System;
+using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Subject;
 using NibrsXml.Ucr.DataCollections;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -24,7 +25,7 @@ namespace NibrsXml.Ucr.DataMining
             //2) a specific group A offense determined by the hate crime specification
             var hateCrimeOffenseLocationAssocs = report.OffenseLocationAssocs
                 .Where(ol =>
-                    ol.RelatedOffense.FactorBiasMotivationCodes.Any(bias => NibrsCodeGroups.HateCrimeBiasMotivationCodes.Contains(bias)) &&
+                    ol.RelatedOffense.FactorBiasMotivationCodes.Any(bias => UcrCodeGroups.HateCrimeBiasMotivationCodes.Contains(bias)) &&
                     Translate.HateCrimeOffenseCodeTranslations.ContainsKey(ol.RelatedOffense.UcrCode))
                 .ToList();
 
@@ -85,18 +86,18 @@ namespace NibrsXml.Ucr.DataMining
                     .ToList();
                 
                 //Get victim counts (juvenile, adult, total-indivudual and total-overall)
-                var individualVictims = victims
-                    .Where(v => v.CategoryCode.MatchOne(NibrsCodeGroups.HumanVictims))
+                var offenseIndividualVictims = victims
+                    .Where(v => v.CategoryCode.MatchOne(UcrCodeGroups.HumanVictims))
                     .ToList();
-                var juvenileVictimCount = individualVictims.Count(v => v.Person.AgeMeasure.IsJuvenile);
-                var adultVictimCount = individualVictims.Count(v => !v.Person.AgeMeasure.IsJuvenile);
-                var totalIndividualVictimCount = juvenileVictimCount + adultVictimCount;
+                var offenseAdultVictimCount = offenseIndividualVictims.Count(v => !v.Person.AgeMeasure.IsJuvenile);
+                var offenseJuvenileVictimCount = offenseIndividualVictims.Count(v => v.Person.AgeMeasure.IsJuvenile);
+                var offenseTotalIndividualVictimCount = offenseJuvenileVictimCount + offenseAdultVictimCount;
 
                 //Extract offenders for this offense
                 //???: How do we get suspects for victims who are not "I" or "L" since there is no subject victim association for those?
                 //temp-soln: when any victim is not I or L, use all offenders
                 List<Subject> offenders;
-                if (victims.Any(v => !NibrsCodeGroups.HumanVictims.Contains(v.CategoryCode)))
+                if (victims.Any(v => !UcrCodeGroups.HumanVictims.Contains(v.CategoryCode)))
                     offenders = report.Subjects;
                 else
                 {
@@ -112,39 +113,35 @@ namespace NibrsXml.Ucr.DataMining
                 }
 
                 //Initialize default values for counts, races, and ethnicities
-                var juvenileOffenderCount = 0;
-                var adultOffenderCount = 0;
-                var totalOffenderCount = 0;
-                var offenderGroupRace = RACCode.UNKNOWN.NibrsCode();
-                var offenderGroupEthnicity = EthnicityCode.UNKNOWN.NibrsCode();
+                var offenseAdultOffenderCount = 0;
+                var offenseJuvenileOffenderCount = 0;
+                var offenseTotalOffenderCount = 0;
+                var offenseOffenderGroupRace = RACCode.UNKNOWN.NibrsCode();
+                var offenseOffenderGroupEthnicity = EthnicityCode.UNKNOWN.NibrsCode();
 
-                if (offenders.Count > 1 || offenders[0].SeqNum != "00")
+                if (offenders.Count > 1 || offenders[0].SeqNum != HateCrimeConstants.UnknownOffenderSequenceCode)
                 {
                     //Get offender counts (juvenile, adult, and total)
-                    juvenileOffenderCount = offenders.Count(o => o.Person.AgeMeasure.IsJuvenile);
-                    adultOffenderCount = offenders.Count(o => !o.Person.AgeMeasure.IsJuvenile);
-                    totalOffenderCount = juvenileOffenderCount + adultOffenderCount;
+                    offenseJuvenileOffenderCount = offenders.Count(o => o.Person.AgeMeasure.IsJuvenile);
+                    offenseAdultOffenderCount = offenders.Count(o => !o.Person.AgeMeasure.IsJuvenile);
+                    offenseTotalOffenderCount = offenseJuvenileOffenderCount + offenseAdultOffenderCount;
 
                     //Get offender races
-                    offenderGroupRace = offenders[0].Person.RaceCode;
-                    var race = offenderGroupRace;
-                    if (offenders.All(o => o.Person.RaceCode != race))
-                        offenderGroupRace = "M";
+                    offenseOffenderGroupRace = offenders[0].Person.RaceCode;
+                    if (offenders.All(o => o.Person.RaceCode != offenseOffenderGroupRace))
+                        offenseOffenderGroupRace = HateCrimeConstants.HateCrimeMultipleRaceCode;
                     
                     //Get offender ethnicities
-                    offenderGroupEthnicity = offenders[0].Person.EthnicityCode;
-                    var ethnicity = offenderGroupEthnicity;
-                    if (offenders.All(o => o.Person.EthnicityCode != ethnicity))
-                        offenderGroupEthnicity = "M";
+                    offenseOffenderGroupEthnicity = offenders[0].Person.EthnicityCode;
+                    if (offenders.All(o => o.Person.EthnicityCode != offenseOffenderGroupEthnicity))
+                        offenseOffenderGroupEthnicity = HateCrimeConstants.HateCrimeMultipleEthnicityCode;
                 }
 
                 return new {
                     HateCrimeOffense = new HateCrime.Offense
                     {
                         Code = offenseCode,
-                        AdultVictimCount = adultVictimCount,
-                        JuvenileVictimCount = juvenileVictimCount,
-                        TotalVictimCount = totalIndividualVictimCount,
+                        VictimCount = offenseTotalIndividualVictimCount,
                         Location = locationCode,
                         BiasMotivation1 = biases.ElementAtOrDefault(0),
                         BiasMotivation2 = biases.ElementAtOrDefault(1),
@@ -159,20 +156,59 @@ namespace NibrsXml.Ucr.DataMining
                         VictimTypeOther = victimTypes.Contains(VictimCategoryCode.OTHER.NibrsCode()),
                         VictimTypeUnknown = victimTypes.Contains(VictimCategoryCode.UNKNOWN.NibrsCode())
                     },
-                    AdultOffenderCount = totalOffenderCount == 0 ? (int?)adultOffenderCount : null,
-                    JuvenileOffenderCount = totalOffenderCount == 0 ? (int?)juvenileOffenderCount : null,
-                    TotalOffenderCount = totalOffenderCount,
-                    OffenderGroupRace = offenderGroupRace,
-                    OffenderGroupEthnicity = offenderGroupEthnicity
+                    AdultVictimCount = offenseAdultVictimCount,
+                    JuvenileVictimCount = offenseJuvenileVictimCount,
+                    AdultOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseAdultOffenderCount : null,
+                    JuvenileOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseJuvenileOffenderCount : null,
+                    TotalOffenderCount = offenseTotalOffenderCount,
+                    OffenderGroupRace = offenseOffenderGroupRace,
+                    OffenderGroupEthnicity = offenseOffenderGroupEthnicity
                 };
-            });
+            }).ToList();
 
+            //Aggregate victims
+            var incidentAdultVictimCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.AdultVictimCount);
+            var incidentJuvenileVictimCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.JuvenileVictimCount);
+            var incidentTotalVictimCount = incidentAdultVictimCount + incidentJuvenileVictimCount;
+
+            //Aggregate offenders
+            var incidentAdultOffenderCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.AdultOffenderCount ?? sum );
+            var incidentJuvenileOffenderCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.JuvenileOffenderCount ?? sum);
+            var incidentTotalOffenderCount = incidentAdultOffenderCount + incidentJuvenileOffenderCount;
+
+            //Aggregate races
+            var incidentOffenderGroupRace = offenses[0].OffenderGroupRace;
+            if (offenses.All(offenseData => offenseData.OffenderGroupRace != incidentOffenderGroupRace))
+                incidentOffenderGroupRace = HateCrimeConstants.HateCrimeMultipleRaceCode;
+
+            //Aggregate ethnicities
+            var incidentOffenderGroupEthnicities = offenses[0].OffenderGroupEthnicity;
+            if (offenses.All(offenseData => offenseData.OffenderGroupEthnicity != incidentOffenderGroupEthnicities))
+                incidentOffenderGroupEthnicities = HateCrimeConstants.HateCrimeMultipleEthnicityCode;
+
+            //Construct full hate crime incident
             var hateCrimeIncident = new HateCrime.Incident
             {
+                Id = report.Incident.ActivityId.Id.PadRight(12, ' ').Substring(0, 12),
                 Date = report.Incident.ActivityDate.DateTime,
-                Id = report.Incident.ActivityId.Id.PadRight(12, ' ').Substring(0, 12)
+                AdultVictimCount = incidentAdultVictimCount,
+                JuvenileVictimCount = incidentJuvenileVictimCount,
+                TotalVictimCount = incidentTotalVictimCount,
+                AdultOffenderCount = incidentAdultOffenderCount,
+                JuvenileOffenderCount = incidentJuvenileOffenderCount,
+                TotalOffenderCount = incidentTotalOffenderCount,
+                OffenderRace = incidentOffenderGroupRace,
+                OffenderEthnicity = incidentOffenderGroupEthnicities,
+                Offenses = offenses.Select(offenseData => offenseData.HateCrimeOffense).ToList()
             };
 
+            //Use incident date and ORI to determine where to store it in the dictionary
+            var incidentDate = DateTime.Parse(report.Incident.ActivityDate.DateTime);
+            var ucrReportkey = incidentDate.Year + incidentDate.Month.ToDigitStr(2) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+
+            //Add the hate crime incident to the appropriate HCR
+            monthlyReportData.TryAdd(ucrReportkey, new ReportData());
+            monthlyReportData[ucrReportkey].HateCrimeData.Incidents.Add(hateCrimeIncident);
         }
     }
 }

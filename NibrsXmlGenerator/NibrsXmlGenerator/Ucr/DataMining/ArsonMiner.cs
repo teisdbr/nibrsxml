@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.Ucr.DataCollections;
@@ -195,7 +196,7 @@ namespace NibrsXml.Ucr.DataMining
             //Get at most one property per offense.
             //----Gather only one structure property with the highest value. Given OrderBy sorts in ascending, Last() provides desired property.
             var structureProperty =
-                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.StructureProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(UcrCodeGroups.StructureProperties)).Max();
             //--------If structureProperty is not null, return it
             if (structureProperty != null) return structureProperty;
 
@@ -208,13 +209,13 @@ namespace NibrsXml.Ucr.DataMining
 
             //----Gather all other mobile properties
             var otherMobileProperty =
-                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.OtherMobileProperties)).Max();
+                burnedItems.Where(i => i.NibrsPropertyCategoryCode.MatchOne(UcrCodeGroups.OtherMobileProperties)).Max();
 
             //--------If structureProperty is not null, return it
             if (otherMobileProperty != null) return otherMobileProperty;
 
             //----Gather Total Other Property
-            var totalOtherProperty = burnedItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.TotalOtherProperties));
+            var totalOtherProperty = burnedItems.FirstOrDefault(i => i.NibrsPropertyCategoryCode.MatchOne(UcrCodeGroups.TotalOtherProperties));
 
             //--------Return Total other property or null if code reached this point.
             return totalOtherProperty;

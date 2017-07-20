@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport.Victim;
-using NibrsXml.NibrsReport.Subject;
-using NibrsXml.Utility;
-using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -16,20 +10,21 @@ namespace NibrsXml.Ucr.DataCollections
         {
             public string Id { get; set; }
             public string Date { get; set; }
-            public int AdultOffenderCount { get; set; }
-            public int JuvenileOffenderCount { get; set; }
-            public char OffenderRace { get; set; }
-            public char OffenderEthnicity { get; set; }
+            public int AdultVictimCount { get; set; }
+            public int JuvenileVictimCount { get; set; }
+            public int TotalVictimCount { get; set; }
+            public int? AdultOffenderCount { get; set; }
+            public int? JuvenileOffenderCount { get; set; }
+            public int TotalOffenderCount { get; set; }
+            public string OffenderRace { get; set; }
+            public string OffenderEthnicity { get; set; }
             public List<Offense> Offenses { get; set; }
         }
 
         public class Offense
         {
-            //Offense group properties
             public string Code { get; set; }
-            public int AdultVictimCount { get; set; }
-            public int JuvenileVictimCount { get; set; }
-            public int TotalVictimCount { get; set; }
+            public int VictimCount { get; set; }
             public string Location { get; set; }
             public string BiasMotivation1 { get; set; }
             public string BiasMotivation2 { get; set; }

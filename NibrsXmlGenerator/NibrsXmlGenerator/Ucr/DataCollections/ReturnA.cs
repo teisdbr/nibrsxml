@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Item;
 using NibrsXml.NibrsReport.Offense;
@@ -80,15 +81,15 @@ namespace NibrsXml.Ucr.DataCollections
             //Therefore, if there are any "c" class weapons, "c" is returned regardless if personal weapons is first in the list
             //because personal weapons are in the "d" class
             if (mostDangerousWeapon == ForceCategoryCode.PERSONAL_WEAPONS.NibrsCode() &&
-                offenseForceCodes.Any(f => NibrsCodeGroups.OtherDangerousWeapons.Contains(f)))
+                offenseForceCodes.Any(f => UcrCodeGroups.OtherDangerousWeapons.Contains(f)))
                 return "c";
 
             //Return based on hierarchy
-            return NibrsCodeGroups.Firearms.Contains(mostDangerousWeapon)
+            return UcrCodeGroups.Firearms.Contains(mostDangerousWeapon)
                 ? "a"
                 : mostDangerousWeapon == ForceCategoryCode.LETHAL_CUTTING_INSTRUMENT.NibrsCode()
                     ? "b"
-                    : NibrsCodeGroups.OtherDangerousWeapons.Contains(mostDangerousWeapon)
+                    : UcrCodeGroups.OtherDangerousWeapons.Contains(mostDangerousWeapon)
                         ? "c"
                         : "d";
         }

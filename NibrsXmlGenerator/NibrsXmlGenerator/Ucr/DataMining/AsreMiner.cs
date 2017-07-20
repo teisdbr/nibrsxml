@@ -3,6 +3,7 @@ using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using System.Collections.Concurrent;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -17,9 +18,9 @@ namespace NibrsXml.Ucr.DataMining
             //All arrestees must have known sexes, races, and ethnicities.
             var validAssocs = report.ArrestSubjectAssocs.Where(assoc =>
                 assoc.RelatedArrestee.SubjectCountCode.MatchOne(MultipleArresteeSegmentsCode.COUNT.NibrsCode(), MultipleArresteeSegmentsCode.NOT_APPLICABLE.NibrsCode()) &&
-                assoc.RelatedArrestee.Person.SexCode.MatchOne(NibrsCodeGroups.KnownSexCodes) &&
-                assoc.RelatedArrestee.Person.RaceCode.MatchOne(NibrsCodeGroups.KnownRaceCodes) &&
-                assoc.RelatedArrestee.Person.EthnicityCode.MatchOne(NibrsCodeGroups.KnownEthnicityCodes));
+                assoc.RelatedArrestee.Person.SexCode.MatchOne(UcrCodeGroups.KnownSexCodes) &&
+                assoc.RelatedArrestee.Person.RaceCode.MatchOne(UcrCodeGroups.KnownRaceCodes) &&
+                assoc.RelatedArrestee.Person.EthnicityCode.MatchOne(UcrCodeGroups.KnownEthnicityCodes));
             foreach (var assoc in validAssocs)
             {
                 //Gather arrest data from the association

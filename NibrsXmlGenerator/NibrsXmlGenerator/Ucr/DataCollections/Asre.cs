@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.NibrsReport.Offense;
 using NibrsXml.NibrsReport.Substance;
 using NibrsXml.Utility;
@@ -203,9 +204,9 @@ namespace NibrsXml.Ucr.DataCollections
             //1: Sale/Manufacturing(NibrsCodeGroups.SaleOrManufacturingCriminalActivities)
             //2: Possession(NibrsCodeGroups.PossessionCriminalActivities)
             var criminalActivityTypes = drugOffenses.SelectMany(o => o.CriminalActivityCategoryCodes).Where(criminalActivityCode => criminalActivityCode != null).ToArray();
-            var mostDangerousCriminalActivityType = criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.SaleOrManufacturingCriminalActivities))
+            var mostDangerousCriminalActivityType = criminalActivityTypes.Any(code => code.MatchOne(UcrCodeGroups.SaleOrManufacturingCriminalActivities))
                 ? 1
-                : criminalActivityTypes.Any(code => code.MatchOne(NibrsCodeGroups.PossessionCriminalActivities))
+                : criminalActivityTypes.Any(code => code.MatchOne(UcrCodeGroups.PossessionCriminalActivities))
                     ? 2
                     : 0;
             if (mostDangerousCriminalActivityType == 0)
@@ -216,13 +217,13 @@ namespace NibrsXml.Ucr.DataCollections
             //2: NibrsCodeGroups.OtherDangerousNonnarcoticDrugs
             //3: NibrsCodeGroups.SyntheticNarcotics
             //4: NibrsCodeGroups.Marijuana
-            var mostDangerousSuspectedDrugType = drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OpiumCocaineAndDerivedDrugs))
+            var mostDangerousSuspectedDrugType = drugs.Any(d => d.DrugCategoryCode.MatchOne(UcrCodeGroups.OpiumCocaineAndDerivedDrugs))
                 ? 1
-                : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.OtherDangerousNonnarcoticDrugs))
+                : drugs.Any(d => d.DrugCategoryCode.MatchOne(UcrCodeGroups.OtherDangerousNonnarcoticDrugs))
                     ? 2
-                    : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.SyntheticNarcotics))
+                    : drugs.Any(d => d.DrugCategoryCode.MatchOne(UcrCodeGroups.SyntheticNarcotics))
                         ? 3
-                        : drugs.Any(d => d.DrugCategoryCode.MatchOne(NibrsCodeGroups.Marijuana))
+                        : drugs.Any(d => d.DrugCategoryCode.MatchOne(UcrCodeGroups.Marijuana))
                             ? 4
                             : 0;
             if (mostDangerousSuspectedDrugType == 0)

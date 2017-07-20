@@ -65,10 +65,10 @@
     <Compile Include="Builder\ReportBuilder.cs" />
     <Compile Include="Builder\ReportHeaderBuilder.cs" />
     <Compile Include="Builder\SubmissionBuilder.cs" />
-    <Compile Include="Constants\AgeGroup.cs" />
     <Compile Include="Constants\Namespace.cs" />
     <Compile Include="Constants\NibrsCodeGroups.cs" />
     <Compile Include="Constants\NibrsCodes.cs" />
+    <Compile Include="Constants\Ucr\UcrCodeGroups.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
     <Compile Include="NibrsReport\Arrest\Arrest.cs" />
@@ -114,7 +114,7 @@
     <Compile Include="NibrsReport\Victim\Victim.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Constants\UcrReportTypes.cs" />
+    <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
     <Compile Include="Ucr\DataCollections\Arson.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
@@ -144,6 +144,7 @@
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
     <Compile Include="Ucr\Translate.cs" />
+    <Compile Include="Constants\Ucr\UcrCodes.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />

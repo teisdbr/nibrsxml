@@ -1,5 +1,4 @@
-﻿using System;
-using NibrsXml.Constants;
+﻿using NibrsXml.Constants;
 using System.Xml.Serialization;
 
 namespace NibrsXml.NibrsReport.Substance
