@@ -42,7 +42,13 @@ namespace NibrsXml.NibrsReport.Victim
         [XmlIgnore]
         public List<LIBRSVictimOffenderRelation> RelatedOffenders { get; set; }
 
-        public Victim Reference => new Victim(this.Person.Id);
+        public Victim Reference
+        {
+            get
+            {
+                return new Victim(this.Person.Id);
+            }
+        }
         public Victim() {
             this.RelatedOffenders = new List<LIBRSVictimOffenderRelation>();
         }

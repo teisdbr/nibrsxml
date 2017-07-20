@@ -98,8 +98,21 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Serialization Properties
 
-        public override string XmlRootName => "ReturnASummary";
-        public override string XslFileName => "returna.xsl";
+        public override string XmlRootName
+        {
+            get
+            {
+                return "ReturnASummary";
+            }
+        }
+
+        public override string XslFileName
+        {
+            get
+            {
+                return "returna.xsl";
+            }
+        }
         #endregion
 
         #region Base Overriden Incrementers

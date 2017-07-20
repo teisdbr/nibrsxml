@@ -20,7 +20,14 @@ namespace NibrsXml.NibrsReport.Location
         public string CategoryCode { get; set; }
 
         [XmlIgnore]
-        public Location Reference => new Location(Id);
+        public Location Reference
+        {
+            get
+            {
+                return new Location(Id);
+            }
+        }
+
         public Location() { }
 
         public Location(string locationRef)

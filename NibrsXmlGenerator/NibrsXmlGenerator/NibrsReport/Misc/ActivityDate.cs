@@ -58,7 +58,14 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
-        public string Time => _dateTime.Substring(_dateTime.IndexOf("T") + 1);
+        public string Time
+        {
+            get
+            {
+                return _dateTime.Substring(_dateTime.IndexOf("T") + 1);
+            }
+        }
+
         public ActivityDate() { }
 
         public ActivityDate(string date)

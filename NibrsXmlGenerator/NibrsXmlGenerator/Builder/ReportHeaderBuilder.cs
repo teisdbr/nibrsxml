@@ -26,7 +26,7 @@ namespace NibrsXml.Builder
                 return o;
             }).ToList();
 
-            ReportHeader rptHeader = new ReportHeader();
+            var rptHeader = new ReportHeader();
             rptHeader.NibrsReportCategoryCode = DetermineNibrsReportCategoryCode(offenses);
             rptHeader.ReportActionCategoryCode = actionType;
             rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
@@ -37,7 +37,7 @@ namespace NibrsXml.Builder
         private static string DetermineNibrsReportCategoryCode(List<LIBRSOffense> offenses)
         {
              // Determine NIBRS report category code based on provided offenses
-            foreach (LIBRSOffense offense in offenses)
+            foreach (var offense in offenses)
             {
                 //Trim LRSNumber value in offense
                 offense.LrsNumber = offense.LrsNumber.Trim();

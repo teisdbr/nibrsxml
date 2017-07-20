@@ -29,10 +29,22 @@ namespace NibrsXml.NibrsReport.Person
         public PersonAugmentation Augmentation { get; set; }
 
         [XmlIgnore]
-        public bool AgeIsUnknown => Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
+        public bool AgeIsUnknown
+        {
+            get
+            {
+                return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
+            }
+        }
 
         [XmlIgnore]
-        public bool IsJuvenile => AgeMeasure != null && AgeMeasure.IsJuvenile;
+        public bool IsJuvenile
+        {
+            get
+            {
+                return AgeMeasure != null && AgeMeasure.IsJuvenile;
+            }
+        }
 
         public Person() { }
 

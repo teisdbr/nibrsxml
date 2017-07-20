@@ -63,8 +63,22 @@ namespace NibrsXml.Ucr.DataMining
             //No additional calls need to be made because the base constructor is making the appropriate calls already.
         }
 
-        protected override string[] ApplicableUcrCodes => ApplicableReturnAUcrCodes;
-        protected override Dictionary<string, string> ClearanceClassificationDictionary => ReturnAClearanceClassificationDictionary;
+        protected override string[] ApplicableUcrCodes
+        {
+            get
+            {
+                return ApplicableReturnAUcrCodes;
+            }
+        }
+
+        protected override Dictionary<string, string> ClearanceClassificationDictionary
+        {
+            get
+            {
+                return ReturnAClearanceClassificationDictionary;
+            }
+        }
+
         protected override void Mine(ConcurrentDictionary<string, ReportData> monthlyOriReportData, Report report)
         {
             try

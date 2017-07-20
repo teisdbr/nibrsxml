@@ -17,7 +17,14 @@ namespace NibrsXml.NibrsReport.Person
         public string Value { get; set; }
 
         [XmlIgnore]
-        public string RangeOrValue => Value ?? Range.Min + "-" + Range.Max;
+        public string RangeOrValue
+        {
+            get
+            {
+                return Value ?? Range.Min + "-" + Range.Max;
+            }
+        }
+
         [XmlIgnore]
         public bool IsJuvenile
         {

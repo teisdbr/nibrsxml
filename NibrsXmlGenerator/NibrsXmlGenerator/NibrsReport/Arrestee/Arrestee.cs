@@ -40,7 +40,13 @@ namespace NibrsXml.NibrsReport.Arrestee
         [XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 6)]
         public string SubjectCountCode { get; set; }
 
-        public Arrestee Reference => new Arrestee(Person.Id);
+        public Arrestee Reference
+        {
+            get
+            {
+                return new Arrestee(Person.Id);
+            }
+        }
         public Arrestee() { }
 
         public Arrestee(string arresteeId)

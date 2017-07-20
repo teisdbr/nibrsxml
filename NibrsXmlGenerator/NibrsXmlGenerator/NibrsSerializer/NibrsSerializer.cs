@@ -20,7 +20,13 @@ namespace NibrsXml.NibrsSerializer
         /// </summary>
         internal class Utf8StringWriter : StringWriter
         {
-            public override Encoding Encoding => Encoding.UTF8;
+            public override Encoding Encoding
+            {
+                get
+                {
+                    return Encoding.UTF8;
+                }
+            }
         }
 
         // Declare the types of all the objects that shall be serialized by NibrsSerializer
@@ -90,7 +96,7 @@ namespace NibrsXml.NibrsSerializer
         /// <returns>An XML representation of the argument object using NIBRS XML schema definitions</returns>
         public string Serialize(NibrsSerializable serializee)
         { 
-            string xml = "";
+            var xml = "";
             using (StringWriter xmlWriter = new Utf8StringWriter())
             {
                 if (serializee.GetType() == typeof(Submission) || serializee.GetType() == typeof(Report))

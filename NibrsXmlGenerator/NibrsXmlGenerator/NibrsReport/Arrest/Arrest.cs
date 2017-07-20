@@ -29,7 +29,13 @@ namespace NibrsXml.NibrsReport.Arrest
         public string SubjectCountCode { get; set; }
 
         [XmlIgnore]
-        public Arrest Reference => new Arrest(this.Id);
+        public Arrest Reference
+        {
+            get
+            {
+                return new Arrest(this.Id);
+            }
+        }
         [XmlIgnore]
         public string SequenceNumber { get; set; }
 

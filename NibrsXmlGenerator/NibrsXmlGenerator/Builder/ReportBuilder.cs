@@ -119,8 +119,8 @@ namespace NibrsXml.Builder
         #region Helper Functions
         private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
-            List<string> uniqueBiasMotivationCodes = new List<string>();
-            foreach (LIBRSOffender offender in offenders)
+            var uniqueBiasMotivationCodes = new List<string>();
+            foreach (var offender in offenders)
             {
                 uniqueBiasMotivationCodes.UniqueAdd(offender.BiasMotivation);
             }
@@ -129,8 +129,8 @@ namespace NibrsXml.Builder
 
         private static List<string> UniqueSuspectedOfUsingCodes(List<LIBRSOffenderUsing> offenderUsings)
         {
-            List<string> uniqueSuspectedofUsingCodes = new List<string>();
-            foreach (LIBRSOffenderUsing offenderUsing in offenderUsings)
+            var uniqueSuspectedofUsingCodes = new List<string>();
+            foreach (var offenderUsing in offenderUsings)
             {
                 uniqueSuspectedofUsingCodes.UniqueAdd(offenderUsing.OffUsingGamingMot);
             }
@@ -158,7 +158,7 @@ namespace NibrsXml.Builder
                 }
 
                 //Create Offense Location Object
-                OffenseLocationAssociation offenseAssoc = new OffenseLocationAssociation();
+                var offenseAssoc = new OffenseLocationAssociation();
                 offenseAssoc.OffenseRef = offense.Reference;
                 offenseAssoc.LocationRef = locations.Where(location => location.CategoryCode == offense.Location.CategoryCode).First().Reference;
                 locationAssociations.Add(offenseAssoc);
@@ -169,12 +169,12 @@ namespace NibrsXml.Builder
         {
 
 
-            foreach (LIBRSPropertyDescription prop in librsProperties)
+            foreach (var prop in librsProperties)
             {
                 if (prop.PropertyDescription == drugNarcoticLibrsPropDesc && prop.PropertyLossType == LIBRSErrorConstants.PLSeiz)
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
-                    string drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
+                    var drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
 
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
@@ -185,8 +185,8 @@ namespace NibrsXml.Builder
                 else
                 {
                     // Translate LIBRS Property Description to NIBRS ItemStatusCode
-                    string librsTypeOfPropertyLoss = prop.PropertyLossType.TrimStart('0');
-                    string nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
+                    var librsTypeOfPropertyLoss = prop.PropertyLossType.TrimStart('0');
+                    var nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
                     // todo: ??? May need to also create the minimal Item within condition for when the Property Loss Type (ItemStatusCode) is Unknown (8) 
                     if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode()) 

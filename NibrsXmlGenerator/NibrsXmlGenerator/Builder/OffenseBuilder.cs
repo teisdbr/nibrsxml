@@ -59,10 +59,10 @@ namespace NibrsXml.Builder
 
         public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, string uniqueReportPrefix)
         {
-            List<Offense> offenseReports = new List<Offense>();
-            foreach (LIBRSOffense offense in offenses)
+            var offenseReports = new List<Offense>();
+            foreach (var offense in offenses)
             {
-                Offense offenseReport = new Offense();
+                var offenseReport = new Offense();
                 offenseReport.Id = ExtractOffenseId(uniqueReportPrefix: uniqueReportPrefix, offenseSeqNum: offense.OffenseSeqNum);
                 offenseReport.UcrCode = ExtractNibrsCode(offense);
                 offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
@@ -97,7 +97,7 @@ namespace NibrsXml.Builder
 
         private static List<string> ExtractNibrsCriminalActivityCategoryCodes(LIBRSOffense offense)
         {
-            List<string> nibrsCriminalActivityCategoryCodes = new List<string>();
+            var nibrsCriminalActivityCategoryCodes = new List<string>();
             nibrsCriminalActivityCategoryCodes.TryAdd(
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity1),
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity2),
@@ -117,7 +117,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsBiasMotivationCode(LIBRSOffender offender)
         {    
-            HashSet<string> librsOnlyBiasMotivationCodes = new HashSet<string>
+            var librsOnlyBiasMotivationCodes = new HashSet<string>
             {
                 "70",   //Age
                 "71",   //Ancestry
@@ -131,8 +131,8 @@ namespace NibrsXml.Builder
 
         private static List<OffenseFactor> TranslateOffenseFactors(List<string> suspectedOfUsingCodes)
         {
-            List<OffenseFactor> offenseFactors = new List<OffenseFactor>();
-            foreach (string code in suspectedOfUsingCodes)
+            var offenseFactors = new List<OffenseFactor>();
+            foreach (var code in suspectedOfUsingCodes)
             {
                 //Exception: If LIBRS is G, should be translated to N
                 var translatedCode = code == LIBRSErrorConstants.OffGaming ? LIBRSErrorConstants.OffNotApp : code;
@@ -143,7 +143,7 @@ namespace NibrsXml.Builder
 
         private static List<OffenseForce> ExtractNibrsOffenseForces(LIBRSOffense offense)
         {
-            List<OffenseForce> nibrsOffenseForces = new List<OffenseForce>();
+            var nibrsOffenseForces = new List<OffenseForce>();
             nibrsOffenseForces.TryAdd(
                 offense.WeaponForce1.Trim().TryBuild<OffenseForce>(),
                 offense.WeaponForce2.Trim().TryBuild<OffenseForce>(),

@@ -27,12 +27,18 @@ namespace NibrsXml.NibrsReport
         private static readonly NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlIgnore]
-        public string Xml => serializer.Serialize(this);
+        public string Xml
+        {
+            get
+            {
+                return serializer.Serialize(this);
+            }
+        }
         public Submission() { }
 
         public Submission(params Report[] reports)
         {
-            foreach (Report r in reports)
+            foreach (var r in reports)
             {
                 this.Reports.Add(r);
             }
@@ -41,8 +47,8 @@ namespace NibrsXml.NibrsReport
         public static Submission Deserialize(string filepath)
         {
             // Retrieve the XML file
-            FileStream xmlFile = new FileStream(filepath, FileMode.Open);
-            XmlReader xmlReader = XmlReader.Create(xmlFile);
+            var xmlFile = new FileStream(filepath, FileMode.Open);
+            var xmlReader = XmlReader.Create(xmlFile);
 
             // Deserialize the XML file
             Submission sub;

@@ -40,8 +40,13 @@ namespace NibrsXml.Ucr.DataCollections
             public bool VictimTypeUnknown { get; set; }
         }
 
-        public List<Incident> Incidents { get; } = new List<Incident>();
-        
+        public List<Incident> Incidents { get; set; }
+
+        public HateCrime()
+        {
+            Incidents = new List<Incident>();
+        }
+
         public XDocument Serialize()
         {
             throw new NotImplementedException();

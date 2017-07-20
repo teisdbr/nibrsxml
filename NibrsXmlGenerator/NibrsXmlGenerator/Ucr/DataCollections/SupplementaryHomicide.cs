@@ -13,13 +13,18 @@ namespace NibrsXml.Ucr.DataCollections
         ///     functions
         /// </summary>
         [XmlElement]
-        private List<Incident> Incidents { get; } = new List<Incident>();
+        private List<Incident> Incidents { get; set; }
+
+        public SupplementaryHomicide()
+        {
+            Incidents = new List<Incident>();
+        }
 
         public XDocument Serialize()
         {
             //todo: serialize this
             var serializer = new XmlSerializer(typeof(SupplementaryHomicide), new []{typeof(Victim), typeof(Offender), typeof(Relationship), typeof(Incident)});
-            string xml = "";
+            var xml = "";
             using (StringWriter xmlWriter = new NibrsSerializer.NibrsSerializer.Utf8StringWriter())
             {
                 serializer.Serialize(xmlWriter, this);

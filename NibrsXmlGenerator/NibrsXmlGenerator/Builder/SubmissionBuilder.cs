@@ -9,10 +9,10 @@ namespace NibrsXml.Builder
     {   
         public static Submission Build(List<IncidentList> agencySpecificIncidents)
         {
-            Submission sub = new Submission();
+            var sub = new Submission();
             //todo: Turn this into a queue and remove an incident from the queue whenever it is used by a report to release the memory that is held by that incident
             //todo: Implement this using threads so that each thread returns a built report
-            foreach (IncidentList agencyIncidentList in agencySpecificIncidents)
+            foreach (var agencyIncidentList in agencySpecificIncidents)
             {
                 foreach (LIBRSIncident incident in agencyIncidentList) {
                     if (!incident.HasErrors)

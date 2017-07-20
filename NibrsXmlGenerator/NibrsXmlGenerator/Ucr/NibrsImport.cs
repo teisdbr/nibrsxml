@@ -13,8 +13,8 @@ namespace NibrsXml.Ucr
 {
     public class NibrsImport
     {
-        public List<Report> Reports { get; private set; }
-        public ConcurrentDictionary<string, ReportData> MonthlyOriReportData { get; private set; }
+        public List<Report> Reports { get; set; }
+        public ConcurrentDictionary<string, ReportData> MonthlyOriReportData { get; set; }
 
         public NibrsImport(string xmlFilepath)
         {
@@ -44,7 +44,7 @@ namespace NibrsXml.Ucr
             };
 
             //Use the StringReader Overload constructor to validate the string directly instead of reading an xml file.
-            XmlValidator validator = new XmlValidator(new StringReader(submission.Xml), schemasToUseForValidation);
+            var validator = new XmlValidator(new StringReader(submission.Xml), schemasToUseForValidation);
             if (!validator.HasErrors)
             {
                 Reports = submission.Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();

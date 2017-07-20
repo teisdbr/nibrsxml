@@ -104,12 +104,22 @@ namespace NibrsXml.Ucr.DataCollections
         /// </summary>
         private Dictionary<string, Tuple<int, int>> SupplementData { get; set; }
 
-        public List<Tuple<string, int, int>> PropertyByTypeAndValue => SupplementData
+        public List<Tuple<string, int, int>> PropertyByTypeAndValue
+        {
+            get
+            {
+                return SupplementData
                     .Where(kvp => kvp.Key.MatchOne("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", PropertyByTypeAndValueTotalDataEntryKey))
                     .Select(kvp => Tuple.Create(kvp.Key, kvp.Value.Item1, kvp.Value.Item2))
                     .ToList();
+            }
+        }
 
-        public List<Tuple<string, int, int>> PropertyStolenByClassification => SupplementData
+        public List<Tuple<string, int, int>> PropertyStolenByClassification
+        {
+            get
+            {
+                return SupplementData
                     .Where(
                         kvp =>
                             kvp.Key.MatchOne("12", "20", "31", "32", "33", "34", "35", "36", "37", "30", "51", "52", "53", "54", "55", "56", "50", "61", "62", "63", "60", "70", "77", "81", "82", "83",
@@ -117,6 +127,8 @@ namespace NibrsXml.Ucr.DataCollections
                                 "86", "87", "88", "89", "80", "91", "92", "90", "93"))
                     .Select(kvp => Tuple.Create(kvp.Key, kvp.Value.Item1, kvp.Value.Item2))
                     .ToList();
+            }
+        }
 
         public XDocument Serialize()
         {

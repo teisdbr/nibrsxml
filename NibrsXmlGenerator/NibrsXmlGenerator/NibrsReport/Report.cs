@@ -63,10 +63,22 @@ namespace NibrsXml.NibrsReport
         private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
 
         [XmlIgnore]
-        public List<Item.Item> StolenVehicles => Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
+        public List<Item.Item> StolenVehicles
+        {
+            get
+            {
+                return Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
+            }
+        }
 
         [XmlIgnore]
-        public string Xml => Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
+        public string Xml
+        {
+            get
+            {
+                return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
+            }
+        }
         public Report() { 
             //Initialize Locations
             this.Locations = new List<Location.Location>();
@@ -117,31 +129,31 @@ namespace NibrsXml.NibrsReport
 
         public void AddOffenses(params Offense.Offense[] offenses)
         {
-            foreach (Offense.Offense offense in offenses)
+            foreach (var offense in offenses)
                 this.Offenses.Add(offense);
         }
 
         public void AddLocations(params Location.Location[] locations)
         {
-            foreach (Location.Location location in locations)
+            foreach (var location in locations)
                 this.Locations.Add(location);
         }
 
         public void AddItems(params Item.Item[] items)
         {
-            foreach (Item.Item item in items)
+            foreach (var item in items)
                 this.Items.Add(item);
         }
 
         public void AddSubstances(params Substance.Substance[] substances)
         {
-            foreach (Substance.Substance substance in substances)
+            foreach (var substance in substances)
                 this.Substances.Add(substance);
         }
 
         public void AddEnforcementOfficials(params EnforcementOfficial.EnforcementOfficial[] officers)
         {
-            foreach (EnforcementOfficial.EnforcementOfficial officer in officers)
+            foreach (var officer in officers)
             {
                 this.Officers.Add(officer);
             }
@@ -149,7 +161,7 @@ namespace NibrsXml.NibrsReport
 
         public void AddVictims(params Victim.Victim[] victims)
         {
-            foreach (Victim.Victim victim in victims)
+            foreach (var victim in victims)
             {
                 this.Victims.Add(victim);
                 this.Persons.Add(victim.Person);
@@ -158,7 +170,7 @@ namespace NibrsXml.NibrsReport
 
         public void AddSubjects(params Subject.Subject[] subjects)
         {
-            foreach (Subject.Subject subject in subjects)
+            foreach (var subject in subjects)
             {
                 this.Subjects.Add(subject);
                 this.Persons.Add(subject.Person);
@@ -167,7 +179,7 @@ namespace NibrsXml.NibrsReport
 
         public void AddArrestees(params Arrestee.Arrestee[] arrestees)
         {
-            foreach (Arrestee.Arrestee arrestee in arrestees)
+            foreach (var arrestee in arrestees)
             {
                 this.Arrestees.Add(arrestee);
                 this.Persons.Add(arrestee.Person);
@@ -176,31 +188,31 @@ namespace NibrsXml.NibrsReport
 
         public void AddArrests(params Arrest.Arrest[] arrests)
         {
-            foreach (Arrest.Arrest arrest in arrests)
+            foreach (var arrest in arrests)
                 this.Arrests.Add(arrest);
         }
 
         public void AddArrestSubjectAssociations(params Associations.ArrestSubjectAssociation[] associations)
         {
-            foreach (Associations.ArrestSubjectAssociation association in associations)
+            foreach (var association in associations)
                 this.ArrestSubjectAssocs.Add(association);
         }
 
         public void AddOffenseLocationAssociations(params Associations.OffenseLocationAssociation[] associations)
         {
-            foreach (Associations.OffenseLocationAssociation association in associations)
+            foreach (var association in associations)
                 this.OffenseLocationAssocs.Add(association);
         }
 
         public void AddOffenseVictimAssociations(params Associations.OffenseVictimAssociation[] associations)
         {
-            foreach (Associations.OffenseVictimAssociation association in associations)
+            foreach (var association in associations)
                 this.OffenseVictimAssocs.Add(association);
         }
 
         public void AddSubjectVictimAssociations(params Associations.SubjectVictimAssociation[] associations)
         {
-            foreach (Associations.SubjectVictimAssociation association in associations)
+            foreach (var association in associations)
                 this.SubjectVictimAssocs.Add(association);
         }
 

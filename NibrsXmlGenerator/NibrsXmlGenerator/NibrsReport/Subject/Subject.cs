@@ -24,7 +24,13 @@ namespace NibrsXml.NibrsReport.Subject
         public string SeqNum { get; set; }
 
         [XmlIgnore]
-        public Subject Reference => new Subject(Person.Id);
+        public Subject Reference
+        {
+            get
+            {
+                return new Subject(Person.Id);
+            }
+        }
         public Subject() { }
 
         public Subject(string subjectId)

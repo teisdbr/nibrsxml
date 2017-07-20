@@ -4,26 +4,37 @@
     {
         #region Stored Properties
 
-        public Asre AsreData { get; set; } = new Asre();
-
-        public ReturnA ReturnAData { get; set; } = new ReturnA();
-
-        public HumanTrafficking HumanTraffickingData { get; set; } = new HumanTrafficking();
-
-        public Arson ArsonData { get; set; } = new Arson();
-
-        public Leoka LeokaData { get; set; } = new Leoka();
-
-        public SupplementaryHomicide SupplementaryHomicideData { get; set; } = new SupplementaryHomicide();
-
-        public HateCrime HateCrimeData { get; set; } = new HateCrime();
+        public Asre AsreData { get; set; }
+        public ReturnA ReturnAData { get; set; }
+        public HumanTrafficking HumanTraffickingData { get; set; }
+        public Arson ArsonData { get; set; }
+        public Leoka LeokaData { get; set; }
+        public SupplementaryHomicide SupplementaryHomicideData { get; set; }
+        public HateCrime HateCrimeData { get; set; }
 
         #endregion
         
         #region Computed Properties
 
-        public ReturnASupplement ReturnASupplementData => ReturnAData.Supplement;
+        public ReturnASupplement ReturnASupplementData
+        {
+            get
+            {
+                return ReturnAData.Supplement;
+            }
+        } 
 
         #endregion
+
+        public ReportData()
+        {
+            AsreData = new Asre();
+            ReturnAData = new ReturnA();
+            HumanTraffickingData = new HumanTrafficking();
+            ArsonData = new Arson();
+            LeokaData = new Leoka();
+            SupplementaryHomicideData = new SupplementaryHomicide();
+            HateCrimeData = new HateCrime();
+        }
     }
 }

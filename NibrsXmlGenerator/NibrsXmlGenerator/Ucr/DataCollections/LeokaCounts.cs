@@ -9,7 +9,12 @@ namespace NibrsXml.Ucr.DataCollections
 {
     public class LeokaCounts : XmlSerializer
     {
-        public Dictionary<string, int> CountsDictionary { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> CountsDictionary { get; set; }
+
+        public LeokaCounts()
+        {
+            CountsDictionary = new Dictionary<string, int>();
+        }
 
         public static string GetWeaponKey(string weapon)
         {

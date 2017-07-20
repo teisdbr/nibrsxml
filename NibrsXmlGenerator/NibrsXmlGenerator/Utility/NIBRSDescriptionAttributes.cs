@@ -14,13 +14,13 @@ namespace NibrsXml.Utility
 
         protected static string GetDescription(Enum nc, Type descriptionType)
         {
-            string desc = "";
+            var desc = "";
 
             try
             {
-                Type t = nc.GetType();
-                MemberInfo[] mi = t.GetMember(nc.ToString());
-                DescriptionAttribute[] attributes = (DescriptionAttribute[])mi[0].GetCustomAttributes(descriptionType, false);
+                var t = nc.GetType();
+                var mi = t.GetMember(nc.ToString());
+                var attributes = (DescriptionAttribute[])mi[0].GetCustomAttributes(descriptionType, false);
                 desc = attributes[0].Description;
             }
             catch (Exception e)

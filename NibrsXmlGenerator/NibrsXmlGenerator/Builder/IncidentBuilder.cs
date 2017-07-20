@@ -11,7 +11,7 @@ namespace NibrsXml.Builder
     {
         public static Incident Build(LIBRSAdmin admin)
         {
-            Incident inc = new Incident();
+            var inc = new Incident();
             inc.ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim());
             inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?

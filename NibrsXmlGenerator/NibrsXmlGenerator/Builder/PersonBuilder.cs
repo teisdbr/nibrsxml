@@ -336,7 +336,7 @@ namespace NibrsXml.Builder
             if (relationship.IsNullBlankOrEmpty()) return null;
 
             //Derived relationship
-            string derivedVicOffRelationship = relationship;
+            var derivedVicOffRelationship = relationship;
 
             //If boyfriend or girlfriend related, add gender for specific translation
             if (relationship.MatchOne("XB", "BG"))

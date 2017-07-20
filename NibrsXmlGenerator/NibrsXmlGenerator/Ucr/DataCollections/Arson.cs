@@ -4,8 +4,22 @@ namespace NibrsXml.Ucr.DataCollections
 {
     public class Arson : GeneralSummaryData
     {
-        public override string XmlRootName => "ArsonSummary";
-        public override string XslFileName => "arson.xsl";
+        public override string XmlRootName
+        {
+            get
+            {
+                return "ArsonSummary";
+            }
+        }
+
+        public override string XslFileName
+        {
+            get
+            {
+                return "arson.xsl";
+            }
+        }
+
         protected override void ClassificationCountEntryInstantiations()
         {
             ClassificationCounts.Add("A", new GeneralSummaryCounts());

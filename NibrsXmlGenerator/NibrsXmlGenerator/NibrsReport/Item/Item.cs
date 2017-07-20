@@ -42,7 +42,7 @@ namespace NibrsXml.NibrsReport.Item
             if (b == null)
                 throw new ArgumentNullException();
 
-            Item otherItem = b as Item;
+            var otherItem = b as Item;
             if (otherItem != null)
                 return Convert.ToInt32(Value.ValueAmount.Amount) - Convert.ToInt32(otherItem.Value.ValueAmount.Amount);
             else
