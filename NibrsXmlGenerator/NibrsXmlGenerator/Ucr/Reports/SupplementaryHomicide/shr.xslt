@@ -4,6 +4,9 @@
     <html>
       <head>
         <style>
+          @page :first {
+          margin-top: 10cm    
+          }
           body {
           font-size: 20px;
           }
@@ -18,17 +21,33 @@
           table {
           width: 1200px;
           border-spacing: 0px;
-          border-collapse: separate;
+          border-collapse: collapse;
+          page-break-inside: avoid;
+          }
+          tbody {
+          page-break-inside: avoid;
           }
           .rowheader {
           text-align: left;
           }
+          p.firstpagedesc{
+          font-size: 18px;
+          }
           @media print {
           table{
+          page-break-inside: avoid;
+          <!--page-break-after: always;-->
+          }
+          tbody {
           page-break-inside: avoid;
           page-break-after: always;
           }
           thead {display: table-header-group;}
+          <!--@page{
+          size: letter;
+          }-->
+          @page :first {
+          p { display:block }
           }
         </style>
       </head>
@@ -145,6 +164,7 @@
                   <td colspan="1">
                   </td>
                 </tr>
+                <br/>
               </xsl:for-each>
             </tbody>
           </table>

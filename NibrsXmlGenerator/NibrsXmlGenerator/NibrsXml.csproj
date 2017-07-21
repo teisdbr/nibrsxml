@@ -223,6 +223,7 @@
     <Content Include="Ucr\Reports\Arson\arson.xml" />
     <Content Include="Ucr\Reports\SupplementaryHomicide\SHRSample.xml" />
     <Content Include="Ucr\Reports\SupplementaryHomicide\shr.xslt" />
+    <Content Include="Ucr\Reports\SHR\TEST.xslt" />
     <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
     <Content Include="Ucr\Reports\Asre\asre.xml">
       <SubType>Designer</SubType>

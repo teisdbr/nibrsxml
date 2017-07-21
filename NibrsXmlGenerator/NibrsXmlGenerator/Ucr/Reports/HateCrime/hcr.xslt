@@ -26,11 +26,19 @@
           page-break-inside: avoid;
           page-break-after: always;
           }
+          thead {
+          display: table-header-group;
+          vertical-align: middle;
+          border-color: inherit;
+          }
           @page{
           <!--letter=1700px by 2200px@200 DPI-->
           size: letter portrait;
           margin: 5px ;
-
+          }
+          div {
+          page-break-inside: avoid;
+          <!--page-break-after: always;-->
           }
           }
           }
@@ -43,10 +51,8 @@
             <thead>
               <tr>
                 <th colspan="3" scope="colgroup" style="text-align:center;">
-                  <p>
-                    Quarterly Hate Crime Report<br/>(Offenses Known to Law Enforcement)
-                  </p>
-                </th>
+                  Quarterly Hate Crime Report<br/>(Offenses Known to Law Enforcement)
+                  </th>
               </tr>
 
               <tr>
@@ -91,6 +97,7 @@
             </thead>
             <tbody>
               <xsl:for-each select="OFFENSES/OFFENSE">
+                <div>
                 <tr>
                   <td colspan="3" style="text-align:left;border:0px;" >
                     <!--Not sure if offense # is total count or the occurence-->
@@ -132,6 +139,7 @@
                     Victim Type(s): <xsl:value-of select="VICTIMTYPE"></xsl:value-of>
                   </td>
                 </tr>
+                </div>
               </xsl:for-each>
             </tbody>
           </table>
