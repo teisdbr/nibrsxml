@@ -11,7 +11,7 @@
           border: 0px ;
           text-align: left;
           }
-
+          
           td {
           border: 1px solid black;
           text-align: left;
@@ -50,28 +50,27 @@
         </style>
       </head>
       <body>
-
-        <table>
-          <xsl:for-each select="SHR/INCIDENTS/INCIDENT">
-            <xsl:variable name="iposition" select="position()" />
+        
+          <table>
+            <xsl:for-each select="INCIDENTS/INCIDENT">
+              <xsl:variable name="iposition" select="position()" />
             <colgroup span="3"></colgroup>
             <thead>
-
+              
               <tr>
                 <th colspan="3" scope="colgroup" style="text-align:center;">
-                  Supplementary Homicide Report
+                    Supplementary Homicide Report
                 </th>
               </tr>
-
-
+             
+             
             </thead>
             <tbody>
               <tr>
                 <th colspan="3" scope="colgroup" >
                   <xsl:if test="MANSLAUGTERNEGLIGENT='1'">
                     <div class="block">
-                      <!--<p class="firstpage">-->
-                      <p>Manslaughter by Negligence</p>
+                      <!--<p class="firstpage">--><p>Manslaughter by Negligence</p>
                       <!--<p class="firstpagedesc">-->
                       <p>
                         Do not list traffic fatalities, accidental deaths, or death due to negligence of the victim. List below all other
@@ -131,10 +130,10 @@
                     Offenders for Victim #: <xsl:value-of select="$iposition" />
                   </td>
                 </tr>
-             
-
-              <xsl:for-each select="OFFENDERS/OFFENDER">
-                <div>
+              </xsl:for-each>
+              
+                <xsl:for-each select="OFFENDERS/OFFENDER">
+                  <div>
                   <tr>
                     <td colspan="3" style="text-align:left;border:0px;">
                       Offender # : <xsl:value-of select="position()" />
@@ -174,14 +173,13 @@
                     </td>
                   </tr>
                   <br/>
-                </div>
-              </xsl:for-each>
-              </xsl:for-each>
-
+                  </div>
+                </xsl:for-each>
+              
             </tbody>
-          </xsl:for-each>
-        </table>
-
+            </xsl:for-each>
+          </table>
+        
       </body>
     </html>
   </xsl:template>
