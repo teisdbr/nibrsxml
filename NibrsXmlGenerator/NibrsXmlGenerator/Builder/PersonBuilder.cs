@@ -138,9 +138,9 @@ namespace NibrsXml.Builder
                     new Person(
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(offender.Age),
-                        ethnicityCode: null,
+                        ethnicityCode: EthnicityCode.UNKNOWN.NibrsCode(),
                         raceCode: offender.Race,
-                        residentCode: null,
+                        residentCode: ResidentCode.UNKNOWN.NibrsCode(),
                         sexCode: offender.Sex,
                         augmentation: null //This person should never be a NB, BB, or NN.
                     );

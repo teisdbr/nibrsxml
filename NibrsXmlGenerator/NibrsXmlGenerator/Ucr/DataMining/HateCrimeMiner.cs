@@ -119,7 +119,7 @@ namespace NibrsXml.Ucr.DataMining
                 var offenseOffenderGroupRace = RACCode.UNKNOWN.NibrsCode();
                 var offenseOffenderGroupEthnicity = EthnicityCode.UNKNOWN.NibrsCode();
 
-                if (offenders.Count > 1 || offenders[0].SeqNum != HateCrimeConstants.UnknownOffenderSequenceCode)
+                if (offenders.Count > 0 || offenders[0].SeqNum != HateCrimeConstants.UnknownOffenderSequenceCode)
                 {
                     //Get offender counts (juvenile, adult, and total)
                     offenseJuvenileOffenderCount = offenders.Count(o => o.Person.AgeMeasure.IsJuvenile);

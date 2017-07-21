@@ -151,16 +151,14 @@ namespace NibrsXml.Builder
             {
                 //Modify and Use current offense Location Object
                 //Add to location list only if category code does not already exist.
-                if ((locations.Where(location => location.CategoryCode == offense.Location.CategoryCode)).Count() == 0)
+                if (locations.All(location => location.CategoryCode != offense.Location.CategoryCode))
                 {
-                    offense.Location.Id += "Location" + (locations.Count + 1).ToString();
+                    offense.Location.Id += "Location" + (locations.Count + 1);
                     locations.Add(offense.Location);
                 }
 
                 //Create Offense Location Object
-                var offenseAssoc = new OffenseLocationAssociation();
-                offenseAssoc.OffenseRef = offense.Reference;
-                offenseAssoc.LocationRef = locations.Where(location => location.CategoryCode == offense.Location.CategoryCode).First().Reference;
+                var offenseAssoc = new OffenseLocationAssociation(offense, locations.First(location => location.CategoryCode == offense.Location.CategoryCode));
                 locationAssociations.Add(offenseAssoc);
             }
         }
@@ -235,7 +233,7 @@ namespace NibrsXml.Builder
                                                     arr => arr,
                                                     (seq, arrList) => { 
                                                         var minRank = arrList.Min(arr => arr.Rank);
-                                                        var arrest = arrList.Where(arr => arr.Rank == minRank).First();
+                                                        var arrest = arrList.First(arr => arr.Rank == minRank);
                                                         return
                                                         new Arrest(
                                                             uniquePrefix: uniquePrefix + incident.Admin.ActionType + "-",

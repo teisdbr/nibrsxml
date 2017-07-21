@@ -214,6 +214,8 @@
   <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
+    <Folder Include="Ucr\Reports\HateCrime\" />
+    <Folder Include="Ucr\Reports\SupplementaryHomicide\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
