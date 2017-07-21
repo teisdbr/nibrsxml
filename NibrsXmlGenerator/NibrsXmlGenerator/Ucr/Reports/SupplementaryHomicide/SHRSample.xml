@@ -24,8 +24,7 @@
           <ETHNICITY>Unknown</ETHNICITY>
           <RACE>Unknow</RACE>
         </VICTIM>
-      </VICTIMS>
-      <OFFENDERS>
+        <OFFENDERS>
         <OFFENDER>
           <AGE>10</AGE>
           <SEX>Male</SEX>
@@ -97,6 +96,8 @@
           <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
         </OFFENDER>
       </OFFENDERS>
+      </VICTIMS>
+      
     </INCIDENT>
   </INCIDENTS>
 </SHR>

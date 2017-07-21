@@ -25,8 +25,11 @@ namespace NibrsXml.Ucr.DataMining
             var homicideVictimSeqNums = homicideOffenseVicAssocs.Select(ov => ov.RelatedVictim.SeqNum);
             var homicideSubjectVictimAssocs = report.SubjectVictimAssocs.Where(sv => homicideVictimSeqNums.Contains(sv.RelatedVictim.SeqNum)).ToArray();
 
-            //Transform filtered result sets to get objects we want
-
+            //Extract negligence
+            var offenseCodes = homicideOffenseVicAssocs.Select(ov => ov.RelatedOffense.UcrCode).Distinct().ToArray();
+            var isHomicideNegligent = offenseCodes.Contains("09A") ? false : offenseCodes.Contains("09B");
+            
+            //Extract relationships
             var homicideRelationships = homicideSubjectVictimAssocs
                 .Select(sv => new SupplementaryHomicide.Relationship
                 {
@@ -36,6 +39,7 @@ namespace NibrsXml.Ucr.DataMining
                 })
                 .ToList();
 
+            //Extract victims
             var homicideVictims = homicideVictimSeqNums
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedVictim.SeqNum == seqNum).RelatedVictim)
                 .Select(victim => new SupplementaryHomicide.Victim
@@ -57,6 +61,7 @@ namespace NibrsXml.Ucr.DataMining
                 })
                 .ToList();
 
+            //Extract offenders
             var homicideSubjects = homicideSubjectVictimAssocs
                 .Select(sv => sv.RelatedSubject.SeqNum)
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedSubject.SeqNum == seqNum).RelatedSubject)
@@ -73,6 +78,7 @@ namespace NibrsXml.Ucr.DataMining
             //Construct the homicide incident with the previous filtered data
             var homicideIncident = new SupplementaryHomicide.Incident{
                 //Incident number is determined by TryAddIncident()
+                IsNegligent = isHomicideNegligent,
                 Victims = homicideVictims,
                 Offenders = homicideSubjects,
                 Relationships = homicideRelationships,

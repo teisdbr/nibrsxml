@@ -214,8 +214,6 @@
   <ItemGroup>
     <Folder Include="Ucr\QueryBuilder\" />
     <Folder Include="Ucr\ReportBuilder\" />
-    <Folder Include="Ucr\Reports\HateCrime\" />
-    <Folder Include="Ucr\Reports\SupplementaryHomicide\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
@@ -223,15 +221,15 @@
     <Content Include="NibrsXsd\xml\wantlist.xml" />
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
     <Content Include="Ucr\Reports\Arson\arson.xml" />
-    <Content Include="Ucr\Reports\SHR\SHRSample.xml" />
-    <Content Include="Ucr\Reports\SHR\SHR.xslt" />
+    <Content Include="Ucr\Reports\SupplementaryHomicide\SHRSample.xml" />
+    <Content Include="Ucr\Reports\SupplementaryHomicide\shr.xslt" />
     <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
     <Content Include="Ucr\Reports\Asre\asre.xml">
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Ucr\Reports\Asre\asre.xsl" />
-    <Content Include="Ucr\Reports\HCR\HCRSample.xml" />
-    <Content Include="Ucr\Reports\HCR\HCR.xslt" />
+    <Content Include="Ucr\Reports\HateCrime\HCRSample.xml" />
+    <Content Include="Ucr\Reports\HateCrime\hcr.xslt" />
     <Content Include="Ucr\Reports\HumanTrafficking\ht.xml" />
     <EmbeddedResource Include="Ucr\Reports\HumanTrafficking\ht.xsl" />
     <Content Include="Ucr\Reports\HumanTrafficking\humantrafficking.xml" />

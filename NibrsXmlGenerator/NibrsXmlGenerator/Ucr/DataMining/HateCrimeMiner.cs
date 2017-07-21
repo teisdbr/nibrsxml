@@ -141,6 +141,8 @@ namespace NibrsXml.Ucr.DataMining
                     HateCrimeOffense = new HateCrime.Offense
                     {
                         Code = offenseCode,
+                        AdultVictimCount = offenseAdultVictimCount,
+                        JuvenileVictimCount = offenseJuvenileVictimCount,
                         VictimCount = offenseTotalIndividualVictimCount,
                         Location = locationCode,
                         BiasMotivation1 = biases.ElementAtOrDefault(0),
@@ -156,8 +158,6 @@ namespace NibrsXml.Ucr.DataMining
                         VictimTypeOther = victimTypes.Contains(VictimCategoryCode.OTHER.NibrsCode()),
                         VictimTypeUnknown = victimTypes.Contains(VictimCategoryCode.UNKNOWN.NibrsCode())
                     },
-                    AdultVictimCount = offenseAdultVictimCount,
-                    JuvenileVictimCount = offenseJuvenileVictimCount,
                     AdultOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseAdultOffenderCount : null,
                     JuvenileOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseJuvenileOffenderCount : null,
                     TotalOffenderCount = offenseTotalOffenderCount,
@@ -165,11 +165,6 @@ namespace NibrsXml.Ucr.DataMining
                     OffenderGroupEthnicity = offenseOffenderGroupEthnicity
                 };
             }).ToList();
-
-            //Aggregate victims
-            var incidentAdultVictimCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.AdultVictimCount);
-            var incidentJuvenileVictimCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.JuvenileVictimCount);
-            var incidentTotalVictimCount = incidentAdultVictimCount + incidentJuvenileVictimCount;
 
             //Aggregate offenders
             var incidentAdultOffenderCount = offenses.Aggregate(0, (sum, offenseData) => sum + offenseData.AdultOffenderCount ?? sum );
@@ -191,9 +186,6 @@ namespace NibrsXml.Ucr.DataMining
             {
                 Id = report.Incident.ActivityId.Id.PadRight(12, ' ').Substring(0, 12),
                 Date = report.Incident.ActivityDate.DateTime,
-                AdultVictimCount = incidentAdultVictimCount,
-                JuvenileVictimCount = incidentJuvenileVictimCount,
-                TotalVictimCount = incidentTotalVictimCount,
                 AdultOffenderCount = incidentAdultOffenderCount,
                 JuvenileOffenderCount = incidentJuvenileOffenderCount,
                 TotalOffenderCount = incidentTotalOffenderCount,

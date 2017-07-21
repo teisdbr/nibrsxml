@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace NibrsXml.Ucr.DataCollections
 {
-    [XmlRoot]
     public class SupplementaryHomicide : Data
     {
         /// <summary>
         ///     Keep this property private so that the only way to interact with it is via the AddIncident and AddIncidents
         ///     functions
         /// </summary>
-        [XmlElement]
         private List<Incident> Incidents { get; set; }
 
         public SupplementaryHomicide()
@@ -22,16 +20,30 @@ namespace NibrsXml.Ucr.DataCollections
 
         public XDocument Serialize()
         {
-            //todo: serialize this
-            var serializer = new XmlSerializer(typeof(SupplementaryHomicide), new []{typeof(Victim), typeof(Offender), typeof(Relationship), typeof(Incident)});
-            var xml = "";
-            using (StringWriter xmlWriter = new NibrsSerializer.NibrsSerializer.Utf8StringWriter())
-            {
-                serializer.Serialize(xmlWriter, this);
-                xml = xmlWriter.ToString() + "\r\n";
-            }
-            //return xml;
-            return null;
+            return new XDocument(
+                new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"shr.xsl\""),
+                new XElement("SHR",
+                    new XElement("INCIDENTS",
+                        Incidents.Select(i => new XElement("INCIDENT",
+                            new XElement("MANSLAUGHTERNEGLIGENT", i.IsNegligent ? 1 : 0,
+                            new XElement("MANSLAUGTERNOTNEGLIGENT", i.IsNegligent ? 1 : 0,
+                            new XElement("SITUATION", i.Situation),
+                            new XElement("VICTIMS",
+                                i.Victims.Select(v => new XElement("VICTIM",
+                                    new XElement("AGE", v.Age),
+                                    new XElement("SEX", v.Sex),
+                                    new XElement("ETHNICITY", v.Ethnicity),
+                                    new XElement("RACE", v.Race),
+                                    new XElement("OFFENDERS",
+                                        i.Offenders.Select(o => new XElement("OFFENDER",
+                                            new XElement("AGE", o.Age),
+                                            new XElement("SEX", o.Sex),
+                                            new XElement("ETHNICITY", o.Ethnicity),
+                                            new XElement("RACE", o.Race),
+                                            new XElement("WEAPONUSED"),
+                                            new XElement("RELATIONSHIP"),
+                                            new XElement("CIRCUMSTANCE"),
+                                            new XElement("SUBCIRCUMSTANCE"))))))))))))));
         }
 
         /// <summary>
@@ -48,79 +60,40 @@ namespace NibrsXml.Ucr.DataCollections
                 Incidents.Add(incident);
         }
 
-        [XmlRoot]
         public class Victim
         {
-            [XmlElement]
             public string Age { get; set; }
-
-            [XmlElement]
             public string Sex { get; set; }
-
-            [XmlElement]
             public string Race { get; set; }
-
-            [XmlElement]
             public string Ethnicity { get; set; }
-
-            [XmlElement]
             public bool WasKilledByNegligence { get; set; }
-
-            [XmlElement]
             public string Circumstance { get; set; }
-
-            [XmlElement]
             public string Subcircumstance { get; set; }
         }
 
-        [XmlRoot]
         public class Offender
         {
-            [XmlElement]
             public string SequenceNumber { get; set; }
-
-            [XmlElement]
             public string Age { get; set; }
-
-            [XmlElement]
             public string Sex { get; set; }
-
-            [XmlElement]
             public string Race { get; set; }
-
-            [XmlElement]
             public string Ethnicity { get; set; }
         }
 
-        [XmlRoot]
         public class Relationship
         {
-            [XmlElement]
             public string VictimSequenceNumber { get; set; }
-
-            [XmlElement]
             public string OffenderSequenceNumber { get; set; }
-
-            [XmlElement]
             public string RelationshipOfVictimToOffender { get; set; }
         }
 
-        [XmlRoot]
         public class Incident
         {
-            [XmlElement]
             public string SequenceNumber { get; set; }
-
-            [XmlElement]
+            public bool IsNegligent { get; set; }
             public List<Victim> Victims { get; set; }
-
-            [XmlElement]
             public List<Offender> Offenders { get; set; }
-
-            [XmlElement]
             public List<Relationship> Relationships { get; set; }
-
-            [XmlElement]
             public string Situation { get; set; }
         }
     }
