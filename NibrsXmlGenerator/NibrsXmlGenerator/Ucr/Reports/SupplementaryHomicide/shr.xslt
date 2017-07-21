@@ -30,12 +30,10 @@
           }
           thead {display: table-header-group;}
           }
-         
-          
         </style>
       </head>
       <body>
-        <xsl:for-each select="INCIDENTS/INCIDENT">
+        <xsl:for-each select="SHR/INCIDENTS/INCIDENT">
           <xsl:variable name="iposition" select="position()" />
           <table>
             <colgroup span="3"></colgroup>
@@ -145,7 +143,6 @@
                     Subcircumstance : <xsl:value-of select="SUBCIRCUMSTANCE" />
                   </td>
                   <td colspan="1">
-
                   </td>
                 </tr>
               </xsl:for-each>

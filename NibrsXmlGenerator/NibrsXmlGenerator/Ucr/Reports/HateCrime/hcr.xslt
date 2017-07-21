@@ -37,7 +37,7 @@
         </style>
       </head>
       <body>
-        <xsl:for-each select="INCIDENTS/INCIDENT">
+        <xsl:for-each select="HCR/INCIDENTS/INCIDENT">
           <table>
             <colgroup span="3"></colgroup>
             <thead>
