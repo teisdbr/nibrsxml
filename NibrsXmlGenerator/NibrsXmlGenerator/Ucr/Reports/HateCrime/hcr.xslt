@@ -19,6 +19,18 @@
           border: 1px solid black;
           text-align: left;
           }
+          div{
+          white-space:nowrap;
+          }
+          th.head{
+          border: 0px;
+          text-align: left;
+          font-weight: bold;
+          font-size: 15px;
+          padding-left:15px;
+          padding-right:120px;
+
+          }
           table {
           width: 1200px;
           border-spacing: 0px;
@@ -46,7 +58,7 @@
           size: letter portrait;
           margin: 5px ;
           }
-          div {
+          div.body {
           page-break-inside: avoid;
           <!--page-break-after: always;-->
           }
@@ -63,6 +75,24 @@
                 <th colspan="3" scope="colgroup" style="text-align:center;">
                   Quarterly Hate Crime Report<br/>(Offenses Known to Law Enforcement)
                   </th>
+              </tr>
+              <tr colspan="3">
+                <div >
+                  <th    class="head">
+                    <xsl:value-of select="../../@AGENCY" />
+                  </th>
+                  <th   class="head">
+                    City:<xsl:value-of select="../../@CITY" />
+                  </th>
+                  <th  class="head">
+                    Parish:<xsl:value-of select="../../@PARISH" />
+                  </th>
+                  <th  class="head">
+                    <xsl:value-of select="../../@QUARTER" />
+                    <br/>
+                    <br/>
+                  </th>
+                </div>
               </tr>
 
              </thead>
@@ -107,7 +137,7 @@
                 </td>
               </tr>
               <xsl:for-each select="OFFENSES/OFFENSE">
-                <div>
+                <div class="body">
                 <tr>
                   <td colspan="3" style="text-align:left;border:0px;" >
                     <!--Not sure if offense # is total count or the occurence-->
@@ -152,6 +182,42 @@
                 </div>
               </xsl:for-each>
             </tbody>
+            <tfoot>
+              <tr colspan="3">
+                <div>
+                  <th    class="head">
+                    Prepared By:<xsl:value-of select="../../@PREPAREDBY" />
+                  </th>
+                  <th   class="head">
+                    Date Prepared:<xsl:value-of select="../../@PREPAREDDATE" />
+                  </th>
+                  <th  class="head">
+                    Title:<xsl:value-of select="../../@TITLE" />
+                  </th>
+                </div>
+              </tr>
+              <tr colspan="3">
+                <div>
+                  <th    class="head">
+                    Generated On:<xsl:value-of select="../../@GENERATEDDATE" />
+                  </th>
+                  <th   class="head">
+                    Chief:<xsl:value-of select="../../@CHIEF" />
+                  </th>
+                  <th  class="head">
+                    Phone:<xsl:value-of select="../../@PHONE" />
+                  </th>
+                </div>
+              </tr>
+              <tr colspan="3">
+                <div>
+                  <th    class="head">
+                    Population:<xsl:value-of select="../../@POPULATION" />
+                  </th>
+                 
+                </div>
+              </tr>
+            </tfoot>
           </table>
         </xsl:for-each>
       </body>

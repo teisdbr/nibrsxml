@@ -1,5 +1,5 @@
-<?xml-stylesheet type="text/xsl" href="SHR.xslt"?>
-<SHR PARISH="New Orleans" CITY="New Orleans" PERIOD="September 2016" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
+<?xml-stylesheet type="text/xsl" href="shr.xslt"?>
+<SHR AGENCY="Delgado Community College" PARISH="New Orleans" CITY="New Orleans" PERIOD="September 2016" CHIEF="" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
  <INCIDENTS>
     <INCIDENT>
       <MANSLAUGTERNEGLIGENT></MANSLAUGTERNEGLIGENT>

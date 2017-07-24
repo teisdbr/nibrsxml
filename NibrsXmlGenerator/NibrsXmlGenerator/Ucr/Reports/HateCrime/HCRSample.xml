@@ -1,18 +1,5 @@
-<?xml-stylesheet type="text/xsl" href="HCR.xslt"?>
-<!--<?xml-stylesheet type="text/xsl" href="hcr.xslt"?>-->
-<HCR PARISH="New Orleans" CITY="New Orleans" QUARTER="January - March 2012" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
-  <HEADER>
-    <PARISH>New Orleans</PARISH>
-    <CITY>New Orleans</CITY>
-    <QUARTER> January-March 2012</QUARTER>
-  </HEADER>
-  <FOOTER>
-    <PREPAREDBY></PREPAREDBY>
-    <PREPAREDDATE></PREPAREDDATE>
-    <TITLE></TITLE>
-    <GENERATEDDATE></GENERATEDDATE>
-    <PHONE></PHONE>
-  </FOOTER>
+<?xml-stylesheet type="text/xsl" href="hcr.xslt"?>
+<HCR PARISH="New Orleans" CITY="New Orleans" QUARTER="January - March 2012" POPULATION="" CHIEF="" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
   <INCIDENTS>
     <INCIDENT>
       <INCIDENTNUM>A-30426-12</INCIDENTNUM>
