@@ -7,8 +7,14 @@
           body {
           font-size: 20px;
           }
-          th{border: 0px ;
+          th{
+          border: 0px ;
           text-align: left;}
+          td.head{
+          border: 0px ;
+          text-align: left;
+          font-weight: bold;
+          }
           td {
           border: 1px solid black;
           text-align: left;
@@ -19,6 +25,10 @@
           border-collapse: separate;
           }
           .rowheader {
+          text-align: left;
+          }
+          td.head{
+          border: 0px ;
           text-align: left;
           }
           @media print {
@@ -55,47 +65,47 @@
                   </th>
               </tr>
 
+             </thead>
+            <tbody>
               <tr>
-                <th >
+                <td colspan="3" class="head">
                   Incident Date : <xsl:value-of select="INCIDENTDATE" />
 
-                </th>
+                </td>
               </tr>
               <tr>
-                <th >
+                <td colspan="3" class="head">
 
                   Incident # : <xsl:value-of select="INCIDENTNUM" />
 
-                </th>
+                </td>
               </tr>
               <tr>
-                <th>
+                <td colspan="3" class="head">
                   Filing Type : <xsl:value-of select="FILINGTYPE" />
-                </th>
+                </td>
               </tr>
               <tr>
-                <th  colspan="2">
+                <td  colspan="2" class="head">
                   #Adult Offenders: <xsl:value-of select="ADULTOFFENDERSCOUNT" />
-                </th>
-                <th>
+                </td>
+                <td  colspan="1" class="head">
                   #Juvenile Offenders : <xsl:value-of select="JUVENILEOFFENDERSCOUNT" />
-                </th>
+                </td>
               </tr>
               <tr>
-                <th  colspan="2">
+                <td  colspan="2" class="head">
                   Offender Race :<xsl:value-of select="OFFENDERRACE" />
-                </th>
-                <th>
+                </td>
+                <td  colspan="1" class="head">
                   Offender Ethnicity :<xsl:value-of select="OFFENDERETHNICITY" />
-                </th>
+                </td>
               </tr>
               <tr>
-                <th>
+                <td colspan="3" class="head">
                   Offenses for this Incident # :
-                </th>
+                </td>
               </tr>
-            </thead>
-            <tbody>
               <xsl:for-each select="OFFENSES/OFFENSE">
                 <div>
                 <tr>

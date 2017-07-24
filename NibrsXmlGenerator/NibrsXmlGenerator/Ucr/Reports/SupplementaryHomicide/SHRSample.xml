@@ -1,18 +1,6 @@
-<?xml-stylesheet type="text/xsl" href="XSLTFile1.xslt"?>
-<SHR>
-  <HEADER>
-    <PARISH>New Orleans</PARISH>
-    <CITY>New Orleans</CITY>
-    <MONTH> September 2016 </MONTH>
-  </HEADER>
-  <FOOTER>
-    <PREPAREDBY></PREPAREDBY>
-    <PREPAREDDATE></PREPAREDDATE>
-    <TITLE></TITLE>
-    <GENERATEDDATE></GENERATEDDATE>
-    <PHONE></PHONE>
-  </FOOTER>
-  <INCIDENTS>
+<?xml-stylesheet type="text/xsl" href="SHR.xslt"?>
+<SHR PARISH="New Orleans" CITY="New Orleans" PERIOD="September 2016" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
+ <INCIDENTS>
     <INCIDENT>
       <MANSLAUGTERNEGLIGENT></MANSLAUGTERNEGLIGENT>
       <MANSLAUGTERNOTNEGLIGENT>1</MANSLAUGTERNOTNEGLIGENT>

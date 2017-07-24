@@ -10,6 +10,7 @@
           td.head{
           border: 0px ;
           text-align: left;
+          font-weight: bold;
           }
 
           td {
@@ -25,7 +26,7 @@
           .rowheader {
           text-align: left;
           }
-          p.firstpagedesc{
+          p.desc{
           font-size: 18px;
           }
           @media print {
@@ -40,10 +41,7 @@
           }
 
 
-          @page :first {
-          .block { font-size: 90px;display: none; }
-          }
-
+          
           }
 
 
@@ -67,30 +65,29 @@
             </thead>
             <tbody>
               <tr>
-                <th colspan="3" scope="colgroup" >
+                <td colspan="3" scope="colgroup" class="head" >
                   <xsl:if test="MANSLAUGTERNEGLIGENT='1'">
-                    <div class="block">
-                      <!--<p class="firstpage">-->
+                   
+                      
                       <p>Manslaughter by Negligence</p>
-                      <!--<p class="firstpagedesc">-->
-                      <p>
+                      <p class="desc">
+                    
                         Do not list traffic fatalities, accidental deaths, or death due to negligence of the victim. List below all other
                         negligent manslaughters, regardless of prosecutive action taken.
                       </p>
-                    </div>
+                    
                   </xsl:if>
                   <xsl:if test="MANSLAUGTERNOTNEGLIGENT='1'">
-                    <div class="block">
-                      <p class="firstpage">Murder and Nonnegligent Manslaughter</p>
-                      <p class="firstpagedesc">
+                   
+                      <p >Murder and Nonnegligent Manslaughter</p>
+                      <p class="desc">    
                         List below for each murder and nonnegligent homicide and / or justifiable homicide shown in item 1a of the monthly
                         Return A. In addition, for justifiable homicide list all justifiable killings of felons by a citizen or by a peace
                         officer in the line of duty. A brief explanation in the circumstances field regarding unfounded homicide offenses
                         will aid the natural Uniform Crime Reporting Program in editing the reports.
                       </p>
-                    </div>
-                  </xsl:if>
-                </th>
+                    </xsl:if>
+                </td>
               </tr>
               <tr>
                 <td colspan="3" class="head">
