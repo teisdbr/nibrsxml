@@ -43,6 +43,13 @@
 	<body>
 		<div id="report-header">Law Enforcement Officers Killed or Assaulted</div>
 		<br/>
+    <div style="float:left">
+      <xsl:value-of select="concat(//@AGENCY,'   ',//@ORI)" />
+    </div>
+    <div style="float:right">
+      <xsl:value-of select="//@PERIOD"/>
+    </div>
+    <br/>
 		<table id="killed-table">
 			<thead>
 				<tr>
