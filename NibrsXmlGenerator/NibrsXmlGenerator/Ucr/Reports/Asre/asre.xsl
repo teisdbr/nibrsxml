@@ -31,10 +31,14 @@
           text-align: left;
           }
           .ages {
-            background-color: yellow;
+          background-color: yellow;
           }
           .table-pad-bot {
-            padding-bottom: 10px;
+          padding-bottom: 10px;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
@@ -47,7 +51,17 @@
           <colgroup span="4"></colgroup>
           <thead>
             <tr>
-              <th colspan="39">Age, Sex, Race, and Ethnicity of Persons Arrested</th>
+              <th colspan="39" class="title">Age, Sex, Race, and Ethnicity of Persons Arrested</th>
+            </tr>
+            <tr>
+              <xsl:for-each select="ASRSummary">
+                <th colspan="20" style="text-align:left;border:0px;">
+                  <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
+                </th>
+                <th colspan="19" style="text-align:right;border:0px;">
+                  <xsl:value-of select="@Period" />
+                </th>
+              </xsl:for-each>
             </tr>
             <tr>
               <th rowspan="3" scope="col">Classification of Offenses</th>

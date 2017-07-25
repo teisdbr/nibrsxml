@@ -15,7 +15,7 @@
           }
           table {
           border-spacing: 0px;
-          border-collapse: separate;
+          border-collapse: collapse;
           }
           td {
           text-align:right;
@@ -32,21 +32,22 @@
       <body>
         <table>
           <xsl:for-each select="ReturnASummary">
-          <colgroup span="6"></colgroup>
+          <colgroup span="7"></colgroup>
           <thead>
           <tr>
-              <th colspan="6" scope="colgroup" class="title" >Return A - Monthly Return of Offenses Known to the Police</th>
+              <th colspan="7" scope="colgroup" class="title" >Return A - Monthly Return of Offenses Known to the Police</th>
             </tr>
             <tr>
               <th colspan="3" style="text-align:left;border:0px;">
                 <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
               </th>
-              <th colspan="3" style="text-align:right;border:0px;">
+              <th colspan="4" style="text-align:right;border:0px;">
                 <xsl:value-of select="@Period" />
               </th>
             </tr>
             <tr>
               <th scope="col">1</th>
+              <th scope="col" width="1px" rowspan="2">DATA ENTRY</th>
               <th scope="col">2</th>
               <th scope="col">3</th>
               <th scope="col">4</th>
@@ -151,6 +152,89 @@
                     </xsl:otherwise>
                   </xsl:choose>
                 </th>
+                <td style="text-align:center;">
+                  <xsl:choose>
+                   
+                    <xsl:when test="@name='1a'">
+                      <xsl:value-of select="'11'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='1b'">
+                      <xsl:value-of select="'12'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='2'">
+                      <xsl:value-of select="'20'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='2a'">
+                      <xsl:value-of select="'21'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='2b'">
+                      <xsl:value-of select="'22'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='3'">
+                      <xsl:value-of select="'30'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='3a'">
+                      <xsl:value-of select="'31'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='3b'">
+                      <xsl:value-of select="'32'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='3c'">
+                      <xsl:value-of select="'33'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='3d'">
+                      <xsl:value-of select="'34'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4'">
+                      <xsl:value-of select="'40'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4a'">
+                      <xsl:value-of select="'41'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4b'">
+                      <xsl:value-of select="'42'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4c'">
+                      <xsl:value-of select="'43'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4d'">
+                      <xsl:value-of select="'44'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='4e'">
+                      <xsl:value-of select="'45'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='5'">
+                      <xsl:value-of select="'50'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='5a'">
+                      <xsl:value-of select="'51'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='5b'">
+                      <xsl:value-of select="'52'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='5c'">
+                      <xsl:value-of select="'53'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='6'">
+                      <xsl:value-of select="'60'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='7'">
+                      <xsl:value-of select="'70'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='7a'">
+                      <xsl:value-of select="'71'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='7b'">
+                      <xsl:value-of select="'72'"/>
+                    </xsl:when>
+                    <xsl:when test="@name='7c'">
+                      <xsl:value-of select="'73'"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="' '"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </td>
 
                 <!-- Offenses Reported is same as Actual -->
                 <td>

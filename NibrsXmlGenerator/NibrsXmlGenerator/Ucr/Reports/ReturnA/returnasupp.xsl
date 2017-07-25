@@ -6,26 +6,30 @@
       <head>
         <style>
           body {
-            font-size: 10px;
+          font-size: 10px;
           }
           th, td {
-            border: 1px solid black;
+          border: 1px solid black;
           }
           th {
-            text-align:center;
+          text-align:center;
           }
           table {
-            border-spacing: 0px;
-            border-collapse: separate;
+          border-spacing: 0px;
+          border-collapse: separate;
           }
           td {
-            text-align:right;
+          text-align:right;
           }
           .rowheader {
-            text-align: left;
+          text-align: left;
           }
           .table-pad-bot {
-            padding-bottom: 10px;
+          padding-bottom: 10px;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
@@ -33,14 +37,33 @@
         <table class='table-pad-bot'>
           <colgroup span="3"></colgroup>
           <thead>
-            <tr>
-              <th colspan="3" scope="colgroup">Supplement to Return A - Property by Type and Value</th>
+            <xsl:for-each select="ReturnASupplement">
+              <tr>
+              <th colspan="4" scope="colgroup" class="title">Supplement to Return A <br/>Monthly Return Of Offenses Known to Police</th>
             </tr>
+              <tr>
+                <th colspan="2" style="text-align:left;border:0px;">
+                  <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
+                </th>
+                <th colspan="2" style="text-align:right;border:0px;">
+                  <xsl:value-of select="@Period" />
+                </th>
+              </tr>
+              <tr>
+                <th colspan="4" scope="colgroup">PROPERTY BY TYPE AND VALUE</th>
+              </tr>
             <tr>
-              <th scope="col">Property Type</th>
-              <th scope="col">Stolen Value</th>
-              <th scope="col">Recovered Value</th>
+              <th scope="col">Type of Property</th>
+              <th scope="col" rowspan="2">Data Entry</th>
+              <th colspan="2">Monetary value of Property Stolen in Your Jurisdiction</th>
+              
             </tr>
+              <tr>
+                <th scope="col">(1)</th>
+                <th scope="col">Stolen<br/>(2)</th>
+                <th scope="col">Recovered<br/>(3)</th>
+              </tr>
+            </xsl:for-each>
           </thead>
           <tbody>
             <xsl:for-each select="ReturnASupplement/StolenAndRecoveredProperties/Property">
@@ -89,6 +112,9 @@
                     </xsl:otherwise>
                   </xsl:choose>
                 </th>
+                <td style="text-align:center;">
+                  <xsl:value-of select="@entry"/>
+                </td>
                 <td>
                   <xsl:choose>
                     <xsl:when test="not(Stolen)">$0.00</xsl:when>
@@ -110,15 +136,22 @@
           </tbody>
         </table>
         <table>
-          <colgroup span="3"></colgroup>
+          <colgroup span="4"></colgroup>
           <thead>
             <tr>
-              <th colspan="3" scope="colgroup">Supplement to Return A - Property Stolen by Classification</th>
+              <th colspan="4" scope="colgroup">PROPERTY STOLEN BY CLASSIFICATION</th>
             </tr>
             <tr>
-              <th scope="col">Classification</th>
-              <th scope="col">Number of Actual Offenses</th>
-              <th scope="col">Stolen Value</th>
+              <th scope="col" rowspan="2">Classification</th>
+              <th scope="col" rowspan="2">Data Entry</th>
+              <th colspan="2" >
+                <br/>
+              </th>
+             
+            </tr>
+            <tr>
+              <th scope="col">Number of Actual Offenses(Column 4 Return A)</th>
+              <th scope="col">Monetary Value of Property Stolen</th>
             </tr>
           </thead>
           <tbody>
@@ -243,6 +276,9 @@
                     </xsl:otherwise>
                   </xsl:choose>
                 </th>
+                <td style="text-align:center;">
+                  <xsl:value-of select="@entry"/>
+                </td>
                 <td>
                   <xsl:choose>
                     <xsl:when test="not(Actual)">0</xsl:when>
