@@ -5,32 +5,45 @@
       <head>
         <style>
           body {
-            font-size: 10px;
+          font-size: 10px;
           }
           th, td {
-            border: 1px solid black;
+          border: 1px solid black;
           }
           th {
-            text-align:center;
+          text-align:center;
           }
           table {
-            border-spacing: 0px;
-            border-collapse: separate;
+          border-spacing: 0px;
+          border-collapse: separate;
           }
           td {
-            text-align:right;
+          text-align:right;
           }
           .rowheader {
-            text-align: left;
+          text-align: left;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
       <body>
         <table>
+          <xsl:for-each select="HumanTraffickingSummary">
           <colgroup span="6"></colgroup>
           <thead>
             <tr>
-              <th colspan="6" scope="colgroup">Monthly Return of Human Trafficking Offenses Known to Law Enforcement</th>
+              <th colspan="6" scope="colgroup" class="title">Monthly Return of Human Trafficking Offenses Known to Law Enforcement</th>
+            </tr>
+            <tr>
+              <th colspan="3" style="text-align:left;border:0px;">
+                <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
+              </th>
+              <th colspan="3" style="text-align:right;border:0px;">
+                <xsl:value-of select="@Period" />
+              </th>
             </tr>
             <tr>
               <th scope="col">1</th>
@@ -50,7 +63,7 @@
             </tr>
           </thead>
           <tbody>
-            <xsl:for-each select="HumanTraffickingSummary/Classification">
+            <xsl:for-each select="Classification">
               <xsl:sort select="@name"/>
               <tr>
                 <!--The row header-->
@@ -92,6 +105,7 @@
               </tr>
             </xsl:for-each>
           </tbody>
+            </xsl:for-each>
         </table>
       </body>
     </html>

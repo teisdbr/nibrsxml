@@ -23,14 +23,27 @@
           .rowheader {
           text-align: left;
           }
+          .title{
+          border:0px;
+          font-size:20px;
+          }
         </style>
       </head>
       <body>
         <table>
+          <xsl:for-each select="ReturnASummary">
           <colgroup span="6"></colgroup>
           <thead>
+          <tr>
+              <th colspan="6" scope="colgroup" class="title" >Return A - Monthly Return of Offenses Known to the Police</th>
+            </tr>
             <tr>
-              <th colspan="6" scope="colgroup">Return A - Monthly Return of Offenses Known to the Police</th>
+              <th colspan="3" style="text-align:left;border:0px;">
+                <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
+              </th>
+              <th colspan="3" style="text-align:right;border:0px;">
+                <xsl:value-of select="@Period" />
+              </th>
             </tr>
             <tr>
               <th scope="col">1</th>
@@ -50,7 +63,7 @@
             </tr>
           </thead>
           <tbody>
-            <xsl:for-each select="ReturnASummary/Classification">
+            <xsl:for-each select="Classification">
               <tr>
                 <!--The row header-->
                 <th class="rowheader">
@@ -163,6 +176,7 @@
               </tr>
             </xsl:for-each>
           </tbody>
+          </xsl:for-each>
         </table>
       </body>
     </html>

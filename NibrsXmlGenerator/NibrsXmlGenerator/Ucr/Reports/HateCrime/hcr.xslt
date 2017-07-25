@@ -7,61 +7,41 @@
           body {
           font-size: 20px;
           }
-          th{
-          border: 0px ;
-          text-align: left;}
-          td.head{
-          border: 0px ;
+          .head{
+          border: 0px;
           text-align: left;
           font-weight: bold;
+          padding:0px;
           }
-          td {
-          border: 1px solid black;
-          text-align: left;
-          }
-          div{
-          white-space:nowrap;
-          }
-          th.head{
+          .small{
           border: 0px;
           text-align: left;
           font-weight: bold;
           font-size: 15px;
-          padding-left:15px;
-          padding-right:120px;
-
+          padding:0px;
+          }
+          td {
+          border: 1px solid black;
+          text-align: left;
+          padding:10px;
           }
           table {
-          width: 1200px;
+          width: 100%;
           border-spacing: 0px;
-          border-collapse: separate;
+          border-collapse: collapse;
+          page-break-inside: avoid;
           }
-          .rowheader {
-          text-align: left;
-          }
-          td.head{
-          border: 0px ;
-          text-align: left;
+          div{
+          white-space:nowrap;
           }
           @media print {
           table{
           page-break-inside: avoid;
           page-break-after: always;
           }
-          thead {
-          display: table-header-group;
-          vertical-align: middle;
-          border-color: inherit;
-          }
-          @page{
-          <!--letter=1700px by 2200px@200 DPI-->
-          size: letter portrait;
-          margin: 5px ;
-          }
           div.body {
           page-break-inside: avoid;
           <!--page-break-after: always;-->
-          }
           }
           }
         </style>
@@ -72,27 +52,19 @@
             <colgroup span="3"></colgroup>
             <thead>
               <tr>
-                <th colspan="3" scope="colgroup" style="text-align:center;">
+                <th  colspan="3" style="text-align:center;">
                   Quarterly Hate Crime Report<br/>(Offenses Known to Law Enforcement)
                   </th>
               </tr>
-              <tr colspan="3">
-                <div >
-                  <th    class="head">
-                    <xsl:value-of select="../../@AGENCY" />
-                  </th>
-                  <th   class="head">
-                    City:<xsl:value-of select="../../@CITY" />
-                  </th>
-                  <th  class="head">
-                    Parish:<xsl:value-of select="../../@PARISH" />
-                  </th>
-                  <th  class="head">
-                    <xsl:value-of select="../../@QUARTER" />
-                    <br/>
-                    <br/>
-                  </th>
-                </div>
+              <tr >
+                <td  class="small">
+                  <xsl:value-of select="concat(../../@AGENCY,'  ',../../@ORI)" />
+                </td>
+                <td  class="small">
+                  <xsl:value-of select="../../@QUARTER" />
+                  <br />
+                  <br />
+                </td>          
               </tr>
 
              </thead>
@@ -116,19 +88,23 @@
                 </td>
               </tr>
               <tr>
-                <td  colspan="2" class="head">
+                <td   class="head">
                   #Adult Offenders: <xsl:value-of select="ADULTOFFENDERSCOUNT" />
                 </td>
-                <td  colspan="1" class="head">
+                <td   class="head">
                   #Juvenile Offenders : <xsl:value-of select="JUVENILEOFFENDERSCOUNT" />
                 </td>
               </tr>
               <tr>
-                <td  colspan="2" class="head">
+                <td   class="head">
+                  <div>
                   Offender Race :<xsl:value-of select="OFFENDERRACE" />
+                  </div>
                 </td>
-                <td  colspan="1" class="head">
+                <td   class="head">
+                  <div>
                   Offender Ethnicity :<xsl:value-of select="OFFENDERETHNICITY" />
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -157,12 +133,12 @@
                   <td  >
                     # Adult Victims : <xsl:value-of select="ADULTVICTIMSCOUNT" />
                   </td >
-                  <td colspan="2" >
+                  <td  >
                     # Juvenile Victims : <xsl:value-of select="JUVENILEVICTIMSCOUNT" />
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="1" style="text-align:left;border-right:1px;">
+                  <td  style="text-align:left;border-right:1px;">
                     Bias Motive (s) :
                   </td>
                   <td colspan="2" style="text-align:left;border-left:1px;">
@@ -182,43 +158,7 @@
                 </div>
               </xsl:for-each>
             </tbody>
-            <tfoot>
-              <tr colspan="3">
-                <div>
-                  <th    class="head">
-                    Prepared By:<xsl:value-of select="../../@PREPAREDBY" />
-                  </th>
-                  <th   class="head">
-                    Date Prepared:<xsl:value-of select="../../@PREPAREDDATE" />
-                  </th>
-                  <th  class="head">
-                    Title:<xsl:value-of select="../../@TITLE" />
-                  </th>
-                </div>
-              </tr>
-              <tr colspan="3">
-                <div>
-                  <th    class="head">
-                    Generated On:<xsl:value-of select="../../@GENERATEDDATE" />
-                  </th>
-                  <th   class="head">
-                    Chief:<xsl:value-of select="../../@CHIEF" />
-                  </th>
-                  <th  class="head">
-                    Phone:<xsl:value-of select="../../@PHONE" />
-                  </th>
-                </div>
-              </tr>
-              <tr colspan="3">
-                <div>
-                  <th    class="head">
-                    Population:<xsl:value-of select="../../@POPULATION" />
-                  </th>
-                 
-                </div>
-              </tr>
-            </tfoot>
-          </table>
+           </table>
         </xsl:for-each>
       </body>
     </html>
