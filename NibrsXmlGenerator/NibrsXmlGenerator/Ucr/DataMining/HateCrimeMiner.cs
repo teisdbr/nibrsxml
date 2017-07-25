@@ -194,11 +194,8 @@ namespace NibrsXml.Ucr.DataMining
                 Offenses = offenses.Select(offenseData => offenseData.HateCrimeOffense).ToList()
             };
 
-            //Use incident date and ORI to determine where to store it in the dictionary
-            var incidentDate = DateTime.Parse(report.Incident.ActivityDate.DateTime);
-            var ucrReportkey = incidentDate.Year + incidentDate.Month.ToDigitStr(2) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
-
             //Add the hate crime incident to the appropriate HCR
+            var ucrReportkey = report.UcrKey();
             monthlyReportData.TryAdd(ucrReportkey, new ReportData());
             monthlyReportData[ucrReportkey].HateCrimeData.Incidents.Add(hateCrimeIncident);
         }

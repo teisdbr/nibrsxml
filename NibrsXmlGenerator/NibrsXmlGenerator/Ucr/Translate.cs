@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NibrsXml.Constants;
 using NibrsXml.Utility;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Ucr
 {
@@ -73,6 +74,23 @@ namespace NibrsXml.Ucr
             //Ucr does not have code 22 in its scope, but it does for 52
             //All other codes are consistent for both systems
             return locationCategoryCode == "22" ? "52" : locationCategoryCode;
+        }
+
+        public static string TranslateSupplementaryHomicideWeaponForceCode(string forceCategoryCode)
+        {
+            //Ucr force codes have no concept of automatic firearms
+            forceCategoryCode = forceCategoryCode.Replace("A", "");
+
+            var nibrsOnlyForceCodes = new[]
+            {
+                ForceCategoryCode.MOTOR_VEHICLE.NibrsCode(),
+                ForceCategoryCode.UNKNOWN.NibrsCode(),
+                ForceCategoryCode.NONE.NibrsCode()
+            };
+
+            return forceCategoryCode.MatchOne(nibrsOnlyForceCodes)
+                ? ForceCategoryCode.OTHER.NibrsCode()
+                : forceCategoryCode;
         }
     }
 }

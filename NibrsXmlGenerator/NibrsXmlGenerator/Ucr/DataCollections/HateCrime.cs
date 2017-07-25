@@ -72,7 +72,14 @@ namespace NibrsXml.Ucr.DataCollections
                                     new XElement("LOCATIONCODE", o.Location),
                                     new XElement("ADULTVICTIMSCOUNT", o.AdultVictimCount),
                                     new XElement("JUVENILEVICTIMSCOUNT", o.JuvenileVictimCount),
-                                    new XElement("VICTIMTYPE", "INDIVIDUAL"), //todo: right now the victim type only allows one type per offense group. this needs to change to allow multiple per group
+                                    new XElement("VICTIMTYPE",
+                                        new XElement("INDIVIDUAL", Convert.ToInt32(o.VictimTypeIndividual)),
+                                        new XElement("BUSINESS", Convert.ToInt32(o.VictimTypeBusiness)),
+                                        new XElement("FINANCIAL", Convert.ToInt32(o.VictimTypeFinancialInstitution)),
+                                        new XElement("GOVERNMENT", Convert.ToInt32(o.VictimTypeGovernment)),
+                                        new XElement("RELIGIOUS", Convert.ToInt32(o.VictimTypeReligiousOrg)),
+                                        new XElement("OTHER", Convert.ToInt32(o.VictimTypeOther)),
+                                        new XElement("UNKNOWN", Convert.ToInt32(o.VictimTypeUnknown))),
                                     new XElement("BIASMOTIVES", biases));
                             })))))));
         }

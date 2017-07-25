@@ -3,7 +3,6 @@ using System.Linq;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.NibrsReport.Offense;
 
-
 namespace NibrsXml.Ucr.DataMining
 {
     public class UcrHierarchyMiner
@@ -17,7 +16,6 @@ namespace NibrsXml.Ucr.DataMining
                 return new List<string> { "09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C" };
             }
         }
-                
 
         public Offense HighestRatedOffense { get; private set; }
         public List<OffenseVictimAssociation> VictimsRelatedToHighestRatedOffense { get; private set; }
@@ -32,11 +30,11 @@ namespace NibrsXml.Ucr.DataMining
             if (!offenses.Any()) return;
 
             //Select the highest ranking offense based on the reversed index of the array.
-            this.HighestRatedOffense = offenses.OrderBy(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode)).FirstOrDefault(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode) >= 0);
+            HighestRatedOffense = offenses.OrderBy(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode)).FirstOrDefault(o => UcrHierarchyOrderArray.IndexOf(o.UcrCode) >= 0);
 
-            if (this.HighestRatedOffense == null) return;
+            if (HighestRatedOffense == null) return;
 
-            this.VictimsRelatedToHighestRatedOffense = victimAssociations.Where(ov => ov.RelatedOffense.UcrCode == HighestRatedOffense.UcrCode)
+            VictimsRelatedToHighestRatedOffense = victimAssociations.Where(ov => ov.RelatedOffense.UcrCode == HighestRatedOffense.UcrCode)
                 .ToList();
         }
     }

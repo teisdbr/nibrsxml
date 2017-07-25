@@ -29,6 +29,10 @@ namespace NibrsXml.Ucr.DataMining
             var offenseCodes = homicideOffenseVicAssocs.Select(ov => ov.RelatedOffense.UcrCode).Distinct().ToArray();
             var isHomicideNegligent = offenseCodes.Contains("09A") ? false : offenseCodes.Contains("09B");
             
+            //Extract weapon (used for all offenders)
+            var mostCriticalOffense = homicideOffenseVicAssocs.First(ov => ov.RelatedOffense.UcrCode == offenseCodes.OrderBy(o => o).First()).RelatedOffense;
+            var weaponUsed = Translate.TranslateSupplementaryHomicideWeaponForceCode(mostCriticalOffense.Forces.OrderBy(f => f.CategoryCode).First().CategoryCode);
+
             //Extract relationships
             var homicideRelationships = homicideSubjectVictimAssocs
                 .Select(sv => new SupplementaryHomicide.Relationship
@@ -44,6 +48,7 @@ namespace NibrsXml.Ucr.DataMining
                 .Select(seqNum => homicideSubjectVictimAssocs.First(sv => sv.RelatedVictim.SeqNum == seqNum).RelatedVictim)
                 .Select(victim => new SupplementaryHomicide.Victim
                 {
+                    SequenceNumber = victim.SeqNum,
                     Age = victim.Person.AgeMeasure.Value ?? "00",
                     Sex = victim.Person.SexCode,
                     Ethnicity = victim.Person.EthnicityCode,
@@ -71,7 +76,8 @@ namespace NibrsXml.Ucr.DataMining
                     Age = subject.Person.AgeMeasure.Value ?? "00",
                     Sex = subject.Person.SexCode,
                     Ethnicity = subject.Person.EthnicityCode,
-                    Race = subject.Person.RaceCode
+                    Race = subject.Person.RaceCode,
+                    WeaponUsed = weaponUsed
                 })
                 .ToList();
 
@@ -85,11 +91,8 @@ namespace NibrsXml.Ucr.DataMining
                 Situation = GetSituation(homicideSubjects, homicideVictims)
             };
 
-            //Use incident date and ORI to determine where to store it in the dictionary
-            var incidentDate = DateTime.Parse(report.Incident.ActivityDate.DateTime);
-            var ucrReportkey = incidentDate.Year + incidentDate.Month.ToDigitStr(2) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
-
             //Add data to the appropriate SHR
+            var ucrReportkey = report.UcrKey();
             monthlyReportData.TryAdd(ucrReportkey, new ReportData());
             monthlyReportData[ucrReportkey].SupplementaryHomicideData.TryAddIncident(homicideIncident);
         }

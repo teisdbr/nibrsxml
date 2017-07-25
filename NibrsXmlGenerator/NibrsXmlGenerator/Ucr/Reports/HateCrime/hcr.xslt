@@ -152,7 +152,14 @@
                 </tr>
                 <tr >
                   <td colspan="3">
-                    Victim Type(s): <xsl:value-of select="VICTIMTYPE"></xsl:value-of>
+                    Victim Type(s): 
+                    <xsl:if test="VICTIMTYPE/INDIVIDUAL='1'">Individual</xsl:if>
+                    <xsl:if test="VICTIMTYPE/BUSINESS='1'"> Business</xsl:if>
+                    <xsl:if test="VICTIMTYPE/FINANCIAL='1'"> Financial-Institution</xsl:if>
+                    <xsl:if test="VICTIMTYPE/GOVERNMENT='1'"> Government</xsl:if>
+                    <xsl:if test="VICTIMTYPE/RELIGIOUS='1'"> Religious-Organization</xsl:if>
+                    <xsl:if test="VICTIMTYPE/OTHER='1'"> Other</xsl:if>
+                    <xsl:if test="VICTIMTYPE/UNKNOWN='1'"> Unknown</xsl:if>
                   </td>
                 </tr>
                 </div>

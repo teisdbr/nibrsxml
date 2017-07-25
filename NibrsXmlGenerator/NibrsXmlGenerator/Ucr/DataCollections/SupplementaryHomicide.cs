@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -29,21 +28,26 @@ namespace NibrsXml.Ucr.DataCollections
                             new XElement("MANSLAUGTERNOTNEGLIGENT", i.IsNegligent ? 1 : 0,
                             new XElement("SITUATION", i.Situation),
                             new XElement("VICTIMS",
-                                i.Victims.Select(v => new XElement("VICTIM",
-                                    new XElement("AGE", v.Age),
-                                    new XElement("SEX", v.Sex),
-                                    new XElement("ETHNICITY", v.Ethnicity),
-                                    new XElement("RACE", v.Race),
-                                    new XElement("OFFENDERS",
-                                        i.Offenders.Select(o => new XElement("OFFENDER",
-                                            new XElement("AGE", o.Age),
-                                            new XElement("SEX", o.Sex),
-                                            new XElement("ETHNICITY", o.Ethnicity),
-                                            new XElement("RACE", o.Race),
-                                            new XElement("WEAPONUSED"),
-                                            new XElement("RELATIONSHIP"),
-                                            new XElement("CIRCUMSTANCE"),
-                                            new XElement("SUBCIRCUMSTANCE"))))))))))))));
+                                i.Victims.GroupJoin(i.Relationships, v => v.SequenceNumber, r => r.VictimSequenceNumber, (victim, relationships) =>
+                                {
+                                    return new XElement("VICTIM",
+                                        new XElement("AGE", victim.Age),
+                                        new XElement("SEX", victim.Sex),
+                                        new XElement("ETHNICITY", victim.Ethnicity),
+                                        new XElement("RACE", victim.Race),
+                                        new XElement("OFFENDERS",
+                                            relationships.Join(i.Offenders, r => r.OffenderSequenceNumber, o => o.SequenceNumber, (relationship, offender) =>
+                                            new XElement("OFFENDER",
+                                                new XElement("AGE", offender.Age),
+                                                new XElement("SEX", offender.Sex),
+                                                new XElement("ETHNICITY", offender.Ethnicity),
+                                                new XElement("RACE", offender.Race),
+                                                new XElement("WEAPONUSED", offender.WeaponUsed),
+                                                new XElement("RELATIONSHIP", relationship.RelationshipOfVictimToOffender),
+                                                new XElement("CIRCUMSTANCE", victim.Circumstance),
+                                                new XElement("SUBCIRCUMSTANCE", victim.Subcircumstance)
+                                                ))));
+                                })))))))));
         }
 
         /// <summary>
@@ -62,6 +66,7 @@ namespace NibrsXml.Ucr.DataCollections
 
         public class Victim
         {
+            public string SequenceNumber { get; set; }
             public string Age { get; set; }
             public string Sex { get; set; }
             public string Race { get; set; }
@@ -78,6 +83,7 @@ namespace NibrsXml.Ucr.DataCollections
             public string Sex { get; set; }
             public string Race { get; set; }
             public string Ethnicity { get; set; }
+            public string WeaponUsed { get; set; }
         }
 
         public class Relationship

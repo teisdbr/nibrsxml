@@ -15,7 +15,15 @@
           <LOCATIONCODE>20 (Residence/Home)</LOCATIONCODE>
           <ADULTVICTIMSCOUNT>4</ADULTVICTIMSCOUNT>
           <JUVENILEVICTIMSCOUNT>2</JUVENILEVICTIMSCOUNT>
-          <VICTIMTYPE>INDIVIDUAL</VICTIMTYPE>
+          <VICTIMTYPE>
+            <INDIVIDUAL>1</INDIVIDUAL>
+            <BUSINESS>1</BUSINESS>
+            <FINANCIAL>0</FINANCIAL>
+            <GOVERNMENT>0</GOVERNMENT>
+            <RELIGIOUS>0</RELIGIOUS>
+            <OTHER>0</OTHER>
+            <UNKNOWN>0</UNKNOWN>
+          </VICTIMTYPE>
           <BIASMOTIVES>
             <BIASMOTIVE>
               <DESCRIPTION>43 (Anti-Lesbian,Gay,Bisexual, or Transgender (Mixed group))</DESCRIPTION>

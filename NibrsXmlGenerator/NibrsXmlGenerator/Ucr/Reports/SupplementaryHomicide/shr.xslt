@@ -91,7 +91,7 @@
               </tr>
               <tr >
                 <td class="head">
-                  Incident #: <xsl:value-of select="position()" />
+                  Incident #: <xsl:value-of select="SEQUENCENUMBER" />
                 </td>
               </tr>
               <tr >
@@ -129,7 +129,7 @@
                 </tr>
                 <tr >
                   <td style="text-align:center;border:0px">
-                    Offenders for Victim #: <xsl:value-of select="$iposition" />
+                    Offenders for Victim #: <xsl:value-of select="position()" />
                   </td>
                 </tr>
 

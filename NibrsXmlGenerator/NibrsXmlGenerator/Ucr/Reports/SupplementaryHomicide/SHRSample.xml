@@ -2,6 +2,7 @@
 <SHR AGENCY="Delgado Community College" ORI="LA03000" PERIOD="September 2016" CHIEF="" PREPAREDBY="" PREPAREDDATE="" TITLE="" GENERATEDDATE="" PHONE="">
  <INCIDENTS>
     <INCIDENT>
+      <SEQUENCENUMBER>001</SEQUENCENUMBER>
       <MANSLAUGTERNEGLIGENT></MANSLAUGTERNEGLIGENT>
       <MANSLAUGTERNOTNEGLIGENT>1</MANSLAUGTERNOTNEGLIGENT>
       <SITUATION>Multiple Victims/Multiple Offenders</SITUATION>
@@ -84,6 +85,84 @@
           </OFFENDER>
         </OFFENDERS>
        </VICTIM>
+        <VICTIM>
+          <AGE>10</AGE>
+          <SEX>Female</SEX>
+          <ETHNICITY>Unknown</ETHNICITY>
+          <RACE>Unknow</RACE>
+          <OFFENDERS>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+            <OFFENDER>
+              <AGE>10</AGE>
+              <SEX>Male</SEX>
+              <ETHNICITY>Hispanic or Latino</ETHNICITY>
+              <RACE>Black</RACE>
+              <WEAPONUSED>Handgun</WEAPONUSED>
+              <RELATIONSHIP>Common - Law Wife</RELATIONSHIP>
+              <CIRCUMSTANCE>Felon killed by private citizen</CIRCUMSTANCE>
+              <SUBCIRCUMSTANCES>Felon attacked a civilian</SUBCIRCUMSTANCES>
+            </OFFENDER>
+          </OFFENDERS>
+        </VICTIM>
       </VICTIMS>
     </INCIDENT>
   </INCIDENTS>
