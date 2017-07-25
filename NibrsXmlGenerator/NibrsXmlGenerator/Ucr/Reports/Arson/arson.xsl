@@ -6,23 +6,30 @@
       <head>
         <style>
           body {
-            font-size: 10px;
+          font-size: 10px;
           }
           th, td {
-            border: 1px solid black;
+          border: 1px solid black;
           }
           th {
-            text-align:center;
+          text-align:center;
           }
           .rowheader {
-            text-align: left;
+          text-align: left;
           }
           table {
-            border-spacing: 0px;
-            border-collapse: separate;
+          border-spacing: 0px;
+          border-collapse: separate;
           }
           td {
-            text-align:right;
+          text-align:right;
+          }
+          .small{
+          border: 0px;
+          text-align: left;
+          font-weight: bold;
+          font-size: 10px;
+          padding:0px;
           }
         </style>
       </head>
@@ -32,6 +39,24 @@
           <thead>
             <tr>
               <th colspan="8" scope="colgroup">Monthly Arson Offenses Known to Law Enforcement</th>
+            </tr>
+            <tr>
+              <td style="border-left:1px solid black;text-indent:5px;" class="small">
+               <xsl:value-of select="concat(//ArsonSummary/@AGENCY,'  ',//ArsonSummary/@ORI)" />
+                <br />
+                <br />
+              </td>
+              <td class="small"></td>
+              <td class="small"></td>
+              <td class="small"></td>
+              <td class="small"></td>
+              <td class="small"></td>
+              <td class="small"></td>
+              <td style="float:right;border-right:1px solid black;text-indent:-5px;" class="small">
+                <xsl:value-of select="ArsonSummary/@PERIOD" />         
+                <br />
+                <br />
+              </td>
             </tr>
             <tr>
               <th scope="col">1</th>
