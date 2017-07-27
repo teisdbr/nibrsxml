@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NibrsXml.Constants;
@@ -31,7 +30,8 @@ namespace NibrsXml.Ucr.DataMining
             
             //Extract weapon (used for all offenders)
             var mostCriticalOffense = homicideOffenseVicAssocs.First(ov => ov.RelatedOffense.UcrCode == offenseCodes.OrderBy(o => o).First()).RelatedOffense;
-            var weaponUsed = Translate.TranslateSupplementaryHomicideWeaponForceCode(mostCriticalOffense.Forces.OrderBy(f => f.CategoryCode).First().CategoryCode);
+            var primaryForce = mostCriticalOffense.Forces.OrderBy(f => f.CategoryCode).First();
+            var weaponUsed = Translate.TranslateSupplementaryHomicideWeaponForceCode(primaryForce.CategoryCode);
 
             //Extract relationships
             var homicideRelationships = homicideSubjectVictimAssocs
@@ -39,7 +39,7 @@ namespace NibrsXml.Ucr.DataMining
                 {
                     VictimSequenceNumber = sv.RelatedVictim.SeqNum,
                     OffenderSequenceNumber = sv.RelatedSubject.SeqNum,
-                    RelationshipOfVictimToOffender = sv.RelationshipCode
+                    RelationshipOfVictimToOffender = Translate.TranslateSupplementaryHomicideRelationship(sv.RelationshipCode, sv.RelatedVictim.Person.SexCode)
                 })
                 .ToList();
 
@@ -62,7 +62,7 @@ namespace NibrsXml.Ucr.DataMining
                         homicideRelationships.Where(rel => rel.VictimSequenceNumber == victim.SeqNum).ToList(),
                         report.OffenseLocationAssocs,
                         victim.JustifiableHomicideFactorCode),
-                    Subcircumstance = victim.JustifiableHomicideFactorCode
+                    Subcircumstance = victim.JustifiableHomicideFactorCode == string.Empty ? null : victim.JustifiableHomicideFactorCode
                 })
                 .ToList();
 

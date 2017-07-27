@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using NibrsXml.Constants.Ucr;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -50,13 +51,13 @@ namespace NibrsXml.Ucr.DataCollections
         public XDocument Serialize()
         {
             return new XDocument(
-                new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"hcr.xsl\""),
+                new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"hcr.xslt\""),
                 new XElement("HCR",
                     new XElement("INCIDENTS",
                         Incidents.Select(i => new XElement("INCIDENT",
                             new XElement("INCIDENTNUM", i.Id),
                             new XElement("INCIDENTDATE", i.Date),
-                            new XElement("FILINGTYPE", "INITIAL"), //todo: The filing type of HCRs need to be determined ??? how? i don't really know yet
+                            new XElement("FILINGTYPE", FilingType.Initial), //todo: The filing type of HCRs need to be determined ??? how? i don't really know yet
                             new XElement("ADULTOFFENDERSCOUNT", i.AdultOffenderCount),
                             new XElement("JUVENILEOFFENDERSCOUNT", i.JuvenileOffenderCount),
                             new XElement("OFFENDERRACE", i.OffenderRace),
@@ -65,7 +66,7 @@ namespace NibrsXml.Ucr.DataCollections
                             {
                                 var biases = new[] { o.BiasMotivation1, o.BiasMotivation2, o.BiasMotivation3, o.BiasMotivation4, o.BiasMotivation5 }
                                     .Where(b => b != null)
-                                    .Select(b => new XElement("BIASMOTIVE", new XElement("DESCRIPTION", b)));
+                                    .Select(b => new XElement("BIASMOTIVE",  b));
 
                                 return new XElement("OFFENSE",
                                     new XElement("OFFENSECODE", o.Code),

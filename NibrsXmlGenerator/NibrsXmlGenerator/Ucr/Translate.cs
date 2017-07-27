@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -68,12 +69,88 @@ namespace NibrsXml.Ucr
             { OffenseCode.HUMAN_TRAFFICKING_INVOLUNTARY_SERVITUDE.NibrsCode(), "13" }
         };
 
+        private static readonly Dictionary<string, string> SupplementaryHomicideRelationshipDirectTranslations = new Dictionary<string, string>
+        {
+            { VictimToSubjectRelationshipCode.Family_Member.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Child_of_Boyfriend_Girlfriend.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Uncle.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Aunt.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Foster_Child.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Foster_Parent.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Cousin.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Grandchild.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Grandparent.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Nephew.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Niece.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Family_Member_Stepsibling.NibrsCode(), VictimOffenderRelationship.OtherFamily },
+            { VictimToSubjectRelationshipCode.Neighbor.NibrsCode(), VictimOffenderRelationship.Neighbor },
+            { VictimToSubjectRelationshipCode.Acquaintance.NibrsCode(), VictimOffenderRelationship.Acquaintance },
+            { VictimToSubjectRelationshipCode.Boyfriend.NibrsCode(), VictimOffenderRelationship.Boyfriend },
+            { VictimToSubjectRelationshipCode.Girlfriend.NibrsCode(), VictimOffenderRelationship.Girlfriend },
+            { VictimToSubjectRelationshipCode.Employee.NibrsCode(), VictimOffenderRelationship.Employee },
+            { VictimToSubjectRelationshipCode.Employer.NibrsCode(), VictimOffenderRelationship.Employer },
+            { VictimToSubjectRelationshipCode.Friend.NibrsCode(), VictimOffenderRelationship.Friend },
+            { VictimToSubjectRelationshipCode.Homosexual_relationship.NibrsCode(), VictimOffenderRelationship.HomosexualRelationship },
+            { VictimToSubjectRelationshipCode.NonFamily_Otherwise_Known.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Accomplice.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Babysittee.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Babysitter.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Caregiver.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Client.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Cohabitant.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Authority_Figure.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Former_Employee.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Former_Employer.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Guardian.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Patient.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Student.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Teacher.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Victim_Was_Offender.NibrsCode(), VictimOffenderRelationship.OtherKnown },
+            { VictimToSubjectRelationshipCode.Stranger.NibrsCode(), VictimOffenderRelationship.Stranger },
+            { VictimToSubjectRelationshipCode.Relationship_Unknown.NibrsCode(), VictimOffenderRelationship.UnknownRelationship },
+            { VictimToSubjectRelationshipCode.Delivery_Person.NibrsCode(), VictimOffenderRelationship.UnknownRelationship }
+        };
+
+        private static readonly Dictionary<string, Dictionary<string, string>> SupplementaryHomicideRelationshipComplexTranslations = new Dictionary<string, Dictionary<string, string>>
+        {
+            { SexCode.MALE.NibrsCode(), new Dictionary<string, string>
+            {
+                { VictimToSubjectRelationshipCode.Family_Member_Spouse.NibrsCode(), VictimOffenderRelationship.Husband },
+                { VictimToSubjectRelationshipCode.Family_Member_Spouse_Common_Law.NibrsCode(), VictimOffenderRelationship.CommonLawHusband },
+                { VictimToSubjectRelationshipCode.Family_Member_Sibling.NibrsCode(), VictimOffenderRelationship.Brother },
+                { VictimToSubjectRelationshipCode.Family_Member_Parent.NibrsCode(), VictimOffenderRelationship.Father },
+                { VictimToSubjectRelationshipCode.Family_Member_Child.NibrsCode(), VictimOffenderRelationship.Son },
+                { VictimToSubjectRelationshipCode.Family_Member_Stepparent.NibrsCode(), VictimOffenderRelationship.Stepfather },
+                { VictimToSubjectRelationshipCode.Ex_Spouse.NibrsCode(), VictimOffenderRelationship.ExHusband }
+            }},
+            { SexCode.FEMALE.NibrsCode(), new Dictionary<string, string>
+            {
+                { VictimToSubjectRelationshipCode.Family_Member_Spouse.NibrsCode(), VictimOffenderRelationship.Wife },
+                { VictimToSubjectRelationshipCode.Family_Member_Spouse_Common_Law.NibrsCode(), VictimOffenderRelationship.CommonLawHusband },
+                { VictimToSubjectRelationshipCode.Family_Member_Sibling.NibrsCode(), VictimOffenderRelationship.Sister },
+                { VictimToSubjectRelationshipCode.Family_Member_Parent.NibrsCode(), VictimOffenderRelationship.Mother },
+                { VictimToSubjectRelationshipCode.Family_Member_Child.NibrsCode(), VictimOffenderRelationship.Daughter },
+                { VictimToSubjectRelationshipCode.Family_Member_Stepparent.NibrsCode(), VictimOffenderRelationship.Stepmother },
+                { VictimToSubjectRelationshipCode.Ex_Spouse.NibrsCode(), VictimOffenderRelationship.ExWife }
+            }}
+        };
+
         public static string TranslateHateCrimeLocationCode(string locationCategoryCode)
         {
             //22 in NIBRS is "SCHOOL_COLLEGE", 52 "SCHOOL_COLLEGE_UNIVERSITY"
             //Ucr does not have code 22 in its scope, but it does for 52
             //All other codes are consistent for both systems
             return locationCategoryCode == "22" ? "52" : locationCategoryCode;
+        }
+
+        public static string TranslateSupplementaryHomicideRelationship(string nibrsRelationshipCode, string nibrsSexCode)
+        {
+            if (nibrsSexCode == SexCode.UNKNOWN.NibrsCode())
+                return VictimOffenderRelationship.UnknownRelationship;
+
+            return SupplementaryHomicideRelationshipDirectTranslations.TryGet(nibrsRelationshipCode) ??
+                SupplementaryHomicideRelationshipComplexTranslations[nibrsSexCode]
+                    .TryGet(nibrsRelationshipCode) ?? VictimOffenderRelationship.UnknownRelationship;
         }
 
         public static string TranslateSupplementaryHomicideWeaponForceCode(string forceCategoryCode)

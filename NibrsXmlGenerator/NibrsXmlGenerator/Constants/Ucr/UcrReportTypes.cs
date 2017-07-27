@@ -8,7 +8,7 @@ namespace NibrsXml.Constants.Ucr
         ReturnA,
 
         [UcrReport("NibrsXml.Ucr.Reports.ReturnA.returnasupp.xsl","_ReturnASupplement.xml","_ReturnASupplement.html")]
-        ReturnASupplement,
+        SupplementToReturnA,
 
         [UcrReport("NibrsXml.Ucr.Reports.Asre.asre.xsl","_Asre.xml","_Asre.html")]
         Asre,
@@ -19,8 +19,10 @@ namespace NibrsXml.Constants.Ucr
         [UcrReport("NibrsXml.Ucr.Reports.HumanTrafficking.ht.xsl","_HumanTrafficking.xml","_HumanTrafficking.html")]
         HumanTrafficking,
 
+        [UcrReport("NibrsXml.Ucr.Reports.HateCrime.hcr.xslt", "_HateCrime.xml", "_HateCrime.html")]
         HateCrime,
 
+        [UcrReport("NibrsXml.Ucr.Reports.SupplementaryHomicide.shr.xslt", "_SupplementaryHomicide.xml", "SupplementaryHomicide.html")]
         SupplementaryHomicide,
 
         [UcrReport("NibrsXml.Ucr.Reports.Leoka.leoka.xsl","_Leoka.xml","_Leoka.html")]

@@ -32,4 +32,43 @@
         public const string SixtyToSixtyfour = "60-64";
         public const string SixtyfivePlus = "65+";
     }
+
+    public class FilingType
+    {
+        public const int Initial = 1;
+        public const int Adjustment = 2;
+    }
+
+    public class VictimOffenderRelationship
+    {
+        public const string Husband = "HU";
+        public const string Wife = "WI";
+        public const string CommonLawHusband = "CH";
+        public const string CommonLawWife = "CW";
+        public const string Mother = "MO";
+        public const string Father = "FA";
+        public const string Son = "SO";
+        public const string Daughter = "DA";
+        public const string Brother = "BR";
+        public const string Sister = "SI";
+        public const string InLaw = "IL";
+        public const string Stepfather = "SF";
+        public const string Stepmother = "SM";
+        public const string Stepson = "SS";
+        public const string Stepdaughter = "SD";
+        public const string OtherFamily = "OF";
+        public const string Neighbor = "NE";
+        public const string Acquaintance = "AQ";
+        public const string Boyfriend = "BF";
+        public const string Girlfriend = "GF";
+        public const string ExHusband = "XH";
+        public const string ExWife = "XW";
+        public const string Employee = "EE";
+        public const string Employer = "ER";
+        public const string Friend = "FR";
+        public const string HomosexualRelationship = "HO";
+        public const string OtherKnown = "OK";
+        public const string Stranger = "ST";
+        public const string UnknownRelationship = "UN";
+    }
 }

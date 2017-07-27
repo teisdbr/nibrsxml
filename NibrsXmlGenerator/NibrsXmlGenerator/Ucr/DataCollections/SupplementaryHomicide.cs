@@ -20,34 +20,29 @@ namespace NibrsXml.Ucr.DataCollections
         public XDocument Serialize()
         {
             return new XDocument(
-                new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"shr.xsl\""),
+                new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"shr.xslt\""),
                 new XElement("SHR",
                     new XElement("INCIDENTS",
                         Incidents.Select(i => new XElement("INCIDENT",
-                            new XElement("MANSLAUGHTERNEGLIGENT", i.IsNegligent ? 1 : 0,
-                            new XElement("MANSLAUGTERNOTNEGLIGENT", i.IsNegligent ? 1 : 0,
+                            new XElement("MANSLAUGHTERNEGLIGENT", i.IsNegligent ? 1 : 0),
+                            new XElement("MANSLAUGTERNOTNEGLIGENT", i.IsNegligent ? 1 : 0),
                             new XElement("SITUATION", i.Situation),
                             new XElement("VICTIMS",
-                                i.Victims.GroupJoin(i.Relationships, v => v.SequenceNumber, r => r.VictimSequenceNumber, (victim, relationships) =>
-                                {
-                                    return new XElement("VICTIM",
-                                        new XElement("AGE", victim.Age),
-                                        new XElement("SEX", victim.Sex),
-                                        new XElement("ETHNICITY", victim.Ethnicity),
-                                        new XElement("RACE", victim.Race),
-                                        new XElement("OFFENDERS",
-                                            relationships.Join(i.Offenders, r => r.OffenderSequenceNumber, o => o.SequenceNumber, (relationship, offender) =>
-                                            new XElement("OFFENDER",
-                                                new XElement("AGE", offender.Age),
-                                                new XElement("SEX", offender.Sex),
-                                                new XElement("ETHNICITY", offender.Ethnicity),
-                                                new XElement("RACE", offender.Race),
-                                                new XElement("WEAPONUSED", offender.WeaponUsed),
-                                                new XElement("RELATIONSHIP", relationship.RelationshipOfVictimToOffender),
-                                                new XElement("CIRCUMSTANCE", victim.Circumstance),
-                                                new XElement("SUBCIRCUMSTANCE", victim.Subcircumstance)
-                                                ))));
-                                })))))))));
+                                i.Victims.GroupJoin(i.Relationships, v => v.SequenceNumber, r => r.VictimSequenceNumber, (victim, relationships) => new XElement("VICTIM",
+                                    new XElement("AGE", victim.Age),
+                                    new XElement("SEX", victim.Sex),
+                                    new XElement("ETHNICITY", victim.Ethnicity),
+                                    new XElement("RACE", victim.Race),
+                                    new XElement("OFFENDERS",
+                                        relationships.Join(i.Offenders, r => r.OffenderSequenceNumber, o => o.SequenceNumber, (relationship, offender) => new XElement("OFFENDER",
+                                            new XElement("AGE", offender.Age),
+                                            new XElement("SEX", offender.Sex),
+                                            new XElement("ETHNICITY", offender.Ethnicity),
+                                            new XElement("RACE", offender.Race),
+                                            new XElement("WEAPONUSED", offender.WeaponUsed),
+                                            new XElement("RELATIONSHIP", relationship.RelationshipOfVictimToOffender),
+                                            new XElement("CIRCUMSTANCE", victim.Circumstance),
+                                            victim.Subcircumstance == null ? null : new XElement("SUBCIRCUMSTANCE", victim.Subcircumstance))))))))))));
         }
 
         /// <summary>

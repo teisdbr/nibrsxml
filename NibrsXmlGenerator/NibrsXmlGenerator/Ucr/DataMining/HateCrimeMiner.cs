@@ -158,8 +158,8 @@ namespace NibrsXml.Ucr.DataMining
                         VictimTypeOther = victimTypes.Contains(VictimCategoryCode.OTHER.NibrsCode()),
                         VictimTypeUnknown = victimTypes.Contains(VictimCategoryCode.UNKNOWN.NibrsCode())
                     },
-                    AdultOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseAdultOffenderCount : null,
-                    JuvenileOffenderCount = offenseTotalOffenderCount == 0 ? (int?)offenseJuvenileOffenderCount : null,
+                    AdultOffenderCount = offenseTotalOffenderCount > 0 ? (int?) offenseAdultOffenderCount : null,
+                    JuvenileOffenderCount = offenseTotalOffenderCount > 0 ? (int?) offenseJuvenileOffenderCount : null,
                     TotalOffenderCount = offenseTotalOffenderCount,
                     OffenderGroupRace = offenseOffenderGroupRace,
                     OffenderGroupEthnicity = offenseOffenderGroupEthnicity

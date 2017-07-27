@@ -86,34 +86,34 @@
                 <th class="rowheader">
                   <xsl:choose>
                     <xsl:when test="@name='A'">
-                      <xsl:value-of select="'A. Single Occupancy Residential: Houses, Townhouses, Duplexes, etc.'"/>
+                      A. Single Occupancy Residential: Houses, Townhouses, Duplexes, etc.
                     </xsl:when>
                     <xsl:when test="@name='B'">
-                      <xsl:value-of select="'B. Other Residential: Apartments, Tenements, Flats, Hotels, Motels, Inns, Dormitories, Boarding Houses, etc.'"/>
+                      B. Other Residential: Apartments, Tenements, Flats, Hotels, Motels, Inns, Dormitories, Boarding Houses, etc.
                     </xsl:when>
                     <xsl:when test="@name='C'">
-                      <xsl:value-of select="'C. Storage: Barns, Garages, Warehouses, etc.'"/>
+                      C. Storage: Barns, Garages, Warehouses, etc.
                     </xsl:when>
                     <xsl:when test="@name='D'">
-                      <xsl:value-of select="'D. Industrial/Manufacturing'"/>
+                      D. Industrial/Manufacturing
                     </xsl:when>
                     <xsl:when test="@name='E'">
-                      <xsl:value-of select="'E. Other Commercial Stores, Restaurants Offices, etc.'"/>
+                      E. Other Commercial Stores, Restaurants Offices, etc.
                     </xsl:when>
                     <xsl:when test="@name='F'">
-                      <xsl:value-of select="'F. Community/Public: Churches, Jails, Schools, Colleges, Hospitals, etc.'"/>
+                      F. Community/Public: Churches, Jails, Schools, Colleges, Hospitals, etc.
                     </xsl:when>
                     <xsl:when test="@name='G'">
-                      <xsl:value-of select="'G. All Other Structure: Out Buildings, Monuments, Buildings Under Construction, etc.'"/>
+                      G. All Other Structure: Out Buildings, Monuments, Buildings Under Construction, etc.
                     </xsl:when>
                     <xsl:when test="@name='H'">
-                      <xsl:value-of select="'H. Motor Vehicles: Automobiles, Trucks, Buses, Motorcycles, etc.: UCR Definition'"/>
+                      H. Motor Vehicles: Automobiles, Trucks, Buses, Motorcycles, etc.: UCR Definition
                     </xsl:when>
                     <xsl:when test="@name='I'">
-                      <xsl:value-of select="'I. Other Mobile Property: Trailers, Recreational Vehicles, Airplanes, Boats, etc.'"/>
+                      I. Other Mobile Property: Trailers, Recreational Vehicles, Airplanes, Boats, etc.
                     </xsl:when>
                     <xsl:when test="@name='J'">
-                      <xsl:value-of select="'J. Total Other: Crops, Timber, Fences, Signs, etc.'"/>
+                      J. Total Other: Crops, Timber, Fences, Signs, etc.
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:value-of select="@name"/>
