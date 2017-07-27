@@ -1,4 +1,6 @@
-﻿namespace NibrsXml.Ucr.DataCollections
+﻿using System.Xml.Linq;
+
+namespace NibrsXml.Ucr.DataCollections
 {
     public class ReportData
     {
@@ -35,6 +37,19 @@
             LeokaData = new Leoka();
             SupplementaryHomicideData = new SupplementaryHomicide();
             HateCrimeData = new HateCrime();
+        }
+
+        public XDocument Serialize()
+        {
+            return new XDocument(
+                new XElement("UcrReports",
+                    ReturnAData.Serialize().Root,
+                    HumanTraffickingData.Serialize().Root,
+                    ArsonData.Serialize().Root,
+                    AsreData.Serialize().Root,
+                    LeokaData.Serialize().Root,
+                    HateCrimeData.Serialize().Root,
+                    SupplementaryHomicideData.Serialize().Root));
         }
     }
 }

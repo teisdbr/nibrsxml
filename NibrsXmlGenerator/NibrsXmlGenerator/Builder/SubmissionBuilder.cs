@@ -5,8 +5,8 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
-    public class SubmissionBuilder 
-    {   
+    public class SubmissionBuilder
+    {
         public static Submission Build(List<IncidentList> agencySpecificIncidents)
         {
             var sub = new Submission();
