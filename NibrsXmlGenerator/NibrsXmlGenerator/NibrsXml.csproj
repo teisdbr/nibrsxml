@@ -143,6 +143,7 @@
     <Compile Include="Ucr\Extensions.cs" />
     <Compile Include="Ucr\NibrsImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
+    <Compile Include="Ucr\ReportRendering\HtmlRenderer.cs" />
     <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Constants\Ucr\UcrCodes.cs" />
     <Compile Include="Utility\Extensions.cs" />
