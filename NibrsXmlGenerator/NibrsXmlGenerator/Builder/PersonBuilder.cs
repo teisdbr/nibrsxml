@@ -138,7 +138,9 @@ namespace NibrsXml.Builder
                     new Person(
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(offender.Age),
-                        ethnicityCode: EthnicityCode.UNKNOWN.NibrsCode(),
+                        ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
+                        ? offender.Ethnicity
+                        : EthnicityCode.UNKNOWN.NibrsCode(),
                         raceCode: offender.Race,
                         residentCode: ResidentCode.UNKNOWN.NibrsCode(),
                         sexCode: offender.Sex,
