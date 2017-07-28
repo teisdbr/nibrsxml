@@ -221,42 +221,42 @@
                       Bias Motive (s) :
                     </td>
                     <td colspan="2" style="text-align:left;border-left:1px;">
-                      <xsl:for-each select="BIASMOTIVES">
+                      <xsl:for-each select="BIASMOTIVES/BIASMOTIVE">
                         <xsl:choose>
-                          <xsl:when test="BIASMOTIVE='11'">11 (Anti-White)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='12'">12 (Anti-Black or African American)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='13'">13 (Anti-American Indian/Alaska Native)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='14'">14 (Anti-Asian)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='15'">15 (Anti-Multiple Races, Group)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='21'">21 (Anti-Jewish)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='22'">22 (Anti-Catholic)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='23'">23 (Anti-Protestant)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='24'">24 (Anti-Islamic (Muslim))</xsl:when>
-                          <xsl:when test="BIASMOTIVE='25'">25 (Anti-Other Religion)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='26'">26 (Anti-Multiple Religions, Group)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='27'">27 (Anti-Atheism/Agnosticism)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='32'">32 (Anti-Hispanic or Latino)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='33'">33 (Anti-Other Race/Ethnicity/Ancestry)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='41'">41 (Anti-Gay (Male))</xsl:when>
-                          <xsl:when test="BIASMOTIVE='42'">42 (Anti-Lesbian)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='43'">43 (Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group))</xsl:when>
-                          <xsl:when test="BIASMOTIVE='44'">44 (Anti-Heterosexual)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='45'">45 (Anti-Bisexual)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='16'">16 (Anti-Native Hawaiian or Other Pacific Islander)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='31'">31 (Anti-Arab)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='28'">28 (Anti-Mormon)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='29'">29 (Anti-Jehovah's Witness)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='81'">81 (Anti-Eastern Orthodox (Russian, Greek, Other))</xsl:when>
-                          <xsl:when test="BIASMOTIVE='82'">82 (Anti-Other Christian)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='83'">83 (Anti-Buddhist)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='84'">84 (Anti-Hindu)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='85'">85 (Anti-Sikh)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='51'">51 (Anti-Physical Disability)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='52'">52 (Anti-Mental Disability)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='61'">61 (Anti-Male)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='62'">62 (Anti-Female)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='71'">71 (Anti-Transgender)</xsl:when>
-                          <xsl:when test="BIASMOTIVE='72'">72 (Anti-Gender Nonconforming)</xsl:when>
+                          <xsl:when test="@CODE='11'">11 (Anti-White)</xsl:when>
+                          <xsl:when test="@CODE='12'">12 (Anti-Black or African American)</xsl:when>
+                          <xsl:when test="@CODE='13'">13 (Anti-American Indian/Alaska Native)</xsl:when>
+                          <xsl:when test="@CODE='14'">14 (Anti-Asian)</xsl:when>
+                          <xsl:when test="@CODE='15'">15 (Anti-Multiple Races, Group)</xsl:when>
+                          <xsl:when test="@CODE='21'">21 (Anti-Jewish)</xsl:when>
+                          <xsl:when test="@CODE='22'">22 (Anti-Catholic)</xsl:when>
+                          <xsl:when test="@CODE='23'">23 (Anti-Protestant)</xsl:when>
+                          <xsl:when test="@CODE='24'">24 (Anti-Islamic (Muslim))</xsl:when>
+                          <xsl:when test="@CODE='25'">25 (Anti-Other Religion)</xsl:when>
+                          <xsl:when test="@CODE='26'">26 (Anti-Multiple Religions, Group)</xsl:when>
+                          <xsl:when test="@CODE='27'">27 (Anti-Atheism/Agnosticism)</xsl:when>
+                          <xsl:when test="@CODE='32'">32 (Anti-Hispanic or Latino)</xsl:when>
+                          <xsl:when test="@CODE='33'">33 (Anti-Other Race/Ethnicity/Ancestry)</xsl:when>
+                          <xsl:when test="@CODE='41'">41 (Anti-Gay (Male))</xsl:when>
+                          <xsl:when test="@CODE='42'">42 (Anti-Lesbian)</xsl:when>
+                          <xsl:when test="@CODE='43'">43 (Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group))</xsl:when>
+                          <xsl:when test="@CODE='44'">44 (Anti-Heterosexual)</xsl:when>
+                          <xsl:when test="@CODE='45'">45 (Anti-Bisexual)</xsl:when>
+                          <xsl:when test="@CODE='16'">16 (Anti-Native Hawaiian or Other Pacific Islander)</xsl:when>
+                          <xsl:when test="@CODE='31'">31 (Anti-Arab)</xsl:when>
+                          <xsl:when test="@CODE='28'">28 (Anti-Mormon)</xsl:when>
+                          <xsl:when test="@CODE='29'">29 (Anti-Jehovah's Witness)</xsl:when>
+                          <xsl:when test="@CODE='81'">81 (Anti-Eastern Orthodox (Russian, Greek, Other))</xsl:when>
+                          <xsl:when test="@CODE='82'">82 (Anti-Other Christian)</xsl:when>
+                          <xsl:when test="@CODE='83'">83 (Anti-Buddhist)</xsl:when>
+                          <xsl:when test="@CODE='84'">84 (Anti-Hindu)</xsl:when>
+                          <xsl:when test="@CODE='85'">85 (Anti-Sikh)</xsl:when>
+                          <xsl:when test="@CODE='51'">51 (Anti-Physical Disability)</xsl:when>
+                          <xsl:when test="@CODE='52'">52 (Anti-Mental Disability)</xsl:when>
+                          <xsl:when test="@CODE='61'">61 (Anti-Male)</xsl:when>
+                          <xsl:when test="@CODE='62'">62 (Anti-Female)</xsl:when>
+                          <xsl:when test="@CODE='71'">71 (Anti-Transgender)</xsl:when>
+                          <xsl:when test="@CODE='72'">72 (Anti-Gender Nonconforming)</xsl:when>
                         </xsl:choose>
                         <xsl:if test="position() != last()">
                           <br />

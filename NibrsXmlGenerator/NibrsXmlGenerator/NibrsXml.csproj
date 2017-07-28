@@ -211,10 +211,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ucr\QueryBuilder\" />
-    <Folder Include="Ucr\ReportBuilder\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
     <Content Include="NibrsXsd\xml\nibrs2.xml" />

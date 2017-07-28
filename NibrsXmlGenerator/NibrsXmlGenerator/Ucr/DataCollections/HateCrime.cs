@@ -66,7 +66,8 @@ namespace NibrsXml.Ucr.DataCollections
                             {
                                 var biases = new[] { o.BiasMotivation1, o.BiasMotivation2, o.BiasMotivation3, o.BiasMotivation4, o.BiasMotivation5 }
                                     .Where(b => b != null)
-                                    .Select(b => new XElement("BIASMOTIVE",  b));
+                                    .Select(b => new XElement("BIASMOTIVE",
+                                        new XAttribute("CODE", b)));
 
                                 return new XElement("OFFENSE",
                                     new XElement("OFFENSECODE", o.Code),

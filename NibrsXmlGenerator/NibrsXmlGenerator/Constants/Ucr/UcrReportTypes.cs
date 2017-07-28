@@ -22,7 +22,7 @@ namespace NibrsXml.Constants.Ucr
         [UcrReport("NibrsXml.Ucr.Reports.HateCrime.hcr.xslt", "_HateCrime.xml", "_HateCrime.html")]
         HateCrime,
 
-        [UcrReport("NibrsXml.Ucr.Reports.SupplementaryHomicide.shr.xslt", "_SupplementaryHomicide.xml", "SupplementaryHomicide.html")]
+        [UcrReport("NibrsXml.Ucr.Reports.SupplementaryHomicide.shr.xslt", "_SupplementaryHomicide.xml", "_SupplementaryHomicide.html")]
         SupplementaryHomicide,
 
         [UcrReport("NibrsXml.Ucr.Reports.Leoka.leoka.xsl","_Leoka.xml","_Leoka.html")]
