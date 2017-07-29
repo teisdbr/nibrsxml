@@ -10,6 +10,7 @@ using System.Xml.XPath;
 using System.Xml.Xsl;
 using LoadBusinessLayer;
 using NibrsXml.Constants;
+using NibrsXml.Constants.Ucr;
 using NibrsXml.NibrsReport;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
@@ -46,7 +47,7 @@ namespace NibrsXml.Ucr.ReportRendering
             //Return A
             RenderUcrReport(UcrReportType.ReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ReturnAData.Serialize().ToString()));
             //Supplement to Return A
-            RenderUcrReport(UcrReportType.ReturnASupplement, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ReturnASupplementData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.SupplementToReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ReturnASupplementData.Serialize().ToString()));
             //Arson
             RenderUcrReport(UcrReportType.Arson, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ArsonData.Serialize().ToString()));
             //Asre
