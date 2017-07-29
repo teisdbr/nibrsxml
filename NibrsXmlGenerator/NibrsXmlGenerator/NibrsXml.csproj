@@ -136,7 +136,6 @@
     <Compile Include="Ucr\DataCollections\Data.cs" />
     <Compile Include="Ucr\DataCollections\HateCrime.cs" />
     <Compile Include="Ucr\DataCollections\Leoka.cs" />
-    <Compile Include="Ucr\DataCollections\OffenseReturn.cs" />
     <Compile Include="Ucr\DataCollections\ReturnASupplement.cs" />
     <Compile Include="Ucr\DataCollections\SupplementaryHomicide.cs" />
     <Compile Include="Ucr\DataMining\UcrHierarchyMiner.cs" />

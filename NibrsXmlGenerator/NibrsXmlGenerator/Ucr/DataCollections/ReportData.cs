@@ -44,6 +44,7 @@ namespace NibrsXml.Ucr.DataCollections
             return new XDocument(
                 new XElement("UcrReports",
                     ReturnAData.Serialize().Root,
+                    ReturnASupplementData.Serialize().Root,
                     HumanTraffickingData.Serialize().Root,
                     ArsonData.Serialize().Root,
                     AsreData.Serialize().Root,
