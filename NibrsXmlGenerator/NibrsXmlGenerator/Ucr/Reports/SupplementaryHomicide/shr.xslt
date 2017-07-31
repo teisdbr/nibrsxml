@@ -67,20 +67,20 @@
             </tr>
             <tr>
               <td class="small">
-                <xsl:value-of select="SHR/@AGENCY" />
+                <xsl:value-of select="UcrReports/@agency" />
               </td>
               <td class="small">
-                <xsl:value-of select="SHR/@ORI" />
+                <xsl:value-of select="UcrReports/@ori" />
               </td>
-              <td  class="small">
-                <xsl:value-of select="SHR/@PERIOD" />
+              <td class="small">
+                <xsl:value-of select="concat(UcrReports/@year, ' ', UcrReports/@month)" />
               </td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td colspan="3">
-                <xsl:for-each select="SHR/INCIDENTS/INCIDENT">
+                <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT">
                   <table class="incident">
                     <xsl:variable name="iposition" select="position()" />
                     <tbody>
@@ -104,12 +104,12 @@
                           </xsl:if>
                         </td>
                       </tr>
-                      <tr >
+                      <tr>
                         <td class="head">
                           Incident #: <xsl:value-of select="SEQUENCENUMBER" />
                         </td>
                       </tr>
-                      <tr >
+                      <tr>
                         <td class="head">
                           Situation :
                           <xsl:choose>
@@ -123,12 +123,12 @@
                         </td>
                       </tr>
                       <xsl:for-each select="VICTIMS/VICTIM">
-                        <tr >
+                        <tr>
                           <td class="head">
                             Victim # : <xsl:value-of select="position()" />
                           </td>
                         </tr>
-                        <tr >
+                        <tr>
                           <td class="head">
                             <div>
                               Age : <xsl:value-of select="AGE" />
@@ -163,7 +163,7 @@
                             </div>
                           </td>
                         </tr>
-                        <tr >
+                        <tr>
                           <td style="text-align:center;border:0px">
                             Offenders for Victim #: <xsl:value-of select="position()" />
                           </td>
@@ -171,7 +171,7 @@
 
                         <xsl:for-each select="OFFENDERS/OFFENDER">
                           <div class="body">
-                            <tr >
+                            <tr>
                               <td style="text-align:left;border:0px;">
                                 Offender # : <xsl:value-of select="position()" />
                               </td>
@@ -203,7 +203,7 @@
                                 </xsl:choose>
                               </td>
                             </tr>
-                            <tr >
+                            <tr>
                               <td>
                                 Ethnicity :
                                 <xsl:choose>

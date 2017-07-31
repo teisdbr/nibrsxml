@@ -54,14 +54,12 @@
               <th colspan="39" class="title">Age, Sex, Race, and Ethnicity of Persons Arrested</th>
             </tr>
             <tr>
-              <xsl:for-each select="ASRSummary">
-                <th colspan="20" style="text-align:left;border:0px;">
-                  <xsl:value-of select="concat(@Agency,'  ',@ORI)" />
-                </th>
-                <th colspan="19" style="text-align:right;border:0px;">
-                  <xsl:value-of select="@Period" />
-                </th>
-              </xsl:for-each>
+              <th colspan="20" style="text-align:left;border:0px;">
+                <xsl:value-of select="concat(UcrReports/@agency, ' ', UcrReports/@ori)" />
+              </th>
+              <th colspan="19" style="text-align:right;border:0px;">
+                <xsl:value-of select="concat(/UcrReports/@year,' ',/UcrReports/@month)" />
+              </th>
             </tr>
             <tr>
               <th rowspan="3" scope="col">Classification of Offenses</th>
@@ -120,7 +118,7 @@
             </tr>
           </thead>
           <tbody>
-            <xsl:for-each select="ASRSummary/UCR">
+            <xsl:for-each select="UcrReports/ASRSummary/UCR">
               <tr>
                 <th class="rowheader" rowspan="2" scope="rowgroup">
                   <xsl:variable name="ucrCode" select="./@value" />
@@ -410,7 +408,8 @@
                   <xsl:value-of select="Juvenile/Races/Black" />
                 </td>
                 <td rowspan="2">
-                  <xsl:if test="not(Adult/Races/AmericanIndian)">0</xsl:if><xsl:value-of select="Adult/Races/AmericanIndian" />
+                  <xsl:if test="not(Adult/Races/AmericanIndian)">0</xsl:if>
+                  <xsl:value-of select="Adult/Races/AmericanIndian" />
                 </td>
                 <td rowspan="2">
                   <xsl:if test="not(Juvenile/Races/AmericanIndian)">0</xsl:if>
@@ -432,7 +431,8 @@
                   <xsl:value-of select="Juvenile/Races/NativeHawaiianOrOther" />
                 </td>
                 <td rowspan="2">
-                  <xsl:if test="not(Adult/Ethnicities/Hispanic)">0</xsl:if><xsl:value-of select="Adult/Ethnicities/Hispanic" />
+                  <xsl:if test="not(Adult/Ethnicities/Hispanic)">0</xsl:if>
+                  <xsl:value-of select="Adult/Ethnicities/Hispanic" />
                 </td>
                 <td rowspan="2">
                   <xsl:if test="not(Juvenile/Ethnicities/Hispanic)">0</xsl:if>
@@ -650,27 +650,45 @@
           <tbody>
             <tr>
               <th class="rowheader">Handled Within Department</th>
-              <td><xsl:if test="not(//JuvenileDispositions/Department[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Department[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/Department[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/Department[1]" />
+              </td>
             </tr>
             <tr>
               <th class="rowheader">Referred to Juvenile Court</th>
-              <td><xsl:if test="not(//JuvenileDispositions/Court[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Court[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/Court[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/Court[1]" />
+              </td>
             </tr>
             <tr>
               <th class="rowheader">Referred to Welfare Agency</th>
-              <td><xsl:if test="not(//JuvenileDispositions/WelfareAgency[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/WelfareAgency[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/WelfareAgency[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/WelfareAgency[1]" />
+              </td>
             </tr>
             <tr>
               <th class="rowheader">Referred to Other Police Agency</th>
-              <td><xsl:if test="not(//JuvenileDispositions/OtherPoliceAgency[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/OtherPoliceAgency[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/OtherPoliceAgency[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/OtherPoliceAgency[1]" />
+              </td>
             </tr>
             <tr>
               <th class="rowheader">Referred to Criminal (Adult) Court</th>
-              <td><xsl:if test="not(//JuvenileDispositions/CriminalOrAdultCourt[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/CriminalOrAdultCourt[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/CriminalOrAdultCourt[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/CriminalOrAdultCourt[1]" />
+              </td>
             </tr>
             <tr>
               <th class="rowheader">Total</th>
-              <td><xsl:if test="not(//JuvenileDispositions/Total[1])">0</xsl:if><xsl:value-of select="//JuvenileDispositions/Total[1]" /></td>
+              <td>
+                <xsl:if test="not(//JuvenileDispositions/Total[1])">0</xsl:if>
+                <xsl:value-of select="//JuvenileDispositions/Total[1]" />
+              </td>
             </tr>
           </tbody>
         </table>

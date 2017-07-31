@@ -1,56 +1,59 @@
 <?xml-stylesheet type="text/xsl" href="arson.xsl"?>
-<ArsonSummary AGENCY=" Olla P.D. " ORI="LA03002" PERIOD="February 2017 ">
-  <Classification name="A">
-    <Actual>20</Actual>
-    <EstimatedValueOfDamage>11472</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="B">
-    <Actual>17</Actual>
-    <EstimatedValueOfDamage>4858</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="C">
-    <Actual>1</Actual>
-    <EstimatedValueOfDamage>415</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="D" />
-  <Classification name="E">
-    <Actual>11</Actual>
-    <EstimatedValueOfDamage>7626</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="F">
-    <Actual>1</Actual>
-    <EstimatedValueOfDamage>1</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="G">
-    <Actual>15</Actual>
-    <ClearedByArrest>1</ClearedByArrest>
-    <EstimatedValueOfDamage>10254</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="Total Structure">
-    <Actual>65</Actual>
-    <ClearedByArrest>1</ClearedByArrest>
-    <EstimatedValueOfDamage>34626</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="H">
-    <Actual>96</Actual>
-    <EstimatedValueOfDamage>1216844</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="I">
-    <Actual>4</Actual>
-    <EstimatedValueOfDamage>63001</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="Total Mobile">
-    <Actual>100</Actual>
-    <EstimatedValueOfDamage>1279845</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="J">
-    <Actual>1126</Actual>
-    <ClearedByArrest>5</ClearedByArrest>
-    <EstimatedValueOfDamage>1169568</EstimatedValueOfDamage>
-  </Classification>
-  <Classification name="Grand Total">
-    <Actual>1291</Actual>
-    <ClearedByArrest>6</ClearedByArrest>
-    <EstimatedValueOfDamage>2484039</EstimatedValueOfDamage>
-  </Classification>
-</ArsonSummary>
+
+<UcrReports agency="Saint Helena Parish Sheriff's Office" ori="LA0460000" year="2017" month="7">
+  <ArsonSummary>
+    <Classification name="A">
+      <Actual>20</Actual>
+      <EstimatedValueOfDamage>11472</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="B">
+      <Actual>17</Actual>
+      <EstimatedValueOfDamage>4858</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="C">
+      <Actual>1</Actual>
+      <EstimatedValueOfDamage>415</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="D" />
+    <Classification name="E">
+      <Actual>11</Actual>
+      <EstimatedValueOfDamage>7626</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="F">
+      <Actual>1</Actual>
+      <EstimatedValueOfDamage>1</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="G">
+      <Actual>15</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <EstimatedValueOfDamage>10254</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Total Structure">
+      <Actual>65</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <EstimatedValueOfDamage>34626</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="H">
+      <Actual>96</Actual>
+      <EstimatedValueOfDamage>1216844</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="I">
+      <Actual>4</Actual>
+      <EstimatedValueOfDamage>63001</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Total Mobile">
+      <Actual>100</Actual>
+      <EstimatedValueOfDamage>1279845</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="J">
+      <Actual>1126</Actual>
+      <ClearedByArrest>5</ClearedByArrest>
+      <EstimatedValueOfDamage>1169568</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Grand Total">
+      <Actual>1291</Actual>
+      <ClearedByArrest>6</ClearedByArrest>
+      <EstimatedValueOfDamage>2484039</EstimatedValueOfDamage>
+    </Classification>
+  </ArsonSummary>
+</UcrReports>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:decimal-format name="us" decimal-separator="." grouping-separator=","/>
+  <xsl:decimal-format name="us" decimal-separator="." grouping-separator="," />
   <xsl:template match="/">
     <html>
       <head>
@@ -42,7 +43,7 @@
             </tr>
             <tr>
               <td style="border-left:1px solid black;text-indent:5px;" class="small">
-               <xsl:value-of select="concat(//ArsonSummary/@AGENCY,'  ',//ArsonSummary/@ORI)" />
+                <xsl:value-of select="concat(UcrReports/@agency, ' ', UcrReports/@ori)" />
                 <br />
                 <br />
               </td>
@@ -53,7 +54,7 @@
               <td class="small"></td>
               <td class="small"></td>
               <td style="float:right;border-right:1px solid black;text-indent:-5px;" class="small">
-                <xsl:value-of select="ArsonSummary/@PERIOD" />         
+                <xsl:value-of select="concat(UcrReports/@year, ' ', UcrReports/@month)" />
                 <br />
                 <br />
               </td>
@@ -66,7 +67,7 @@
               <th scope="col">5</th>
               <th scope="col">6</th>
               <th scope="col">7</th>
-              <th scope="col">8</th>              
+              <th scope="col">8</th>
             </tr>
             <tr>
               <th scope="col">Property Classification</th>
@@ -80,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <xsl:for-each select="ArsonSummary/Classification">
+            <xsl:for-each select="UcrReports/ArsonSummary/Classification">
               <tr>
                 <!--The row header-->
                 <th class="rowheader">
@@ -116,7 +117,7 @@
                       J. Total Other: Crops, Timber, Fences, Signs, etc.
                     </xsl:when>
                     <xsl:otherwise>
-                      <xsl:value-of select="@name"/>
+                      <xsl:value-of select="@name" />
                     </xsl:otherwise>
                   </xsl:choose>
                 </th>
@@ -124,7 +125,7 @@
                 <!-- Offenses Reported is same as Actual -->
                 <td>
                   <xsl:if test="not(Actual)">0</xsl:if>
-                  <xsl:value-of select="Actual"/>
+                  <xsl:value-of select="Actual" />
                 </td>
 
                 <!-- Unfounded Offenses will always be 0 -->
@@ -132,17 +133,17 @@
 
                 <td>
                   <xsl:if test="not(Actual)">0</xsl:if>
-                  <xsl:value-of select="Actual"/>
+                  <xsl:value-of select="Actual" />
                 </td>
                 <td>
                   <xsl:if test="not(ClearedByArrest)">0</xsl:if>
-                  <xsl:value-of select="ClearedByArrest"/>
+                  <xsl:value-of select="ClearedByArrest" />
                 </td>
                 <td>
                   <xsl:if test="not(ClearedByJuvArrest)">0</xsl:if>
-                  <xsl:value-of select="ClearedByJuvArrest"/>
+                  <xsl:value-of select="ClearedByJuvArrest" />
                 </td>
-                
+
                 <!-- This is column 7 which will always be zero for NIBRS -->
                 <!-- Offenses Where Structures Uninhabited, Abandoned, or not Normally in Use -->
                 <td>
@@ -152,9 +153,11 @@
                 <td>
                   <xsl:choose>
                     <xsl:when test="not(EstimatedValueOfDamage)">$0.00</xsl:when>
-                    <xsl:otherwise><xsl:value-of select="format-number(EstimatedValueOfDamage, '$#,###.00')"/></xsl:otherwise>
+                    <xsl:otherwise>
+                      <xsl:value-of select="format-number(EstimatedValueOfDamage, '$#,###.00')" />
+                    </xsl:otherwise>
                   </xsl:choose>
-                </td>                
+                </td>
               </tr>
             </xsl:for-each>
           </tbody>

@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Reflection;
+using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
 {
@@ -43,6 +44,24 @@ namespace NibrsXml.Ucr.DataCollections
         {
             return new XDocument(
                 new XElement("UcrReports",
+                    ReturnAData.Serialize().Root,
+                    ReturnASupplementData.Serialize().Root,
+                    HumanTraffickingData.Serialize().Root,
+                    ArsonData.Serialize().Root,
+                    AsreData.Serialize().Root,
+                    LeokaData.Serialize().Root,
+                    HateCrimeData.Serialize().Root,
+                    SupplementaryHomicideData.Serialize().Root));
+        }
+
+        public XDocument Serialize(string agency, string ori, int year, int month)
+        {
+            return new XDocument(
+                new XElement("UcrReports",
+                    new XAttribute("agency", agency),
+                    new XAttribute("ori", ori),
+                    new XAttribute("year", year),
+                    new XAttribute("month", month),
                     ReturnAData.Serialize().Root,
                     ReturnASupplementData.Serialize().Root,
                     HumanTraffickingData.Serialize().Root,

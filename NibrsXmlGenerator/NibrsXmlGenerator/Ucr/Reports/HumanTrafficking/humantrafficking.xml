@@ -1,9 +1,6 @@
 ﻿<?xml-stylesheet type="text/xsl" href="ht.xsl"?>
+
 <HumanTraffickingSummary>
-  <UcrCodeDictionary>
-    <UCRDescription value="A">A. Commercial Sex Acts</UCRDescription>
-    <UCRDescription value="B">B. Involuntary Servitude</UCRDescription>
-  </UcrCodeDictionary>
   <Classification name="A">
     <Actual>1195</Actual>
     <ClearedByArrest>5</ClearedByArrest>

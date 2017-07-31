@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template match="/">
     <html>
@@ -47,21 +48,21 @@
         </style>
       </head>
       <body>
-        <xsl:for-each select="HCR/INCIDENTS/INCIDENT">
+        <xsl:for-each select="UcrReports/HCR/INCIDENTS/INCIDENT">
           <table>
             <colgroup span="3"></colgroup>
             <thead>
               <tr>
-                <th  colspan="3" style="text-align:center;">
-                  Quarterly Hate Crime Report<br/>(Offenses Known to Law Enforcement)
+                <th colspan="3" style="text-align:center;">
+                  Quarterly Hate Crime Report<br />(Offenses Known to Law Enforcement)
                 </th>
               </tr>
-              <tr >
-                <td  class="small">
-                  <xsl:value-of select="concat(../../@AGENCY,'  ',../../@ORI)" />
+              <tr>
+                <td class="small">
+                  <xsl:value-of select="concat(//UcrReports/@agency,'  ', //UcrReports/@ori)" />
                 </td>
-                <td  class="small">
-                  <xsl:value-of select="../../@QUARTER" />
+                <td class="small">
+                  <xsl:value-of select="concat(//UcrReports/@year, ' ', //UcrReports/@month)" />
                   <br />
                   <br />
                 </td>
@@ -91,15 +92,15 @@
                 </td>
               </tr>
               <tr>
-                <td   class="head">
+                <td class="head">
                   #Adult Offenders : <xsl:value-of select="ADULTOFFENDERSCOUNT" />
                 </td>
-                <td   class="head">
+                <td class="head">
                   #Juvenile Offenders : <xsl:value-of select="JUVENILEOFFENDERSCOUNT" />
                 </td>
               </tr>
               <tr>
-                <td   class="head">
+                <td class="head">
                   <div>
                     Offender Race :
                     <xsl:choose>
@@ -113,7 +114,7 @@
                     </xsl:choose>
                   </div>
                 </td>
-                <td   class="head">
+                <td class="head">
                   <div>
                     Offender Ethnicity :
                     <xsl:choose>
@@ -134,12 +135,12 @@
               <xsl:for-each select="OFFENSES/OFFENSE">
                 <div class="body">
                   <tr>
-                    <td colspan="3" style="text-align:left;border:0px;" >
+                    <td colspan="3" style="text-align:left;border:0px;">
                       Offense #: <xsl:value-of select="position()" />
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="1" >
+                    <td colspan="1">
                       Offense Code :
                       <xsl:choose>
                         <xsl:when test="OFFENSECODE='01'">01 (Murder)</xsl:when>
@@ -157,7 +158,7 @@
                         <xsl:when test="OFFENSECODE='13'">13 (Human Trafficking, Involuntary Servitude)</xsl:when>
                       </xsl:choose>
                     </td>
-                    <td colspan="2" >
+                    <td colspan="2">
                       Location Code :
                       <xsl:choose>
                         <xsl:when test="LOCATIONCODE='1'">1 (Air/Bus/Train Terminal)</xsl:when>
@@ -209,15 +210,15 @@
                   </tr>
 
                   <tr>
-                    <td  >
+                    <td>
                       # Adult Victims : <xsl:value-of select="ADULTVICTIMSCOUNT" />
-                    </td >
-                    <td  >
+                    </td>
+                    <td>
                       # Juvenile Victims : <xsl:value-of select="JUVENILEVICTIMSCOUNT" />
                     </td>
                   </tr>
                   <tr>
-                    <td  style="text-align:left;border-right:1px;">
+                    <td style="text-align:left;border-right:1px;">
                       Bias Motive (s) :
                     </td>
                     <td colspan="2" style="text-align:left;border-left:1px;">
@@ -264,7 +265,7 @@
                       </xsl:for-each>
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td colspan="3">
                       Victim Type(s) :
                       <xsl:if test="VICTIMTYPE/INDIVIDUAL='1'">Individual</xsl:if>
