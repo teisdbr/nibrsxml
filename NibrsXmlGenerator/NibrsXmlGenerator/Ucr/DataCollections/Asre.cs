@@ -624,22 +624,22 @@ namespace NibrsXml.Ucr.DataCollections
             public XElement[] Serialize()
             {
                 // Create XElements for ages, sexes, races, and ethnicities
-                var ageElements =
-                    AgeSexCounts.Select(
-                        ageSexdictionaryPair =>
-                            new XElement("Age", new XAttribute("value", ageSexdictionaryPair.Key), ageSexdictionaryPair.Value.Select(sexCountPair => new XElement(sexCountPair.Key, sexCountPair.Value))));
+
+                var ageElements = new XElement("Ages",
+                    AgeSexCounts.Select(ageSexdictionaryPair => new XElement("Age",
+                    new XAttribute("value", ageSexdictionaryPair.Key),
+                    ageSexdictionaryPair.Value.Select(sexCountPair => new XElement(sexCountPair.Key, sexCountPair.Value)))));
+
                 var adultElement = new XElement("Adult",
                     new XElement("Races", AdultRaceCounts.Select(raceCountPair => new XElement(raceCountPair.Key, raceCountPair.Value))),
                     new XElement("Ethnicities", AdultEthnicityCounts.Select(ethnicityCountPair => new XElement(ethnicityCountPair.Key, ethnicityCountPair.Value))));
+
                 var juvenileElement = new XElement("Juvenile",
                     new XElement("Races", JuvenileRaceCounts.Select(raceCountPair => new XElement(raceCountPair.Key, raceCountPair.Value))),
                     new XElement("Ethnicities", JuvenileEthnicityCounts.Select(ethnicityCountPair => new XElement(ethnicityCountPair.Key, ethnicityCountPair.Value))));
 
-                // Concatenate all XElements into a list
-                var xelements = new List<XElement>(ageElements) {adultElement, juvenileElement};
-
                 // Convert the list of XElements to an array and return
-                return xelements.ToArray();
+                return new[] { ageElements, adultElement, juvenileElement }; ;
             }
 
             #region Class Dictionaries for Serialization
