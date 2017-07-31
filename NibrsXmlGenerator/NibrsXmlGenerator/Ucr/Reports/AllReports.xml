@@ -1,0 +1,6329 @@
+<UcrReports>
+  <ReturnASummary>
+    <Classification name="1">
+      <Actual>3</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="1a">
+      <Actual>3</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="1b" >
+      <Actual>3</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+  	</Classification>
+    <Classification name="2">
+      <Actual>2</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="2a">
+      <Actual>2</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="2b" >
+      <Actual>3</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+  	</Classification>
+    <Classification name="3">
+      <Actual>15</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="3a">
+      <Actual>9</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="3b" >
+      <Actual>1</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+  	</Classification>
+    <Classification name="3c">
+      <Actual>1</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="3d">
+      <Actual>5</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4">
+      <Actual>65</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4a">
+      <Actual>21</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4b">
+      <Actual>15</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4c">
+      <Actual>22</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4d">
+      <Actual>7</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="4e" >
+      <Actual>22</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+  	</Classification>
+    <Classification name="5">
+      <Actual>197</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="5a">
+      <Actual>91</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="5b">
+      <Actual>97</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="5c">
+      <Actual>9</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="6">
+      <Actual>689</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="7">
+      <Actual>31</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="7a">
+      <Actual>30</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="7b" >
+      <Actual>30</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+  	</Classification>
+    <Classification name="7c">
+      <Actual>1</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="Grand Total">
+      <Actual>1315</Actual>
+      <ClearedByArrest>1</ClearedByArrest>
+      <ClearedByJuvArrest>2</ClearedByJuvArrest>
+    </Classification>
+  </ReturnASummary>
+  <ReturnASupplement Agency="Southern University A &amp; M system" ORI="LA01706" Period="October 2016">
+	<StolenAndRecoveredProperties>
+	  <Property entry="01">
+	    <Stolen>16287</Stolen>
+	    <Recovered>275</Recovered>
+	  </Property>
+	  <Property entry="02">
+	    <Stolen>6475</Stolen>
+	    <Recovered>275</Recovered>
+	  </Property>
+	  <Property entry="03">
+	    <Stolen>855</Stolen>
+	    <Recovered>100</Recovered>
+	  </Property>
+	  <Property entry="04">
+	    <Stolen>63212</Stolen>
+	    <Recovered>23880</Recovered>
+	  </Property>
+	  <Property entry="05">
+	    <Stolen>1503</Stolen>
+	    <Recovered>300</Recovered>
+	  </Property>
+	  <Property entry="06">
+	    <Stolen>1024</Stolen>
+	    <Recovered>1425</Recovered>
+	  </Property>
+	  <Property entry="07" >
+	    <Stolen>526</Stolen>
+	    <Recovered>134</Recovered>
+	  </Property>
+	  <Property entry="08">
+	    <Stolen>1551</Stolen>
+	    <Recovered>134</Recovered>
+	  </Property>
+	  <Property entry="09">
+	    <Stolen>526</Stolen>
+	    <Recovered>134</Recovered>
+	  </Property>
+	  <Property entry="10" >
+	    <Stolen>526</Stolen>
+	    <Recovered>134</Recovered>
+	  </Property>
+	  <Property entry="11">
+	    <Stolen>10627</Stolen>
+	    <Recovered>3419</Recovered>
+	  </Property>
+	  <Property entry="00">
+	    <Stolen>102060</Stolen>
+	    <Recovered>29533</Recovered>
+	  </Property>
+	</StolenAndRecoveredProperties>
+	<StolenPropertiesByClassification>
+	  <OffenseClassification entry="12">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="20">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="31">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="32">
+	    <Actual>1</Actual>
+	    <Stolen>500</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="33">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="34">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="35">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="36">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="37">
+	    <Actual>1</Actual>
+	    <Stolen>130</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="30">
+	    <Actual>3</Actual>
+	    <Stolen>1630</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="51">
+	    <Actual>753</Actual>
+	    <Stolen>5</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="52">
+	    <Actual>11</Actual>
+	    <Stolen>2</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="53">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="54">
+	    <Actual>101</Actual>
+	    <Stolen>4</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="55">
+	    <Actual>3600</Actual>
+	    <Stolen>2</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="56">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="50">
+	    <Actual>4465</Actual>
+	    <Stolen>13</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="61">
+	    <Actual>18</Actual>
+	    <Stolen>22422</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="62">
+	    <Actual>20</Actual>
+	    <Stolen>2183</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="63">
+	    <Actual>31</Actual>
+	    <Stolen>486</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="60">
+	    <Actual>69</Actual>
+	    <Stolen>25091</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="70">
+	    <Actual>5</Actual>
+	    <Stolen>63212</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="77" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="81" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="82" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="83">
+	    <Actual>2</Actual>
+	    <Stolen>1493</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="84">
+	    <Actual>6</Actual>
+	    <Stolen>904</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="85">
+	    <Actual>1</Actual>
+	    <Stolen>35</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="86" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="87" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="88" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="89">
+	    <Actual>60</Actual>
+	    <Stolen>22659</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="80">
+	    <Actual>69</Actual>
+	    <Stolen>25091</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="91">
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="92" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="90">
+	    <Actual>2</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	  <OffenseClassification entry="93" >
+	    <Actual>1</Actual>
+	    <Stolen>1000</Stolen>
+	  </OffenseClassification>
+	</StolenPropertiesByClassification>
+  </ReturnASupplement>
+  <HumanTraffickingSummary>
+    <Classification name="A">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="B">
+      <Actual>4</Actual>
+      <ClearedByArrest>5</ClearedByArrest>
+      <ClearedByJuvArrest>6</ClearedByJuvArrest>
+    </Classification>
+    <Classification name="GRAND TOTAL">
+      <Actual>5</Actual>
+      <ClearedByArrest>7</ClearedByArrest>
+      <ClearedByJuvArrest>9</ClearedByJuvArrest>
+    </Classification>
+  </HumanTraffickingSummary>
+  <ArsonSummary>
+    <Classification name="A">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>11472</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="B">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4858</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="C">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>415</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="D">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="E">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="F">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="G">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Total Structure">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="H">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="I">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Total Mobile">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="J">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+    <Classification name="Grand Total">
+      <Actual>1</Actual>
+      <ClearedByArrest>2</ClearedByArrest>
+      <ClearedByJuvArrest>3</ClearedByJuvArrest>
+      <EstimatedValueOfDamage>4</EstimatedValueOfDamage>
+    </Classification>
+  </ArsonSummary>
+  <ASRSummary>
+    <UCR value="01A">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="01B">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="02b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+      <Adult>
+        <Races />
+        <Ethnicities />
+      </Adult>
+      <Juvenile>
+        <Races />
+        <Ethnicities />
+      </Juvenile>
+    </UCR>
+    <UCR value="03b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="04b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="05b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="06b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="07b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="08b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="09b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="10b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="11b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="12b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="13b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="14b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="15b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="16b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="16A">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="16B">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="16C">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="17b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+	</UCR>
+    <UCR value="18b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="180">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18A">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18B">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18C">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18D">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="185">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18E">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18F">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18G">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="18H">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="19b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="19A">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="19B">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="19C">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="20b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="21b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="22b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="23b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="24b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="25b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="26b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+	</UCR>
+    <UCR value="27b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+	</UCR>
+    <UCR value="28b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+	</UCR>
+    <UCR value="29b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="30b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <UCR value="31b">
+	  <Ages>
+  	    <Age value="Under 10">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="10-12">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="13-14">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="15">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="16">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+    	<Age value="17">
+    	  <M>3</M>
+    	  <F>2</F>
+    	</Age>
+	    <Age value="18">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="19">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="20">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="21">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="22">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="23">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="24">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="25-29">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="30-34">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="35-39">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="40-44">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="45-49">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="50-54">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="55-59">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="60-64">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	    <Age value="65+">
+	      <M>3</M>
+	      <F>2</F>
+	    </Age>
+	  </Ages>
+	  <Adult>
+	    <Races>
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Adult>
+	  <Juvenile>
+	    <Races >
+	      <Black>1</Black>
+	      <White>1</White>
+	      <AsianOrPacificIslander>1</AsianOrPacificIslander>
+	      <AmericanIndian>1</AmericanIndian>
+	    </Races>
+	    <Ethnicities>
+	      <Hispanic>0</Hispanic>
+	      <Non-Hispanic>5</Non-Hispanic>
+	    </Ethnicities>
+	  </Juvenile>
+    </UCR>
+    <JuvenileDispositions>
+      <Department>1</Department>
+      <Court>2</Court>
+      <WelfareAgency>3</WelfareAgency>
+      <OtherPoliceAgency>4</OtherPoliceAgency>
+      <CriminalOrAdultCourt>5</CriminalOrAdultCourt>
+      <Total>15</Total>
+    </JuvenileDispositions>
+  </ASRSummary>
+  <LeokaSummary>
+    <Killed>
+      <Feloneously>1</Feloneously>
+      <ByAccident>1</ByAccident>
+    </Killed>
+    <Assaults>
+      <Classification name="1">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="2" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="3">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="4" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="5" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="6" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="7" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="8" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="9" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="10">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="11">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="12">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="13">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="14">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+    </Assaults>
+    <AssaultsTime>
+      <H00-01>1</H00-01>
+      <H02-03>1</H02-03>
+      <H04-05>1</H04-05>
+      <H06-07>1</H06-07>
+      <H08-09>1</H08-09>
+      <H10-11>1</H10-11>
+      <H12-13>1</H12-13>
+      <H14-15>1</H14-15>
+      <H16-17>1</H16-17>
+      <H18-19>1</H18-19>
+      <H20-21>1</H20-21>
+      <H22-23>1</H22-23>
+    </AssaultsTime>
+  </LeokaSummary>
+  <HCR>
+    <INCIDENTS>
+      <INCIDENT>
+        <INCIDENTNUM>17-001129-01</INCIDENTNUM>
+        <INCIDENTDATE>2017-07-21T10:00:00</INCIDENTDATE>
+        <FILINGTYPE>1</FILINGTYPE>
+        <ADULTOFFENDERSCOUNT>1</ADULTOFFENDERSCOUNT>
+        <JUVENILEOFFENDERSCOUNT>0</JUVENILEOFFENDERSCOUNT>
+        <OFFENDERRACE>A</OFFENDERRACE>
+        <OFFENDERETHNICITY>N</OFFENDERETHNICITY>
+        <OFFENSES>
+          <OFFENSE>
+            <OFFENSECODE>01</OFFENSECODE>
+            <LOCATIONCODE>05</LOCATIONCODE>
+            <ADULTVICTIMSCOUNT>1</ADULTVICTIMSCOUNT>
+            <JUVENILEVICTIMSCOUNT>0</JUVENILEVICTIMSCOUNT>
+            <VICTIMTYPE>
+              <INDIVIDUAL>1</INDIVIDUAL>
+              <BUSINESS>0</BUSINESS>
+              <FINANCIAL>0</FINANCIAL>
+              <GOVERNMENT>0</GOVERNMENT>
+              <RELIGIOUS>0</RELIGIOUS>
+              <OTHER>0</OTHER>
+              <UNKNOWN>0</UNKNOWN>
+            </VICTIMTYPE>
+            <BIASMOTIVES>
+              <BIASMOTIVE CODE="45" />
+            </BIASMOTIVES>
+          </OFFENSE>
+        </OFFENSES>
+      </INCIDENT>
+    </INCIDENTS>
+  </HCR>
+  <SHR>
+    <INCIDENTS>
+      <INCIDENT>
+        <MANSLAUGHTERNEGLIGENT>0</MANSLAUGHTERNEGLIGENT>
+        <SITUATION>A</SITUATION>
+        <VICTIMS>
+          <VICTIM>
+            <AGE>23</AGE>
+            <SEX>F</SEX>
+            <ETHNICITY>N</ETHNICITY>
+            <RACE>B</RACE>
+            <OFFENDERS>
+              <OFFENDER>
+                <AGE>26</AGE>
+                <SEX>M</SEX>
+                <ETHNICITY>N</ETHNICITY>
+                <RACE>A</RACE>
+                <WEAPONUSED>40</WEAPONUSED>
+                <RELATIONSHIP>GF</RELATIONSHIP>
+                <CIRCUMSTANCE>45</CIRCUMSTANCE>
+              </OFFENDER>
+            </OFFENDERS>
+          </VICTIM>
+        </VICTIMS>
+      </INCIDENT>
+    </INCIDENTS>
+  </SHR>
+</UcrReports>
