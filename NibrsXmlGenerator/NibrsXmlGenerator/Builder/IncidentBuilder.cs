@@ -2,7 +2,7 @@
 using NibrsXml.NibrsReport.Incident;
 using NibrsXml.NibrsReport.Misc;
 using LoadBusinessLayer.LIBRSAdmin;
-using LoadBusinessLayer.LIBRSErrorConstants;
+using LoadBusinessLayer.LibrsErrorConstants;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
@@ -11,27 +11,31 @@ namespace NibrsXml.Builder
     {
         public static Incident Build(LIBRSAdmin admin)
         {
-            var inc = new Incident();
-            inc.ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim());
-            inc.ActivityDate = ExtractNibrsIncidentDateTime(admin);
+            var inc = new Incident
+            {
+                ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim()),
+                ActivityDate = ExtractNibrsIncidentDateTime(admin),
+                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false),
+                JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin),
+                    ExtractIncidentExceptionalClearanceDate(admin))
+            };
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
-            inc.CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false); // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
-            inc.JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin),  ExtractIncidentExceptionalClearanceDate(admin));
+            // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
             return inc;
         }
 
         /// <summary>
         /// Since LIBRS incidents don't record time, this translates LIBRS date format to NIBRS datetime format
         /// </summary>
-        private static ActivityDate ExtractNibrsIncidentDateTime(LIBRSAdmin admin)
+        public static ActivityDate ExtractNibrsIncidentDateTime(LIBRSAdmin admin)
         {
-            string month, day, year, hour, date, time;
+            string date, time;
             try
             {
-                month = admin.IncidentDate.Substring(0, 2);
-                day = admin.IncidentDate.Substring(2, 2);
-                year = admin.IncidentDate.Substring(4, 4);
-                hour = admin.IncidentDate.Substring(9, 2).Trim();
+                var month = admin.IncidentDate.Substring(0, 2);
+                var day = admin.IncidentDate.Substring(2, 2);
+                var year = admin.IncidentDate.Substring(4, 4);
+                var hour = admin.IncidentDate.Substring(9, 2).Trim();
                 date = string.Format("{0}-{1}-{2}", year, month, day);
                 time = string.Format("{0}:00:00", hour == string.Empty ? "00" : hour.PadLeft(2,'0'));
             }
@@ -44,9 +48,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsClearanceCode(LIBRSAdmin admin)
         {
-            if (admin.ClearedExceptionally == LIBRSErrorConstants.CEOther)
-                return LIBRSErrorConstants.CENotApp;
-            return admin.ClearedExceptionally;
+            return admin.ClearedExceptionally == LibrsErrorConstants.CEOther ? LibrsErrorConstants.CENotApp : admin.ClearedExceptionally;
         }
 
         private static IncidentExceptionalClearanceDate ExtractIncidentExceptionalClearanceDate(LIBRSAdmin admin)

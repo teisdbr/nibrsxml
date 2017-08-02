@@ -1,32 +1,28 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Collections.Concurrent;
 using System.IO;
-using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Ucr.DataMining;
-using NibrsXml.Utility;
 using System.Configuration;
 
 namespace NibrsXml.Ucr
 {
-    public class NibrsImport
+    public class NibrsToUcrImport
     {
-        public List<Report> Reports { get; set; }
+        public Submission NibrsSubmission { get; set; }
         public ConcurrentDictionary<string, ReportData> MonthlyOriReportData { get; set; }
 
-        public NibrsImport(string xmlFilepath)
+        public NibrsToUcrImport(string xmlFilepath)
         {
             var validator = new XmlValidator(xmlFilepath);
-            if (!validator.HasErrors)
-            {
-                Reports = Submission.Deserialize(xmlFilepath).Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
-                MonthlyOriReportData = ReportMiner.Mine(Reports);
-            }
+            if (validator.HasErrors) return;
+
+            NibrsSubmission = Submission.Deserialize(xmlFilepath);
+            MonthlyOriReportData = ReportMiner.Mine(NibrsSubmission);
         }
 
-        public NibrsImport(Submission submission, List<KeyValuePair<string, string>> schemasToUseForValidation = null)
+        public NibrsToUcrImport(Submission submission, List<KeyValuePair<string, string>> schemasToUseForValidation = null)
         {
             //If no schemas were provided, use default. IBR should always provide it. It is optional for WinLIBRS.
             if (schemasToUseForValidation == null)
@@ -43,17 +39,16 @@ namespace NibrsXml.Ucr
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/niem-core/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/proxy/xsd/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/structures/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\structures\3.0\structures.xsd"),
-                    new KeyValuePair<string, string>("http://fbi.gov/cjis/nibrs/nibrs-codes/4.0", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd"),
+                    new KeyValuePair<string, string>("http://fbi.gov/cjis/nibrs/nibrs-codes/4.0", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd")
                 };
             }
 
             //Use the StringReader Overload constructor to validate the string directly instead of reading an xml file.
             var validator = new XmlValidator(new StringReader(submission.Xml), schemasToUseForValidation);
-            if (!validator.HasErrors)
-            {
-                Reports = submission.Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
-                MonthlyOriReportData = ReportMiner.Mine(Reports);
-            }
+            if (validator.HasErrors) return;
+
+            NibrsSubmission = submission;
+            MonthlyOriReportData = ReportMiner.Mine(NibrsSubmission);
         }
     }
 }

@@ -8,7 +8,7 @@ using NibrsXml.NibrsReport.EnforcementOfficial;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Constants;
 using LoadBusinessLayer;
-using LoadBusinessLayer.LIBRSErrorConstants;
+using LoadBusinessLayer.LibrsErrorConstants;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -35,7 +35,7 @@ namespace NibrsXml.Builder
                 if (librsVictimInjuries != null && librsVictimInjuries.Count() > 0)
                     nibrsVictimInjuries = librsVictimInjuries.Select(i => new VictimInjury(i.InjuryType)).ToList();
                 
-                if (victim.VictimType == LIBRSErrorConstants.VTIndividual || victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
+                if (victim.VictimType == LibrsErrorConstants.VTIndividual || victim.VictimType == LibrsErrorConstants.VTLawEnfOfficer)
                 {
                     var newPerson = new Person(
                         id: uniquePrefix,
@@ -58,7 +58,7 @@ namespace NibrsXml.Builder
 
                     //Create a new EnforcementOfficial object if this person is an officer
                     //Since Victim takes
-                    if (victim.VictimType == LIBRSErrorConstants.VTLawEnfOfficer)
+                    if (victim.VictimType == LibrsErrorConstants.VTLawEnfOfficer)
                     {
                         newOfficer = new EnforcementOfficial(
                             person: newPerson,
@@ -162,13 +162,13 @@ namespace NibrsXml.Builder
             //Match victims to subjects and create relationships
             if (
                 victims.Any(
-                    v => v.CategoryCode.MatchOne(LIBRSErrorConstants.VTIndividual, LIBRSErrorConstants.VTLawEnfOfficer)))
+                    v => v.CategoryCode.MatchOne(LibrsErrorConstants.VTIndividual, LibrsErrorConstants.VTLawEnfOfficer)))
             {
                 var humanVictims =
                     victims.Where(
                         victim =>
-                            victim.CategoryCode.MatchOne(LIBRSErrorConstants.VTIndividual,
-                                LIBRSErrorConstants.VTLawEnfOfficer));
+                            victim.CategoryCode.MatchOne(LibrsErrorConstants.VTIndividual,
+                                LibrsErrorConstants.VTLawEnfOfficer));
                 foreach (var victim in humanVictims)
                 {
                     foreach (var relatedOffender in victim.RelatedOffenders)
@@ -206,17 +206,17 @@ namespace NibrsXml.Builder
                     var juvenileDispositionCode = librsArrestee.DispositionUnder17;
                     switch (juvenileDispositionCode)
                     {
-                        case LIBRSErrorConstants.DispDepartment:
+                        case LibrsErrorConstants.DispDepartment:
                             juvenileDispositionCode = JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode();
                             break;
-                        case LIBRSErrorConstants.DispPoliceAgency:
+                        case LibrsErrorConstants.DispPoliceAgency:
                             juvenileDispositionCode = JuvenileDispositionCode.OTHER_AUTHORITIES.NibrsCode();
                             break;
-                        case LIBRSErrorConstants.DispAdultCourt:
+                        case LibrsErrorConstants.DispAdultCourt:
                             juvenileDispositionCode = JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode();
                             break;
-                        case LIBRSErrorConstants.DispJuvenileCourt:
-                        case LIBRSErrorConstants.DispWelfareAgency:
+                        case LibrsErrorConstants.DispJuvenileCourt:
+                        case LibrsErrorConstants.DispWelfareAgency:
                             break;
                         default:
                             juvenileDispositionCode = null;
@@ -235,7 +235,7 @@ namespace NibrsXml.Builder
                         seqId: librsArrestee.ArrestSeqNum,
                         clearanceIndicator:
                         //Translate LIBRS OtherExceptionalClearances to NIBRS NotApplicable; other clearance codes do not require translation
-                        librsArrestee.ClearanceIndicator == LIBRSErrorConstants.CEOther
+                        librsArrestee.ClearanceIndicator == LibrsErrorConstants.CEOther
                             ? IncidentExceptionalClearanceCode.NOT_APPLICABLE.NibrsCode()
                             : librsArrestee.ClearanceIndicator,
                         //todo: ??? Does LIBRS Clearance Indicator of "O" translate to NIBRS of "N"?
@@ -359,11 +359,11 @@ namespace NibrsXml.Builder
         #region Shared Variables
         private static Dictionary<string, string> JuvenileDispositionCodeLibrsNibrsTranslations = new Dictionary<string, string>
         {
-            {LIBRSErrorConstants.DispDepartment, JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode()},
-            {LIBRSErrorConstants.DispJuvenileCourt, JuvenileDispositionCode.JUVENILE_COURT.NibrsCode()},
-            {LIBRSErrorConstants.DispWelfareAgency, JuvenileDispositionCode.WELFARE.NibrsCode()},
-            {LIBRSErrorConstants.DispPoliceAgency, JuvenileDispositionCode.OTHER_AUTHORITIES.NibrsCode()},
-            {LIBRSErrorConstants.DispAdultCourt, JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode()}
+            {LibrsErrorConstants.DispDepartment, JuvenileDispositionCode.HANDLED_WITHIN_DEPARTMENT.NibrsCode()},
+            {LibrsErrorConstants.DispJuvenileCourt, JuvenileDispositionCode.JUVENILE_COURT.NibrsCode()},
+            {LibrsErrorConstants.DispWelfareAgency, JuvenileDispositionCode.WELFARE.NibrsCode()},
+            {LibrsErrorConstants.DispPoliceAgency, JuvenileDispositionCode.OTHER_AUTHORITIES.NibrsCode()},
+            {LibrsErrorConstants.DispAdultCourt, JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode()}
         };
 
         private static Dictionary<string, string> VictimOffenderRelationshipLibrsNibrsTranslation = new Dictionary

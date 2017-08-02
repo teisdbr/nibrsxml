@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using LoadBusinessLayer;
-using NibrsXml.Constants;
 using NibrsXml.Constants.Ucr;
-using NibrsXml.NibrsReport;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -19,7 +14,7 @@ namespace NibrsXml.Ucr.ReportRendering
 {
     public class HtmlRenderer
     {
-        public static void RenderUcrFromSubmission(NibrsImport ucrReports, string ori, int desiredYear, int desiredMonth)
+        public static void RenderUcrFromSubmission(NibrsToUcrImport ucrReports, string ori, int desiredYear, int desiredMonth)
         {
             //Get folder path
             var path = new CommonFunctions();

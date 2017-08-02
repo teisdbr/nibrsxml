@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace NibrsXml.Ucr.DataCollections
@@ -14,6 +15,8 @@ namespace NibrsXml.Ucr.DataCollections
         public Leoka LeokaData { get; set; }
         public SupplementaryHomicide SupplementaryHomicideData { get; set; }
         public HateCrime HateCrimeData { get; set; }
+        public List<string> AcceptedIncidents { get; set; }
+        public List<string> RejectedIncidents { get; set; }
 
         #endregion
         
@@ -25,7 +28,7 @@ namespace NibrsXml.Ucr.DataCollections
             {
                 return ReturnAData.Supplement;
             }
-        } 
+        }
 
         #endregion
 
@@ -38,6 +41,8 @@ namespace NibrsXml.Ucr.DataCollections
             LeokaData = new Leoka();
             SupplementaryHomicideData = new SupplementaryHomicide();
             HateCrimeData = new HateCrime();
+            AcceptedIncidents = new List<string>();
+            RejectedIncidents = new List<string>();
         }
 
         public XDocument Serialize()
@@ -51,7 +56,8 @@ namespace NibrsXml.Ucr.DataCollections
                     AsreData.Serialize().Root,
                     LeokaData.Serialize().Root,
                     HateCrimeData.Serialize().Root,
-                    SupplementaryHomicideData.Serialize().Root));
+                    SupplementaryHomicideData.Serialize().Root,
+                    SerializeAcceptedAndRejectedIncidents()));
         }
 
         public XDocument Serialize(string agency, string ori, int year, int month)
@@ -69,7 +75,19 @@ namespace NibrsXml.Ucr.DataCollections
                     AsreData.Serialize().Root,
                     LeokaData.Serialize().Root,
                     HateCrimeData.Serialize().Root,
-                    SupplementaryHomicideData.Serialize().Root));
+                    SupplementaryHomicideData.Serialize().Root,
+                    SerializeAcceptedAndRejectedIncidents()));
+        }
+
+        public XElement SerializeAcceptedAndRejectedIncidents()
+        {
+            return new XElement("IncidentsAcceptedOrRejected",
+                AcceptedIncidents.Select(i => new XElement("Incident",
+                    new XAttribute("id", i),
+                    new XAttribute("accepted", 1))),
+                RejectedIncidents.Select(i => new XElement("Incident",
+                    new XAttribute("id", i),
+                    new XAttribute("accepted", 0))));
         }
     }
 }

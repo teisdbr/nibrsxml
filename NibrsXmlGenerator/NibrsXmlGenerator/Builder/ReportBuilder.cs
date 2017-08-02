@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LoadBusinessLayer;
-using LoadBusinessLayer.LIBRSErrorConstants;
+using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSProperty;
 using NibrsXml.NibrsReport;
@@ -23,9 +23,9 @@ namespace NibrsXml.Builder
 {
     public class ReportBuilder
     {
-        private static string drugNarcoticLibrsPropDesc = "10";
-        
-        public static NibrsReport.Report Build(LIBRSIncident incident)
+        private const string DrugNarcoticLibrsPropDesc = "10";
+
+        public static Report Build(LIBRSIncident incident)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace NibrsXml.Builder
 
             foreach (var prop in librsProperties)
             {
-                if (prop.PropertyDescription == drugNarcoticLibrsPropDesc && prop.PropertyLossType == LIBRSErrorConstants.PLSeiz)
+                if (prop.PropertyDescription == DrugNarcoticLibrsPropDesc && prop.PropertyLossType == LibrsErrorConstants.PLSeiz)
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
                     var drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
@@ -238,7 +238,7 @@ namespace NibrsXml.Builder
                                                         new Arrest(
                                                             uniquePrefix: uniquePrefix + incident.Admin.ActionType + "-",
                                                             arrestId: arrest.SeqNum,
-                                                            activityId: new NibrsReport.Misc.ActivityIdentification(arrest.TransactionNumber.Trim()),
+                                                            activityId: new ActivityIdentification(arrest.TransactionNumber.Trim()),
                                                             date: new ActivityDate(arrest.ActivityDate),
                                                             charge: new ArrestCharge(arrest.Charge),
                                                             categoryCode: arrest.CategoryCode,
@@ -255,7 +255,7 @@ namespace NibrsXml.Builder
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims)
         {
             return offenses.Join(
-                inner: victims.Where(victim => victim.CategoryCode == LIBRSErrorConstants.VTIndividual || victim.CategoryCode == LIBRSErrorConstants.VTLawEnfOfficer),
+                inner: victims.Where(victim => victim.CategoryCode == LibrsErrorConstants.VTIndividual || victim.CategoryCode == LibrsErrorConstants.VTLawEnfOfficer),
                 outerKeySelector: offense => offense.librsVictimSequenceNumber,
                 innerKeySelector: victim => victim.SeqNum,
                 resultSelector: (offense, victim) => new OffenseVictimAssociation(offense, victim)).ToList();

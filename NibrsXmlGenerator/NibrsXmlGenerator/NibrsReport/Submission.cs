@@ -18,22 +18,26 @@ namespace NibrsXml.NibrsReport
     public class Submission : NibrsSerializable
     {
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
-        public string XsiSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
+        public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
         [XmlElement("Report")]
         public List<Report> Reports = new List<Report>();
 
         [XmlIgnore]
-        private static readonly NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
+        public List<Report> RejectedReports = new List<Report>();
+
+        [XmlIgnore]
+        private static readonly NibrsSerializer.NibrsSerializer Serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlIgnore]
         public string Xml
         {
             get
             {
-                return serializer.Serialize(this);
+                return Serializer.Serialize(this);
             }
         }
+
         public Submission() { }
 
         public Submission(params Report[] reports)
@@ -54,7 +58,6 @@ namespace NibrsXml.NibrsReport
             Submission sub;
             try
             {
-
                 //When deserializing, associations and persons do not have the full context of their complex elements.
                 //Deserialization of XML nodes does not cross check the other XML nodes to give the original full context of the data involved;
                 //It will create objects for only what is present within the node being deserialized.
@@ -63,7 +66,7 @@ namespace NibrsXml.NibrsReport
                 //Further, you would not have the full context of the victim either because the victim is composed of a person, so you need to use the victim's ID
                 //and retrieve the person data for that victim.
 
-                sub = (Submission)serializer.Deserialize(xmlReader);
+                sub = (Submission)Serializer.Deserialize(xmlReader);
                 foreach (var report in sub.Reports) report.RebuildCrossReferencedRelationships();
             }
             catch (Exception e)

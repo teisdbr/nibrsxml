@@ -140,7 +140,7 @@
     <Compile Include="Ucr\DataCollections\SupplementaryHomicide.cs" />
     <Compile Include="Ucr\DataMining\UcrHierarchyMiner.cs" />
     <Compile Include="Ucr\Extensions.cs" />
-    <Compile Include="Ucr\NibrsImport.cs" />
+    <Compile Include="Ucr\NibrsToUcrImport.cs" />
     <Compile Include="Ucr\DataCollections\ReportData.cs" />
     <Compile Include="Ucr\ReportRendering\HtmlRenderer.cs" />
     <Compile Include="Ucr\Translate.cs" />
@@ -210,6 +210,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="Ucr\Reports\IncidentsAcceptedOrRejected\incidents.xslt" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

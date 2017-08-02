@@ -1,5 +1,4 @@
-﻿using System;
-using NibrsXml.Constants;
+﻿using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 using NibrsXml.NibrsReport.Subject;
 using NibrsXml.Ucr.DataCollections;

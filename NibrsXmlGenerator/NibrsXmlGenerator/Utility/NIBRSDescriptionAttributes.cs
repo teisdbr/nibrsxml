@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Reflection;
 
 /**
  * Creating custom description attributes for NIBRS constants

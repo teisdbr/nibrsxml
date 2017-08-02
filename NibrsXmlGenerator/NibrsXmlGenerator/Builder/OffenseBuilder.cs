@@ -6,7 +6,7 @@ using NibrsXml.Utility;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
-using LoadBusinessLayer.LIBRSErrorConstants;
+using LoadBusinessLayer.LibrsErrorConstants;
 using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
@@ -110,8 +110,8 @@ namespace NibrsXml.Builder
             if (librsCriminalActivity.Trim() == string.Empty)
                 return null;
             //Other (X) and Possession with Intent to Sell (I) are only ones translated as P because they are LIBRS only.
-            if (librsCriminalActivity.MatchOne(LIBRSErrorConstants.OthCrim,LIBRSErrorConstants.Int))
-                return LIBRSErrorConstants.Posses;
+            if (librsCriminalActivity.MatchOne(LibrsErrorConstants.OthCrim,LibrsErrorConstants.Int))
+                return LibrsErrorConstants.Posses;
             return librsCriminalActivity;
         }
 
@@ -135,7 +135,7 @@ namespace NibrsXml.Builder
             foreach (var code in suspectedOfUsingCodes)
             {
                 //Exception: If LIBRS is G, should be translated to N
-                var translatedCode = code == LIBRSErrorConstants.OffGaming ? LIBRSErrorConstants.OffNotApp : code;
+                var translatedCode = code == LibrsErrorConstants.OffGaming ? LibrsErrorConstants.OffNotApp : code;
                 offenseFactors.Add(translatedCode.TryBuild<OffenseFactor>());
             }
             return offenseFactors;

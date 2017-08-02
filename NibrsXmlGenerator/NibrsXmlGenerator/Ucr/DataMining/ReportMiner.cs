@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NibrsXml.Constants;
@@ -13,15 +12,30 @@ namespace NibrsXml.Ucr.DataMining
     internal class ReportMiner
     {
         [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-        public static ConcurrentDictionary<string, ReportData> Mine(List<Report> nibrsIncidentReports)
+        public static ConcurrentDictionary<string, ReportData> Mine(Submission submission)
         {
+            //Only process incidents with action type I (insert)
+            var nibrsIncidentReports = submission.Reports.Where(r => r.Header.ReportActionCategoryCode == ReportActionCategoryCode.I.NibrsCode()).ToList();
+
             var monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
+
+            foreach (var report in submission.RejectedReports)
+            {
+                //Make sure there is at least an empty ReportData structure for this report
+                monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
+
+                //Add this report to the list of accepted incidents
+                monthlyOriReportData[report.UcrKey()].RejectedIncidents.Add(report.Incident.ActivityId.Id);
+            }
 
             //todo: make parallel
             foreach (var report in nibrsIncidentReports)
             {
                 //Make sure there is at least an empty ReportData structure for this report
                 monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
+
+                //Add this report to the list of accepted incidents
+                monthlyOriReportData[report.UcrKey()].AcceptedIncidents.Add(report.Incident.ActivityId.Id);
 
                 //Asre Data
                 AsreMiner.MineAdd(monthlyOriReportData, report);
@@ -37,7 +51,7 @@ namespace NibrsXml.Ucr.DataMining
                 {
                     new ReturnAMiner(monthlyOriReportData, report);
                 }
-                    
+                
                 //Leoka Data
                 if (report.Victims.Any(v => v.CategoryCode == VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode()))
                 {

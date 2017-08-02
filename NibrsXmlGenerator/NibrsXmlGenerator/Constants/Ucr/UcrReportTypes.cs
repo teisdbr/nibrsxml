@@ -26,6 +26,9 @@ namespace NibrsXml.Constants.Ucr
         SupplementaryHomicide,
 
         [UcrReport("NibrsXml.Ucr.Reports.Leoka.leoka.xsl","_Leoka.xml","_Leoka.html")]
-        Leoka
+        Leoka,
+
+        [UcrReport("NibrsXml.Ucr.Reports.IncidentsAcceptedOrRejected.incidents.xslt", "_IncidentsAcceptedOrRejected.xml", "_IncidentsAcceptedOrRejected.html")]
+        IncidentsAcceptedOrRejected
     }
 }
