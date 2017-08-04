@@ -43,272 +43,296 @@
         </style>
       </head>
       <body>
-        <div id="report-header">Law Enforcement Officers Killed or Assaulted</div>
-        <br />
-        <div style="float:left">
-          <xsl:value-of select="concat(//UcrReports/@agency,'   ',//UcrReports/@ori)" />
-        </div>
-        <div style="float:right">
-          <xsl:value-of select="concat(/UcrReports/@year,' ',/UcrReports/@month)" />
-        </div>
-        <br />
-        <table id="killed-table">
+        <table class="page-wrapper">
+          <!--Page header-->
           <thead>
             <tr>
-              <th colspan="2">Officers Killed</th>
+              <th colspan="4">Law Enforcement Officers Killed or Assaulted</th>
+            </tr>
+            <tr>
+              <th>
+                <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
+              </th>
+              <th>City: </th>
+              <th>Parish: </th>
+              <th>
+                <xsl:choose>
+                  <xsl:when test="UcrReports/@month=1">January </xsl:when>
+                  <xsl:when test="UcrReports/@month=2">February </xsl:when>
+                  <xsl:when test="UcrReports/@month=3">March </xsl:when>
+                  <xsl:when test="UcrReports/@month=4">April </xsl:when>
+                  <xsl:when test="UcrReports/@month=5">May </xsl:when>
+                  <xsl:when test="UcrReports/@month=6">June </xsl:when>
+                  <xsl:when test="UcrReports/@month=7">July </xsl:when>
+                  <xsl:when test="UcrReports/@month=8">August </xsl:when>
+                  <xsl:when test="UcrReports/@month=9">September </xsl:when>
+                  <xsl:when test="UcrReports/@month=10">October </xsl:when>
+                  <xsl:when test="UcrReports/@month=11">November </xsl:when>
+                  <xsl:when test="UcrReports/@month=12">December </xsl:when>
+                </xsl:choose>
+                <xsl:value-of select="UcrReports/@year" />
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th class="rowheader">By felonious act</th>
-              <td>
-                <xsl:if test="not(//Feloneously[1] != '')">0</xsl:if>
-                <xsl:value-of select="//Feloneously[1]" />
-              </td>
-            </tr>
-            <tr>
-              <th class="rowheader">By accident or negligence</th>
-              <td>
-                <xsl:if test="not(Classification/C)">0</xsl:if>
-                <xsl:value-of select="Classification/C" />
+              <td colspan="4">
+                <!--Page content-->
+                <p>
+                  Additional information on officers who were assaulted and injured with a firearm or a knife or other cutting instrument will be requested on a separate questionnaire,
+                  <span>Analysis of Law Enforcement Officers Killed or Assaulted.</span>
+                </p>
+                <table id="assaults-table">
+                  <thead>
+                    <tr>
+                      <th colspan="14">Officers Assaulted (Exclude officers killed)</th>
+                    </tr>
+                    <tr>
+                      <th rowspan="4">Type of Activity</th>
+                      <th rowspan="3">Total Assaults by Weapon</th>
+                      <th colspan="4">Type of Weapon</th>
+                      <th colspan="7">Type of Assignment</th>
+                      <th rowspan="3">Officer Assaults Cleared</th>
+                    </tr>
+                    <tr>
+                      <!-- Weapons -->
+                      <th rowspan="2">Firearm</th>
+                      <th rowspan="2">Knife or Cutting Instrument</th>
+                      <th rowspan="2">Other Dangerous Weapons</th>
+                      <th rowspan="2">Hands, Fists, Feet, etc.</th>
+                      <!-- Assignments -->
+                      <th rowspan="2">Two-Officer Vehicle</th>
+                      <th colspan="2">One-Officer Vehicle</th>
+                      <th colspan="2">Detective or Special Assignment</th>
+                      <th colspan="2">Other</th>
+                    </tr>
+                    <tr>
+                      <!-- Assignments From Column G -->
+                      <th>Alone</th>
+                      <th>Assisted</th>
+                      <th>Alone</th>
+                      <th>Assisted</th>
+                      <th>Alone</th>
+                      <th>Assisted</th>
+                    </tr>
+                    <tr>
+                      <th>A</th>
+                      <!-- Weapons -->
+                      <th>B</th>
+                      <th>C</th>
+                      <th>D</th>
+                      <th>E</th>
+                      <th>F</th>
+                      <th>G</th>
+                      <th>H</th>
+                      <th>I</th>
+                      <th>J</th>
+                      <th>K</th>
+                      <th>L</th>
+                      <th>M</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <xsl:for-each select="UcrReports/LeokaSummary/Assaults/Classification">
+                      <tr>
+                        <th class="rowheader">
+                          <xsl:choose>
+                            <xsl:when test="@name='1'">
+                              <xsl:value-of select="'1. Responding to Disturbance Call (Family Quarrels, Person with Firearm, Etc.)'" />
+                            </xsl:when>
+                            <xsl:when test="@name='2'">
+                              <xsl:value-of select="'2. Burglaries in Progress or Pursuing Burglary Suspects'" />
+                            </xsl:when>
+                            <xsl:when test="@name='3'">
+                              <xsl:value-of select="'3. Robberies in Progress or Pursuing Robbery Suspects'" />
+                            </xsl:when>
+                            <xsl:when test="@name='4'">
+                              <xsl:value-of select="'4. Attempting Other Arrests'" />
+                            </xsl:when>
+                            <xsl:when test="@name='5'">
+                              <xsl:value-of select="'5. Civil Disorder (Riot, Mass Disobedience)'" />
+                            </xsl:when>
+                            <xsl:when test="@name='6'">
+                              <xsl:value-of select="'6. Handling, Transporting, Custody of Prisoners'" />
+                            </xsl:when>
+                            <xsl:when test="@name='7'">
+                              <xsl:value-of select="'7. Investigating Suspicious Persons or Circumstances'" />
+                            </xsl:when>
+                            <xsl:when test="@name='8'">
+                              <xsl:value-of select="'8. Ambush-No Warning'" />
+                            </xsl:when>
+                            <xsl:when test="@name='9'">
+                              <xsl:value-of select="'9. Handling Persons with Mental Illness'" />
+                            </xsl:when>
+                            <xsl:when test="@name='10'">
+                              <xsl:value-of select="'10. Traffic Pursuits and Stops'" />
+                            </xsl:when>
+                            <xsl:when test="@name='11'">
+                              <xsl:value-of select="'11. All Other'" />
+                            </xsl:when>
+                            <xsl:when test="@name='12'">
+                              <xsl:value-of select="'12. TOTAL (1-11)'" />
+                            </xsl:when>
+                            <xsl:when test="@name='13'">
+                              <xsl:value-of select="'13. Number with Personal Injuries *'" />
+                            </xsl:when>
+                            <xsl:when test="@name='14'">
+                              <xsl:value-of select="'14. Number without Personal Injuries'" />
+                            </xsl:when>
+                          </xsl:choose>
+                        </th>
+                        <td>
+                          <xsl:if test="not(A)">0</xsl:if>
+                          <xsl:value-of select="A" />
+                        </td>
+                        <td>
+                          <xsl:if test="not(B)">0</xsl:if>
+                          <xsl:value-of select="B" />
+                        </td>
+                        <td>
+                          <xsl:if test="not(C)">0</xsl:if>
+                          <xsl:value-of select="C" />
+                        </td>
+                        <td>
+                          <xsl:if test="not(D)">0</xsl:if>
+                          <xsl:value-of select="D" />
+                        </td>
+                        <td>
+                          <xsl:if test="not(E)">0</xsl:if>
+                          <xsl:value-of select="E" />
+                        </td>
+                        <xsl:if test="@name!=13 and @name!=14">
+                          <td>
+                            <xsl:if test="not(F)">0</xsl:if>
+                            <xsl:value-of select="F" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(G)">0</xsl:if>
+                            <xsl:value-of select="G" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(H)">0</xsl:if>
+                            <xsl:value-of select="H" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(I)">0</xsl:if>
+                            <xsl:value-of select="I" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(J)">0</xsl:if>
+                            <xsl:value-of select="J" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(K)">0</xsl:if>
+                            <xsl:value-of select="K" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(L)">0</xsl:if>
+                            <xsl:value-of select="L" />
+                          </td>
+                          <td>
+                            <xsl:if test="not(M)">0</xsl:if>
+                            <xsl:value-of select="M" />
+                          </td>
+                        </xsl:if>
+                      </tr>
+                    </xsl:for-each>
+                    <tr>
+                      <th class="rowheader" rowspan="3">15. Time of Assaults</th>
+                      <td>Time Period</td>
+                      <td>12:01-02:00</td>
+                      <td>2:01-04:00</td>
+                      <td>4:01-06:00</td>
+                      <td>6:01-08:00</td>
+                      <td>8:01-10:00</td>
+                      <td>10:01-12:00</td>
+                      <th rowspan="3" colspan="3">
+                        <span>OFFICERS KILLED</span>
+                        <span>Number of your law enforcement officers killed in the line of duty this month.</span>
+                      </th>
+                      <td rowspan="3" colspan="3">
+                        <table>
+                            <tr>
+                              <td>By felonious act</td>
+                              <td>
+                                <xsl:if test="not(//Feloneously[1] != '')">0</xsl:if>
+                                <xsl:value-of select="//Feloneously[1]" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>By accident or negligence</td>
+                              <td>
+                                <xsl:if test="not(//ByAccident[1] != '')">0</xsl:if>
+                                <xsl:value-of select="//ByAccident[1]" />
+                              </td>
+                            </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>AM</td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H00-01)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H00-01" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H02-03)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H02-03" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H04-05)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H04-05" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H06-07)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H06-07" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H08-09)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H08-09" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H10-11)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H10-11" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>PM</td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H12-13)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H12-13" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H14-15)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H14-15" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H16-17)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H16-17" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H18-19)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H18-19" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H20-21)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H20-21" />
+                      </td>
+                      <td>
+                        <xsl:if test="not(LeokaSummary/AssaultsTime/H22-23)">0</xsl:if>
+                        <xsl:value-of select="LeokaSummary/AssaultsTime/H22-23" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>* If the officer was injured with a firearm (13B) or a knife or other cutting instrument (13C), please complete the block on page 2 and include your agency's incident or case number(s).</p>
+                <p>This information is only for your agency's use to assist in referencing the incident once the above-mention questionnaire is forwarded to you for completion.</p>
               </td>
             </tr>
           </tbody>
-        </table>
-        <br />
-        <table id="assaults-table">
-          <colgroup></colgroup>
-          <colgroup></colgroup>
-          <colgroup span="4"></colgroup>
-          <colgroup span="7"></colgroup>
-          <colgroup></colgroup>
-          <thead>
-            <tr>
-              <th colspan="14">Officers Assaulted</th>
-            </tr>
-            <tr>
-              <th rowspan="4">Type of Activity</th>
-              <th rowspan="3">Total Assaults by Weapon</th>
-              <th colspan="4">Type of Weapon</th>
-              <th colspan="7">Type of Assignment</th>
-              <th rowspan="3">Officer Assaults Cleared</th>
-            </tr>
-            <tr>
-              <!-- Weapons -->
-              <th rowspan="2">Firearm</th>
-              <th rowspan="2">Knife or Cutting Instrument</th>
-              <th rowspan="2">Other Dangerous Weapons</th>
-              <th rowspan="2">Hands, Fists, Feet, etc.</th>
-              <!-- Assignments -->
-              <th rowspan="2">Two-Officer Vehicle</th>
-              <th colspan="2">One-Officer Vehicle</th>
-              <th colspan="2">Detective or Special Assignment</th>
-              <th colspan="2">Other</th>
-            </tr>
-            <tr>
-              <!-- Assignments From Column G -->
-              <th>Alone</th>
-              <th>Assisted</th>
-              <th>Alone</th>
-              <th>Assisted</th>
-              <th>Alone</th>
-              <th>Assisted</th>
-            </tr>
-            <tr>
-              <th>A</th>
-              <!-- Weapons -->
-              <th>B</th>
-              <th>C</th>
-              <th>D</th>
-              <th>E</th>
-              <th>F</th>
-              <th>G</th>
-              <th>H</th>
-              <th>I</th>
-              <th>J</th>
-              <th>K</th>
-              <th>L</th>
-              <th>M</th>
-            </tr>
-          </thead>
-          <tbody>
-            <xsl:for-each select="UcrReports/LeokaSummary/Assaults/Classification">
-              <tr>
-                <th class="rowheader">
-                  <xsl:choose>
-                    <xsl:when test="@name='1'">
-                      <xsl:value-of
-                        select="'Responding to Disturbance Call (Family Quarrels, Person with Firearm, Etc.)'" />
-                    </xsl:when>
-                    <xsl:when test="@name='2'">
-                      <xsl:value-of select="'Burglaries in Progress or Pursuing Burglary Suspects'" />
-                    </xsl:when>
-                    <xsl:when test="@name='3'">
-                      <xsl:value-of select="'Robberies in Progress or Pursuing Robbery Suspects'" />
-                    </xsl:when>
-                    <xsl:when test="@name='4'">
-                      <xsl:value-of select="'Attempting Other Arrests'" />
-                    </xsl:when>
-                    <xsl:when test="@name='5'">
-                      <xsl:value-of select="'Civil Disorder (Riot, Mass Disobedience)'" />
-                    </xsl:when>
-                    <xsl:when test="@name='6'">
-                      <xsl:value-of select="'Handling, Transporting, Custody of Prisoners'" />
-                    </xsl:when>
-                    <xsl:when test="@name='7'">
-                      <xsl:value-of select="'Investigating Suspicious Persons or Circumstances'" />
-                    </xsl:when>
-                    <xsl:when test="@name='8'">
-                      <xsl:value-of select="'Ambush-No Warning'" />
-                    </xsl:when>
-                    <xsl:when test="@name='9'">
-                      <xsl:value-of select="'Handling Persons with Mental Illness'" />
-                    </xsl:when>
-                    <xsl:when test="@name='10'">
-                      <xsl:value-of select="'Traffic Pursuits and Stops'" />
-                    </xsl:when>
-                    <xsl:when test="@name='11'">
-                      <xsl:value-of select="'All Other'" />
-                    </xsl:when>
-                    <xsl:when test="@name='12'">
-                      <xsl:value-of select="'Totals'" />
-                    </xsl:when>
-                    <xsl:when test="@name='13'">
-                      <xsl:value-of select="'Numbers with Personal Injuries'" />
-                    </xsl:when>
-                    <xsl:when test="@name='14'">
-                      <xsl:value-of select="'Numbers with Personal Without Injuries'" />
-                    </xsl:when>
-                  </xsl:choose>
-                </th>
-                <td>
-                  <xsl:if test="not(A)">0</xsl:if>
-                  <xsl:value-of select="A" />
-                </td>
-                <td>
-                  <xsl:if test="not(B)">0</xsl:if>
-                  <xsl:value-of select="B" />
-                </td>
-                <td>
-                  <xsl:if test="not(C)">0</xsl:if>
-                  <xsl:value-of select="C" />
-                </td>
-                <td>
-                  <xsl:if test="not(D)">0</xsl:if>
-                  <xsl:value-of select="D" />
-                </td>
-                <td>
-                  <xsl:if test="not(E)">0</xsl:if>
-                  <xsl:value-of select="E" />
-                </td>
-                <td>
-                  <xsl:if test="not(F)">0</xsl:if>
-                  <xsl:value-of select="F" />
-                </td>
-                <td>
-                  <xsl:if test="not(G)">0</xsl:if>
-                  <xsl:value-of select="G" />
-                </td>
-                <td>
-                  <xsl:if test="not(H)">0</xsl:if>
-                  <xsl:value-of select="H" />
-                </td>
-                <td>
-                  <xsl:if test="not(I)">0</xsl:if>
-                  <xsl:value-of select="I" />
-                </td>
-                <td>
-                  <xsl:if test="not(J)">0</xsl:if>
-                  <xsl:value-of select="J" />
-                </td>
-                <td>
-                  <xsl:if test="not(K)">0</xsl:if>
-                  <xsl:value-of select="K" />
-                </td>
-                <td>
-                  <xsl:if test="not(L)">0</xsl:if>
-                  <xsl:value-of select="L" />
-                </td>
-                <td>
-                  <xsl:if test="not(M)">0</xsl:if>
-                  <xsl:value-of select="M" />
-                </td>
-              </tr>
-            </xsl:for-each>
-          </tbody>
-        </table>
-        <br />
-        <table id="assaults-time-table">
-          <thead>
-            <tr>
-              <th colspan="7">Time of Assaults</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td>12:01-02:00</td>
-              <td>2:01-04:00</td>
-              <td>4:01-06:00</td>
-              <td>6:01-08:00</td>
-              <td>8:01-10:00</td>
-              <td>10:01-12:00</td>
-            </tr>
-            <tr>
-              <td>AM</td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H00-01)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H00-01" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H02-03)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H02-03" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H04-05)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H04-05" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H06-07)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H06-07" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H08-09)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H08-09" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H10-11)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H10-11" />
-              </td>
-            </tr>
-            <tr>
-              <td>PM</td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H12-13)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H12-13" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H14-15)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H14-15" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H16-17)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H16-17" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H18-19)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H18-19" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H20-21)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H20-21" />
-              </td>
-              <td>
-                <xsl:if test="not(LeokaSummary/AssaultsTime/H22-23)">0</xsl:if>
-                <xsl:value-of select="LeokaSummary/AssaultsTime/H22-23" />
-              </td>
-            </tr>
-          </tbody>
+          <!--Page footer-->
+          <tfoot>
+          </tfoot>
         </table>
       </body>
     </html>
