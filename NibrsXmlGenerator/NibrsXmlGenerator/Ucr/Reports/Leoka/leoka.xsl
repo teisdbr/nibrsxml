@@ -138,7 +138,8 @@
                         <th class="rowheader">
                           <xsl:choose>
                             <xsl:when test="@name='1'">
-                              <xsl:value-of select="'1. Responding to Disturbance Call (Family Quarrels, Person with Firearm, Etc.)'" />
+                              <xsl:value-of
+                                select="'1. Responding to Disturbance Call (Family Quarrels, Person with Firearm, Etc.)'" />
                             </xsl:when>
                             <xsl:when test="@name='2'">
                               <xsl:value-of select="'2. Burglaries in Progress or Pursuing Burglary Suspects'" />
@@ -238,36 +239,27 @@
                       </tr>
                     </xsl:for-each>
                     <tr>
-                      <th class="rowheader" rowspan="3">15. Time of Assaults</th>
-                      <td>Time Period</td>
-                      <td>12:01-02:00</td>
-                      <td>2:01-04:00</td>
-                      <td>4:01-06:00</td>
-                      <td>6:01-08:00</td>
-                      <td>8:01-10:00</td>
-                      <td>10:01-12:00</td>
-                      <th rowspan="3" colspan="3">
+                      <th class="rowheader" rowspan="4">15. Time of Assaults</th>
+                      <td rowspan="2">Time Period</td>
+                      <td rowspan="2">12:01-02:00</td>
+                      <td rowspan="2">2:01-04:00</td>
+                      <td rowspan="2">4:01-06:00</td>
+                      <td rowspan="2">6:01-08:00</td>
+                      <td rowspan="2">8:01-10:00</td>
+                      <td rowspan="2">10:01-12:00</td>
+                      <th colspan="3" rowspan="4">
                         <span>OFFICERS KILLED</span>
                         <span>Number of your law enforcement officers killed in the line of duty this month.</span>
                       </th>
-                      <td rowspan="3" colspan="3">
-                        <table>
-                            <tr>
-                              <td>By felonious act</td>
-                              <td>
-                                <xsl:if test="not(//Feloneously[1] != '')">0</xsl:if>
-                                <xsl:value-of select="//Feloneously[1]" />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>By accident or negligence</td>
-                              <td>
-                                <xsl:if test="not(//ByAccident[1] != '')">0</xsl:if>
-                                <xsl:value-of select="//ByAccident[1]" />
-                              </td>
-                            </tr>
-                        </table>
+                      <td colspan="2" rowspan="2">By felonious act</td>
+                      <td rowspan="2">
+                        <xsl:if test="not(//Feloneously[1] != '')">0</xsl:if>
+                        <xsl:value-of select="//Feloneously[1]" />
                       </td>
+                      <td style="visibility:hidden;">.</td>
+                    </tr>
+                    <tr>
+                      <td style="visibility:hidden;">.</td>
                     </tr>
                     <tr>
                       <td>AM</td>
@@ -294,6 +286,11 @@
                       <td>
                         <xsl:if test="not(LeokaSummary/AssaultsTime/H10-11)">0</xsl:if>
                         <xsl:value-of select="LeokaSummary/AssaultsTime/H10-11" />
+                      </td>
+                      <td rowspan="2" colspan="2">By accident or negligence</td>
+                      <td rowspan="2">
+                        <xsl:if test="not(//ByAccident[1] != '')">0</xsl:if>
+                        <xsl:value-of select="//ByAccident[1]" />
                       </td>
                     </tr>
                     <tr>

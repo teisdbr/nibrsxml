@@ -85,10 +85,10 @@
                     </tr>
                     <tr>
                       <th colspan="2">Property Classification</th>
-                      <th>Offenses Reported</th>
+                      <th>Offenses Reported or Known to Police (Include "Unfounded" and Attempts)</th>
                       <th>Unfounded, i.e., False or Baseless Complaints</th>
                       <th>Number of Actual Offenses (Column 2 Minus Column 3) (Include Attempts)</th>
-                      <th>Total Offenses Clears by Arrest or Exceptional Means</th>
+                      <th>Total Offenses Clears by Arrest or Exceptional Means (Includes Column 6)</th>
                       <th>Number of Clearances Involving Only Persons Under 18 Years of Age</th>
                       <th>Offenses Where Structures Uninhabited, Abandoned, or not Normally in Use</th>
                       <th>Estimated Value of Property Damage</th>

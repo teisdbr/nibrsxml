@@ -35,272 +35,441 @@
         </style>
       </head>
       <body>
-        <table class='table-pad-bot'>
-          <colgroup span="3"></colgroup>
-          <thead>
-            <xsl:for-each select="UcrReports/ReturnASupplement">
-              <tr>
-                <th colspan="4" scope="colgroup" class="title">Supplement to Return A <br />Monthly Return Of Offenses Known to Police</th>
-              </tr>
-              <tr>
-                <th colspan="2" style="text-align:left;border:0px;">
-                  <xsl:value-of select="concat(//UcrReports/@agency, ' ', //UcrReports/@ori)" />
-                </th>
-                <th colspan="2" style="text-align:right;border:0px;">
-                  <xsl:value-of select="concat(//UcrReports/@year, ' ', //UcrReports/@month)" />
-                </th>
-              </tr>
-              <tr>
-                <th colspan="4" scope="colgroup">PROPERTY BY TYPE AND VALUE</th>
-              </tr>
-              <tr>
-                <th scope="col">Type of Property</th>
-                <th scope="col" rowspan="2">Data Entry</th>
-                <th colspan="2">Monetary value of Property Stolen in Your Jurisdiction</th>
-
-              </tr>
-              <tr>
-                <th scope="col">(1)</th>
-                <th scope="col">Stolen<br />(2)</th>
-                <th scope="col">Recovered<br />(3)</th>
-              </tr>
-            </xsl:for-each>
-          </thead>
-          <tbody>
-            <xsl:for-each select="UcrReports/ReturnASupplement/StolenAndRecoveredProperties/Property">
-              <tr>
-                <!--Stolen and Recovered Properties by Type and Value - row header-->
-                <th class="rowheader">
-                  <xsl:choose>
-                    <xsl:when test="@entry='01'">
-                      <xsl:value-of select="'Currency, Notes, Etc.'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='02'">
-                      <xsl:value-of select="'Jewelry and Precious Metals'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='03'">
-                      <xsl:value-of select="'Clothing and Furs'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='04'">
-                      <xsl:value-of select="'Locally Stolen Motor Vehicles'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='05'">
-                      <xsl:value-of select="'Office Equipment'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='06'">
-                      <xsl:value-of select="'Televisions, Radios, Stereos, Etc.'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='07'">
-                      <xsl:value-of select="'Firearms'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='08'">
-                      <xsl:value-of select="'Household Goods'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='09'">
-                      <xsl:value-of select="'Consumable Goods'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='10'">
-                      <xsl:value-of select="'Livestock'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='11'">
-                      <xsl:value-of select="'Miscellaneous'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='00'">
-                      <xsl:value-of select="'TOTAL'" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="@entry" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </th>
-                <td style="text-align:center;">
-                  <xsl:value-of select="@entry" />
-                </td>
-                <td>
-                  <xsl:choose>
-                    <xsl:when test="not(Stolen)">$0.00</xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="format-number(Stolen, '$#,###.00')" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </td>
-                <td>
-                  <xsl:choose>
-                    <xsl:when test="not(Recovered)">$0.00</xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="format-number(Recovered, '$#,###.00')" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </td>
-              </tr>
-            </xsl:for-each>
-          </tbody>
-        </table>
-        <table>
-          <colgroup span="4"></colgroup>
+        <table class="page-wrapper">
+          <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4" scope="colgroup">PROPERTY STOLEN BY CLASSIFICATION</th>
-            </tr>
-            <tr>
-              <th scope="col" rowspan="2">Classification</th>
-              <th scope="col" rowspan="2">Data Entry</th>
-              <th colspan="2">
-                <br />
+              <th colspan="4">
+                Supplement to Return A <br />Monthly Return Of Offenses Known to Police
               </th>
-
             </tr>
             <tr>
-              <th scope="col">Number of Actual Offenses(Column 4 Return A)</th>
-              <th scope="col">Monetary Value of Property Stolen</th>
+              <th>
+                <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
+              </th>
+              <th>City: </th>
+              <th>Parish: </th>
+              <th>
+                <xsl:choose>
+                  <xsl:when test="UcrReports/@month=1">January </xsl:when>
+                  <xsl:when test="UcrReports/@month=2">February </xsl:when>
+                  <xsl:when test="UcrReports/@month=3">March </xsl:when>
+                  <xsl:when test="UcrReports/@month=4">April </xsl:when>
+                  <xsl:when test="UcrReports/@month=5">May </xsl:when>
+                  <xsl:when test="UcrReports/@month=6">June </xsl:when>
+                  <xsl:when test="UcrReports/@month=7">July </xsl:when>
+                  <xsl:when test="UcrReports/@month=8">August </xsl:when>
+                  <xsl:when test="UcrReports/@month=9">September </xsl:when>
+                  <xsl:when test="UcrReports/@month=10">October </xsl:when>
+                  <xsl:when test="UcrReports/@month=11">November </xsl:when>
+                  <xsl:when test="UcrReports/@month=12">December </xsl:when>
+                </xsl:choose>
+                <xsl:value-of select="UcrReports/@year" />
+              </th>
             </tr>
           </thead>
           <tbody>
-            <xsl:for-each select="ReturnASupplement/StolenPropertiesByClassification/OffenseClassification">
-              <tr>
-                <!--Properties Stolen by Classification - row header-->
-                <th class="rowheader">
-                  <xsl:choose>
-                    <xsl:when test="@entry='12'">
-                      <xsl:value-of select="'Murder and Nonnegligent Manslaughter'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='20'">
-                      <xsl:value-of select="'Rape'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='31'">
-                      <xsl:value-of select="'Robbery - Highway (Streets, Alleys, Etc.)'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='32'">
-                      <xsl:value-of select="'Robbery - Comercial House'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='33'">
-                      <xsl:value-of select="'Robbery - Gas or Service Station'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='34'">
-                      <xsl:value-of select="'Robbery - Convenience Store'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='35'">
-                      <xsl:value-of select="'Robbery - Residence'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='36'">
-                      <xsl:value-of select="'Robbery - Bank'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='37'">
-                      <xsl:value-of select="'Robbery - Miscellaneous'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='30'">
-                      <xsl:value-of select="'Total Robbery'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='51'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Residence, Night (6 p.m. to 6 a.m.)'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='52'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Residence, Day (6 a.m. to 6 p.m.)'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='53'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Residence, Unknown'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='54'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Nonresidence, Night (6 p.m. to 6 a.m.)'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='55'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Nonresidence, Day (6 a.m. to 6 p.m.)'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='56'">
-                      <xsl:value-of select="'Burglary/Breaking or Entering - Nonresidence, Unknown'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='50'">
-                      <xsl:value-of select="'Total Burglary'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='61'">
-                      <xsl:value-of select="'Larceny - $200+'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='62'">
-                      <xsl:value-of select="'Larceny - $50 - $199'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='63'">
-                      <xsl:value-of select="'Larceny - Below $50'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='60'">
-                      <xsl:value-of select="'Total Larceny'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='70'">
-                      <xsl:value-of select="'Motor Vehicle Theft'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='77'">
-                      <xsl:value-of select="'GRAND TOTAL'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='81'">
-                      <xsl:value-of select="'Pocket-Picking'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='82'">
-                      <xsl:value-of select="'Purse-Snatching'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='83'">
-                      <xsl:value-of select="'Shoplifting'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='84'">
-                      <xsl:value-of select="'From Motor Vehicles'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='85'">
-                      <xsl:value-of select="'Motor Vehicle Parts and Accessories'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='86'">
-                      <xsl:value-of select="'Bicycles'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='87'">
-                      <xsl:value-of select="'From Building'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='88'">
-                      <xsl:value-of select="'From Coin-Operated Machine'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='89'">
-                      <xsl:value-of select="'All Other'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='80'">
-                      <xsl:value-of select="'Total Larceny'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='91'">
-                      <xsl:value-of select="'Motor Vehicles Recovered - Stolen Locally and Recovered Locally'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='92'">
-                      <xsl:value-of
-                        select="'Motor Vehicles Recovered - Stolen Locally and Recovered by Other Jurisdictions'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='90'">
-                      <xsl:value-of select="'Motor Vehicles Recovered - Total Locally Stolen Motor Vehicles Recovered'" />
-                    </xsl:when>
-                    <xsl:when test="@entry='93'">
-                      <xsl:value-of
-                        select="'Motor Vehicles Recovered - Stolen in Other Jurisdictions and Recovered Locally'" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="@entry" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </th>
-                <td style="text-align:center;">
-                  <xsl:value-of select="@entry" />
-                </td>
-                <td>
-                  <xsl:choose>
-                    <xsl:when test="not(Actual)">0</xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="format-number(Actual, '#,###')" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </td>
-                <td>
-                  <xsl:choose>
-                    <xsl:when test="not(Stolen)">$0.00</xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="format-number(Stolen, '$#,###.00')" />
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </td>
-              </tr>
-            </xsl:for-each>
+            <tr>
+              <td colspan="4">
+                <!--Page content-->
+                <p>This form deals with the nature of crime and the monetary value of property stole and recovered. The total offenses recorded on this form should be the same as the number of actual offenses listed in Column 4 of the Return A for each crime class. Include attempted crimes on this form, but do not include unfounded offenses. If you cannot complete the report in all areas, please record as much information as is available.</p>
+                <table style="width:100%;">
+                  <thead>
+                    <xsl:for-each select="UcrReports/ReturnASupplement">
+                      <tr>
+                        <th colspan="4">PROPERTY BY TYPE AND VALUE</th>
+                      </tr>
+                      <tr>
+                        <th>Type of Property</th>
+                        <th rowspan="2">Data Entry</th>
+                        <th colspan="2">Monetary Value of Property Stolen in Your Jurisdiction</th>
+                      </tr>
+                      <tr>
+                        <th>(1)</th>
+                        <th>
+                          Stolen<br />(2) *
+                        </th>
+                        <th>
+                          Recovered<br />(3) **
+                        </th>
+                      </tr>
+                    </xsl:for-each>
+                  </thead>
+                  <tbody>
+                    <xsl:for-each select="UcrReports/ReturnASupplement/StolenAndRecoveredProperties/Property">
+                      <tr>
+                        <!--Stolen and Recovered Properties by Type and Value - row header-->
+                        <th class="rowheader">
+                          <xsl:choose>
+                            <xsl:when test="@entry='01'">
+                              <xsl:value-of select="'(A) Currency, Notes, Etc.'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='02'">
+                              <xsl:value-of select="'(B) Jewelry and Precious Metals'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='03'">
+                              <xsl:value-of select="'(C) Clothing and Furs'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='04'">
+                              <xsl:value-of select="'(D) Locally Stolen Motor Vehicles'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='05'">
+                              <xsl:value-of select="'(E) Office Equipment'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='06'">
+                              <xsl:value-of select="'(F) Televisions, Radios, Stereos, Etc.'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='07'">
+                              <xsl:value-of select="'(G) Firearms'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='08'">
+                              <xsl:value-of select="'(H) Household Goods'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='09'">
+                              <xsl:value-of select="'(I) Consumable Goods'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='10'">
+                              <xsl:value-of select="'(J) Livestock'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='11'">
+                              <xsl:value-of select="'(K) Miscellaneous'" />
+                            </xsl:when>
+                            <xsl:when test="@entry='00'">
+                              <xsl:value-of select="'TOTAL'" />
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="@entry" />
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </th>
+                        <td style="text-align:center;">
+                          <xsl:value-of select="@entry" />
+                        </td>
+                        <td>
+                          <xsl:choose>
+                            <xsl:when test="not(Stolen)">$0.00</xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="format-number(Stolen, '$#,###.00')" />
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </td>
+                        <td>
+                          <xsl:choose>
+                            <xsl:when test="not(Recovered)">$0.00</xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="format-number(Recovered, '$#,###.00')" />
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </td>
+                      </tr>
+                    </xsl:for-each>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="4">
+                        <p>* The total of this column should agree with the Grand Total (DATA ENTRY 77) in the Property Stolen By Classification table.</p>
+                        <p>** Include in this column all property recovered even though stolen in prior months. The above is an accounting for only that property stolen in your jurisdiction. This will include property recovered for you by other jurisdictions, but not property you recover for them.</p>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <div style="display:inline-block;"></div>
+
+                <table style="width:100%;">
+                  <thead>
+                    <tr>
+                      <th colspan="6">PROPERTY STOLEN BY CLASSIFICATION</th>
+                    </tr>
+                    <tr>
+                      <th rowspan="2" colspan="3">Classification</th>
+                      <th rowspan="2">Data Entry</th>
+                      <th rowspan="2">Number of Actual Offenses (Column 4 Return A)</th>
+                      <th rowspan="2">Monetary Value of Property Stolen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <xsl:for-each
+                      select="UcrReports/ReturnASupplement/StolenPropertiesByClassification/OffenseClassification">
+                      <xsl:if test="@entry &lt; 80">
+                        <tr>
+                          <!--Properties Stolen by Classification - row header-->
+                          <xsl:choose>
+                            <xsl:when test="@entry='12'">
+                              <th class="rowheader" colspan="3">
+                                <xsl:value-of select="'MURDER AND NONNEGLIGENT MANSLAUGHTER'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='20'">
+                              <th class="rowheader" colspan="3">
+                                <xsl:value-of select="'RAPE'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='31'">
+                              <th class="rowheader" rowspan="8">ROBBERY</th>
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Highway (Streets, Alleys, Etc.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='32'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Comercial House (Except c, d, and f)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='33'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Gas or Service Station'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='34'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Convenience Store'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='35'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Residence (anywhere on premises)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='36'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Bank'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='37'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Robbery - Miscellaneous'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='30'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'TOTAL ROBBERY'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='51'">
+                              <th class="rowheader" rowspan="7">BURGLARY - BREAKING OR ENTERING</th>
+                              <th class="rowheader" rowspan="3">Residence (Dwelling)</th>
+                              <th class="rowheader">
+                                <xsl:value-of select="'Night (6 p.m. to 6 a.m.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='52'">
+                              <th class="rowheader">
+                                <xsl:value-of select="'Day (6 a.m. to 6 p.m.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='53'">
+                              <th class="rowheader">
+                                <xsl:value-of select="'Unknown'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='54'">
+                              <th class="rowheader" rowspan="3">Nonresidence</th>
+                              <th class="rowheader">
+                                <xsl:value-of select="'Night (6 p.m. to 6 a.m.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='55'">
+                              <th class="rowheader">
+                                <xsl:value-of select="'Day (6 a.m. to 6 p.m.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='56'">
+                              <th class="rowheader">
+                                <xsl:value-of select="'Unknown'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='50'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'TOTAL BURGLARY'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='61'">
+                              <th class="rowheader" rowspan="4">LARCENY/THEFT (EXCEPT MOTOR VEHICLE THEFT)</th>
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Larceny - $200+'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='62'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Larceny - $50 - $199'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='63'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'Larceny - Below $50'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='60'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'TOTAL LARCENY (SAME AS DATA ENTRY 80)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='70'">
+                              <th class="rowheader" colspan="3">
+                                <xsl:value-of select="'MOTOR VEHICLE THEFT (INCLUDE ALLEGED JOY RIDE)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='77'">
+                              <th class="rowheader" colspan="3">
+                                <xsl:value-of select="'GRAND TOTAL'" />
+                              </th>
+                            </xsl:when>
+                          </xsl:choose>
+                          <td style="text-align:center;">
+                            <xsl:value-of select="@entry" />
+                          </td>
+                          <td>
+                            <xsl:choose>
+                              <xsl:when test="not(Actual)">0</xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="format-number(Actual, '#,###')" />
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </td>
+                          <td>
+                            <xsl:choose>
+                              <xsl:when test="not(Stolen)">$0.00</xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="format-number(Stolen, '$#,###.00')" />
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </td>
+                        </tr>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </tbody>
+                </table>
+
+                <div style="display:inline-block;"></div>
+
+
+                <table style="width:100%;">
+                  <thead>
+                    <tr>
+                      <th colspan="6">ADDITIONAL ANALYSIS OF LARCENY AND MOTOR VEHICLE THEFT</th>
+                    </tr>
+                    <tr>
+                      <th rowspan="2" colspan="3">Classification</th>
+                      <th rowspan="2">Data Entry</th>
+                      <th rowspan="2">Number of Actual Offenses (Column 4 Return A)</th>
+                      <th rowspan="2">Monetary Value of Property Stolen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <xsl:for-each
+                      select="UcrReports/ReturnASupplement/StolenPropertiesByClassification/OffenseClassification">
+                      <xsl:if test="@entry &gt;= 80">
+                        <tr>
+                          <!--Properties Stolen by Classification - row header-->
+                          <xsl:choose>
+                            <xsl:when test="@entry='81'">
+                              <th class="rowheader" rowspan="10">6X. NATURE OF LARCENIES UNDER ITEM 6</th>
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'a. Pocket-Picking'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='82'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'b. Purse-Snatching'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='83'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'c. Shoplifting'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='84'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'d. From Motor Vehicles (Except e)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='85'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'e. Motor Vehicle Parts and Accessories'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='86'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'f. Bicycles'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='87'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'g. From Building'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='88'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'h. From Coin-Operated Machine (Parking Meters, Etc.)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='89'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'i. All Other'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='80'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of select="'TOTAL LARCENY (SAME AS DATA ENTRY 60)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='91'">
+                              <th class="rowheader" rowspan="4">7X. MOTOR VEHICLES RECOVERED</th>
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of
+                                  select="'a. Stolen Locally and Recovered Locally'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='92'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of
+                                  select="'b. Stolen Locally and Recovered by Other Jurisdictions'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='90'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of
+                                  select="'c. Total Locally Stolen Motor Vehicles Recovered (a &amp; b)'" />
+                              </th>
+                            </xsl:when>
+                            <xsl:when test="@entry='93'">
+                              <th class="rowheader" colspan="2">
+                                <xsl:value-of
+                                  select="'d. Stolen in Other Jurisdictions and Recovered Locally'" />
+                              </th>
+                            </xsl:when>
+                          </xsl:choose>
+                          <td style="text-align:center;">
+                            <xsl:value-of select="@entry" />
+                          </td>
+                          <td>
+                            <xsl:choose>
+                              <xsl:when test="not(Actual)">0</xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="format-number(Actual, '#,###')" />
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </td>
+                          <td>
+                            <xsl:choose>
+                              <xsl:when test="not(Stolen)">$0.00</xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="format-number(Stolen, '$#,###.00')" />
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </td>
+                        </tr>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
           </tbody>
+          <!--Page footer-->
+          <tfoot>
+          </tfoot>
         </table>
       </body>
     </html>

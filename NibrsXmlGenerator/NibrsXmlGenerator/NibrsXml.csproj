@@ -218,6 +218,7 @@
     <Content Include="NibrsXsd\xml\nibrs2.xml" />
     <Content Include="NibrsXsd\xml\wantlist.xml" />
     <Content Include="NibrsXsd\xml\xml-catalog.xml" />
+    <Content Include="Ucr\Reports\AllReports.xml" />
     <Content Include="Ucr\Reports\Arson\arson.xml" />
     <EmbeddedResource Include="Ucr\Reports\HateCrime\hcr.xslt" />
     <EmbeddedResource Include="Ucr\Reports\SupplementaryHomicide\shr.xslt" />

@@ -47,10 +47,10 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">Age, Sex, Race, and Ethnicity of Persons Arrested</th>
-            </tr>
-            <tr>
-              <th colspan="4">(includes those released without having been charged formally)</th>
+              <th colspan="4">
+                Age, Sex, Race, and Ethnicity of Persons Arrested, All Age Groups<br/>
+                (includes those released without having been charged formally)
+              </th>
             </tr>
             <tr>
               <th>
@@ -84,8 +84,8 @@
                   <thead>
                     <tr>
                       <th rowspan="3" colspan="2">Classification of Offenses</th>
-                      <th rowspan="3" >Sex</th>
-                      <th colspan="23" >Ages</th>
+                      <th rowspan="3">Sex</th>
+                      <th colspan="23">Ages</th>
                       <th colspan="10">Race</th>
                       <th colspan="4">Ethnicity</th>
                     </tr>
@@ -155,7 +155,7 @@
                         <xsl:choose>
                           <xsl:when test="@value='01A'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Murder and Nonnegligent Manslaughter'" />
+                              Murder and Nonnegligent Manslaughter
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -164,7 +164,7 @@
 
                           <xsl:when test="@value='01B'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Manslaughter by Negligence'" />
+                              Manslaughter by Negligence
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -173,7 +173,7 @@
 
                           <xsl:when test="@value='02b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Rape'" />
+                              Rape
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -182,7 +182,7 @@
 
                           <xsl:when test="@value='03b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Robbery'" />
+                              Robbery
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -191,7 +191,7 @@
 
                           <xsl:when test="@value='04b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Aggravated Assault'" />
+                              Aggravated Assault (Return A: 4a-d)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -200,7 +200,7 @@
 
                           <xsl:when test="@value='05b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Burglary'" />
+                              Burglary - Breaking or Entering
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -209,7 +209,7 @@
 
                           <xsl:when test="@value='06b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Larceny-theft (Except Motor Vehicle Theft)'" />
+                              Larceny - Theft (Except Motor Vehicle Theft)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -218,7 +218,7 @@
 
                           <xsl:when test="@value='07b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Motor Vehicle Theft'" />
+                              Motor Vehicle Theft
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -227,7 +227,7 @@
 
                           <xsl:when test="@value='08b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Other Assaults'" />
+                              Other Assaults (Return A: 4e)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -236,7 +236,7 @@
 
                           <xsl:when test="@value='09b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Arson'" />
+                              Arson
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -245,7 +245,7 @@
 
                           <xsl:when test="@value='10b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Forgery and Counterfeiting'" />
+                              Forgery and Counterfeiting
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -254,7 +254,7 @@
 
                           <xsl:when test="@value='11b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Fraud'" />
+                              Fraud
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -263,7 +263,7 @@
 
                           <xsl:when test="@value='12b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Embezzlement'" />
+                              Embezzlement
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -272,7 +272,7 @@
 
                           <xsl:when test="@value='13b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Stolen Property: Buying, Receiving, Possessing'" />
+                              Stolen Property: Buying, Receiving, Possessing
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -281,7 +281,7 @@
 
                           <xsl:when test="@value='14b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Vandalism'" />
+                              Vandalism
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -290,7 +290,7 @@
 
                           <xsl:when test="@value='15b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Weapons: Carrying, Possessing, etc.'" />
+                              Weapons: Carrying, Possessing, etc.
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -299,7 +299,7 @@
 
                           <xsl:when test="@value='16b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Prostitution and Commercialized Vice'" />
+                              Prostitution and Commercialized Vice
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -308,7 +308,7 @@
 
                           <xsl:when test="@value='16A'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Prostitution'" />
+                              Prostitution
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -317,7 +317,7 @@
 
                           <xsl:when test="@value='16B'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Assisting or Promoting Prostitution'" />
+                              Assisting or Promoting Prostitution
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -326,7 +326,7 @@
 
                           <xsl:when test="@value='16C'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Purchasing Prostitution'" />
+                              Purchasing Prostitution
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -335,7 +335,7 @@
 
                           <xsl:when test="@value='17b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Sex Offenses (Except Rape and Prostitution)'" />
+                              Sex Offenses (Except Rape and Prostitution)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -344,7 +344,7 @@
 
                           <xsl:when test="@value='18b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Drug Abuse Violations (Grand Total)'" />
+                              Drug Abuse Violations<br/>Grand Total
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -353,7 +353,7 @@
 
                           <xsl:when test="@value='180'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Sale/Manufacturing (Subtotal)'" />
+                              (1) Sale/Manufacturing<br/>Subtotal
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -362,7 +362,7 @@
 
                           <xsl:when test="@value='18A'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Opium or Cocaine and their Derivatives (Morphine and Heroin)'" />
+                              Opium or Cocaine and their Derivatives (Morphine, Heroin, Codeine)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -371,7 +371,7 @@
 
                           <xsl:when test="@value='18B'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Marijuana'" />
+                              Marijuana
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -380,7 +380,7 @@
 
                           <xsl:when test="@value='18C'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Synthetic Narcotics-Manufactured Narcotics which can cause true drug addiction (Demerol, Methadones)'" />
+                              Synthetic Narcotics -<br/>Manufactured Narcotics which can cause true drug addiction (Demerol, Methadones)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -389,7 +389,7 @@
 
                           <xsl:when test="@value='18D'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Other-Dangerous Nonnarcotic Drugs (Barbiturates, Benzedrine)'" />
+                              Other - Dangerous Non-narcotic Drugs (Barbiturates, Benzedrine)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -398,7 +398,7 @@
 
                           <xsl:when test="@value='185'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Possession (Subtotal)'" />
+                              (2) Possession<br/>Subtotal
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -407,7 +407,7 @@
 
                           <xsl:when test="@value='18E'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Opium or Cocaine and their Derivatives (Morphine and Codeine)'" />
+                              Opium or Cocaine and their Derivatives (Morphine and Codeine)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -416,7 +416,7 @@
 
                           <xsl:when test="@value='18F'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Marijuana'" />
+                              Marijuana
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -425,8 +425,7 @@
 
                           <xsl:when test="@value='18G'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of
-                              select="'Synthetic Narcotics-Manufactured Narcotics which can cause true drug addiction (Demerol, Methadones)'" />
+                              Synthetic Narcotics -<br/>Manufactured Narcotics Which Can Cause True Drug Addiction (Demerol, Methadones)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -435,7 +434,7 @@
 
                           <xsl:when test="@value='18H'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Other-Dangerous Nonnarcotic Drugs (Barbiturates, Benzedrine)'" />
+                              Other - Dangerous Non-narcotic Drugs (Barbiturates, Benzedrine)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -444,7 +443,7 @@
 
                           <xsl:when test="@value='19b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Gambling (Total)'" />
+                              Gambling<br/>Total
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -453,7 +452,7 @@
 
                           <xsl:when test="@value='19A'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Bookmaking (Horse and Sport Book)'" />
+                              Bookmaking (Horse and Sport Book)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -462,7 +461,7 @@
 
                           <xsl:when test="@value='19B'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Numbers and Lottery'" />
+                              Numbers and Lottery
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -471,7 +470,7 @@
 
                           <xsl:when test="@value='19C'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'All Other Gambling'" />
+                              All Other Gambling
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -480,7 +479,7 @@
 
                           <xsl:when test="@value='20b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Offenses Against the Family and Children'" />
+                              Offenses Against the Family and Children
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -489,7 +488,7 @@
 
                           <xsl:when test="@value='21b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Driving Under the Influence'" />
+                              Driving Under the Influence
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -498,7 +497,7 @@
 
                           <xsl:when test="@value='22b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Liquor Laws'" />
+                              Liquor Laws
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -507,7 +506,7 @@
 
                           <xsl:when test="@value='23b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Drunkenness'" />
+                              Drunkenness
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -516,7 +515,7 @@
 
                           <xsl:when test="@value='24b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Disorderly Conduct'" />
+                              Disorderly Conduct
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -525,7 +524,7 @@
 
                           <xsl:when test="@value='25b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Vagrancy'" />
+                              Vagrancy
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -534,7 +533,7 @@
 
                           <xsl:when test="@value='26b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'All Other Offenses (Except Traffic)'" />
+                              All Other Offenses (Except Traffic)
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -543,7 +542,7 @@
 
                           <xsl:when test="@value='27b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Suspicion'" />
+                              Suspicion
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -552,7 +551,7 @@
 
                           <xsl:when test="@value='28b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Curfew and Loitering Law Violations'" />
+                              Curfew and Loitering Law Violations
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -561,7 +560,7 @@
 
                           <xsl:when test="@value='29b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Runaways'" />
+                              Runaways
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -570,7 +569,7 @@
 
                           <xsl:when test="@value='30b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Human Trafficking/Commercial Sex Acts'" />
+                              Human Trafficking/<br/>Commercial Sex Acts
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
@@ -579,7 +578,7 @@
 
                           <xsl:when test="@value='31b'">
                             <th class="rowheader" rowspan="2">
-                              <xsl:value-of select="'Human Trafficking/Involuntary Servitude'" />
+                              Human Trafficking/<br/>Involuntary Servitude
                             </th>
                             <th rowspan="2">
                               <xsl:value-of select="@value" />
