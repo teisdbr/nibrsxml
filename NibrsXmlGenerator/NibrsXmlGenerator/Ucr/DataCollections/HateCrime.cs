@@ -54,7 +54,9 @@ namespace NibrsXml.Ucr.DataCollections
                 new XProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"hcr.xslt\""),
                 new XElement("HCR",
                     new XElement("INCIDENTS",
-                        Incidents.Select(i => new XElement("INCIDENT",
+                        Incidents
+                        .OrderBy(i => i.Date)
+                        .Select(i => new XElement("INCIDENT",
                             new XElement("INCIDENTNUM", i.Id),
                             new XElement("INCIDENTDATE", i.Date),
                             new XElement("FILINGTYPE", FilingType.Initial), //todo: The filing type of HCRs need to be determined ??? how? i don't really know yet

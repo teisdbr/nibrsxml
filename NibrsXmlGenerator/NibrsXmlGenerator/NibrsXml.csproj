@@ -222,6 +222,8 @@
     <Content Include="Ucr\Reports\Arson\arson.xml" />
     <EmbeddedResource Include="Ucr\Reports\HateCrime\hcr.xslt" />
     <EmbeddedResource Include="Ucr\Reports\SupplementaryHomicide\shr.xslt" />
+    <EmbeddedResource Include="Ucr\Reports\SupplementaryHomicide\shr - Copy.xslt" />
+    <Content Include="Ucr\Reports\SupplementaryHomicide\SHRSample - Copy.xml" />
     <Content Include="Ucr\Reports\SupplementaryHomicide\SHRSample.xml" />
     <EmbeddedResource Include="Ucr\Reports\Arson\arson.xsl" />
     <Content Include="Ucr\Reports\Asre\asre.xml">

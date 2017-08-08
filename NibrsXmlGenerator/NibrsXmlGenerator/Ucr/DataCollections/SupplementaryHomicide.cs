@@ -24,6 +24,7 @@ namespace NibrsXml.Ucr.DataCollections
                 new XElement("SHR",
                     new XElement("INCIDENTS",
                         Incidents.Select(i => new XElement("INCIDENT",
+                            new XElement("SEQUENCENUMBER" , i.SequenceNumber),
                             new XElement("MANSLAUGHTERNEGLIGENT", i.IsNegligent ? 1 : 0),
                             new XElement("SITUATION", i.Situation),
                             new XElement("VICTIMS",
