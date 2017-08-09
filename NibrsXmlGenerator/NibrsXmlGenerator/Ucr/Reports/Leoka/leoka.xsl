@@ -47,14 +47,12 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">Law Enforcement Officers Killed or Assaulted</th>
+              <th colspan="2">Law Enforcement Officers Killed or Assaulted</th>
             </tr>
             <tr>
               <th>
                 <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
               </th>
-              <th>City: </th>
-              <th>Parish: </th>
               <th>
                 <xsl:choose>
                   <xsl:when test="UcrReports/@month=1">January </xsl:when>
@@ -76,7 +74,7 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="2">
                 <!--Page content-->
                 <p>
                   Additional information on officers who were assaulted and injured with a firearm or a knife or other cutting instrument will be requested on a separate questionnaire,

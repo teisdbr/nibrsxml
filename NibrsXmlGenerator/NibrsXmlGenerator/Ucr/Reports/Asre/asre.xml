@@ -63,9 +63,11 @@
       </Juvenile>
     </UCR>
     <UCR value="06b">
-      <Age value="25-29">
-        <F>1</F>
-      </Age>
+      <Ages>
+        <Age value="25-29">
+          <F>1</F>
+        </Age>
+      </Ages>
       <Adult>
         <Races>
           <Black>1</Black>
@@ -120,9 +122,11 @@
       </Juvenile>
     </UCR>
     <UCR value="11b">
-      <Age value="40-44">
-        <F>1</F>
-      </Age>
+      <Ages>
+        <Age value="40-44">
+          <F>1</F>
+        </Age>
+      </Ages>
       <Adult>
         <Races>
           <Black>1</Black>
@@ -227,12 +231,14 @@
       </Juvenile>
     </UCR>
     <UCR value="18b">
-      <Age value="35-39">
-        <M>2</M>
-      </Age>
-      <Age value="40-44">
-        <M>1</M>
-      </Age>
+      <Ages>
+        <Age value="35-39">
+          <M>2</M>
+        </Age>
+        <Age value="40-44">
+          <M>1</M>
+        </Age>
+      </Ages>
       <Adult>
         <Races>
           <Black>1</Black>
@@ -298,9 +304,11 @@
       </Juvenile>
     </UCR>
     <UCR value="185">
-      <Age value="35-39">
-        <M>1</M>
-      </Age>
+      <Ages>
+        <Age value="35-39">
+          <M>1</M>
+        </Age>
+      </Ages>
       <Adult>
         <Races>
           <Black>1</Black>
@@ -315,9 +323,11 @@
       </Juvenile>
     </UCR>
     <UCR value="18E">
-      <Age value="35-39">
-        <M>1</M>
-      </Age>
+      <Ages>
+        <Age value="35-39">
+          <M>1</M>
+        </Age>
+      </Ages>
       <Adult>
         <Races>
           <Black>1</Black>

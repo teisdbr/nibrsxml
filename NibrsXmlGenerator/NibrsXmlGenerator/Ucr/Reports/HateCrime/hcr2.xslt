@@ -35,7 +35,7 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">
+              <th colspan="2">
                 Quarterly Hate Crime Report<br/>
                 (Offenses Known to Law Enforcement)
             </th>
@@ -44,8 +44,6 @@
               <th>
                 <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
               </th>
-              <th>City: </th>
-              <th>Parish: </th>
               <th>
                 <xsl:choose>
                   <xsl:when test="UcrReports/@month=1">January </xsl:when>
@@ -67,7 +65,7 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="2">
                 <!--Page content-->
                 
               </td>

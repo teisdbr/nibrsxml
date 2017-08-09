@@ -35,14 +35,12 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">Monthly Return of Human Trafficking Offenses Known to Law Enforcement</th>
+              <th colspan="2">Monthly Return of Human Trafficking Offenses Known to Law Enforcement</th>
             </tr>
             <tr>
               <th>
                 <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
               </th>
-              <th>City: </th>
-              <th>Parish: </th>
               <th>
                 <xsl:choose>
                   <xsl:when test="UcrReports/@month=1">January </xsl:when>
@@ -64,7 +62,7 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="2">
                 <!--Page content-->
                 <table>
                   <xsl:for-each select="UcrReports/HumanTraffickingSummary">

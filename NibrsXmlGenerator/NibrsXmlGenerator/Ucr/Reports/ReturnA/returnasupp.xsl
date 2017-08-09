@@ -39,7 +39,7 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">
+              <th colspan="2">
                 Supplement to Return A <br />Monthly Return Of Offenses Known to Police
               </th>
             </tr>
@@ -47,8 +47,6 @@
               <th>
                 <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
               </th>
-              <th>City: </th>
-              <th>Parish: </th>
               <th>
                 <xsl:choose>
                   <xsl:when test="UcrReports/@month=1">January </xsl:when>
@@ -70,7 +68,7 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="2">
                 <!--Page content-->
                 <p>This form deals with the nature of crime and the monetary value of property stole and recovered. The total offenses recorded on this form should be the same as the number of actual offenses listed in Column 4 of the Return A for each crime class. Include attempted crimes on this form, but do not include unfounded offenses. If you cannot complete the report in all areas, please record as much information as is available.</p>
                 <table style="width:100%;">

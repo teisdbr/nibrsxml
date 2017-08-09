@@ -47,7 +47,7 @@
           <!--Page header-->
           <thead>
             <tr>
-              <th colspan="4">
+              <th colspan="2">
                 Age, Sex, Race, and Ethnicity of Persons Arrested, All Age Groups<br/>
                 (includes those released without having been charged formally)
               </th>
@@ -56,8 +56,6 @@
               <th>
                 <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
               </th>
-              <th>City: </th>
-              <th>Parish: </th>
               <th>
                 <xsl:choose>
                   <xsl:when test="UcrReports/@month=1">January </xsl:when>
@@ -79,7 +77,7 @@
           </thead>
           <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="2">
                 <table class="table-pad-bot">
                   <thead>
                     <tr>
@@ -593,95 +591,95 @@
                         </xsl:choose>
                         <td class="centered">M</td>
                         <td>
-                          <xsl:if test="not(Age[@value='Under 10']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='Under 10']/M" />
+                          <xsl:if test="not(Ages/Age[@value='Under 10']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='Under 10']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='10-12']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='10-12']/M" />
+                          <xsl:if test="not(Ages/Age[@value='10-12']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='10-12']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='13-14']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='13-14']/M" />
+                          <xsl:if test="not(Ages/Age[@value='13-14']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='13-14']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='15']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='15']/M" />
+                          <xsl:if test="not(Ages/Age[@value='15']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='15']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='16']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='16']/M" />
+                          <xsl:if test="not(Ages/Age[@value='16']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='16']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='17']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='17']/M" />
+                          <xsl:if test="not(Ages/Age[@value='17']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='17']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='18']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='18']/M" />
+                          <xsl:if test="not(Ages/Age[@value='18']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='18']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='19']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='19']/M" />
+                          <xsl:if test="not(Ages/Age[@value='19']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='19']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='20']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='20']/M" />
+                          <xsl:if test="not(Ages/Age[@value='20']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='20']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='21']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='21']/M" />
+                          <xsl:if test="not(Ages/Age[@value='21']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='21']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='22']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='22']/M" />
+                          <xsl:if test="not(Ages/Age[@value='22']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='22']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='23']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='23']/M" />
+                          <xsl:if test="not(Ages/Age[@value='23']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='23']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='24']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='24']/M" />
+                          <xsl:if test="not(Ages/Age[@value='24']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='24']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='25-29']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='25-29']/M" />
+                          <xsl:if test="not(Ages/Age[@value='25-29']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='25-29']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='30-34']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='30-34']/M" />
+                          <xsl:if test="not(Ages/Age[@value='30-34']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='30-34']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='35-39']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='35-39']/M" />
+                          <xsl:if test="not(Ages/Age[@value='35-39']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='35-39']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='40-44']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='40-44']/M" />
+                          <xsl:if test="not(Ages/Age[@value='40-44']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='40-44']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='45-49']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='45-49']/M" />
+                          <xsl:if test="not(Ages/Age[@value='45-49']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='45-49']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='50-54']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='50-54']/M" />
+                          <xsl:if test="not(Ages/Age[@value='50-54']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='50-54']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='55-59']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='55-59']/M" />
+                          <xsl:if test="not(Ages/Age[@value='55-59']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='55-59']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='60-64']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='60-64']/M" />
+                          <xsl:if test="not(Ages/Age[@value='60-64']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='60-64']/M" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='65+']/M)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='65+']/M" />
+                          <xsl:if test="not(Ages/Age[@value='65+']/M)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='65+']/M" />
                         </td>
                         <td>
-                          <xsl:value-of select="sum(Age/M)" />
+                          <xsl:value-of select="sum(Ages/Age/M)" />
                         </td>
                         <td rowspan="2">
                           <xsl:if test="not(Adult/Races/White)">0</xsl:if>
@@ -743,210 +741,210 @@
                       <tr>
                         <td class="centered">F</td>
                         <td>
-                          <xsl:if test="not(Age[@value='Under 10']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='Under 10']/F" />
+                          <xsl:if test="not(Ages/Age[@value='Under 10']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='Under 10']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='10-12']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='10-12']/F" />
+                          <xsl:if test="not(Ages/Age[@value='10-12']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='10-12']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='13-14']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='13-14']/F" />
+                          <xsl:if test="not(Ages/Age[@value='13-14']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='13-14']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='15']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='15']/F" />
+                          <xsl:if test="not(Ages/Age[@value='15']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='15']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='16']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='16']/F" />
+                          <xsl:if test="not(Ages/Age[@value='16']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='16']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='17']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='17']/F" />
+                          <xsl:if test="not(Ages/Age[@value='17']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='17']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='18']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='18']/F" />
+                          <xsl:if test="not(Ages/Age[@value='18']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='18']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='19']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='19']/F" />
+                          <xsl:if test="not(Ages/Age[@value='19']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='19']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='20']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='20']/F" />
+                          <xsl:if test="not(Ages/Age[@value='20']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='20']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='21']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='21']/F" />
+                          <xsl:if test="not(Ages/Age[@value='21']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='21']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='22']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='22']/F" />
+                          <xsl:if test="not(Ages/Age[@value='22']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='22']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='23']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='23']/F" />
+                          <xsl:if test="not(Ages/Age[@value='23']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='23']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='24']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='24']/F" />
+                          <xsl:if test="not(Ages/Age[@value='24']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='24']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='25-29']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='25-29']/F" />
+                          <xsl:if test="not(Ages/Age[@value='25-29']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='25-29']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='30-34']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='30-34']/F" />
+                          <xsl:if test="not(Ages/Age[@value='30-34']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='30-34']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='35-39']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='35-39']/F" />
+                          <xsl:if test="not(Ages/Age[@value='35-39']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='35-39']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='40-44']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='40-44']/F" />
+                          <xsl:if test="not(Ages/Age[@value='40-44']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='40-44']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='45-49']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='45-49']/F" />
+                          <xsl:if test="not(Ages/Age[@value='45-49']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='45-49']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='50-54']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='50-54']/F" />
+                          <xsl:if test="not(Ages/Age[@value='50-54']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='50-54']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='55-59']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='55-59']/F" />
+                          <xsl:if test="not(Ages/Age[@value='55-59']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='55-59']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='60-64']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='60-64']/F" />
+                          <xsl:if test="not(Ages/Age[@value='60-64']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='60-64']/F" />
                         </td>
                         <td>
-                          <xsl:if test="not(Age[@value='65+']/F)">0</xsl:if>
-                          <xsl:value-of select="Age[@value='65+']/F" />
+                          <xsl:if test="not(Ages/Age[@value='65+']/F)">0</xsl:if>
+                          <xsl:value-of select="Ages/Age[@value='65+']/F" />
                         </td>
                         <td>
-                          <xsl:value-of select="sum(Age/F)" />
+                          <xsl:value-of select="sum(Ages/Age/F)" />
                         </td>
                       </tr>
                     </xsl:for-each>
                     <tr>
                       <th class="rowheader" scope="row" colspan="3">Totals</th>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='Under 10']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='Under 10']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='10-12']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='10-12']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='13-14']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='13-14']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='15']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='15']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='16']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='16']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='17']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='17']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='18']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='18']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='19']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='19']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='20']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='20']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='21']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='21']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='22']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='22']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='23']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='23']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='24']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='24']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='25-29']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='25-29']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='30-34']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='30-34']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='35-39']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='35-39']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='40-44']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='40-44']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='45-49']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='45-49']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='50-54']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='50-54']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='55-59']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='55-59']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='60-64']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='60-64']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age[@value='65+']/*)" />
+                        <xsl:value-of select="sum(//Ages/Age[@value='65+']/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Age/*)" />
+                        <xsl:value-of select="sum(//Ages/Age/*)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Races/White)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/White)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Races/White)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/White)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Races/Black)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/Black)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Races/Black)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/Black)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Races/AmericanIndian)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/AmericanIndian)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Races/AmericanIndian)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/AmericanIndian)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Races/Asian)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/Asian)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Races/Asian)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/Asian)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Races/NativeHawaiianOrOther)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/NativeHawaiianOrOther)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Races/NativeHawaiianOrOther)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/NativeHawaiianOrOther)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Ethnicities/Hispanic)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Ethnicities/Hispanic)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Ethnicities/Hispanic)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Ethnicities/Hispanic)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Adult/Ethnicities/Non-Hispanic)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Ethnicities/Non-Hispanic)" />
                       </td>
                       <td>
-                        <xsl:value-of select="sum(//Juvenile/Ethnicities/Non-Hispanic)" />
+                        <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Ethnicities/Non-Hispanic)" />
                       </td>
                     </tr>
                   </tbody>
