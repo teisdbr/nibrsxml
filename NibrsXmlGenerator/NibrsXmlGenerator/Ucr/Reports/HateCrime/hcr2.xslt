@@ -36,9 +36,9 @@
           <thead>
             <tr>
               <th colspan="2">
-                Quarterly Hate Crime Report<br/>
+                Quarterly Hate Crime Report<br />
                 (Offenses Known to Law Enforcement)
-            </th>
+              </th>
             </tr>
             <tr>
               <th>
@@ -62,29 +62,174 @@
                 <xsl:value-of select="UcrReports/@year" />
               </th>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <!--Page content-->
-                
-              </td>
-            </tr>
-          </tbody>
-          <!--Page footer-->
-          <tfoot>
-            <tr>
+            <!--<tr>
               <td>
                 <div class="legend-wrapper">
-                  <!--Race
+                  -->
+            <!--Race
                   Ethnicity
                   Offense Code
                   Location Code
                   Bias Motive
                   Victim Type-->
+            <!--
                 </div>
               </td>
+            </tr>-->
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="2">
+                <!--Page content-->
+                <table>
+                  <thead>
+                    <tr>
+                      <th rowspan="3">Incident Date</th>
+                      <th rowspan="3">Incident ID</th>
+                      <th rowspan="2" colspan="2">Number of Offenders</th>
+                      <th colspan="17">Related Offenses</th>
+                    </tr>
+                    <tr>
+                      <th rowspan="2">Offense Sequence Number</th>
+                      <th rowspan="2">Offense Code</th>
+                      <th rowspan="2">Location Code</th>
+                      <th colspan="2">Number of Victims</th>
+                      <th colspan="5">Bias Motivation Codes</th>
+                      <th colspan="8">Victim Types</th>
+                    </tr>
+                    <tr>
+                      <th>Adult</th>
+                      <th>Juvenile</th>
+                      <th>Adult</th>
+                      <th>Juvenile</th>
+                      <th>1</th>
+                      <th>2</th>
+                      <th>3</th>
+                      <th>4</th>
+                      <th>5</th>
+                      <th>I</th>
+                      <th>B</th>
+                      <th>F</th>
+                      <th>G</th>
+                      <th>R</th>
+                      <th>O</th>
+                      <th>U</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <xsl:for-each select="UcrReports/HCR/INCIDENTS/INCIDENT">
+                      <tr>
+                        <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                          <xsl:value-of select="INCIDENTDATE"/>
+                        </td>
+                        <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                          <xsl:value-of select="INCIDENTNUM"/>
+                        </td>
+                        <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                          <xsl:value-of select="ADULTOFFENDERSCOUNT"/>
+                        </td>
+                        <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                          <xsl:value-of select="JUVENILEOFFENDERSCOUNT"/>
+                        </td>
+                      </tr>
+                      <xsl:for-each select="OFFENSES/OFFENSE">
+                        <tr>
+                          <td>
+                            <xsl:value-of select="position()"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="OFFENSECODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="LOCATIONCODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="ADULTVICTIMSCOUNT"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="JUVENILEVICTIMSCOUNT"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 1]/@CODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 2]/@CODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 3]/@CODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 4]/@CODE"/>
+                          </td>
+                          <td>
+                            <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 5]/@CODE"/>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/INDIVIDUAL = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/BUSINESS = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/FINANCIAL = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/GOVERNMENT = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/RELIGIOUS = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/OTHER = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                          <td>
+                            <input type="checkbox">
+                              <xsl:if test="VICTIMTYPE/UNKNOWN = 1">
+                                <xsl:attribute name="checked"></xsl:attribute>
+                              </xsl:if>
+                              <xsl:attribute name="disabled"></xsl:attribute>
+                            </input>
+                          </td>
+                        </tr>
+                      </xsl:for-each>
+                    </xsl:for-each>
+                  </tbody>
+                </table>
+              </td>
             </tr>
+          </tbody>
+          <!--Page footer-->
+          <tfoot>
           </tfoot>
         </table>
       </body>
