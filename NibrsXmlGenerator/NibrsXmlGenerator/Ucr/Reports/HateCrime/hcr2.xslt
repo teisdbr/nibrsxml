@@ -5,6 +5,9 @@
     <html>
       <head>
         <style>
+          .no-border {
+          border: none;
+          }
           body {
           display: -webkit-flex;
           display: flex;
@@ -37,10 +40,13 @@
           .data-table-container {
           display: -webkit-flex;
           display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
           }
           .data-table-container > table {
           margin:auto;
           padding: 10px 0;
+          width:100%;
           }
           .dictionary-container {
           max-height:161mm;
@@ -77,6 +83,22 @@
           }
           .checkbox-container {
           pointer-events:none;
+          }
+          .centered {
+          text-align: center;
+          }
+          .rowheader {
+          text-align: left;
+          }
+          .ages {
+          background-color: yellow;
+          }
+          .table-pad-bot {
+          padding-bottom: 10px;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
