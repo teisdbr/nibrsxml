@@ -91,111 +91,97 @@
                       </tr>
                       <tr>
                         <td>
-                          <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=1]">
-                            <div class="incident-wrapper">
-                              <div class="incident-header">
-                                <span class="incident-number">
-                                  Incident #<xsl:value-of select="SEQUENCENUMBER" />
-                                </span>
-                                <span class="incident-situation">
-                                  <xsl:choose>
-                                    <xsl:when test="SITUATION='A'">Situation A - Single Victim/Single Offender</xsl:when>
-                                    <xsl:when test="SITUATION='B'">Situation B - Single Victim/Unknown Offender or Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='C'">Situation C - Single Victim/Multiple Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='D'">Situation D - Multiple Victims/Single Offender</xsl:when>
-                                    <xsl:when test="SITUATION='E'">Situation E - Multiple Victims/Multiple Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='F'">Situation F - Multiple Victims/Unknown Offender or Offenders</xsl:when>
-                                  </xsl:choose>
-                                </span>
-                              </div>
-                              <xsl:for-each select="VICTIMS/VICTIM">
-                                <div class="related-people-wrapper">
-                                  <div class="victim-panel">
-                                    <div class="victim-card">
-                                      <span class="victim-sequence-number">
-                                        Victim #<xsl:value-of select="position()" />
-                                      </span>
-                                      <span class="label">Age:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="AGE" />
-                                      </span>
-
-                                      <span class="label">Sex:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="SEX" />
-                                      </span>
-
-                                      <span class="label">Race:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="RACE" />
-                                      </span>
-
-                                      <span class="label">Ethnicity:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="ETHNICITY" />
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div class="people-panel-separator" />
-                                  <div class="offender-panel">
-                                    <xsl:for-each select="OFFENDERS/OFFENDER">
-                                      <div class="offender-card">
-                                        <span class="victim-sequence-number">
-                                          Offender #<xsl:value-of select="position()" />
-                                        </span>
-                                        <div class="offender-details-wrapper">
-                                          <div class="offender-details">
-                                            <span class="label">Age:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="AGE" />
-                                            </span>
-
-                                            <span class="label">Sex:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="SEX" />
-                                            </span>
-
-                                            <span class="label">Race:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="RACE" />
-                                            </span>
-
-                                            <span class="label">Ethnicity:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="ETHNICITY" />
-                                            </span>
-                                          </div>
-                                          <div class="crime-details">
-                                            <span class="label">Relationship:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="RELATIONSHIP" />
-                                            </span>
-
-                                            <span class="label">Weapon Used:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="WEAPONUSED" />
-                                            </span>
-
-                                            <span class="label">Circumstance:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="CIRCUMSTANCE" />
-                                            </span>
-
-                                            <xsl:if test="CIRCUMSTANCE=80 or CIRCUMSTNACE=81">
-                                              <span class="label">Subcircumstance:</span>
-                                              <span class="code">
-                                                <xsl:value-of select="SUBCIRCUMSTANCE" />
-                                              </span>
-                                            </xsl:if>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </xsl:for-each>
-                                  </div>
-                                </div>
+                          <table>
+                            <thead>
+                              <tr>
+                                <th rowspan="2">Incident Sequence Number</th>
+                                <th rowspan="2">Situation</th>
+                                <th colspan="5">Victim</th>
+                                <th colspan="9">Offender</th>
+                              </tr>
+                              <tr>
+                                <th>#</th>
+                                <th>Age</th>
+                                <th>Sex</th>
+                                <th>Race</th>
+                                <th>Ethnicity</th>
+                                <th>#</th>
+                                <th>Age</th>
+                                <th>Sex</th>
+                                <th>Race</th>
+                                <th>Ethnicity</th>
+                                <th>Weapon Used</th>
+                                <th>Relationship</th>
+                                <th>Circumstance</th>
+                                <th>Subcircumstance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=1]">
+                                <tr>
+                                  <td rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                    <xsl:value-of select="SEQUENCENUMBER"/>
+                                  </td>
+                                  <td rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                    <xsl:value-of select="SITUATION"/>
+                                  </td>
+                                </tr>
+                                <xsl:for-each select="VICTIMS/VICTIM">
+                                  <tr>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="position()"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="AGE"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="SEX"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="RACE"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="ETHNICITY"/>
+                                    </td>
+                                  </tr>
+                                  <xsl:for-each select="OFFENDERS/OFFENDER">
+                                    <tr>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="position()"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="AGE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="SEX"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="RACE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="ETHNICITY"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="WEAPONUSED"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="RELATIONSHIP"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="CIRCUMSTANCE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="SUBCIRCUMSTANCE"/>
+                                        <xsl:if test="not(SUBCIRCUMSTANCE)">
+                                          N/A
+                                        </xsl:if>
+                                      </td>
+                                    </tr>
+                                  </xsl:for-each>
+                                </xsl:for-each>
                               </xsl:for-each>
-                            </div>
-                          </xsl:for-each>
+                            </tbody>
+                          </table>
                         </td>
                       </tr>
                     </tbody>
@@ -221,111 +207,97 @@
                       </tr>
                       <tr>
                         <td>
-                          <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=0]">
-                            <div class="incident-wrapper">
-                              <div class="incident-header">
-                                <span class="incident-number">
-                                  Incident #<xsl:value-of select="SEQUENCENUMBER" />
-                                </span>
-                                <span class="incident-situation">
-                                  <xsl:choose>
-                                    <xsl:when test="SITUATION='A'">Situation A - Single Victim/Single Offender</xsl:when>
-                                    <xsl:when test="SITUATION='B'">Situation B - Single Victim/Unknown Offender or Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='C'">Situation C - Single Victim/Multiple Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='D'">Situation D - Multiple Victims/Single Offender</xsl:when>
-                                    <xsl:when test="SITUATION='E'">Situation E - Multiple Victims/Multiple Offenders</xsl:when>
-                                    <xsl:when test="SITUATION='F'">Situation F - Multiple Victims/Unknown Offender or Offenders</xsl:when>
-                                  </xsl:choose>
-                                </span>
-                              </div>
-                              <xsl:for-each select="VICTIMS/VICTIM">
-                                <div class="related-people-wrapper">
-                                  <div class="victim-panel">
-                                    <div class="victim-card">
-                                      <span class="victim-sequence-number">
-                                        Victim #<xsl:value-of select="position()" />
-                                      </span>
-                                      <span class="label">Age:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="AGE" />
-                                      </span>
-
-                                      <span class="label">Sex:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="SEX" />
-                                      </span>
-
-                                      <span class="label">Race:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="RACE" />
-                                      </span>
-
-                                      <span class="label">Ethnicity:</span>
-                                      <span class="code">
-                                        <xsl:value-of select="ETHNICITY" />
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div class="people-panel-separator" />
-                                  <div class="offender-panel">
-                                    <xsl:for-each select="OFFENDERS/OFFENDER">
-                                      <div class="offender-card">
-                                        <span class="victim-sequence-number">
-                                          Offender #<xsl:value-of select="position()" />
-                                        </span>
-                                        <div class="offender-details-wrapper">
-                                          <div class="offender-details">
-                                            <span class="label">Age:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="AGE" />
-                                            </span>
-
-                                            <span class="label">Sex:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="SEX" />
-                                            </span>
-
-                                            <span class="label">Race:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="RACE" />
-                                            </span>
-
-                                            <span class="label">Ethnicity:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="ETHNICITY" />
-                                            </span>
-                                          </div>
-                                          <div class="crime-details">
-                                            <span class="label">Relationship:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="RELATIONSHIP" />
-                                            </span>
-
-                                            <span class="label">Weapon Used:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="WEAPONUSED" />
-                                            </span>
-
-                                            <span class="label">Circumstance:</span>
-                                            <span class="code">
-                                              <xsl:value-of select="CIRCUMSTANCE" />
-                                            </span>
-
-                                            <xsl:if test="CIRCUMSTANCE=80 or CIRCUMSTNACE=81">
-                                              <span class="label">Subcircumstance:</span>
-                                              <span class="code">
-                                                <xsl:value-of select="SUBCIRCUMSTANCE" />
-                                              </span>
-                                            </xsl:if>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </xsl:for-each>
-                                  </div>
-                                </div>
+                          <table>
+                            <thead>
+                              <tr>
+                                <th rowspan="2">Incident Sequence Number</th>
+                                <th rowspan="2">Situation</th>
+                                <th colspan="5">Victim</th>
+                                <th colspan="9">Offender</th>
+                              </tr>
+                              <tr>
+                                <th>#</th>
+                                <th>Age</th>
+                                <th>Sex</th>
+                                <th>Race</th>
+                                <th>Ethnicity</th>
+                                <th>#</th>
+                                <th>Age</th>
+                                <th>Sex</th>
+                                <th>Race</th>
+                                <th>Ethnicity</th>
+                                <th>Weapon Used</th>
+                                <th>Relationship</th>
+                                <th>Circumstance</th>
+                                <th>Subcircumstance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=0]">
+                                <tr>
+                                  <td rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                    <xsl:value-of select="SEQUENCENUMBER"/>
+                                  </td>
+                                  <td rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                    <xsl:value-of select="SITUATION"/>
+                                  </td>
+                                </tr>
+                                <xsl:for-each select="VICTIMS/VICTIM">
+                                  <tr>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="position()"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="AGE"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="SEX"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="RACE"/>
+                                    </td>
+                                    <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                      <xsl:value-of select="ETHNICITY"/>
+                                    </td>
+                                  </tr>
+                                  <xsl:for-each select="OFFENDERS/OFFENDER">
+                                    <tr>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="position()"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="AGE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="SEX"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="RACE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="ETHNICITY"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="WEAPONUSED"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="RELATIONSHIP"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="CIRCUMSTANCE"/>
+                                      </td>
+                                      <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                        <xsl:value-of select="SUBCIRCUMSTANCE"/>
+                                        <xsl:if test="not(SUBCIRCUMSTANCE)">
+                                          N/A
+                                        </xsl:if>
+                                      </td>
+                                    </tr>
+                                  </xsl:for-each>
+                                </xsl:for-each>
                               </xsl:for-each>
-                            </div>
-                          </xsl:for-each>
+                            </tbody>
+                          </table>
                         </td>
                       </tr>
                     </tbody>
