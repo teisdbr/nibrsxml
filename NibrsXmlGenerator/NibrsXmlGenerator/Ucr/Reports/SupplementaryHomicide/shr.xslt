@@ -5,336 +5,972 @@
     <html>
       <head>
         <style>
+          .no-border {
+          border: none;
+          }
           body {
-          font-size: 20px;
+          display: -webkit-flex;
+          display: flex;
+          font-size: 10px;
           }
-
-          .head{
-          border: 0px;
-          text-align: left;
-          font-weight: bold;
-          padding:0px;
+          .page-wrapper {
+          width:210mm;
+          margin:auto;
           }
-
-          .small{
-          border: 0px;
-          text-align: left;
-          font-weight: bold;
-          font-size: 15px;
-          padding:0px;
-          }
-
-          td {
+          th, td {
           border: 1px solid black;
-          text-align: left;
-          padding:10px;
           }
-
-          .incident {
+          table {
           border-spacing: 0px;
-          border-collapse: collapse;
-          page-break-inside: avoid;
+          border-collapse: separate;
           }
-
-          div{
-          white-space:nowrap;
+          .rowheader {
+          text-align: left;
           }
-
-          .wrapper {
-          text-align: center;
+          .title{
+          border:0px;
+          font-size:20px;
+          }
+          .page-content {
+          }
+          .page-content > table {
+          width: 100%;
+          padding: 10px 0;
+          }
+          .data-table-container {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          }
+          .data-table-container > table {
+          margin:auto;
+          padding: 10px 0;
+          width:100%;
+          }
+          .dictionary-container {
+          max-height:161mm;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          margin:10px;
+          }
+          .dictionary {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          padding: 5px 0;
+          }
+          .dictionary-header {
           display: block;
-          padding: 0 10%;
           }
-
-          @media print {
-          .incident{
-          page-break-inside: avoid;
-          page-break-after: always;
+          .dictionary-key {
+          padding: 0 10px 0 0;
+          display: inline-block;
+          width:30px;
+          text-align:right;
+          vertical-align:top;
           }
-          div.body {
-          page-break-inside: avoid;
+          .dictionary-value {
+          display: inline-block;
+          width:200px;
           }
+          .checkbox-container {
+          pointer-events:none;
+          }
+          .centered {
+          text-align: center;
+          }
+          .rowheader {
+          text-align: left;
+          }
+          .ages {
+          background-color: yellow;
+          }
+          .table-pad-bot {
+          padding-bottom: 10px;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
       <body>
-        <table class="wrapper">
-          <thead>
-            <tr>
-              <th style="text-align:center;" colspan="3">
-                Supplementary Homicide Report
-              </th>
-            </tr>
-            <tr>
-              <td class="small">
-                <xsl:value-of select="UcrReports/@agency" />
-              </td>
-              <td class="small">
-                <xsl:value-of select="UcrReports/@ori" />
-              </td>
-              <td class="small">
-                <xsl:value-of select="concat(UcrReports/@year, ' ', UcrReports/@month)" />
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="3">
-                <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT">
-                  <table class="incident">
-                    <xsl:variable name="iposition" select="position()" />
-                    <tbody>
-                      <tr>
-                        <td class="head">
-                          <xsl:if test="MANSLAUGTERNEGLIGENT='1'">
-                            <p>Manslaughter by Negligence</p>
-                            <p class="small">
+        <div class="page-wrapper">
+          <table>
+            <!--Page header-->
+            <thead>
+              <tr>
+                <th colspan="2">Supplementary Homicide Report</th>
+              </tr>
+              <tr>
+                <th>
+                  <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
+                </th>
+                <th>
+                  <xsl:choose>
+                    <xsl:when test="UcrReports/@month=1">January </xsl:when>
+                    <xsl:when test="UcrReports/@month=2">February </xsl:when>
+                    <xsl:when test="UcrReports/@month=3">March </xsl:when>
+                    <xsl:when test="UcrReports/@month=4">April </xsl:when>
+                    <xsl:when test="UcrReports/@month=5">May </xsl:when>
+                    <xsl:when test="UcrReports/@month=6">June </xsl:when>
+                    <xsl:when test="UcrReports/@month=7">July </xsl:when>
+                    <xsl:when test="UcrReports/@month=8">August </xsl:when>
+                    <xsl:when test="UcrReports/@month=9">September </xsl:when>
+                    <xsl:when test="UcrReports/@month=10">October </xsl:when>
+                    <xsl:when test="UcrReports/@month=11">November </xsl:when>
+                    <xsl:when test="UcrReports/@month=12">December </xsl:when>
+                  </xsl:choose>
+                  <xsl:value-of select="UcrReports/@year" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2">
+                  <!--Page content-->
+                  <div class="page-content">
+                    <!--Negligent homicide table-->
+                    <xsl:if test="boolean(UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=1])">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Manslaughter by Negligence</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="foreword">
                               Do not list traffic fatalities, accidental deaths, or death due to negligence of the victim. List below all other
                               negligent manslaughters, regardless of prosecutive action taken.
-                            </p>
-                          </xsl:if>
-                          <xsl:if test="MANSLAUGTERNOTNEGLIGENT='1'">
-                            <p>Murder and Nonnegligent Manslaughter</p>
-                            <p class="small">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="data-table-container">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th rowspan="2">Incident Sequence Number</th>
+                                      <th rowspan="2">Situation</th>
+                                      <th colspan="5">Victim</th>
+                                      <th colspan="9">Offender</th>
+                                    </tr>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Age</th>
+                                      <th>Sex</th>
+                                      <th>Race</th>
+                                      <th>Ethnicity</th>
+                                      <th>#</th>
+                                      <th>Age</th>
+                                      <th>Sex</th>
+                                      <th>Race</th>
+                                      <th>Ethnicity</th>
+                                      <th>Weapon Used</th>
+                                      <th>Relationship</th>
+                                      <th>Circumstance</th>
+                                      <th>Subcircumstance</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=1]">
+                                      <tr>
+                                        <td
+                                          rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                          <xsl:value-of select="SEQUENCENUMBER" />
+                                        </td>
+                                        <td
+                                          rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                          <xsl:value-of select="SITUATION" />
+                                        </td>
+                                      </tr>
+                                      <xsl:for-each select="VICTIMS/VICTIM">
+                                        <tr>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="position()" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="AGE" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="SEX" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="RACE" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="ETHNICITY" />
+                                          </td>
+                                        </tr>
+                                        <xsl:for-each select="OFFENDERS/OFFENDER">
+                                          <tr>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="position()" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="AGE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="SEX" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="RACE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="ETHNICITY" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="WEAPONUSED" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="RELATIONSHIP" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="CIRCUMSTANCE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="SUBCIRCUMSTANCE" />
+                                              <xsl:if test="not(SUBCIRCUMSTANCE)">
+                                                N/A
+                                              </xsl:if>
+                                            </td>
+                                          </tr>
+                                        </xsl:for-each>
+                                      </xsl:for-each>
+                                    </xsl:for-each>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </xsl:if>
+
+                    <!--Nonnegligent homicide table-->
+                    <xsl:if test="boolean(UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=0])">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Murder and Nonnegligent Manslaughter</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="foreword">
                               List below for each murder and nonnegligent homicide and / or justifiable homicide shown in item 1a of the monthly
                               Return A. In addition, for justifiable homicide list all justifiable killings of felons by a citizen or by a peace
                               officer in the line of duty. A brief explanation in the circumstances field regarding unfounded homicide offenses
                               will aid the natural Uniform Crime Reporting Program in editing the reports.
-                            </p>
-                          </xsl:if>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="head">
-                          Incident #: <xsl:value-of select="SEQUENCENUMBER" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="head">
-                          Situation :
-                          <xsl:choose>
-                            <xsl:when test="SITUATION='A'">A (Single Victim/Single Offender)</xsl:when>
-                            <xsl:when test="SITUATION='B'">B (Single Victim/Unknown Offender or Offenders)</xsl:when>
-                            <xsl:when test="SITUATION='C'">C (Single Victim/Multiple Offenders)</xsl:when>
-                            <xsl:when test="SITUATION='D'">D (Multiple Victims/Single Offender)</xsl:when>
-                            <xsl:when test="SITUATION='E'">E (Multiple Victims/Multiple Offenders)</xsl:when>
-                            <xsl:when test="SITUATION='F'">F (Multiple Victims/Unknown Offender or Offenders)</xsl:when>
-                          </xsl:choose>
-                        </td>
-                      </tr>
-                      <xsl:for-each select="VICTIMS/VICTIM">
-                        <tr>
-                          <td class="head">
-                            Victim # : <xsl:value-of select="position()" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="head">
-                            <div>
-                              Age : <xsl:value-of select="AGE" />
-                            </div>
-                          </td>
-                          <td class="head">
-                            <div>
-                              Sex : <xsl:value-of select="SEX" />
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="head">
-                            Ethnicity :
-                            <xsl:choose>
-                              <xsl:when test="ETHNICITY='H'">H (Hispanic or Latino)</xsl:when>
-                              <xsl:when test="ETHNICITY='N'">N (Non-Hispanic or Non-Latino)</xsl:when>
-                              <xsl:when test="ETHNICITY='U'">U (Unknown)</xsl:when>
-                            </xsl:choose>
-                          </td>
-                          <td class="head">
-                            <div>
-                              Race :
-                              <xsl:choose>
-                                <xsl:when test="RACE='W'">W (White)</xsl:when>
-                                <xsl:when test="RACE='B'">B (Black)</xsl:when>
-                                <xsl:when test="RACE='I'">I (American Indian or Alaskan Native)</xsl:when>
-                                <xsl:when test="RACE='A'">A (Asian)</xsl:when>
-                                <xsl:when test="RACE='U'">U (Unknown)</xsl:when>
-                                <xsl:when test="RACE='P'">P (Native Hawaiian or Other Pacific Islander)</xsl:when>
-                              </xsl:choose>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="text-align:center;border:0px">
-                            Offenders for Victim #: <xsl:value-of select="position()" />
-                          </td>
-                        </tr>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="data-table-container">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th rowspan="2">Incident Sequence Number</th>
+                                      <th rowspan="2">Situation</th>
+                                      <th colspan="5">Victim</th>
+                                      <th colspan="9">Offender</th>
+                                    </tr>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Age</th>
+                                      <th>Sex</th>
+                                      <th>Race</th>
+                                      <th>Ethnicity</th>
+                                      <th>#</th>
+                                      <th>Age</th>
+                                      <th>Sex</th>
+                                      <th>Race</th>
+                                      <th>Ethnicity</th>
+                                      <th>Weapon Used</th>
+                                      <th>Relationship</th>
+                                      <th>Circumstance</th>
+                                      <th>Subcircumstance</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <xsl:for-each select="UcrReports/SHR/INCIDENTS/INCIDENT[MANSLAUGHTERNEGLIGENT=0]">
+                                      <tr>
+                                        <td
+                                          rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                          <xsl:value-of select="SEQUENCENUMBER" />
+                                        </td>
+                                        <td
+                                          rowspan="{1 + count(VICTIMS/VICTIM) + count(VICTIMS/VICTIM/OFFENDERS/OFFENDER)}">
+                                          <xsl:value-of select="SITUATION" />
+                                        </td>
+                                      </tr>
+                                      <xsl:for-each select="VICTIMS/VICTIM">
+                                        <tr>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="position()" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="AGE" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="SEX" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="RACE" />
+                                          </td>
+                                          <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                            <xsl:value-of select="ETHNICITY" />
+                                          </td>
+                                        </tr>
+                                        <xsl:for-each select="OFFENDERS/OFFENDER">
+                                          <tr>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="position()" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="AGE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="SEX" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="RACE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="ETHNICITY" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="WEAPONUSED" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="RELATIONSHIP" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="CIRCUMSTANCE" />
+                                            </td>
+                                            <td rowspan="{1 + count(OFFENDERS/OFFENDER)}">
+                                              <xsl:value-of select="SUBCIRCUMSTANCE" />
+                                              <xsl:if test="not(SUBCIRCUMSTANCE)">
+                                                N/A
+                                              </xsl:if>
+                                            </td>
+                                          </tr>
+                                        </xsl:for-each>
+                                      </xsl:for-each>
+                                    </xsl:for-each>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </xsl:if>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <!--Legend-->
+                  <div class="dictionary-container">
+                    <div class="dictionary">
+                      <span class="dictionary-header">Age of Victim/Offender</span>
 
-                        <xsl:for-each select="OFFENDERS/OFFENDER">
-                          <div class="body">
-                            <tr>
-                              <td style="text-align:left;border:0px;">
-                                Offender # : <xsl:value-of select="position()" />
-                              </td>
-                            </tr>
-                            <tr>
+                      <div>
+                        <span class="dictionary-key">00</span>
+                        <span class="dictionary-value">Age unknown</span>
+                      </div>
 
-                              <td>
-                                *Age : <xsl:value-of select="AGE" />
-                              </td>
+                      <div>
+                        <span class="dictionary-key">01-98</span>
+                        <span class="dictionary-value">Corresponding age of individual</span>
+                      </div>
 
-                              <td>
-                                Sex :
-                                <xsl:choose>
-                                  <xsl:when test="SEX='M'">M (Male)</xsl:when>
-                                  <xsl:when test="SEX='F'">F (Female)</xsl:when>
-                                  <xsl:when test="SEX='U'">U (Unknown)</xsl:when>
-                                </xsl:choose>
-                              </td>
+                      <div>
+                        <span class="dictionary-key">99</span>
+                        <span class="dictionary-value">Age 99 or older</span>
+                      </div>
 
-                              <td>
-                                Race :
-                                <xsl:choose>
-                                  <xsl:when test="RACE='W'">W (White)</xsl:when>
-                                  <xsl:when test="RACE='B'">B (Black)</xsl:when>
-                                  <xsl:when test="RACE='I'">I (American Indian or Alaskan Native)</xsl:when>
-                                  <xsl:when test="RACE='A'">A (Asian)</xsl:when>
-                                  <xsl:when test="RACE='U'">U (Unknown)</xsl:when>
-                                  <xsl:when test="RACE='P'">P (Native Hawaiian or Other Pacific Islander)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Ethnicity :
-                                <xsl:choose>
-                                  <xsl:when test="ETHNICITY='H'">H (Hispanic or Latino)</xsl:when>
-                                  <xsl:when test="ETHNICITY='N'">N (Non-Hispanic or Non-Latino)</xsl:when>
-                                  <xsl:when test="ETHNICITY='U'">U (Unknown)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                              <td>
-                                Weapon Used :
-                                <xsl:choose>
-                                  <xsl:when test="WEAPONUSED='11'">11 (Firearm)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='12'">12 (Handgun-pistol, revolver)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='13'">13 (Rifle)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='14'">14 (Shotgun)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='15'">15 (Other gun)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='20'">20 (Knife or cutting instrument)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='30'">30 (Blunt object-hammer, club)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='40'">40 (Personal weapons)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='50'">50 (Poison)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='55'">55 (Pushed or thrown out window)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='60'">60 (Explosives)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='65'">65 (Fire)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='70'">70 (Narcotics and drugs)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='75'">75 (Drowning)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='80'">80 (Strangulation-include hanging)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='85'">85 (Asphyxiation)</xsl:when>
-                                  <xsl:when test="WEAPONUSED='90'">90 (Other-type of weapon)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                              <td>
-                                Relationship :
-                                <xsl:choose>
-                                  <xsl:when test="RELATIONSHIP='HU'">HU (Husband)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='WI'">WI (Wife)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='CH'">CH (Common-Law Husband)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='CW'">CW (Common-Law Wife)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='MO'">MO (Mother)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='FA'">FA (Father)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SO'">SO (Son)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='DA'">DA (Daughter)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='BR'">BR (Brother)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SI'">SI (Sister)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='IL'">IL (In-Law)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SF'">SF (Stepfather)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SM'">SM (Stepmother)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SS'">SS (Stepson)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='SD'">SD (Stepdaughter)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='OF'">OF (Other family)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='NE'">NE (Neighbor)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='AQ'">AQ (Acquaintance)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='BF'">BF (Boyfriend)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='GF'">GF (Girlfriend)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='XH'">XH (Ex-Husband)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='XW'">XW (Ex-Wife)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='EE'">EE (Employee)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='ER'">ER (Employer)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='FR'">FR (Friend)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='HO'">HO (Homosexual Relationship)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='OK'">OK (Other-known to victim)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='ST'">ST (Stranger)</xsl:when>
-                                  <xsl:when test="RELATIONSHIP='UN'">UN (Unknown Relationship)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Circumstance :
-                                <xsl:choose>
-                                  <xsl:when test="CIRCUMSTANCE='01'">01 (Rape)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='02'">02 (Robbery)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='05'">05 (Burglary)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='06'">06 (Larceny-theft)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='07'">07 (Motor Vehicle Theft)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='09'">09 (Arson)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='10'">10 (Prostitution and Commercialized Vice)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='17'">17 (Other Sex Offense)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='32'">32 (Abortion)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='18'">18 (Narcotic Drug Laws)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='19'">19 (Gambling)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='26'">26 (Other-not specified)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='30'">30 (Human Trafficking/Commercial Sex Acts)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='31'">31 (Human Trafficking/Involuntary Serviture)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='40'">40 (Lover's Triangle)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='41'">41 (Child Killed by Babysitter)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='42'">42 (Brawl Due to Influence of Alcohol)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='43'">43 (Brawl Due to Influence of Narcotics)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='44'">44 (Argument Over Money or Property)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='45'">45 (Other Arguments)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='46'">46 (Gangland Killings)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='47'">47 (Juvenile Gang Killings)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='48'">48 (Institutional Killings)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='49'">49 (Sniper Attack)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='60'">60 (Other)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='70'">70 (All suspected felony types)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='80'">80 (Felon killed by private citizen)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='81'">81 (Felon killed by police)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='99'">99 (All instances where facts provided do not permit determination of circumstances)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='50'">50 (Victim shot in hunting accident)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='51'">51 (Gun-cleaning death-other than self-inflicted)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='52'">52 (Children playing with gun)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='53'">53 (Other negligent handling of gun which results in death of another)</xsl:when>
-                                  <xsl:when test="CIRCUMSTANCE='59'">59 (All other manslaughter by negligence except traffic deaths)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                              <td>
-                                Subcircumstance :
-                                <xsl:choose>
-                                  <xsl:when test="SUBCIRCUMSTANCE='A'">A (Felon attacked police officer)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='B'">B (Felon attacked fellow police officer)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='C'">C (Felon attacked a civilian)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='D'">D (Felon attempted flight from a crime)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='E'">E (Felon killed in commission of a crime)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='F'">F (Felon resisted arrest)</xsl:when>
-                                  <xsl:when test="SUBCIRCUMSTANCE='G'">G (Not enough information to determine)</xsl:when>
-                                </xsl:choose>
-                              </td>
-                              <td>
-                              </td>
-                            </tr>
-                            <br />
-                          </div>
-                        </xsl:for-each>
-                      </xsl:for-each>
-                    </tbody>
-                  </table>
-                </xsl:for-each>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                      <div>
+                        <span class="dictionary-key">BB</span>
+                        <span class="dictionary-value">Baby - 1 week to 1 year of age</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">NB</span>
+                        <span class="dictionary-value">Newborn - less than 1 week of age (include abandoned infant)</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Circumstance</span>
+
+                      <div>
+                        <span class="dictionary-key">02</span>
+                        <span class="dictionary-value">Rape</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">03</span>
+                        <span class="dictionary-value">Robbery</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">05</span>
+                        <span class="dictionary-value">Burglary</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">06</span>
+                        <span class="dictionary-value">Larceny-theft</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">07</span>
+                        <span class="dictionary-value">Motor Vehicle Theft</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">09</span>
+                        <span class="dictionary-value">Arson</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">10</span>
+                        <span class="dictionary-value">Prostitution and Commercialized Vice</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">17</span>
+                        <span class="dictionary-value">Other Sex Offense</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">18</span>
+                        <span class="dictionary-value">Narcotic Drug Laws</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">19</span>
+                        <span class="dictionary-value">Gambling</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">26</span>
+                        <span class="dictionary-value">Other - Not Specified</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">30</span>
+                        <span class="dictionary-value">Human Trafficking/Commercial Sex Acts</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">31</span>
+                        <span class="dictionary-value">Human Trafficking/Involuntary Servitude</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">32</span>
+                        <span class="dictionary-value">Abortion</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">40</span>
+                        <span class="dictionary-value">Lover's Triangle</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">41</span>
+                        <span class="dictionary-value">Child Killed by Babysitter</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">42</span>
+                        <span class="dictionary-value">Brawl Due to Influence of Alcohol</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">43</span>
+                        <span class="dictionary-value">Brawl Due to Influence of Narcotics</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">44</span>
+                        <span class="dictionary-value">Argument Over Money or Property</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">45</span>
+                        <span class="dictionary-value">Other Arguments</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">46</span>
+                        <span class="dictionary-value">Gangland Killings</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">47</span>
+                        <span class="dictionary-value">Juvenile Gang Killings</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">48</span>
+                        <span class="dictionary-value">Institutional Killings</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">49</span>
+                        <span class="dictionary-value">Sniper Attack</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">50</span>
+                        <span class="dictionary-value">Victim Shot in Hunting Accident</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">51</span>
+                        <span class="dictionary-value">Gun-Cleaning Death - Other Than Self-Inflicted</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">52</span>
+                        <span class="dictionary-value">Children Playing With Gun</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">53</span>
+                        <span class="dictionary-value">Other Negligent Handling of Gun Which Results in Death of Another</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">59</span>
+                        <span class="dictionary-value">All Other Manslaughter by Negligence Except Traffic Deaths</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">60</span>
+                        <span class="dictionary-value">Other</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">70</span>
+                        <span class="dictionary-value">All Suspected Felony Types</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">80</span>
+                        <span class="dictionary-value">Felon Killed by Private Citizen</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">81</span>
+                        <span class="dictionary-value">Felon Killed by Police</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">99</span>
+                        <span class="dictionary-value">All Instances Where Facts Provided Do Not Permit Determination of Circumstances</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Ethnicity</span>
+
+                      <div>
+                        <span class="dictionary-key">H</span>
+                        <span class="dictionary-value">Hispanic Origin</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">N</span>
+                        <span class="dictionary-value">Not of Hispanic Origin</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Race</span>
+
+                      <div>
+                        <span class="dictionary-key">W</span>
+                        <span class="dictionary-value">White</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">B</span>
+                        <span class="dictionary-value">Black</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">I</span>
+                        <span class="dictionary-value">American Indian or Alaskan Native</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">A</span>
+                        <span class="dictionary-value">Asian or Pacific Islander</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Relationship</span>
+
+                      <div>
+                        <span class="dictionary-key">AQ</span>
+                        <span class="dictionary-value">Acquaintance</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">BF</span>
+                        <span class="dictionary-value">Boyfriend</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">BR</span>
+                        <span class="dictionary-value">Brother</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">CH</span>
+                        <span class="dictionary-value">Common-Law Husband</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">CW</span>
+                        <span class="dictionary-value">Common-Law Wife</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">DA</span>
+                        <span class="dictionary-value">Daughter</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">EE</span>
+                        <span class="dictionary-value">Employee</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">ER</span>
+                        <span class="dictionary-value">Employer</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">FA</span>
+                        <span class="dictionary-value">Father</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">FR</span>
+                        <span class="dictionary-value">Friend</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">GF</span>
+                        <span class="dictionary-value">Girlfriend</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">HO</span>
+                        <span class="dictionary-value">Homosexual Relationship</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">HU</span>
+                        <span class="dictionary-value">Husband</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">IL</span>
+                        <span class="dictionary-value">In-Law</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">MO</span>
+                        <span class="dictionary-value">Mother</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">NE</span>
+                        <span class="dictionary-value">Neighbor</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">OF</span>
+                        <span class="dictionary-value">Other Family</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">OK</span>
+                        <span class="dictionary-value">Other Known to Victim</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SD</span>
+                        <span class="dictionary-value">Stepdaughter</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SF</span>
+                        <span class="dictionary-value">Stepfather</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SI</span>
+                        <span class="dictionary-value">Sister</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SM</span>
+                        <span class="dictionary-value">Stepmother</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SO</span>
+                        <span class="dictionary-value">Son</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">SS</span>
+                        <span class="dictionary-value">Stepson</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">ST</span>
+                        <span class="dictionary-value">Stranger</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">UN</span>
+                        <span class="dictionary-value">Unknown Relationship</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">WI</span>
+                        <span class="dictionary-value">Wife</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">XH</span>
+                        <span class="dictionary-value">Ex-Husband</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">XW</span>
+                        <span class="dictionary-value">Ex-Wife</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Sex</span>
+
+                      <div>
+                        <span class="dictionary-key">M</span>
+                        <span class="dictionary-value">Male</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">F</span>
+                        <span class="dictionary-value">Female</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Situation</span>
+
+                      <div>
+                        <span class="dictionary-key">A</span>
+                        <span class="dictionary-value">Single Victim/Single Offender</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">B</span>
+                        <span class="dictionary-value">Single Victim/Unknown Offender(s)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">C</span>
+                        <span class="dictionary-value">Single Victim/Multiple Offenders</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">D</span>
+                        <span class="dictionary-value">Multiple Victims/Single Offender</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">E</span>
+                        <span class="dictionary-value">Multiple Victims/Multiple Offenders</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">F</span>
+                        <span class="dictionary-value">Multiple Victims/Unknown Offender(s)</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Subcircumstance</span>
+
+                      <div>
+                        <span class="dictionary-key">A</span>
+                        <span class="dictionary-value">Felon Attacked Police Officer</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">B</span>
+                        <span class="dictionary-value">Felon Attacked Fellow Police Officer</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">C</span>
+                        <span class="dictionary-value">Felon Attacked a Civilian</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">D</span>
+                        <span class="dictionary-value">Felon Attempted Flight From a Crime</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">E</span>
+                        <span class="dictionary-value">Felon Killed in Commission of a Crime</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">F</span>
+                        <span class="dictionary-value">Felon Resisted Arrest</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">G</span>
+                        <span class="dictionary-value">Not Enough Information to Determine</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Weapon</span>
+
+                      <div>
+                        <span class="dictionary-key">11</span>
+                        <span class="dictionary-value">Firearm</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">12</span>
+                        <span class="dictionary-value">Handgun</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">13</span>
+                        <span class="dictionary-value">Rifle</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">14</span>
+                        <span class="dictionary-value">Shotgun</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">15</span>
+                        <span class="dictionary-value">Other gun</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">20</span>
+                        <span class="dictionary-value">Knife or Cutting Instrument</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">30</span>
+                        <span class="dictionary-value">Blunt Object</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">40</span>
+                        <span class="dictionary-value">Personal Weapons</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">50</span>
+                        <span class="dictionary-value">Poison</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">55</span>
+                        <span class="dictionary-value">Pushed or Thrown Out Window</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">60</span>
+                        <span class="dictionary-value">Explosives</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">65</span>
+                        <span class="dictionary-value">Fire</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">70</span>
+                        <span class="dictionary-value">Narcotics and Drugs</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">75</span>
+                        <span class="dictionary-value">Drowning</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">80</span>
+                        <span class="dictionary-value">Strangulation</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">85</span>
+                        <span class="dictionary-value">Asphyxiation</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">90</span>
+                        <span class="dictionary-value">Other Weapon</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <!--Page footer-->
+            <tfoot>
+            </tfoot>
+          </table>
+        </div>
       </body>
     </html>
   </xsl:template>

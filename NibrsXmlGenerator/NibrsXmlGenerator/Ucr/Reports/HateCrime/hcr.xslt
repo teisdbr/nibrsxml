@@ -5,283 +5,864 @@
     <html>
       <head>
         <style>
+          .no-border {
+          border: none;
+          }
           body {
-          font-size: 20px;
+          display: -webkit-flex;
+          display: flex;
+          font-size: 10px;
           }
-          .head{
-          border: 0px;
-          text-align: left;
-          font-weight: bold;
-          padding:0px;
+          .page-wrapper {
+          width:210mm;
+          margin:auto;
           }
-          .small{
-          border: 0px;
-          text-align: left;
-          font-weight: bold;
-          font-size: 15px;
-          padding:0px;
-          }
-          td {
+          th, td {
           border: 1px solid black;
-          text-align: left;
-          padding:10px;
           }
           table {
-          width: 100%;
           border-spacing: 0px;
-          border-collapse: collapse;
-          page-break-inside: avoid;
+          border-collapse: separate;
           }
-          div{
-          white-space:nowrap;
+          .rowheader {
+          text-align: left;
           }
-          @media print {
-          table{
-          page-break-inside: avoid;
-          page-break-after: always;
+          .title{
+          border:0px;
+          font-size:20px;
           }
-          div.body {
-          page-break-inside: avoid;
-          <!--page-break-after: always;-->
+          .page-content {
           }
+          .page-content > table {
+          width: 100%;
+          padding: 10px 0;
+          }
+          .data-table-container {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          }
+          .data-table-container > table {
+          margin:auto;
+          padding: 10px 0;
+          width:100%;
+          }
+          .dictionary-container {
+          max-height:161mm;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          margin:10px;
+          }
+          .dictionary {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          padding: 5px 0;
+          }
+          .dictionary-header {
+          display: block;
+          }
+          .dictionary-key {
+          padding: 0 10px 0 0;
+          display: inline-block;
+          width:30px;
+          text-align:right;
+          vertical-align:top;
+          }
+          .dictionary-value {
+          display: inline-block;
+          width:200px;
+          }
+          .checkbox-container {
+          pointer-events:none;
+          }
+          .centered {
+          text-align: center;
+          }
+          .rowheader {
+          text-align: left;
+          }
+          .ages {
+          background-color: yellow;
+          }
+          .table-pad-bot {
+          padding-bottom: 10px;
+          }
+          .title{
+          border:0px;
+          font-size:20px;
           }
         </style>
       </head>
       <body>
-        <xsl:for-each select="UcrReports/HCR/INCIDENTS/INCIDENT">
+        <div class="page-wrapper">
           <table>
-            <colgroup span="3"></colgroup>
+            <!--Page header-->
             <thead>
               <tr>
-                <th colspan="3" style="text-align:center;">
-                  Quarterly Hate Crime Report<br />(Offenses Known to Law Enforcement)
+                <th colspan="2">
+                  Quarterly Hate Crime Report<br />
+                  (Offenses Known to Law Enforcement)
                 </th>
               </tr>
               <tr>
-                <td class="small">
-                  <xsl:value-of select="concat(//UcrReports/@agency,'  ', //UcrReports/@ori)" />
-                </td>
-                <td class="small">
-                  <xsl:value-of select="concat(//UcrReports/@year, ' ', //UcrReports/@month)" />
-                  <br />
-                  <br />
-                </td>
+                <th>
+                  <xsl:value-of select="concat(UcrReports/@ori, ' ', UcrReports/@agency)" />
+                </th>
+                <th>
+                  <xsl:choose>
+                    <xsl:when test="UcrReports/@month=1 or UcrReports/@month=2 or UcrReports/@month=3">Quarter 1: January-March </xsl:when>
+                    <xsl:when test="UcrReports/@month=4 or UcrReports/@month=5 or UcrReports/@month=6">Quarter 2: April-June </xsl:when>
+                    <xsl:when test="UcrReports/@month=7 or UcrReports/@month=8 or UcrReports/@month=9">Quarter 3: July-September </xsl:when>
+                    <xsl:when test="UcrReports/@month=10 or UcrReports/@month=11 or UcrReports/@month=12">Quarter 4: October-December </xsl:when>
+                    <xsl:when test="UcrReports/@month=7">July </xsl:when>
+                    <xsl:when test="UcrReports/@month=8">August </xsl:when>
+                    <xsl:when test="UcrReports/@month=9">September </xsl:when>
+                    <xsl:when test="UcrReports/@month=10">October </xsl:when>
+                    <xsl:when test="UcrReports/@month=11">November </xsl:when>
+                    <xsl:when test="UcrReports/@month=12">December </xsl:when>
+                  </xsl:choose>
+                  <xsl:value-of select="UcrReports/@year" />
+                </th>
               </tr>
-
             </thead>
             <tbody>
               <tr>
-                <td colspan="3" class="head">
-                  Incident Date : <xsl:value-of select="INCIDENTDATE" />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3" class="head">
-
-                  Incident # : <xsl:value-of select="INCIDENTNUM" />
-
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3" class="head">
-                  Filing Type :
-                  <xsl:choose>
-                    <xsl:when test="FILINGTYPE='1'">Initial</xsl:when>
-                    <xsl:when test="FILINGTYPE='2'">Adjustment</xsl:when>
-                  </xsl:choose>
-                </td>
-              </tr>
-              <tr>
-                <td class="head">
-                  #Adult Offenders : <xsl:value-of select="ADULTOFFENDERSCOUNT" />
-                </td>
-                <td class="head">
-                  #Juvenile Offenders : <xsl:value-of select="JUVENILEOFFENDERSCOUNT" />
-                </td>
-              </tr>
-              <tr>
-                <td class="head">
-                  <div>
-                    Offender Race :
-                    <xsl:choose>
-                      <xsl:when test="OFFENDERRACE='W'">W (White)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='B'">B (Black or African American)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='I'">I (American Indian or Alaska Native)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='A'">A (Asian)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='P'">P (Native Hawaiian or Other Pacific Islander)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='M'">M (Group of Multiple Races)</xsl:when>
-                      <xsl:when test="OFFENDERRACE='U'">U (Unknown)</xsl:when>
-                    </xsl:choose>
+                <td colspan="2">
+                  <!--Page content-->
+                  <div class="page-content data-table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th rowspan="3">Incident Date</th>
+                          <th rowspan="3">Incident ID</th>
+                          <th rowspan="2" colspan="2">Number of Offenders</th>
+                          <th rowspan="3">Offender(s) Race</th>
+                          <th rowspan="3">Offender(s) Ethnicity</th>
+                          <th colspan="17">Related Offenses</th>
+                        </tr>
+                        <tr>
+                          <th rowspan="2">Offense Sequence Number</th>
+                          <th rowspan="2">Offense Code</th>
+                          <th rowspan="2">Location Code</th>
+                          <th colspan="2">Number of Victims</th>
+                          <th colspan="5">Bias Motivation Codes</th>
+                          <th colspan="8">Victim Types</th>
+                        </tr>
+                        <tr>
+                          <th>Adult</th>
+                          <th>Juvenile</th>
+                          <th>Adult</th>
+                          <th>Juvenile</th>
+                          <th>1</th>
+                          <th>2</th>
+                          <th>3</th>
+                          <th>4</th>
+                          <th>5</th>
+                          <th>I</th>
+                          <th>B</th>
+                          <th>F</th>
+                          <th>G</th>
+                          <th>R</th>
+                          <th>O</th>
+                          <th>U</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <xsl:for-each select="UcrReports/HCR/INCIDENTS/INCIDENT">
+                          <tr>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="substring-before(INCIDENTDATE, 'T')"/>
+                            </td>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="INCIDENTNUM"/>
+                            </td>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="ADULTOFFENDERSCOUNT"/>
+                            </td>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="JUVENILEOFFENDERSCOUNT"/>
+                            </td>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="OFFENDERRACE"/>
+                            </td>
+                            <td rowspan="{count(OFFENSES/OFFENSE) + 1}">
+                              <xsl:value-of select="OFFENDERETHNICITY"/>
+                            </td>
+                          </tr>
+                          <xsl:for-each select="OFFENSES/OFFENSE">
+                            <tr>
+                              <td>
+                                <xsl:value-of select="position()"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="OFFENSECODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="LOCATIONCODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="ADULTVICTIMSCOUNT"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="JUVENILEVICTIMSCOUNT"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 1]/@CODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 2]/@CODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 3]/@CODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 4]/@CODE"/>
+                              </td>
+                              <td>
+                                <xsl:value-of select="BIASMOTIVES/BIASMOTIVE[position() = 5]/@CODE"/>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/INDIVIDUAL = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/BUSINESS = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/FINANCIAL = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/GOVERNMENT = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/RELIGIOUS = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/OTHER = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                              <td class="checkbox-container">
+                                <input type="checkbox">
+                                  <xsl:if test="VICTIMTYPE/UNKNOWN = 1">
+                                    <xsl:attribute name="checked"></xsl:attribute>
+                                  </xsl:if>
+                                </input>
+                              </td>
+                            </tr>
+                          </xsl:for-each>
+                        </xsl:for-each>
+                      </tbody>
+                    </table>
                   </div>
                 </td>
-                <td class="head">
-                  <div>
-                    Offender Ethnicity :
-                    <xsl:choose>
-                      <xsl:when test="OFFENDERETHNICITY='H'">H (Hispanic or Latino)</xsl:when>
-                      <xsl:when test="OFFENDERETHNICITY='N'">N (Not Hispanic or Latino)</xsl:when>
-                      <xsl:when test="OFFENDERETHNICITY='M'">M (Group of Multiple Ethnicities)</xsl:when>
-                      <xsl:when test="OFFENDERETHNICITY='U'">U (Unknown)</xsl:when>
-                      <xsl:when test="OFFENDERETHNICITY='b'">b (BLANK)</xsl:when>
-                    </xsl:choose>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <!--Legend-->
+                  <div class="dictionary-container">
+                    <div class="dictionary">
+                      <span class="dictionary-header">Bias Motivation</span>
+
+                      <div>
+                        <span class="dictionary-key">11</span>
+                        <span class="dictionary-value">Anti-White</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">12</span>
+                        <span class="dictionary-value">Anti-Black or African American</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">13</span>
+                        <span class="dictionary-value">Anti-American Indian/Alaska Native</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">14</span>
+                        <span class="dictionary-value">Anti-Asian</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">15</span>
+                        <span class="dictionary-value">Anti-Multiple Races, Group</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">16</span>
+                        <span class="dictionary-value">Anti-Native Hawaiian or Other Pacific Islander</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">21</span>
+                        <span class="dictionary-value">Anti-Jewish</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">22</span>
+                        <span class="dictionary-value">Anti-Catholic</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">23</span>
+                        <span class="dictionary-value">Anti-Protestant</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">24</span>
+                        <span class="dictionary-value">Anti-Islamic (Muslim)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">25</span>
+                        <span class="dictionary-value">Anti-Other Religion</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">26</span>
+                        <span class="dictionary-value">Anti-Multiple Religions, Group</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">27</span>
+                        <span class="dictionary-value">Anti-Atheism/Agnosticism</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">28</span>
+                        <span class="dictionary-value">Anti-Mormon</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">29</span>
+                        <span class="dictionary-value">Anti-Jehovah's Witness</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">31</span>
+                        <span class="dictionary-value">Anti-Arab</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">32</span>
+                        <span class="dictionary-value">Anti-Hispanic or Latino</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">33</span>
+                        <span class="dictionary-value">Anti-Other Race/Ethnicity/Ancestry</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">41</span>
+                        <span class="dictionary-value">Anti-Gay (Male)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">42</span>
+                        <span class="dictionary-value">Anti-Lesbian</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">43</span>
+                        <span class="dictionary-value">Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">44</span>
+                        <span class="dictionary-value">Anti-Heterosexual</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">45</span>
+                        <span class="dictionary-value">Anti-Bisexual</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">51</span>
+                        <span class="dictionary-value">Anti-Physical Disability</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">52</span>
+                        <span class="dictionary-value">Anti-Mental Disability</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">61</span>
+                        <span class="dictionary-value">Anti-Male</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">62</span>
+                        <span class="dictionary-value">Anti-Female</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">71</span>
+                        <span class="dictionary-value">Anti-Transgender</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">72</span>
+                        <span class="dictionary-value">Anti-Gender Nonconforming</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">81</span>
+                        <span class="dictionary-value">Anti-Eastern Orthodox (Russian, Greek, Other)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">82</span>
+                        <span class="dictionary-value">Anti-Other Christian</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">83</span>
+                        <span class="dictionary-value">Anti-Buddhist</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">84</span>
+                        <span class="dictionary-value">Anti-Hindu</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">85</span>
+                        <span class="dictionary-value">Anti-Sikh</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Ethnicity</span>
+
+                      <div>
+                        <span class="dictionary-key">b</span>
+                        <span class="dictionary-value">Blank</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">H</span>
+                        <span class="dictionary-value">Hispanic or Latino</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">M</span>
+                        <span class="dictionary-value">Group of Multiple Ethnicities</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">N</span>
+                        <span class="dictionary-value">Not Hispanic or Latino</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Location</span>
+
+                      <div>
+                        <span class="dictionary-key">01</span>
+                        <span class="dictionary-value">Air/Bus/Train Terminal</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">02</span>
+                        <span class="dictionary-value">Bank/Savings and Loan</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">03</span>
+                        <span class="dictionary-value">Bar/Night Club</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">04</span>
+                        <span class="dictionary-value">Church/Synagogue/Temple</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">05</span>
+                        <span class="dictionary-value">Commercial/Office Building</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">06</span>
+                        <span class="dictionary-value">Construction Site</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">07</span>
+                        <span class="dictionary-value">Convenience Store</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">08</span>
+                        <span class="dictionary-value">Department/Discount Store</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">09</span>
+                        <span class="dictionary-value">Drug Store/Doctor Office/Hospital</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">10</span>
+                        <span class="dictionary-value">Field/Woods</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">11</span>
+                        <span class="dictionary-value">Government/Public Building</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">12</span>
+                        <span class="dictionary-value">Grocery/Supermarket</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">13</span>
+                        <span class="dictionary-value">Highway/Road/Alley/Street</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">14</span>
+                        <span class="dictionary-value">Hotel/Motel/etc.</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">15</span>
+                        <span class="dictionary-value">Jail/Prison</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">16</span>
+                        <span class="dictionary-value">Lake/Waterway</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">17</span>
+                        <span class="dictionary-value">Liquor Store</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">18</span>
+                        <span class="dictionary-value">Parking Lot/Garage</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">19</span>
+                        <span class="dictionary-value">Rental Storage Facility</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">20</span>
+                        <span class="dictionary-value">Residence/Home</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">21</span>
+                        <span class="dictionary-value">Restaurant</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">23</span>
+                        <span class="dictionary-value">Service/Gas Station</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">24</span>
+                        <span class="dictionary-value">Specialty Store (TV, Fur, etc.)</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">25</span>
+                        <span class="dictionary-value">Other/Unknown</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">37</span>
+                        <span class="dictionary-value">Abandoned/Condemned Structure</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">38</span>
+                        <span class="dictionary-value">Amusement Park</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">39</span>
+                        <span class="dictionary-value">Arena/Stadium/Fairgrounds/Coliseum</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">40</span>
+                        <span class="dictionary-value">ATM Separate from Bank</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">41</span>
+                        <span class="dictionary-value">Auto Dealership New/Used</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">42</span>
+                        <span class="dictionary-value">Camp/Campground</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">44</span>
+                        <span class="dictionary-value">Daycare Facility</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">45</span>
+                        <span class="dictionary-value">Dock/Wharf/Freight/Modal Terminal</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">46</span>
+                        <span class="dictionary-value">Farm Facility</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">47</span>
+                        <span class="dictionary-value">Gambling Facility/Casino</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">48</span>
+                        <span class="dictionary-value">Industrial Site</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">49</span>
+                        <span class="dictionary-value">Military Installation</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">50</span>
+                        <span class="dictionary-value">Park/Playground</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">51</span>
+                        <span class="dictionary-value">Rest Area</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">52</span>
+                        <span class="dictionary-value">School-College/University</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">53</span>
+                        <span class="dictionary-value">School-Elementary/Secondary</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">54</span>
+                        <span class="dictionary-value">Shelter-Mission/Homeless</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">55</span>
+                        <span class="dictionary-value">Shopping Mall</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">56</span>
+                        <span class="dictionary-value">Tribal Lands</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">57</span>
+                        <span class="dictionary-value">Community Center</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Offense Code</span>
+
+                      <div>
+                        <span class="dictionary-key">01</span>
+                        <span class="dictionary-value">Murder</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">02</span>
+                        <span class="dictionary-value">Rape</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">03</span>
+                        <span class="dictionary-value">Robbery</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">04</span>
+                        <span class="dictionary-value">Aggravated Assault</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">05</span>
+                        <span class="dictionary-value">Burglary</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">06</span>
+                        <span class="dictionary-value">Larceny-Theft</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">07</span>
+                        <span class="dictionary-value">Motor Vehicle Theft</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">08</span>
+                        <span class="dictionary-value">Arson</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">09</span>
+                        <span class="dictionary-value">Simple Assault</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">10</span>
+                        <span class="dictionary-value">Intimidation</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">11</span>
+                        <span class="dictionary-value">Destruction/Damage/Vandalism</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">12</span>
+                        <span class="dictionary-value">Human Trafficking, Commercial Sex Acts</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">13</span>
+                        <span class="dictionary-value">Human Trafficking, Involuntary Servitude</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Race</span>
+
+                      <div>
+                        <span class="dictionary-key">A</span>
+                        <span class="dictionary-value">Asian or Pacific Islander</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">B</span>
+                        <span class="dictionary-value">Black</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">I</span>
+                        <span class="dictionary-value">American Indian or Alaskan Native</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">W</span>
+                        <span class="dictionary-value">White</span>
+                      </div>
+                    </div>
+
+                    <div class="dictionary">
+                      <span class="dictionary-header">Victim Type</span>
+
+                      <div>
+                        <span class="dictionary-key">B</span>
+                        <span class="dictionary-value">Business</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">F</span>
+                        <span class="dictionary-value">Financial Institution</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">G</span>
+                        <span class="dictionary-value">Government</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">I</span>
+                        <span class="dictionary-value">Individual</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">O</span>
+                        <span class="dictionary-value">Other</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">R</span>
+                        <span class="dictionary-value">Religious Organization</span>
+                      </div>
+
+                      <div>
+                        <span class="dictionary-key">U</span>
+                        <span class="dictionary-value">Unknown</span>
+                      </div>
+                    </div>
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td colspan="3" class="head">
-                  Offenses for this Incident # :
-                </td>
-              </tr>
-              <xsl:for-each select="OFFENSES/OFFENSE">
-                <div class="body">
-                  <tr>
-                    <td colspan="3" style="text-align:left;border:0px;">
-                      Offense #: <xsl:value-of select="position()" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="1">
-                      Offense Code :
-                      <xsl:choose>
-                        <xsl:when test="OFFENSECODE='01'">01 (Murder)</xsl:when>
-                        <xsl:when test="OFFENSECODE='02'">02 (Rape)</xsl:when>
-                        <xsl:when test="OFFENSECODE='03'">03 (Robbery)</xsl:when>
-                        <xsl:when test="OFFENSECODE='04'">04 (Aggravated Assault)</xsl:when>
-                        <xsl:when test="OFFENSECODE='05'">05 (Burglary)</xsl:when>
-                        <xsl:when test="OFFENSECODE='06'">06 (Larceny-Theft)</xsl:when>
-                        <xsl:when test="OFFENSECODE='07'">07 (Motor Vehicle Theft)</xsl:when>
-                        <xsl:when test="OFFENSECODE='08'">08 (Arson)</xsl:when>
-                        <xsl:when test="OFFENSECODE='09'">09 (Simple Assault)</xsl:when>
-                        <xsl:when test="OFFENSECODE='10'">10 (Intimidation)</xsl:when>
-                        <xsl:when test="OFFENSECODE='11'">11 (Destruction/Damage/Vandalism)</xsl:when>
-                        <xsl:when test="OFFENSECODE='12'">12 (Human Trafficking, Commercial Sex Acts)</xsl:when>
-                        <xsl:when test="OFFENSECODE='13'">13 (Human Trafficking, Involuntary Servitude)</xsl:when>
-                      </xsl:choose>
-                    </td>
-                    <td colspan="2">
-                      Location Code :
-                      <xsl:choose>
-                        <xsl:when test="LOCATIONCODE='1'">1 (Air/Bus/Train Terminal)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='2'">2 (Bank/Savings and Loan)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='3'">3 (Bar/Night Club)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='4'">4 (Church/Synagogue/Temple)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='5'">5 (Commercial/Office Building)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='6'">6 (Construction Site)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='7'">7 (Convenience Store)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='8'">8 (Department/Discount Store)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='9'">9 (Drug Store/Doctor Office/Hospital)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='10'">10 (Field/Woods)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='11'">11 (Government/Public Building)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='12'">12 (Grocery/Supermarket)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='13'">13 (Highway/Road/Alley/Street)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='14'">14 (Hotel/Motel/etc.)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='15'">15 (Jail/Prison)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='16'">16 (Lake/Waterway)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='17'">17 (Liquor Store)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='18'">18 (Parking Lot/Garage)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='19'">19 (Rental Storage Facility)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='20'">20 (Residence/Home)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='21'">21 (Restaurant)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='23'">23 (Service/Gas Station)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='24'">24 (Specialty Store (TV, Fur, etc.))</xsl:when>
-                        <xsl:when test="LOCATIONCODE='25'">25 (Other/Unknown)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='37'">37 (Abandoned/Condemned Structure)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='38'">38 (Amusement Park)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='39'">39 (Arena/Stadium/Fairgrounds/Coliseum)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='40'">40 (ATM Separate from Bank)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='41'">41 (Auto Dealership New/Used)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='42'">42 (Camp/Campground)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='44'">44 (Daycare Facility)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='45'">45 (Dock/Wharf/Freight/Modal Terminal)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='46'">46 (Farm Facility)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='47'">47 (Gambling Facility/Casino)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='48'">48 (Industrial Site)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='49'">49 (Military Installation)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='50'">50 (Park/Playground)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='51'">51 (Rest Area)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='52'">52 (School-College/University)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='53'">53 (School-Elementary/Secondary)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='54'">54 (Shelter-Mission/Homeless)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='55'">55 (Shopping Mall)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='56'">56 (Tribal Lands)</xsl:when>
-                        <xsl:when test="LOCATIONCODE='57'">57 (Community Center)</xsl:when>
-                      </xsl:choose>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      # Adult Victims : <xsl:value-of select="ADULTVICTIMSCOUNT" />
-                    </td>
-                    <td>
-                      # Juvenile Victims : <xsl:value-of select="JUVENILEVICTIMSCOUNT" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="text-align:left;border-right:1px;">
-                      Bias Motive (s) :
-                    </td>
-                    <td colspan="2" style="text-align:left;border-left:1px;">
-                      <xsl:for-each select="BIASMOTIVES/BIASMOTIVE">
-                        <xsl:choose>
-                          <xsl:when test="@CODE='11'">11 (Anti-White)</xsl:when>
-                          <xsl:when test="@CODE='12'">12 (Anti-Black or African American)</xsl:when>
-                          <xsl:when test="@CODE='13'">13 (Anti-American Indian/Alaska Native)</xsl:when>
-                          <xsl:when test="@CODE='14'">14 (Anti-Asian)</xsl:when>
-                          <xsl:when test="@CODE='15'">15 (Anti-Multiple Races, Group)</xsl:when>
-                          <xsl:when test="@CODE='21'">21 (Anti-Jewish)</xsl:when>
-                          <xsl:when test="@CODE='22'">22 (Anti-Catholic)</xsl:when>
-                          <xsl:when test="@CODE='23'">23 (Anti-Protestant)</xsl:when>
-                          <xsl:when test="@CODE='24'">24 (Anti-Islamic (Muslim))</xsl:when>
-                          <xsl:when test="@CODE='25'">25 (Anti-Other Religion)</xsl:when>
-                          <xsl:when test="@CODE='26'">26 (Anti-Multiple Religions, Group)</xsl:when>
-                          <xsl:when test="@CODE='27'">27 (Anti-Atheism/Agnosticism)</xsl:when>
-                          <xsl:when test="@CODE='32'">32 (Anti-Hispanic or Latino)</xsl:when>
-                          <xsl:when test="@CODE='33'">33 (Anti-Other Race/Ethnicity/Ancestry)</xsl:when>
-                          <xsl:when test="@CODE='41'">41 (Anti-Gay (Male))</xsl:when>
-                          <xsl:when test="@CODE='42'">42 (Anti-Lesbian)</xsl:when>
-                          <xsl:when test="@CODE='43'">43 (Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group))</xsl:when>
-                          <xsl:when test="@CODE='44'">44 (Anti-Heterosexual)</xsl:when>
-                          <xsl:when test="@CODE='45'">45 (Anti-Bisexual)</xsl:when>
-                          <xsl:when test="@CODE='16'">16 (Anti-Native Hawaiian or Other Pacific Islander)</xsl:when>
-                          <xsl:when test="@CODE='31'">31 (Anti-Arab)</xsl:when>
-                          <xsl:when test="@CODE='28'">28 (Anti-Mormon)</xsl:when>
-                          <xsl:when test="@CODE='29'">29 (Anti-Jehovah's Witness)</xsl:when>
-                          <xsl:when test="@CODE='81'">81 (Anti-Eastern Orthodox (Russian, Greek, Other))</xsl:when>
-                          <xsl:when test="@CODE='82'">82 (Anti-Other Christian)</xsl:when>
-                          <xsl:when test="@CODE='83'">83 (Anti-Buddhist)</xsl:when>
-                          <xsl:when test="@CODE='84'">84 (Anti-Hindu)</xsl:when>
-                          <xsl:when test="@CODE='85'">85 (Anti-Sikh)</xsl:when>
-                          <xsl:when test="@CODE='51'">51 (Anti-Physical Disability)</xsl:when>
-                          <xsl:when test="@CODE='52'">52 (Anti-Mental Disability)</xsl:when>
-                          <xsl:when test="@CODE='61'">61 (Anti-Male)</xsl:when>
-                          <xsl:when test="@CODE='62'">62 (Anti-Female)</xsl:when>
-                          <xsl:when test="@CODE='71'">71 (Anti-Transgender)</xsl:when>
-                          <xsl:when test="@CODE='72'">72 (Anti-Gender Nonconforming)</xsl:when>
-                        </xsl:choose>
-                        <xsl:if test="position() != last()">
-                          <br />
-                        </xsl:if>
-                      </xsl:for-each>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="3">
-                      Victim Type(s) :
-                      <xsl:if test="VICTIMTYPE/INDIVIDUAL='1'">Individual</xsl:if>
-                      <xsl:if test="VICTIMTYPE/BUSINESS='1'"> Business</xsl:if>
-                      <xsl:if test="VICTIMTYPE/FINANCIAL='1'"> Financial-Institution</xsl:if>
-                      <xsl:if test="VICTIMTYPE/GOVERNMENT='1'"> Government</xsl:if>
-                      <xsl:if test="VICTIMTYPE/RELIGIOUS='1'"> Religious-Organization</xsl:if>
-                      <xsl:if test="VICTIMTYPE/OTHER='1'"> Other</xsl:if>
-                      <xsl:if test="VICTIMTYPE/UNKNOWN='1'"> Unknown</xsl:if>
-                    </td>
-                  </tr>
-                </div>
-              </xsl:for-each>
             </tbody>
+            <!--Page footer-->
+            <tfoot>
+            </tfoot>
           </table>
-        </xsl:for-each>
+        </div>
       </body>
     </html>
   </xsl:template>
