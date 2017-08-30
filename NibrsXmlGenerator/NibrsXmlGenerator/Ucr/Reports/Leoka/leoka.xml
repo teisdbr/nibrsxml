@@ -1,66 +1,249 @@
 <?xml-stylesheet type="text/xsl" href="leoka.xsl"?>
 
 <UcrReports agency="Saint Helena Parish Sheriff's Office" ori="LA0460000" year="2017" month="7">
-  <LeokaSummary AGENCY="New Orleans P.D. " ORI="LANPD00" PERIOD="October 2016">
+  <LeokaSummary>
     <Killed>
-      <Feloneously />
-      <ByAccident />
+      <Feloneously>100</Feloneously>
+      <ByAccident>200</ByAccident>
     </Killed>
     <Assaults>
       <Classification name="1">
-        <A>6</A>
-        <C>1</C>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
         <D>1</D>
-        <E>4</E>
-        <H>6</H>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
-      <Classification name="2" />
-      <Classification name="3" />
-      <Classification name="4" />
-      <Classification name="5" />
-      <Classification name="6" />
-      <Classification name="7" />
-      <Classification name="8" />
-      <Classification name="9" />
+      <Classification name="2" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="3">
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="4" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="5" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="6" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="7" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="8" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
+      <Classification name="9" >
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
+      </Classification>
       <Classification name="10">
-        <A>1</A>
-        <E>1</E>
-        <H>1</H>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
       <Classification name="11">
-        <A>2</A>
-        <B>1</B>
-        <E>1</E>
-        <H>2</H>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
       <Classification name="12">
-        <A>9</A>
-        <B>1</B>
-        <C>1</C>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
         <D>1</D>
-        <E>6</E>
-        <H>9</H>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
       <Classification name="13">
-        <A>0</A>
-        <B>0</B>
-        <C>0</C>
-        <D>0</D>
-        <E>0</E>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
+        <D>1</D>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
       <Classification name="14">
-        <A>9</A>
-        <B>1</B>
-        <C>1</C>
+        <A>13</A>
+        <B>12</B>
+        <C>11</C>
         <D>1</D>
-        <E>6</E>
+        <E>2</E>
+        <F>3</F>
+        <G>4</G>
+        <H>5</H>
+        <I>6</I>
+        <J>7</J>
+        <K>8</K>
+        <L>9</L>
+        <M>10</M>
       </Classification>
     </Assaults>
     <AssaultsTime>
       <H00-01>1</H00-01>
-      <H10-11>1</H10-11>
-      <H14-15>1</H14-15>
-      <H22-23>6</H22-23>
+      <H02-03>2</H02-03>
+      <H04-05>3</H04-05>
+      <H06-07>4</H06-07>
+      <H08-09>5</H08-09>
+      <H10-11>6</H10-11>
+      <H12-13>7</H12-13>
+      <H14-15>8</H14-15>
+      <H16-17>9</H16-17>
+      <H18-19>10</H18-19>
+      <H20-21>11</H20-21>
+      <H22-23>12</H22-23>
     </AssaultsTime>
   </LeokaSummary>
 </UcrReports>

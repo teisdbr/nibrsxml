@@ -335,28 +335,28 @@
                       <tr>
                         <td>AM</td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H00-01)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H00-01" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H00-01)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H00-01" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H02-03)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H02-03" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H02-03)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H02-03" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H04-05)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H04-05" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H04-05)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H04-05" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H06-07)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H06-07" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H06-07)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H06-07" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H08-09)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H08-09" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H08-09)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H08-09" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H10-11)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H10-11" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H10-11)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H10-11" />
                         </td>
                         <td rowspan="2" colspan="2">By accident or negligence</td>
                         <td rowspan="2">
@@ -367,28 +367,28 @@
                       <tr>
                         <td>PM</td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H12-13)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H12-13" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H12-13)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H12-13" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H14-15)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H14-15" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H14-15)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H14-15" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H16-17)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H16-17" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H16-17)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H16-17" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H18-19)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H18-19" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H18-19)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H18-19" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H20-21)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H20-21" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H20-21)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H20-21" />
                         </td>
                         <td>
-                          <xsl:if test="not(LeokaSummary/AssaultsTime/H22-23)">0</xsl:if>
-                          <xsl:value-of select="LeokaSummary/AssaultsTime/H22-23" />
+                          <xsl:if test="not(UcrReports/LeokaSummary/AssaultsTime/H22-23)">0</xsl:if>
+                          <xsl:value-of select="UcrReports/LeokaSummary/AssaultsTime/H22-23" />
                         </td>
                       </tr>
                     </tbody>
