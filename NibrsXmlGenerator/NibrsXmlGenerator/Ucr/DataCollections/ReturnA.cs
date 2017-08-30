@@ -298,7 +298,7 @@ namespace NibrsXml.Ucr.DataCollections
             else
             {
                 IncrementBurglaryOffenses(robberyOffense, IncrementActualOffense, numberOfPremisesOrDefault);
-                Supplement.IncrementBurglary(incidentTime, robberyOffense.Location.CategoryCode, totalStolenValue, numberOfPremisesOrDefault);
+                Supplement.IncrementBurglary(incidentTime, robberyOffense.Location.CategoryCode, numberOfPremisesOrDefault, totalStolenValue);
             }
         }
 
