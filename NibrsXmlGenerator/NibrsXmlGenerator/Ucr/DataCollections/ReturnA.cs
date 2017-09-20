@@ -291,7 +291,7 @@ namespace NibrsXml.Ucr.DataCollections
                 allArresteesAreJuvenile);
             //--Line 4e - Simple, Not Aggravated
             incrementer("4e",
-                victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode.MatchOne("13[BC]") && vw.Value == "e"),
+                victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode.Matches("13[BC]") || vw.Value == "e"),
                 allArresteesAreJuvenile);
         }
 
