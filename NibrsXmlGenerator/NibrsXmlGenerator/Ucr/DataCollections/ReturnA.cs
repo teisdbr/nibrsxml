@@ -64,13 +64,13 @@ namespace NibrsXml.Ucr.DataCollections
         ///     "c" - Other Dangerous Weapon
         ///     "d" - Strong-Arm (Hands, Fists, Feet, Etc.)
         /// </summary>
-        /// <param name="offenseForces"></param>
+        /// <param name="offenseForceCodes"></param>
         /// <returns>The weapon class of the most dangerous weapon in this list</returns>
-        private string ExtractWeaponGroup(List<OffenseForce> offenseForces)
+        private static string ExtractWeaponGroup(IEnumerable<string> offenseForceCodes)
         {
             //Extract force codes and sort because they codes are generally already hierarchically ordered,
             //with the exception of personal weapons (40)
-            var offenseForceCodes = offenseForces.Select(o => o.CategoryCode).OrderBy(f => f);
+            offenseForceCodes = offenseForceCodes.OrderBy(f => f);
             var mostDangerousWeapon = offenseForceCodes.FirstOrDefault();
 
             //Make sure a weapon exists, otherwise classify it as e.
@@ -100,19 +100,14 @@ namespace NibrsXml.Ucr.DataCollections
 
         public override string XmlRootName
         {
-            get
-            {
-                return "ReturnASummary";
-            }
+            get { return "ReturnASummary"; }
         }
 
         public override string XslFileName
         {
-            get
-            {
-                return "returna.xsl";
-            }
+            get { return "returna.xsl"; }
         }
+
         #endregion
 
         #region Base Overriden Incrementers
@@ -127,7 +122,6 @@ namespace NibrsXml.Ucr.DataCollections
                 var subtotalKey = key.Substring(0, 1);
                 ClassificationCounts.TryAdd(subtotalKey).IncrementActualOffense(byValue);
             }
-                
         }
 
         public override void IncrementAllClearences(string key, int byValue = 1, bool allArresteesAreJuvenile = false)
@@ -164,26 +158,33 @@ namespace NibrsXml.Ucr.DataCollections
         /// <param name="homicideVictimAssociations"></param>
         /// <param name="allArresteesAreJuvenile"></param>
         /// <param name="totalStolenValue"></param>
-        internal void ScoreHomicide(List<OffenseVictimAssociation> homicideVictimAssociations, int totalStolenValue, bool? allArresteesAreJuvenile = null)
+        internal void ScoreHomicide(List<OffenseVictimAssociation> homicideVictimAssociations, int totalStolenValue,
+            bool? allArresteesAreJuvenile = null)
         {
             if (allArresteesAreJuvenile.HasValue)
             {
-                IncrementHomicideScore(homicideVictimAssociations, IncrementAllClearences, allArresteesAreJuvenile.Value);
+                IncrementHomicideScore(homicideVictimAssociations, IncrementAllClearences,
+                    allArresteesAreJuvenile.Value);
             }
             else
             {
                 IncrementHomicideScore(homicideVictimAssociations, IncrementActualOffense);
-                Supplement.IncrementHomicide(homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09A")), totalStolenValue);
+                Supplement.IncrementHomicide(
+                    homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09A")),
+                    totalStolenValue);
             }
         }
 
-        internal void IncrementHomicideScore(List<OffenseVictimAssociation> homicideVictimAssociations, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        internal void IncrementHomicideScore(List<OffenseVictimAssociation> homicideVictimAssociations,
+            Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
         {
             //Column 4
             //--Line 1a Non-negligent Murders - 09A
-            incrementer("1a", homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09A")), allArresteesAreJuvenile);
+            incrementer("1a", homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09A")),
+                allArresteesAreJuvenile);
             //--Line 1b Negligent Murders - 09B
-            incrementer("1b", homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09B")), allArresteesAreJuvenile);
+            incrementer("1b", homicideVictimAssociations.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("09B")),
+                allArresteesAreJuvenile);
         }
 
         #endregion
@@ -197,7 +198,8 @@ namespace NibrsXml.Ucr.DataCollections
         /// <param name="rapeVictimOffenseAssoc"></param>
         /// <param name="allArresteeAreJuvenile"></param>
         /// <param name="totalStolenValue"></param>
-        internal void ScoreRape(List<OffenseVictimAssociation> rapeVictimOffenseAssoc, int totalStolenValue, bool? allArresteeAreJuvenile = null)
+        internal void ScoreRape(List<OffenseVictimAssociation> rapeVictimOffenseAssoc, int totalStolenValue,
+            bool? allArresteeAreJuvenile = null)
         {
             if (allArresteeAreJuvenile.HasValue)
             {
@@ -205,20 +207,26 @@ namespace NibrsXml.Ucr.DataCollections
             }
             else
             {
-                var rapeCount = rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C"));
+                var rapeCount =
+                    rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C"));
                 IncrementRapeScore(rapeVictimOffenseAssoc, IncrementActualOffense);
                 Supplement.IncrementRape(rapeCount, totalStolenValue);
             }
         }
 
-        internal void IncrementRapeScore(List<OffenseVictimAssociation> rapeVictimOffenseAssoc, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        internal void IncrementRapeScore(List<OffenseVictimAssociation> rapeVictimOffenseAssoc,
+            Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
         {
             //Column 4
             //--Line 2a for Completed Offense Rapes
-            incrementer("2a", rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C") && !Convert.ToBoolean(ov.RelatedOffense.AttemptedIndicator)),
+            incrementer("2a",
+                rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C") &&
+                                                   !Convert.ToBoolean(ov.RelatedOffense.AttemptedIndicator)),
                 allArresteesAreJuvenile);
             //--Line 2a for Attempted Offense Rapes
-            incrementer("2b", rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C") && Convert.ToBoolean(ov.RelatedOffense.AttemptedIndicator)),
+            incrementer("2b",
+                rapeVictimOffenseAssoc.Count(ov => ov.RelatedOffense.UcrCode.MatchOne("11A", "11B", "11C") &&
+                                                   Convert.ToBoolean(ov.RelatedOffense.AttemptedIndicator)),
                 allArresteesAreJuvenile);
         }
 
@@ -226,24 +234,24 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Robberies
 
-        internal void ScoreRobbery(Offense robberyOffense, int totalStolenValue, bool? allArresteesAreJuvenile = null)
+        internal void ScoreRobbery(Offense robberyOffense, int totalStolenValue, IEnumerable<string> highestRatedOffenseForces, bool? allArresteesAreJuvenile = null)
         {
             if (allArresteesAreJuvenile.HasValue)
             {
-                IncrementRobberyScore(robberyOffense, IncrementAllClearences, allArresteesAreJuvenile.Value);
+                IncrementRobberyScore(highestRatedOffenseForces, IncrementAllClearences, allArresteesAreJuvenile.Value);
             }
             else
             {
-                IncrementRobberyScore(robberyOffense, IncrementActualOffense);
+                IncrementRobberyScore(highestRatedOffenseForces, IncrementActualOffense);
                 Supplement.IncrementRobbery(robberyOffense.Location.CategoryCode, totalStolenValue);
             }
         }
 
-        internal void IncrementRobberyScore(Offense robberyOffense, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        internal void IncrementRobberyScore(IEnumerable<string> highestRatedOffenseForces, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
         {
             //Column 4
             //Determine the classification based on the weapon/force code after hierarchy rules are applied
-            var offenseClassification = "3" + ExtractWeaponGroup(robberyOffense.Forces);
+            var offenseClassification = "3" + ExtractWeaponGroup(highestRatedOffenseForces);
             incrementer(offenseClassification, 1, allArresteesAreJuvenile);
         }
 
@@ -259,50 +267,66 @@ namespace NibrsXml.Ucr.DataCollections
                 IncrementAssaultScore(assaultVictimOffenseAssoc, IncrementActualOffense);
         }
 
-        private void IncrementAssaultScore(List<OffenseVictimAssociation> assaultVictimOffenseAssoc, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        private void IncrementAssaultScore(List<OffenseVictimAssociation> assaultVictimOffenseAssoc,
+            Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
         {
             //Column 4
             //--Collect a list of keyvaluepairs of Victims and Most Serious Weapons.
             var victimsAndWeapons =
-                assaultVictimOffenseAssoc.Select(vo => new KeyValuePair<OffenseVictimAssociation, string>(vo, ExtractWeaponGroup(vo.RelatedOffense.Forces))).ToList();
+                assaultVictimOffenseAssoc
+                    .Select(vo => new KeyValuePair<OffenseVictimAssociation, string>(vo,
+                        ExtractWeaponGroup(vo.RelatedOffense.Forces.Select(f => f.CategoryCode)))).ToList();
 
             //--Line 4a - Firearms
-            incrementer("4a", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "a"), allArresteesAreJuvenile);
+            incrementer("4a", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "a"),
+                allArresteesAreJuvenile);
             //--Line 4b - Knife or Cutting Instrument
-            incrementer("4b", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "b"), allArresteesAreJuvenile);
+            incrementer("4b", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "b"),
+                allArresteesAreJuvenile);
             //--Line 4c - Other Dangerous Weapons
-            incrementer("4c", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "c"), allArresteesAreJuvenile);
+            incrementer("4c", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "c"),
+                allArresteesAreJuvenile);
             //--Line 4d - Hands, Fists, Feet, etc
-            incrementer("4d", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "d"), allArresteesAreJuvenile);
+            incrementer("4d", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "d"),
+                allArresteesAreJuvenile);
             //--Line 4e - Simple, Not Aggravated
-            incrementer("4e", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode.MatchOne("13[BC]") && vw.Value == "e"), allArresteesAreJuvenile);
+            incrementer("4e",
+                victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode.MatchOne("13[BC]") && vw.Value == "e"),
+                allArresteesAreJuvenile);
         }
 
         #endregion
 
         #region Burglaries
 
-        internal void ScoreBurglary(Offense robberyOffense, string incidentTime, int totalStolenValue, bool? allArresteesAreJuvenile = null)
+        internal void ScoreBurglary(Offense robberyOffense, string incidentTime, int totalStolenValue,
+            bool? allArresteesAreJuvenile = null)
         {
             //This will always contain the count of 1 if there are no premises and if the location is not that of a storage facility.
-            var numberOfPremisesOrDefault = robberyOffense.StructuresEnteredQuantity != null && Convert.ToInt32(robberyOffense.StructuresEnteredQuantity) > 0 &&
-                                            robberyOffense.Location.CategoryCode == LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode()
+            var numberOfPremisesOrDefault = robberyOffense.StructuresEnteredQuantity != null &&
+                                            Convert.ToInt32(robberyOffense.StructuresEnteredQuantity) > 0 &&
+                                            robberyOffense.Location.CategoryCode ==
+                                            LocationCategoryCode.RENTAL_STORAGE_FACILITY.NibrsCode()
                 ? Convert.ToInt32(robberyOffense.StructuresEnteredQuantity)
                 : 1;
 
             //Column 4 - Increment Actual Offense
             if (allArresteesAreJuvenile.HasValue)
             {
-                IncrementBurglaryOffenses(robberyOffense, IncrementAllClearences, numberOfPremisesOrDefault, allArresteesAreJuvenile.Value);
+                IncrementBurglaryOffenses(robberyOffense, IncrementAllClearences, numberOfPremisesOrDefault,
+                    allArresteesAreJuvenile.Value);
             }
             else
             {
                 IncrementBurglaryOffenses(robberyOffense, IncrementActualOffense, numberOfPremisesOrDefault);
-                Supplement.IncrementBurglary(incidentTime, robberyOffense.Location.CategoryCode, numberOfPremisesOrDefault, totalStolenValue);
+                Supplement.IncrementBurglary(incidentTime, robberyOffense.Location.CategoryCode,
+                    numberOfPremisesOrDefault, totalStolenValue);
             }
         }
 
-        private static void IncrementBurglaryOffenses(Offense robberyOffense, Action<string, int, bool> incrementingFunction, int numberOfPremisesOrDefault, bool allArresteesAreJuvenile = false)
+        private static void IncrementBurglaryOffenses(Offense robberyOffense,
+            Action<string, int, bool> incrementingFunction, int numberOfPremisesOrDefault,
+            bool allArresteesAreJuvenile = false)
         {
             switch (robberyOffense.AttemptedIndicator)
             {
@@ -333,7 +357,8 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Larceny-Theft
 
-        internal void ScoreLarcenyThefts(Offense larcenyOffense, List<Item> stolenItems, bool? allArresteesAreJuvenile = null)
+        internal void ScoreLarcenyThefts(Offense larcenyOffense, List<Item> stolenItems,
+            bool? allArresteesAreJuvenile = null)
         {
             if (allArresteesAreJuvenile.HasValue)
             {
@@ -346,7 +371,8 @@ namespace NibrsXml.Ucr.DataCollections
             }
         }
 
-        private static void IncrementLarcenyTheft(Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        private static void IncrementLarcenyTheft(Action<string, int, bool> incrementer,
+            bool allArresteesAreJuvenile = false)
         {
             incrementer("6", 1, allArresteesAreJuvenile);
         }
@@ -355,21 +381,26 @@ namespace NibrsXml.Ucr.DataCollections
 
         #region Motor Vehicle Theft
 
-        internal void ScoreVehicleTheft(Offense motorVehicleOffense, List<Item> vehicleProperties, int totalStolenValue, bool? allArresteesAreJuvenile = null)
+        internal void ScoreVehicleTheft(Offense motorVehicleOffense, List<Item> vehicleProperties, int totalStolenValue,
+            bool? allArresteesAreJuvenile = null)
         {
             if (allArresteesAreJuvenile.HasValue)
             {
-                IncrementVehicleScore(motorVehicleOffense, vehicleProperties, IncrementAllClearences, allArresteesAreJuvenile.Value);
+                IncrementVehicleScore(motorVehicleOffense, vehicleProperties, IncrementAllClearences,
+                    allArresteesAreJuvenile.Value);
             }
             else
             {
-                var stolenVehicleCount = vehicleProperties.Count(v => v.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties));
+                var stolenVehicleCount =
+                    vehicleProperties.Count(
+                        v => v.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties));
                 IncrementVehicleScore(motorVehicleOffense, vehicleProperties, IncrementActualOffense);
                 Supplement.IncrementVehicleTheft(stolenVehicleCount, totalStolenValue);
             }
         }
 
-        private static void IncrementVehicleScore(Offense motorVehicleOffense, List<Item> vehicleProperties, Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
+        private static void IncrementVehicleScore(Offense motorVehicleOffense, List<Item> vehicleProperties,
+            Action<string, int, bool> incrementer, bool allArresteesAreJuvenile = false)
         {
             var isAttemptedOffense = Convert.ToBoolean(motorVehicleOffense.AttemptedIndicator);
 
@@ -377,21 +408,30 @@ namespace NibrsXml.Ucr.DataCollections
             if (isAttemptedOffense)
             {
                 incrementer("7a",
-                    vehicleProperties.Count(v => v.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties)), allArresteesAreJuvenile);
+                    vehicleProperties.Count(
+                        v => v.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties)),
+                    allArresteesAreJuvenile);
             }
             //Completed Offense Calculation
             else
             {
                 //---7c - Motor Vehicle Theft - Other Vehicles
-                incrementer("7c", vehicleProperties.Count(v => v.NibrsPropertyCategoryCode == PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode()), allArresteesAreJuvenile);
+                incrementer("7c",
+                    vehicleProperties.Count(v => v.NibrsPropertyCategoryCode ==
+                                                 PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode()),
+                    allArresteesAreJuvenile);
                 //---7b - Motor Vehicle Theft - Trucks & Buses
                 incrementer("7b",
                     vehicleProperties.Count(
                         v =>
-                            v.NibrsPropertyCategoryCode.MatchOne(PropertyCategoryCode.BUSES.NibrsCode(), PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode(),
-                                PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode())), allArresteesAreJuvenile);
+                            v.NibrsPropertyCategoryCode.MatchOne(
+                                PropertyCategoryCode.BUSES.NibrsCode(),
+                                PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode(),
+                                PropertyCategoryCode.TRUCKS.NibrsCode())), allArresteesAreJuvenile);
                 //---7a - Motor Vehicle Theft - Autos
-                incrementer("7a", vehicleProperties.Count(v => v.NibrsPropertyCategoryCode == PropertyCategoryCode.AUTOMOBILE.NibrsCode()), allArresteesAreJuvenile);
+                incrementer("7a",
+                    vehicleProperties.Count(v => v.NibrsPropertyCategoryCode ==
+                                                 PropertyCategoryCode.AUTOMOBILE.NibrsCode()), allArresteesAreJuvenile);
             }
         }
 

@@ -13,7 +13,7 @@ namespace NibrsXml.Ucr.DataMining
             {
                 //Reverse the list of offenses as found in spec to make sure the highest index belongs to the first (09A). 13B & 13C had to be added so that there is a priority for them as well even though
                 //they are not part of the hierarchy rule.
-                return new List<string> { "09A", "09B", "11A", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C" };
+                return new List<string> { "09A", "09B", "11A", "11B", "11C", "120", "13A", "220", "23A", "23B", "23C", "23D", "23E", "23F", "23G", "23H", "240", "200", "13B", "13C" };
             }
         }
 

@@ -363,6 +363,7 @@ namespace NibrsXml.Ucr.DataCollections
                 case "39C":
                 case "39D":
                     offenseClassificationKeys.Add("19b");
+                    offenseClassificationKeys.Add("19C");
                     break;
                 //Lines 19[abc] are not available in nibrs
                 case "90F":
