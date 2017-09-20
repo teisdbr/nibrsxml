@@ -49,7 +49,8 @@
           width:100%;
           }
           .dictionary-container {
-          max-height:161mm;
+          max-height:340mm;
+          min-width: 190mm;
           display: -webkit-flex;
           display: flex;
           -webkit-flex-direction: column;
