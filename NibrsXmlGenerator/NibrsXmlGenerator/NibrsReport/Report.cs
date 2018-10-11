@@ -9,6 +9,7 @@ using TeUtil.Extensions;
 namespace NibrsXml.NibrsReport
 {
     [XmlRoot("Report", Namespace = Namespaces.cjisNibrs)]
+    
     public class Report : NibrsSerializable
     {
         [XmlElement("ReportHeader", Namespace = Namespaces.cjisNibrs, Order = 1)]

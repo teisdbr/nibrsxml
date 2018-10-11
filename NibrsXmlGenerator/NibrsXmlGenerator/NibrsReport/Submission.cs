@@ -20,6 +20,10 @@ namespace NibrsXml.NibrsReport
         [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
         public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
+        [XmlElement("MessageMetadata", Namespace = Namespaces.cjis)]
+        public MessageMetadata MessageMetadata = new MessageMetadata();
+
+
         [XmlElement("Report")]
         public List<Report> Reports = new List<Report>();
 
@@ -99,6 +103,9 @@ namespace NibrsXml.NibrsReport
             var submission = SubmissionBuilder.Build(lists);
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
             submission.XsiSchemaLocation = nibrsSchemaLocation;
+       
+            //submission.MessageMetadata.sharuk = "sharukshaik";
+            
             var xdoc = new XmlDocument();
             xdoc.LoadXml(submission.Xml);
             xdoc.Save(fileName);
@@ -106,5 +113,10 @@ namespace NibrsXml.NibrsReport
             //Return submission created above
             return submission;
         }
+
+
+
+
     }
+
 }

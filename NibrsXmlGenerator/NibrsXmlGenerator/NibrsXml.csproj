@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\winlibrs\Application\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Builder\LibrsExtensions.cs" />
     <Compile Include="Builder\IncidentBuilder.cs" />
+    <Compile Include="Builder\MessageMetaDataBuilder.cs" />
     <Compile Include="Builder\OffenseBuilder.cs" />
     <Compile Include="Builder\PersonBuilder.cs" />
     <Compile Include="Builder\ReportBuilder.cs" />
@@ -76,6 +78,9 @@
     <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
+    <Compile Include="NibrsReport\MessageMetadata.cs" />
+    <Compile Include="NibrsReport\MessageMetadatas\MessageIdentification.cs" />
+    <Compile Include="NibrsReport\MessageMetadatas\MessageSubmittingOrganization.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
     <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
@@ -261,6 +266,13 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

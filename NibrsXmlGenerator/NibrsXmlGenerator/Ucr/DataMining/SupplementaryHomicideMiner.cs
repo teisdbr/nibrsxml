@@ -73,7 +73,7 @@ namespace NibrsXml.Ucr.DataMining
                 .Select(subject => new SupplementaryHomicide.Offender
                 {
                     SequenceNumber = subject.SeqNum,
-                    Age = subject.Person.AgeMeasure.RangeOrValue ?? "00",
+                    Age = subject.Person.AgeMeasure != null ? subject.Person.AgeMeasure.RangeOrValue : "00",
                     Sex = subject.Person.SexCode,
                     Ethnicity = subject.Person.EthnicityCode,
                     Race = subject.Person.RaceCode,
