@@ -15,7 +15,7 @@ namespace NibrsXml.NibrsReport.Associations
         [XmlElement("Victim", Namespace = Namespaces.justice, Order = 2)]
         public Victim.Victim VictimRef { get; set; }
 
-        [XmlElement("VictimToSubjectRelationshipCode", Namespace = Namespaces.justice, Order = 3)]
+        [XmlElement("VictimToSubjectRelationshipCode", Namespace = Namespaces.cjisNibrs, Order = 3)]
         public string RelationshipCode { get; set; }
 
         [XmlIgnore]

@@ -60,11 +60,12 @@ namespace NibrsXml.NibrsReport.Arrestee
             string clearanceIndicator,
             List<string> armedWithCode,
             string juvenileDispositionCode,
-            string subjectCountCode)
+            string subjectCountCode,
+            string uniquePerfix)
         {
             this.Person = person;
-            this.Id = this.Person.Id + "Arrestee" + seqId.TrimStart('0'); //Since person should already contain a unique prefix by now, we can reuse it here for the arrestee id
-            this.Person.Id += "PersonArrestee" + seqId.TrimStart('0');
+            this.Id = uniquePerfix + "Arrestee" + seqId.TrimStart('0'); 
+            //this.Person.Id += "PersonArrestee" + seqId.TrimStart('0');
             this.Role = new RoleOfPerson(this.Person.Id);
             this.SeqId = seqId.TrimStart('0');
             this.ClearanceIndicator = clearanceIndicator.ToLower().TrimNullIfEmpty();

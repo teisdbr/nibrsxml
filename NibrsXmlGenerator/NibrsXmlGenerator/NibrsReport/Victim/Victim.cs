@@ -18,6 +18,10 @@ namespace NibrsXml.NibrsReport.Victim
         /// This property is public only For serialization.
         /// It should only be set by using the Victim(string) constructor and accessed using the reference property.
         /// </summary>
+        /// 
+        [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
+        public string Id { get; set; }
+
         [XmlAttribute("ref", Namespace = Namespaces.niemStructs)]
         public string VictimRef { get; set; }
 
@@ -46,7 +50,7 @@ namespace NibrsXml.NibrsReport.Victim
         {
             get
             {
-                return new Victim(this.Person.Id);
+                return new Victim(this.Id);
             }
         }
         public Victim() {
@@ -64,15 +68,17 @@ namespace NibrsXml.NibrsReport.Victim
             List<VictimInjury> injuries,
             string categoryCode,
             List<string> aggravatedAssaultHomicideFactorCodes,
-            string justifiableHomicideFactorCode) : this()
+            string justifiableHomicideFactorCode,
+            string uniquePrefix) : this()
         {
             //Initialize required properties
             if (person != null)
             {
                 this.Person = person;
-                this.Person.Id += "PersonVictim" + seqNum.TrimStart('0');
-                this.Role = new RoleOfPerson(this.Person.Id);
+                //this.Person.Id += "PersonVictim" + seqNum.TrimStart('0');
+                this.Role = new RoleOfPerson(this.Person.Id);                
             }
+            this.Id = uniquePrefix + "Victim" + seqNum.TrimStart('0');
             this.SeqNum = seqNum.TrimStart('0').ToString();
             this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = categoryCode;

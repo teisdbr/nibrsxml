@@ -16,7 +16,23 @@ namespace NibrsXml.Builder
 {
     internal class PersonBuilder
     {
-        public static void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
+        private int PersonSeqNum = 1;
+
+        private Person BuildPerson (
+            string id,
+            PersonAgeMeasure ageMeasure,
+            string ethnicityCode,
+            string raceCode,
+            string residentCode,
+            string sexCode,
+            PersonAugmentation augmentation){
+
+                return new Person(id+"Person"+PersonSeqNum++, ageMeasure, ethnicityCode, raceCode, residentCode, sexCode, augmentation
+                    );
+
+        } 
+
+        public void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
             List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,
             List<EnforcementOfficial> officers, LIBRSIncident incident, string uniquePrefix)
         {
@@ -37,7 +53,7 @@ namespace NibrsXml.Builder
                 
                 if (victim.VictimType == LibrsErrorConstants.VTIndividual || victim.VictimType == LibrsErrorConstants.VTLawEnfOfficer)
                 {
-                    var newPerson = new Person(
+                    var newPerson = BuildPerson(
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(victim.Age),
                         ethnicityCode: victim.Ethnicity,
@@ -82,7 +98,8 @@ namespace NibrsXml.Builder
                             injuries: nibrsVictimInjuries,
                             categoryCode: victim.VictimType,
                             aggravatedAssaultHomicideFactorCodes: aggAssaults,
-                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
+                            uniquePrefix: uniquePrefix);
                     }
 
                     //Add related offenders for establishing relationships later on.
@@ -120,7 +137,8 @@ namespace NibrsXml.Builder
                         injuries: nibrsVictimInjuries,
                         categoryCode: victim.VictimType,
                         aggravatedAssaultHomicideFactorCodes: null,
-                        justifiableHomicideFactorCode: null);
+                        justifiableHomicideFactorCode: null,
+                        uniquePrefix: uniquePrefix);
                 }
 
                 //Add the newly created victim to the report's victim list
@@ -135,7 +153,7 @@ namespace NibrsXml.Builder
             {
                 //Create new person
                 var newPerson =
-                    new Person(
+                    BuildPerson(
                         id: uniquePrefix,
                         ageMeasure: LibrsAgeMeasureParser(offender.Age),
                         ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
@@ -148,7 +166,7 @@ namespace NibrsXml.Builder
                     );
 
                 //Create new subject
-                var newSubject = new Subject(newPerson, offender.OffenderSeqNum);
+                var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
 
                 //Add each of the new objects above to their respective lists
                 persons.Add(newPerson);
@@ -224,7 +242,7 @@ namespace NibrsXml.Builder
                     }
 
                     return new Arrestee(
-                        person: new Person(
+                        person: BuildPerson(
                             id: uniquePrefix,
                             ageMeasure: LibrsAgeMeasureParser(librsArrestee.Age),
                             ethnicityCode: librsArrestee.Ethnicity,
@@ -244,8 +262,11 @@ namespace NibrsXml.Builder
                             .Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty())
                             .ToList(),
                         juvenileDispositionCode: TranslateJuvenileDispositionCode(juvenileDispositionCode),
-                        subjectCountCode: librsArrestee.MultipleArresteeIndicator);
+                        subjectCountCode: librsArrestee.MultipleArresteeIndicator,
+                        uniquePerfix: uniquePrefix);
                 }).ToList();
+
+
 
             //var removedDupArrestees = nibrsArrestees.GroupBy(
             //    keySelector: arrtee => arrtee.Person.Id).Select(group => group.First()).ToList();

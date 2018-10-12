@@ -48,31 +48,7 @@ namespace NibrsXml.NibrsReport.Person
 
         public Person() { }
 
-        /// <summary>
-        /// Creates a Person object without an id
-        /// </summary>
-        /// <param name="ageMeasure"></param>
-        /// <param name="ethnicityCode"></param>
-        /// <param name="injury"></param>
-        /// <param name="raceCode"></param>
-        /// <param name="residentCode"></param>
-        /// <param name="sexCode"></param>
-        /// <param name="augmentation"></param>
-        public Person(
-            PersonAgeMeasure ageMeasure,
-            string ethnicityCode,
-            string raceCode,
-            string residentCode,
-            string sexCode,
-            PersonAugmentation augmentation)
-            : this(
-                "",
-                ageMeasure,
-                ethnicityCode,
-                raceCode,
-                residentCode,
-                sexCode,
-                augmentation) { }
+             
 
         public Person(
             string id,

@@ -10,6 +10,9 @@ namespace NibrsXml.NibrsReport.Subject
         [XmlIgnore]
         public Person.Person Person { get; set; }
 
+        [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
+        public string Id { get; set; }
+
         /// <summary>
         /// This property is public only For serialization.
         /// It should only be set by using the Subject(string) constructor and accessed using the reference property.
@@ -28,7 +31,7 @@ namespace NibrsXml.NibrsReport.Subject
         {
             get
             {
-                return new Subject(Person.Id);
+                return new Subject(this.Id);
             }
         }
         public Subject() { }
@@ -40,12 +43,14 @@ namespace NibrsXml.NibrsReport.Subject
 
         public Subject(
             Person.Person person,
-            string seqNum)
+            string seqNum,
+            string uniquePrefix)
         {
             this.Person = person;
-            this.Person.Id += "PersonSubject" + seqNum.TrimStart('0');
+            //this.Person.Id += "PersonSubject" + seqNum.TrimStart('0');
             this.Role = new RoleOfPerson(this.Person.Id);
             this.SeqNum = seqNum.TrimStart('0');
+            this.Id = uniquePrefix + "Subject" + seqNum.TrimStart('0');
         }
     }
 }

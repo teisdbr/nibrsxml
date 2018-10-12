@@ -88,7 +88,7 @@ namespace NibrsXml.Builder
                     librsProperties: incident.PropDesc);
 
                 //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
-                PersonBuilder.Build(
+                new PersonBuilder().Build(
                     persons: rpt.Persons,
                     victims: rpt.Victims,
                     officers: rpt.Officers,

@@ -16,7 +16,7 @@ namespace NibrsXml.NibrsReport.Location
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string Id { get; set; }
 
-        [XmlElement("LocationCategoryCode", Namespace = Namespaces.justice)]
+        [XmlElement("LocationCategoryCode", Namespace = Namespaces.cjisNibrs)]
         public string CategoryCode { get; set; }
 
         [XmlIgnore]
