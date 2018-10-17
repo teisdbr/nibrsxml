@@ -30,7 +30,13 @@ namespace NibrsXml.Builder
                 return new Person(id+"Person"+PersonSeqNum++, ageMeasure, ethnicityCode, raceCode, residentCode, sexCode, augmentation
                     );
 
-        } 
+        }
+
+        public bool IsGroupAVictim(LoadBusinessLayer.LIBRSVictim.LIBRSVictim victim, List<LoadBusinessLayer.LIBRSOffense.LIBRSOffense> offenses) 
+        {
+            var matchingOffenses = offenses.Where(o => o.OffConnecttoVic == victim.VictimSeqNum);
+            return matchingOffenses.Any(o => !o.AgencyAssignedNibrs.Contains("90"));         
+        }
 
         public void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
             List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,
@@ -40,7 +46,11 @@ namespace NibrsXml.Builder
 
             foreach (var victim in incident.Victim)
             {
-                //Initialize victim variable to null
+                // Ensure its groupA victim
+                if (!IsGroupAVictim(victim, incident.Offense))
+                    continue;
+
+                // Initialize victim variable to null
                 Victim newVictim = null;
 
                 //Get injury if applicable for current victim
