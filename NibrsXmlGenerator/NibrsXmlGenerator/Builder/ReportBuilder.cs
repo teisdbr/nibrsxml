@@ -273,7 +273,7 @@ namespace NibrsXml.Builder
 
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims, List<LoadBusinessLayer.LIBRSOffense.LIBRSOffense> librsOffenses)
         {
-            return librsOffenses.Join(
+            return librsOffenses.Where(o => !o.AgencyAssignedNibrs.Contains("90")).Join(
                 inner: victims,
                 outerKeySelector: offense => int.Parse(offense.OffConnecttoVic.Trim()),
                 innerKeySelector: victim => int.Parse(victim.SeqNum.Trim()),
