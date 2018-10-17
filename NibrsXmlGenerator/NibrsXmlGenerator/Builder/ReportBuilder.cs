@@ -292,8 +292,7 @@ namespace NibrsXml.Builder
                 inner: victims,
                 outerKeySelector: offense => int.Parse(offense.OffConnecttoVic.Trim()),
                 innerKeySelector: victim => int.Parse(victim.SeqNum.Trim()),
-                resultSelector: (offense, victim) => new OffenseVictimAssociation(offenses.First(off => off.UcrCode == offense.AgencyAssignedNibrs), victim)).ToList();
-           
+                resultSelector: (offense, victim) => new OffenseVictimAssociation(offenses.First(off => off.UcrCode == offense.AgencyAssignedNibrs), victim)).Distinct().ToList();
         }
 
         private static List<ArrestSubjectAssociation> BuildArrestSubjectAssociation(List<Arrest> arrests, List<Arrestee> arrestees)
