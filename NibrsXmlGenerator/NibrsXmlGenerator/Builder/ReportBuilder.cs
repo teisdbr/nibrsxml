@@ -76,6 +76,13 @@ namespace NibrsXml.Builder
                     uniqueSuspectedOfUsingCodes: UniqueSuspectedOfUsingCodes(incident.OffUsing),
                     uniqueReportPrefix: uniqueReportPrefix);
 
+                // If incident is some kind of theft or larceny, we need to include cargo theft indicator
+                // todo: for now we will always put "false" because WinLIBRS does not capture cargo theft
+                if (rpt.Offenses.Any(o => o.UcrCode.MatchOne(NibrsCodeGroups.TheftOffenseFactorCodes)))
+                {
+                    rpt.Incident.CjisIncidentAugmentation.OffenseCargoTheftIndicator = false.ToString().ToLower();
+                }
+
                 BuildLocationsAndLocationAssociations(
                     offenses: rpt.Offenses,
                     locations: rpt.Locations,
@@ -85,7 +92,8 @@ namespace NibrsXml.Builder
                 BuildItemsAndSubstances(
                     nibrsItems: rpt.Items,
                     nibrsSubstances: rpt.Substances,
-                    librsProperties: incident.PropDesc);
+                    librsProperties: incident.PropDesc,
+                    defaultItemRecoveryDate: rpt.Incident.ActivityDate.Date ?? rpt.Header.ReportDate.YearMonthDateTime.ToString("yyyy-MM-dd"));
 
                 //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
                 new PersonBuilder().Build(
@@ -164,7 +172,7 @@ namespace NibrsXml.Builder
             }
         }
 
-        private static void BuildItemsAndSubstances(List<Item> nibrsItems, List<Substance> nibrsSubstances, List<LIBRSPropertyDescription> librsProperties)
+        private static void BuildItemsAndSubstances(List<Item> nibrsItems, List<Substance> nibrsSubstances, List<LIBRSPropertyDescription> librsProperties, string defaultItemRecoveryDate)
         {
             var uniquePropLossTypeDesc = librsProperties.GroupBy(p => Tuple.Create(p.PropertyLossType, p.PropertyDescription));
 
@@ -175,14 +183,21 @@ namespace NibrsXml.Builder
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
                     var drugCatCode = prop.First().SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.First().SuspectedDrugType.Substring(0, 1);
 
+                    // Translate LIBRS Property Description to NIBRS ItemStatusCode
+                    var librsTypeOfPropertyLoss = prop.First().PropertyLossType.TrimStart('0');
+                    var nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
+
+                    // If no recovery date available, use incident date -- if incident date not available, use report date
+                    var recoveryDate = string.IsNullOrWhiteSpace(prop.First().DateRecovered) ? defaultItemRecoveryDate : prop.First().DateRecovered;
+
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCategoryCode: drugCatCode,
                         measureDecimalValue: prop.First().EstimatedDrugQty.Trim().TrimStart('0').TrimNullIfEmpty(),
-                        substanceUnitCode: prop.First().TypeDrugMeas, 
-                        statusCode: prop.First().PropertyLossType,
-                        valueAmount: prop.First().PropertyValue, 
-                        valueDate: null,
+                        substanceUnitCode: prop.First().TypeDrugMeas,
+                        statusCode: nibrsItemStatusCode,
+                        valueAmount: prop.First().PropertyValue,
+                        valueDate: recoveryDate,
                         nibrsPropertyCategoryCode: prop.First().PropertyDescription, 
                         quantity: prop.Count().ToString()));
                 }

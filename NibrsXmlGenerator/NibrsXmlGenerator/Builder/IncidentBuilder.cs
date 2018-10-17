@@ -15,7 +15,7 @@ namespace NibrsXml.Builder
             {
                 ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim()),
                 ActivityDate = ExtractNibrsIncidentDateTime(admin),
-                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false),
+                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, null),
                 JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin),
                     ExtractIncidentExceptionalClearanceDate(admin))
             };
