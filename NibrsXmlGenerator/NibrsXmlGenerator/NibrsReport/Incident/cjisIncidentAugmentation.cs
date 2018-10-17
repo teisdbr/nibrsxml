@@ -9,7 +9,8 @@ namespace NibrsXml.NibrsReport.Incident
         [XmlElement("IncidentReportDateIndicator", Namespace = Namespaces.cjis, Order = 1)]
         public string IncidentReportDateIndicator { get; set; }
         
-        [XmlElement("OffenseCargoTheftIndicator", Namespace = Namespaces.justice, Order = 2)]
+        //[XmlElement("OffenseCargoTheftIndicator", Namespace = Namespaces.justice, Order = 2)]
+        [XmlIgnore]
         public string OffenseCargoTheftIndicator { get; set; }
         
         public CjisIncidentAugmentation() { }

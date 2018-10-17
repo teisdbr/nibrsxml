@@ -1,10 +1,11 @@
 ﻿using NibrsXml.Constants;
 using System.Xml.Serialization;
 
+
 namespace NibrsXml.NibrsReport.Substance
 {
     [XmlRoot("Substance", Namespace = Namespaces.niemCore)]
-    public class Substance
+    public class Substance : Item.Item
     {
         [XmlElement("DrugCategoryCode", Namespace = Namespaces.justice, Order = 1)]
         public string DrugCategoryCode { get; set; }
@@ -19,7 +20,8 @@ namespace NibrsXml.NibrsReport.Substance
             this.DrugCategoryCode = drugCategoryCode;
             this.QuantityMeasure = quantityMeasure;
         }
-        public Substance(string drugCategoryCode, string measureDecimalValue, string substanceUnitCode)
+        public Substance(string drugCategoryCode, string measureDecimalValue, string substanceUnitCode, string statusCode, string valueAmount, string valueDate, string nibrsPropertyCategoryCode, string quantity)
+            : base(statusCode, valueAmount, valueDate, nibrsPropertyCategoryCode, quantity)
         {
             this.DrugCategoryCode = drugCategoryCode;
             this.QuantityMeasure = new SubstanceQuantityMeasure(decimalValue: measureDecimalValue, substanceUnitCode: substanceUnitCode);

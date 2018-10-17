@@ -9,7 +9,7 @@ using NibrsXml.Utility;
 namespace NibrsXml.NibrsReport.Victim
 {
     [XmlRoot("Victim", Namespace = Namespaces.justice)]
-    public class Victim
+    public class Victim 
     {
         [XmlIgnore]
         public Person.Person Person { get; set; }
@@ -70,6 +70,7 @@ namespace NibrsXml.NibrsReport.Victim
             List<string> aggravatedAssaultHomicideFactorCodes,
             string justifiableHomicideFactorCode,
             string uniquePrefix) : this()
+
         {
             //Initialize required properties
             if (person != null)

@@ -104,7 +104,8 @@ namespace NibrsXml.Builder
 
                 rpt.OffenseVictimAssocs = BuildOffenseVictimAssociations(
                     offenses: rpt.Offenses,
-                    victims: rpt.Victims);
+                    victims: rpt.Victims,
+                    librsOffenses: incident.Offense);
 
                 return rpt;
             }
@@ -165,25 +166,30 @@ namespace NibrsXml.Builder
 
         private static void BuildItemsAndSubstances(List<Item> nibrsItems, List<Substance> nibrsSubstances, List<LIBRSPropertyDescription> librsProperties)
         {
+            var uniquePropLossTypeDesc = librsProperties.GroupBy(p => Tuple.Create(p.PropertyLossType, p.PropertyDescription));
 
-
-            foreach (var prop in librsProperties)
+            foreach (var prop in uniquePropLossTypeDesc)
             {
-                if (prop.PropertyDescription == DrugNarcoticLibrsPropDesc && prop.PropertyLossType == LibrsErrorConstants.PLSeiz)
+                if (prop.First().PropertyDescription == DrugNarcoticLibrsPropDesc && prop.First().PropertyLossType == LibrsErrorConstants.PLSeiz)
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
-                    var drugCatCode = prop.SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.SuspectedDrugType.Substring(0, 1);
+                    var drugCatCode = prop.First().SuspectedDrugType.Substring(0, 1) == "1" ? "C" : prop.First().SuspectedDrugType.Substring(0, 1);
 
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCategoryCode: drugCatCode,
-                        measureDecimalValue: prop.EstimatedDrugQty.Trim().TrimStart('0').TrimNullIfEmpty(),
-                        substanceUnitCode: prop.TypeDrugMeas));
+                        measureDecimalValue: prop.First().EstimatedDrugQty.Trim().TrimStart('0').TrimNullIfEmpty(),
+                        substanceUnitCode: prop.First().TypeDrugMeas, 
+                        statusCode: prop.First().PropertyLossType,
+                        valueAmount: prop.First().PropertyValue, 
+                        valueDate: null,
+                        nibrsPropertyCategoryCode: prop.First().PropertyDescription, 
+                        quantity: prop.Count().ToString()));
                 }
                 else
                 {
                     // Translate LIBRS Property Description to NIBRS ItemStatusCode
-                    var librsTypeOfPropertyLoss = prop.PropertyLossType.TrimStart('0');
+                    var librsTypeOfPropertyLoss = prop.First().PropertyLossType.TrimStart('0');
                     var nibrsItemStatusCode = ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
                     // todo: ??? May need to also create the minimal Item within condition for when the Property Loss Type (ItemStatusCode) is Unknown (8) 
@@ -198,13 +204,26 @@ namespace NibrsXml.Builder
                         continue;
                     }
 
+                    // Aggregate values of property
+                    var totalValue = prop.Sum(p => Decimal.Parse(p.PropertyValue)).ToString();
+
+                    // Total count
+                    //string countOfProperties = prop.First().PropertyDescription.MatchOne(
+                    //    PropertyCategoryCode.AUTOMOBILE.NibrsCode(), 
+                    //    PropertyCategoryCode.TRUCKS.NibrsCode(), 
+                    //    PropertyCategoryCode.BUSES.NibrsCode(), 
+                    //    PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode(), 
+                    //    PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode()) ? prop.Count().ToString(): null;
+
+                    string countOfProperties= prop.Count().ToString();
+
                     // Instantiate and add a new Item object to the list of items
                     nibrsItems.Add(new Item(
                         statusCode: nibrsItemStatusCode,
-                        valueAmount: prop.PropertyValue.Trim().TrimStart('0').TrimNullIfEmpty(),
-                        valueDate: prop.DateRecovered.IsNullBlankOrEmpty() ? null : prop.DateRecovered.ConvertToNibrsYearMonthDay(),
-                        nibrsPropCategCode: prop.PropertyDescription.TrimNullIfEmpty(),
-                        quantity: null)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
+                        valueAmount: totalValue,
+                        valueDate: prop.First().DateRecovered.IsNullBlankOrEmpty() ? null : prop.First().DateRecovered.ConvertToNibrsYearMonthDay(),
+                        nibrsPropCategCode: prop.First().PropertyDescription.TrimNullIfEmpty(),
+                        quantity: countOfProperties)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
                 }
             }
         }
@@ -252,13 +271,14 @@ namespace NibrsXml.Builder
             }
         }
 
-        private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims)
+        private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims, List<LoadBusinessLayer.LIBRSOffense.LIBRSOffense> librsOffenses)
         {
-            return offenses.Join(
-                inner: victims.Where(victim => victim.CategoryCode == LibrsErrorConstants.VTIndividual || victim.CategoryCode == LibrsErrorConstants.VTLawEnfOfficer),
-                outerKeySelector: offense => offense.librsVictimSequenceNumber,
-                innerKeySelector: victim => victim.SeqNum,
-                resultSelector: (offense, victim) => new OffenseVictimAssociation(offense, victim)).ToList();
+            return librsOffenses.Join(
+                inner: victims,
+                outerKeySelector: offense => int.Parse(offense.OffConnecttoVic.Trim()),
+                innerKeySelector: victim => int.Parse(victim.SeqNum.Trim()),
+                resultSelector: (offense, victim) => new OffenseVictimAssociation(offenses.First(off => off.UcrCode == offense.AgencyAssignedNibrs), victim)).ToList();
+           
         }
 
         private static List<ArrestSubjectAssociation> BuildArrestSubjectAssociation(List<Arrest> arrests, List<Arrestee> arrestees)

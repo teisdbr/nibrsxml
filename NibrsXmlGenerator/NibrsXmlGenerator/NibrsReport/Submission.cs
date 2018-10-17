@@ -100,18 +100,22 @@ namespace NibrsXml.NibrsReport
         /// <param name="fileName">Complete file name with path prefixed</param>
         public static Submission WriteXml(List<IncidentList> lists, string fileName, string nibrsSchemaLocation = NibrsXml.Constants.Misc.schemaLocation)
         {
-            var submission = SubmissionBuilder.Build(lists);
+           
+            var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
-            submission.XsiSchemaLocation = nibrsSchemaLocation;
-       
-            //submission.MessageMetadata.sharuk = "sharukshaik";
+
             
-            var xdoc = new XmlDocument();
-            xdoc.LoadXml(submission.Xml);
-            xdoc.Save(fileName);
+            foreach (var submission in submissions)
+            {
+                submission.XsiSchemaLocation = nibrsSchemaLocation;
+                var xdoc = new XmlDocument();
+                xdoc.LoadXml(submission.Xml);
+                xdoc.Save(fileName.Replace(".xml", Guid.NewGuid().ToString() + ".xml"));
+                                
+            }
 
             //Return submission created above
-            return submission;
+            return submissions[0];
         }
 
 

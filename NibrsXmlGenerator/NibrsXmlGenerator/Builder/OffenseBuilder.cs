@@ -60,21 +60,25 @@ namespace NibrsXml.Builder
         public static List<Offense> Build(List<LIBRSOffense> offenses, List<string> uniqueBiasMotivationCodes, List<string> uniqueSuspectedOfUsingCodes, string uniqueReportPrefix)
         {
             var offenseReports = new List<Offense>();
-            foreach (var offense in offenses)
+
+            // Unique UCR Codes
+            var uniqueOffenses = offenses.GroupBy(lo => lo.AgencyAssignedNibrs);
+
+            foreach (var offense in uniqueOffenses)
             {
                 var offenseReport = new Offense();
-                offenseReport.Id = ExtractOffenseId(uniqueReportPrefix: uniqueReportPrefix, offenseSeqNum: offense.OffenseSeqNum);
-                offenseReport.UcrCode = ExtractNibrsCode(offense);
-                offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense);
+                offenseReport.Id = ExtractOffenseId(uniqueReportPrefix: uniqueReportPrefix, offenseSeqNum: offense.First().OffenseSeqNum);
+                offenseReport.UcrCode = ExtractNibrsCode(offense.First());
+                offenseReport.CriminalActivityCategoryCodes = ExtractNibrsCriminalActivityCategoryCodes(offense.First());
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
-                offenseReport.StructuresEnteredQuantity = offense.Premises.TrimStart('0').TrimNullIfEmpty();
+                offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
-                offenseReport.EntryPoint = offense.MethodOfEntry.TryBuild<OffenseEntryPoint>();
-                offenseReport.Forces = ExtractNibrsOffenseForces(offense);
-                offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense);
+                offenseReport.EntryPoint = offense.First().MethodOfEntry.TryBuild<OffenseEntryPoint>();
+                offenseReport.Forces = ExtractNibrsOffenseForces(offense.First());
+                offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense.First());
                 // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
-                offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.LocationType, id: uniqueReportPrefix);
-                offenseReport.librsVictimSequenceNumber = offense.OffConnecttoVic.TrimStart('0');
+                offenseReport.Location = new NibrsReport.Location.Location(categoryCode: offense.First().LocationType, id: uniqueReportPrefix);
+                offenseReport.librsVictimSequenceNumber = offense.First().OffConnecttoVic.TrimStart('0');
                 offenseReports.Add(offenseReport);
             }
             return offenseReports;
