@@ -62,7 +62,7 @@ namespace NibrsXml.Builder
             var offenseReports = new List<Offense>();
 
             // Unique UCR Codes of GROUP A offenses
-            var uniqueOffenses = offenses.Where(o => !o.AgencyAssignedNibrs.Contains("90")).GroupBy(lo => lo.AgencyAssignedNibrs);
+            var uniqueOffenses = offenses.Where(o => o.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase)).GroupBy(lo => lo.AgencyAssignedNibrs);
 
             foreach (var offense in uniqueOffenses)
             {

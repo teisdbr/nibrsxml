@@ -70,6 +70,7 @@ namespace NibrsXml.Builder
                     rpt.Incident = IncidentBuilder.Build(admin: incident.Admin);
                 }
 
+
                 rpt.Offenses = OffenseBuilder.Build(
                     offenses: incident.Offense,
                     uniqueBiasMotivationCodes: UniqueBiasMotivationCodes(incident.Offender),
@@ -88,7 +89,7 @@ namespace NibrsXml.Builder
                     locations: rpt.Locations,
                     locationAssociations: rpt.OffenseLocationAssocs,
                     uniqueReportPrefix: uniqueReportPrefix);
-
+                
                 BuildItemsAndSubstances(
                     nibrsItems: rpt.Items,
                     nibrsSubstances: rpt.Substances,
@@ -288,7 +289,7 @@ namespace NibrsXml.Builder
 
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses, List<Victim> victims, List<LoadBusinessLayer.LIBRSOffense.LIBRSOffense> librsOffenses)
         {
-            return librsOffenses.Where(o => !o.AgencyAssignedNibrs.Contains("90")).Join(
+            return librsOffenses.Where(o => o.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase)).Join(
                 inner: victims,
                 outerKeySelector: offense => int.Parse(offense.OffConnecttoVic.Trim()),
                 innerKeySelector: victim => int.Parse(victim.SeqNum.Trim()),

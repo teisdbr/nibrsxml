@@ -35,7 +35,7 @@ namespace NibrsXml.Builder
         public bool IsGroupAVictim(LoadBusinessLayer.LIBRSVictim.LIBRSVictim victim, List<LoadBusinessLayer.LIBRSOffense.LIBRSOffense> offenses) 
         {
             var matchingOffenses = offenses.Where(o => o.OffConnecttoVic == victim.VictimSeqNum);
-            return matchingOffenses.Any(o => !o.AgencyAssignedNibrs.Contains("90"));         
+            return matchingOffenses.Any(o => o.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase));         
         }
 
         public void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
