@@ -32,7 +32,8 @@ namespace NibrsXml.NibrsReport.Item
         public Item(string statusCode, string valueAmount, string valueDate, string nibrsPropCategCode, string quantity)
         {
             this.Status = new ItemStatus(statusCode);
-            this.Value = new ItemValue(valueAmount, valueDate);
+            if (valueAmount != null & valueDate != null)
+                this.Value = new ItemValue(valueAmount, valueDate);
             this.NibrsPropertyCategoryCode = nibrsPropCategCode;
             this.Quantity = quantity;
         }

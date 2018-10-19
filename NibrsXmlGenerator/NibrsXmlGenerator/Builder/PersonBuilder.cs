@@ -98,7 +98,8 @@ namespace NibrsXml.Builder
                             officer: newOfficer,
                             injuries: nibrsVictimInjuries,
                             aggravatedAssaultHomicideFactorCode: aggAssaults,
-                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty());
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
+                            uniquePrefix: uniquePrefix);
                     }
                     else
                     {

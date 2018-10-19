@@ -22,6 +22,7 @@ namespace NibrsXml.NibrsReport.Item
 
         public ItemValue(string itemValueAmount, string itemValueDate)
         {
+            if (itemValueAmount != null)
             this.ValueAmount = new ItemValueAmount(itemValueAmount);
             
             if (itemValueDate != null)

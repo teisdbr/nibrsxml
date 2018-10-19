@@ -91,10 +91,15 @@ namespace NibrsXml.NibrsReport.Victim
             EnforcementOfficial.EnforcementOfficial officer,
             List<VictimInjury> injuries,
             List<string> aggravatedAssaultHomicideFactorCode,
-            string justifiableHomicideFactorCode) : this()
+            string justifiableHomicideFactorCode,
+            string uniquePrefix ) : this()
         {
-            this.Person = officer.Person;
-            this.Role = officer.Role;
+            if (officer.Person != null)
+            {
+                this.Person = officer.Person;
+                this.Role = new RoleOfPerson(this.Person.Id); 
+            }
+            this.Id = uniquePrefix + "Victim" + officer.VictimSeqNum.TrimStart('0');
             this.SeqNum = officer.VictimSeqNum.TrimStart('0').ToString();
             this.VictimInjuries = injuries ?? new List<VictimInjury>();
             this.CategoryCode = VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode();
