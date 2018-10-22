@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LibrsErrorConstants;
@@ -229,15 +230,18 @@ namespace NibrsXml.Builder
                     }
 
                     // Aggregate values of property
-                    var totalValue = prop.Sum(p => decimal.Parse(p.PropertyValue)).ToString();
-
-                    // Total count
-                    //string countOfProperties = prop.First().PropertyDescription.MatchOne(
-                    //    PropertyCategoryCode.AUTOMOBILE.NibrsCode(), 
-                    //    PropertyCategoryCode.TRUCKS.NibrsCode(), 
-                    //    PropertyCategoryCode.BUSES.NibrsCode(), 
-                    //    PropertyCategoryCode.RECREATIONAL_VEHICLES.NibrsCode(), 
-                    //    PropertyCategoryCode.OTHER_MOTOR_VEHICLES.NibrsCode()) ? prop.Count().ToString(): null;
+                    var totalValue = prop.Sum(p =>
+                    {
+                        try
+                        {
+                            return decimal.Parse(p.PropertyValue);
+                        }
+                        catch
+                        {
+                            return 0;
+                        }
+                        
+                    }).ToString(CultureInfo.InvariantCulture);
 
                     var countOfProperties = prop.Count().ToString();
 

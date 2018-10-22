@@ -1,12 +1,33 @@
 ﻿using System;
-using NibrsXml.Constants;
 using System.Xml.Serialization;
+using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Item
 {
     [XmlRoot("Item", Namespace = Namespaces.niemCore)]
     public class Item : IComparable
     {
+        public Item()
+        {
+        }
+
+        public Item(ItemStatus status, ItemValue value, string nibrsPropertyCategoryCode, int quantity)
+        {
+            Status = status;
+            Value = value;
+            NibrsPropertyCategoryCode = nibrsPropertyCategoryCode;
+            Quantity = quantity.ToString();
+        }
+
+        public Item(string statusCode, string valueAmount, string valueDate, string nibrsPropCategCode, string quantity)
+        {
+            Status = new ItemStatus(statusCode);
+            if (valueAmount != null & valueDate != null)
+                Value = new ItemValue(valueAmount, valueDate);
+            NibrsPropertyCategoryCode = nibrsPropCategCode;
+            Quantity = quantity;
+        }
+
         [XmlElement("ItemStatus", Namespace = Namespaces.niemCore, Order = 1)]
         public ItemStatus Status { get; set; }
 
@@ -19,25 +40,6 @@ namespace NibrsXml.NibrsReport.Item
         [XmlElement("ItemQuantity", Namespace = Namespaces.niemCore, Order = 4)]
         public string Quantity { get; set; }
 
-        public Item() { }
-
-        public Item(ItemStatus status, ItemValue value, string nibrsPropertyCategoryCode, int quantity)
-        {
-            this.Status = status;
-            this.Value = value;
-            this.NibrsPropertyCategoryCode = nibrsPropertyCategoryCode;
-            this.Quantity = quantity.ToString();
-        }
-
-        public Item(string statusCode, string valueAmount, string valueDate, string nibrsPropCategCode, string quantity)
-        {
-            this.Status = new ItemStatus(statusCode);
-            if (valueAmount != null & valueDate != null)
-                this.Value = new ItemValue(valueAmount, valueDate);
-            this.NibrsPropertyCategoryCode = nibrsPropCategCode;
-            this.Quantity = quantity;
-        }
-
         public int CompareTo(object b)
         {
             if (b == null)
@@ -46,8 +48,7 @@ namespace NibrsXml.NibrsReport.Item
             var otherItem = b as Item;
             if (otherItem != null)
                 return Convert.ToInt32(Value.ValueAmount.Amount) - Convert.ToInt32(otherItem.Value.ValueAmount.Amount);
-            else
-                throw new ArgumentException("Object is not an Item.");
+            throw new ArgumentException("Object is not an Item.");
         }
     }
 }

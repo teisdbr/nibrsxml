@@ -7,6 +7,19 @@ namespace NibrsXml.NibrsReport.Incident
     [XmlRoot("Incident", Namespace = Namespaces.niemCore)]
     public class Incident
     {
+        public Incident()
+        {
+        }
+
+        public Incident(ActivityIdentification id, ActivityDate date, CjisIncidentAugmentation cjis,
+            JxdmIncidentAugmentation jdxm)
+        {
+            ActivityId = id;
+            ActivityDate = date;
+            CjisIncidentAugmentation = cjis;
+            JxdmIncidentAugmentation = jdxm;
+        }
+
         [XmlElement("ActivityIdentification", Namespace = Namespaces.niemCore, Order = 1)]
         public ActivityIdentification ActivityId { get; set; }
 
@@ -18,15 +31,5 @@ namespace NibrsXml.NibrsReport.Incident
 
         [XmlElement("IncidentAugmentation", Namespace = Namespaces.justice, Order = 4)]
         public JxdmIncidentAugmentation JxdmIncidentAugmentation { get; set; }
-
-        public Incident() { }
-
-        public Incident(ActivityIdentification id, ActivityDate date, CjisIncidentAugmentation cjis, JxdmIncidentAugmentation jdxm)
-        {
-            this.ActivityId = id;
-            this.ActivityDate = date;
-            this.CjisIncidentAugmentation = cjis;
-            this.JxdmIncidentAugmentation = jdxm;
-        }
     }
 }

@@ -117,7 +117,9 @@ namespace NibrsXml.Ucr.DataMining
                 ).ToList();
 
                 //Report Offenses and Victims not considered for UCR Report.
+                // ReSharper disable once UnusedVariable
                 var ignoredOffenses = report.Offenses.Where(o => o.UcrCode != highestRatedOffense.UcrCode).ToList();
+                // ReSharper disable once UnusedVariable
                 var ignoredVictimAssociations =
                     report.OffenseVictimAssocs.Where(ov => ov.RelatedOffense.UcrCode != highestRatedOffense.UcrCode)
                         .ToList();
@@ -140,6 +142,7 @@ namespace NibrsXml.Ucr.DataMining
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -173,7 +176,8 @@ namespace NibrsXml.Ucr.DataMining
 
                 //Score Robberies via Data Element 6
                 case "120":
-                    returnA.ScoreRobbery(highestRatedOffense, totalStolenValue, highestRatedOffenseForces, doScoreColumn6);
+                    returnA.ScoreRobbery(highestRatedOffense, totalStolenValue, highestRatedOffenseForces,
+                        doScoreColumn6);
                     break;
 
                 //Score Assault Offense by counting victims via Data element 24 - Could be more than one per report.
@@ -283,12 +287,10 @@ namespace NibrsXml.Ucr.DataMining
 
                 if (ucrClearanceCode.MatchOne(OffenseCode.AGGRAVATED_ASSAULT.NibrsCode(),
                     OffenseCode.ROBBERY.NibrsCode()))
-                {
                     clearanceOffense.Forces = clearedOffenses
                         .Where(o => o.UcrCode == ucrClearanceCode)
                         .SelectMany(o => o.Forces)
                         .ToList();
-                }
 
                 return clearanceOffense;
             }

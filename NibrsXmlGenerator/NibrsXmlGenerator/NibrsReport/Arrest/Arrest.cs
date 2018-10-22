@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 
@@ -7,6 +8,29 @@ namespace NibrsXml.NibrsReport.Arrest
     [XmlRoot("Arrest", Namespace = Namespaces.justice)]
     public class Arrest
     {
+        public Arrest()
+        {
+        }
+
+        public Arrest(string arrestId)
+        {
+            ArrestRef = arrestId;
+        }
+
+        public Arrest(string uniquePrefix, string arrestId, ActivityIdentification activityId, ActivityDate date,
+            ArrestCharge charge, string categoryCode, string subjectCountCode)
+        {
+            Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0') + "-" + activityId.Id.Trim();
+            ActivityId = activityId;
+            Date = date;
+            Charge = charge;
+            CategoryCode = categoryCode;
+            SubjectCountCode = subjectCountCode;
+
+            //Save the sequence number for matching to arrestee later on
+            SequenceNumber = arrestId.TrimStart('0');
+        }
+
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string Id { get; set; }
 
@@ -25,38 +49,15 @@ namespace NibrsXml.NibrsReport.Arrest
         [XmlElement("ArrestCategoryCode", Namespace = Namespaces.justice, Order = 4)]
         public string CategoryCode { get; set; }
 
-        [XmlIgnore]//[XmlElement("ArrestSubjectCountCode", Namespace = Namespaces.justice, Order = 5)]
-        public string SubjectCountCode { get; set; }
+        [XmlIgnore] public string SubjectCountCode { get; set; }
 
+        [BsonIgnore]
         [XmlIgnore]
         public Arrest Reference
         {
-            get
-            {
-                return new Arrest(this.Id);
-            }
-        }
-        [XmlIgnore]
-        public string SequenceNumber { get; set; }
-
-        public Arrest() { }
-
-        public Arrest(string arrestId)
-        {
-            this.ArrestRef = arrestId;
+            get { return new Arrest(Id); }
         }
 
-        public Arrest(string uniquePrefix, string arrestId, ActivityIdentification activityId, ActivityDate date, ArrestCharge charge, string categoryCode, string subjectCountCode)
-        {
-            this.Id = uniquePrefix + "Arrest" + arrestId.TrimStart('0') + "-" + activityId.Id.Trim();
-            this.ActivityId = activityId;
-            this.Date = date;
-            this.Charge = charge;
-            this.CategoryCode = categoryCode;
-            this.SubjectCountCode = subjectCountCode;
-
-            //Save the sequence number for matching to arrestee later on
-            this.SequenceNumber = arrestId.TrimStart('0');
-        }
+        [BsonIgnore] [XmlIgnore] public string SequenceNumber { get; set; }
     }
 }

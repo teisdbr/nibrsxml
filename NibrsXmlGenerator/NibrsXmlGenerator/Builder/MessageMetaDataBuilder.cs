@@ -1,86 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
+using MongoDB.Bson;
+using NibrsXml.NibrsReport;
+using NibrsXml.NibrsReport.MessageMetadatas;
 using NibrsXml.NibrsReport.Misc;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MMD_NameSpace  =  NibrsXml.NibrsReport.MessageMetadatas ;
-
 
 namespace NibrsXml.Builder
 {
-   public   class MessageMetaDataBuilder
+    public class MessageMetaDataBuilder
     {
-
-
-
-
-       public static NibrsXml.NibrsReport.MessageMetadata ExtractNibrsMessageDateTime()
+        public static MessageMetadata Build(ObjectId submissionId, string agencyOri)
         {
-           var MD = new NibrsXml.NibrsReport.MessageMetadata(); 
-            string date, time, DateTime;
+            var md = new MessageMetadata();
             try
             {
-                var month = System.DateTime.Now.Month.ToString().PadLeft(2, '0');   //admin.IncidentDate.Substring(0, 2);
-                var day = System.DateTime.Now.Day.ToString().PadLeft(2, '0');
-                var year = System.DateTime.Now.Year;
-                var hour = System.DateTime.Now.Hour.ToString().PadLeft(2, '0');
-                date = string.Format("{0}-{1}-{2}", year, month, day);
-                time = string.Format("{0}:00:00", hour == string.Empty ? "00" : hour.PadLeft(2, '0'));
+                var month = DateTime.Now.Month.ToString().PadLeft(2, '0');
+                var day = DateTime.Now.Day.ToString().PadLeft(2, '0');
+                var year = DateTime.Now.Year;
+                var hour = DateTime.Now.Hour.ToString().PadLeft(2, '0');
+                var date = string.Format("{0}-{1}-{2}", year, month, day);
+                var time = string.Format("{0}:00:00", hour == string.Empty ? "00" : hour.PadLeft(2, '0'));
 
-               DateTime = date + "T" + time;
-               if (DateTime == null || DateTime == string.Empty)
-                   MD.MessageDateTime = "Error";
-               MD.MessageDateTime = DateTime;
-               MD.Version = (float) 4.2;
-               MD.MessageIdentification = MessageIdentificationBuilder();
+                var dateTime = date + "T" + time;
+                if (string.IsNullOrEmpty(dateTime))
+                    md.MessageDateTime = "Error";
+                md.MessageDateTime = dateTime;
+                md.Version = (float) 4.2;
+                md.MessageIdentification = new MessageIdentification {IdentificationId = submissionId.ToString()};
 
-               MD.MessageSubmittingOrganization = new MMD_NameSpace.MessageSubmittingOrganization { OrganizationAugmentation = new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")) };
-               
+                md.MessageSubmittingOrganization = new MessageSubmittingOrganization
+                {
+                    OrganizationAugmentation =
+                        new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000"))
+                };
             }
             catch (Exception e)
             {
                 throw new Exception("Errror occured while generating the MessageMetadata", e);
             }
 
-            return MD;
-       
-       }
-
-
-       //public static MMD_NameSpace.OrganizationORIIdentification OragnizationORIIdentificationBuilder()
-      
-       //{
-       //    var OrganizationORIIdentification = new MMD_NameSpace.OrganizationORIIdentification();
-           
-
-       //   OrganizationORIIdentification.IdentificationID= "LA000000";
-          
-       //   return OrganizationORIIdentification;
-
-       //}
-
-
-       public static MMD_NameSpace.MessageIdentification MessageIdentificationBuilder()
-       {
-           var MessageID = new MMD_NameSpace.MessageIdentification();
-
-           MessageID.IdentificationID = "123456";
-
-           if (MessageID.IdentificationID != null)
-               return MessageID;
-
-           else
-           {
-               MessageID.IdentificationID = "Error"; 
-               
-               return MessageID;}
-
-       }
-
-
-
-
-
+            return md;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Incident
@@ -7,26 +8,32 @@ namespace NibrsXml.NibrsReport.Incident
     [XmlRoot("IncidentExceptionalClearanceDate", Namespace = Namespaces.justice)]
     public class IncidentExceptionalClearanceDate
     {
+        public IncidentExceptionalClearanceDate()
+        {
+        }
+
+        public IncidentExceptionalClearanceDate(string date)
+        {
+            Date = date;
+
+            DateTime realDate;
+            if (DateTime.TryParse(date, out realDate)) RealDate = realDate;
+        }
+
         [XmlElement("Date", Namespace = Namespaces.niemCore)]
         public string Date { get; set; }
 
+        [BsonElement] [XmlIgnore] public DateTime? RealDate { get; set; }
+
+        [BsonIgnore]
         [XmlIgnore]
         public string YearMonthDate
         {
             get
             {
                 DateTime dt;
-                if (DateTime.TryParse(this.Date, out dt))
-                    return dt.ToString("yyyy-MM");
-                return null;
+                return DateTime.TryParse(Date, out dt) ? dt.ToString("yyyy-MM") : null;
             }
-        }
-
-        public IncidentExceptionalClearanceDate() { }
-
-        public IncidentExceptionalClearanceDate(string date)
-        {
-            this.Date = date;
         }
     }
 }

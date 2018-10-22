@@ -7,6 +7,15 @@ namespace NibrsXml.NibrsReport.ReportHeader
     [XmlRoot("ReportDate", Namespace = Namespaces.cjisNibrs)]
     public class ReportDate
     {
+        public ReportDate()
+        {
+        }
+
+        public ReportDate(string ymd)
+        {
+            YearMonthDate = ymd;
+        }
+
         [XmlElement("YearMonthDate", Namespace = Namespaces.niemCore)]
         public string YearMonthDate { get; set; }
 
@@ -17,17 +26,10 @@ namespace NibrsXml.NibrsReport.ReportHeader
             {
                 //Attempt to convert date
                 DateTime dt;
-                DateTime.TryParse(this.YearMonthDate, out dt);
+                DateTime.TryParse(YearMonthDate, out dt);
 
                 return dt;
             }
-        }
-
-        public ReportDate() { }
-
-        public ReportDate(string ymd)
-        {
-            this.YearMonthDate = ymd;
         }
     }
 }
