@@ -106,7 +106,9 @@ namespace NibrsXml.Builder
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity1),
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity2),
                 TranslateCriminalActivityCategoryCode(offense.CriminalActivity3));
-            return nibrsCriminalActivityCategoryCodes;
+
+            // Had to do distinct.. 
+            return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
         }
 
         private static string TranslateCriminalActivityCategoryCode(string librsCriminalActivity)

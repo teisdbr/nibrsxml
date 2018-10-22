@@ -271,7 +271,7 @@ namespace NibrsXml.Builder
                         incident.ArrArm.Where(armm => armm.ArrestSeqNum == librsArrestee.ArrestSeqNum)
                             .Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty())
                             .ToList(),
-                        juvenileDispositionCode: TranslateJuvenileDispositionCode(juvenileDispositionCode),
+                        juvenileDispositionCode: TranslateJuvenileDispositionCode(juvenileDispositionCode,librsArrestee.Age),
                         subjectCountCode: librsArrestee.MultipleArresteeIndicator,
                         uniquePerfix: uniquePrefix);
                 }).ToList();
@@ -352,9 +352,17 @@ namespace NibrsXml.Builder
             return range;
         }
 
-        private static string TranslateJuvenileDispositionCode(string librsJuvenileDisposition)
+        private static string TranslateJuvenileDispositionCode(string librsJuvenileDisposition, string age)
         {
-            if (librsJuvenileDisposition.IsNullBlankOrEmpty())
+            int parsedAge;
+            int.TryParse(age, out parsedAge);
+            
+            if(parsedAge == 17)
+            {
+                // Has to be R we have picked Criminal court as one of the possible cases that can be translated to R. 
+                return JuvenileDispositionCode.CRIMINAL_COURT.NibrsCode();
+            }
+            else if (librsJuvenileDisposition.IsNullBlankOrEmpty())
                 return null;
 
             if (JuvenileDispositionCodeLibrsNibrsTranslations.ContainsKey(librsJuvenileDisposition))

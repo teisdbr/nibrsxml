@@ -437,7 +437,7 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Referred to Criminal (Adult) Court
         /// </summary>
-        [NibrsCode("C")]
+        [NibrsCode("R")]
         [CodeDescription("Referred to Criminal (Adult) Court")]
         CRIMINAL_COURT,
 
@@ -451,7 +451,7 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Referred to Juvenile Court
         /// </summary>
-        [NibrsCode("J")]
+        [NibrsCode("R")]
         [CodeDescription("Referred to Juvenile Court")]
         JUVENILE_COURT,
 
@@ -465,7 +465,7 @@ namespace NibrsXml.Constants
         /// <summary>
         /// Referred to Welfare Agency
         /// </summary>
-        [NibrsCode("w")]
+        [NibrsCode("R")]
         [CodeDescription("Referred to Welfare Agency")]
         WELFARE
     }
