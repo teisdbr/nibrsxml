@@ -215,7 +215,9 @@ namespace NibrsXml.Builder
                     {
                         //Find matching subjects
                         var matchingSubjects =
-                            subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated.TrimStart('0'));
+                            subjects.Where(subject => subject.SeqNum == int.Parse(relatedOffender.OffenderNumberRelated).ToString());
+
+                       
 
                         //Create relationships
                         foreach (var subject in matchingSubjects)
