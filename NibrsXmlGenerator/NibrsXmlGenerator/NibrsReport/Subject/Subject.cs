@@ -24,8 +24,8 @@ namespace NibrsXml.NibrsReport.Subject
         {
             Person = person;
             Role = new RoleOfPerson(Person.Id);
-            SeqNum = seqNum.TrimStart('0');
-            Id = uniquePrefix + "Subject" + seqNum.TrimStart('0');
+            this.SeqNum = int.Parse(seqNum).ToString();
+            this.Id = uniquePrefix + "Subject" + this.SeqNum;
         }
 
         [XmlIgnore] public Person.Person Person { get; set; }
