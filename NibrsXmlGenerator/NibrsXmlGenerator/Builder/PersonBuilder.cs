@@ -9,6 +9,7 @@ using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Constants;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LibrsErrorConstants;
+using LoadBusinessLayer.LIBRSOffense;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
@@ -72,13 +73,19 @@ namespace NibrsXml.Builder
                         sexCode: victim.Sex,
                         augmentation: LibrsAgeCodeParser(victim.Age));
 
-                    //First create the new list of aggravated assault homicide to use when creating the new victim
+                    // First create the new list of aggravated assault homicide to use when creating the new victim
+                                     
                     var aggAssaults = new List<string>();
                     aggAssaults.TryAdd(
                         victim.AggravatedAssault1.TrimNullIfEmpty(),
                         victim.AggravatedAssault2.TrimNullIfEmpty(),
                         victim.AggravatedAssault3.TrimNullIfEmpty());
 
+                    var offenses = incident.Offense.Where(o => o.OffConnecttoVic == victim.VictimSeqNum).ToList();
+                                       
+                    bool is09B = offenses.Any(o => (o.AgencyAssignedNibrs.HasValue(trim: true) ? o.AgencyAssignedNibrs : LarsList.LarsDictionary[o.LrsNumber.Trim()].Nibr) == "09B");
+                             
+                    
                     //Initialize officer variable to null
                     EnforcementOfficial newOfficer = null;
 
@@ -97,7 +104,9 @@ namespace NibrsXml.Builder
                         newVictim = new Victim(
                             officer: newOfficer,
                             injuries: nibrsVictimInjuries,
-                            aggravatedAssaultHomicideFactorCode: aggAssaults,
+
+                            // Convert aggAssault 40 to 34 if offense is 09B else convert to 09 
+                            aggravatedAssaultHomicideFactorCode: aggAssaults.Select(a => (a == "40")  ?  (is09B ? "34" : "09") : a).ToList(),
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
                             uniquePrefix: uniquePrefix);
                     }
@@ -108,7 +117,9 @@ namespace NibrsXml.Builder
                             seqNum: victim.VictimSeqNum,
                             injuries: nibrsVictimInjuries,
                             categoryCode: victim.VictimType,
-                            aggravatedAssaultHomicideFactorCodes: aggAssaults,
+
+                            // Convert aggAssault 40 to 34 if offense is 09B else convert to 09 
+                            aggravatedAssaultHomicideFactorCodes: aggAssaults.Select(a => (a == "40") ? (is09B ? "34" : "09") : a).ToList(),
                             justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
                             uniquePrefix: uniquePrefix);
                     }
@@ -166,7 +177,7 @@ namespace NibrsXml.Builder
                 var newPerson =
                     BuildPerson(
                         id: uniquePrefix,
-                        ageMeasure: LibrsAgeMeasureParser(offender.Age),
+                        ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
                         ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
                         ? offender.Ethnicity
                         : EthnicityCode.UNKNOWN.NibrsCode(),
@@ -303,8 +314,21 @@ namespace NibrsXml.Builder
 
             //Do not create a PersonAgeMeasure if no valid integer age was obtained
             if (calculatedAge == 0 || age == "NB" || age == "BB" || age == "NN")
-                return null;
+            {
 
+                if (calculatedAge == 0)
+                {
+                    return new PersonAgeMeasure("UNKNOWN");
+                }
+                else if(age == "NB")
+                { return new PersonAgeMeasure("NEWBORN");}
+                else if(age == "BB")
+                { return new PersonAgeMeasure("BABY");}
+                else
+                { return new PersonAgeMeasure("NEONATAL"); }
+
+            }
+                
             //Determine if age is numeric or not. If it is not numeric and contains an E 
             //Parse out equivalent age range.
             else if (age.Contains("E"))
@@ -481,19 +505,19 @@ namespace NibrsXml.Builder
                 },
                 {
                     "BGM",
-                    "Boyfriend"
+                    "Boyfriend_Girlfriend"
                 },
                 {
                     "BGF",
-                    "Girlfriend"
+                    "Boyfriend_Girlfriend"
                 },
                 {
                     "XBM",
-                    "Boyfriend"
+                    "Ex_Relationship"
                 },
                 {
                     "XBF",
-                    "Girlfriend"
+                    "Ex_Relationship"
                 },
                 {
                     "CF",

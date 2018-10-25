@@ -28,6 +28,9 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("MeasureIntegerRange", Namespace = Namespaces.niemCore)]
         public MeasureIntegerRange Range { get; set; }
 
+        [XmlElement("MeasureValueText", Namespace = Namespaces.niemCore)]
+        public string ValueText { get; set; }
+        
         [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
         public string Value { get; set; }
 
@@ -49,6 +52,11 @@ namespace NibrsXml.NibrsReport.Person
                 if (int.TryParse(Value, out ageValue)) return ageValue < 18;
                 return Range.Max >= 1 && Range.Max < 18;
             }
+        }
+
+        public PersonAgeMeasure(string textvalue)
+        {
+            this.ValueText = textvalue;
         }
     }
 }

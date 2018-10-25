@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using NibrsXml.Constants;
+using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Substance
 {
@@ -22,6 +23,10 @@ namespace NibrsXml.NibrsReport.Substance
         {
             DrugCategoryCode = drugCategoryCode;
             QuantityMeasure = new SubstanceQuantityMeasure(measureDecimalValue, substanceUnitCode);
+            if(nibrsPropertyCategoryCode == PropertyCategoryCode.DRUGS_NARCOTICS.NibrsCode() && statusCode == ItemStatusCode.SEIZED.NibrsCode())
+            {
+                Value = null;
+            }
         }
 
         [XmlElement("DrugCategoryCode", Namespace = Namespaces.justice, Order = 1)]
