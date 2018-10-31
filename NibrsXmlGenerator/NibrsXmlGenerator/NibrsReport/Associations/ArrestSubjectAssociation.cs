@@ -13,7 +13,7 @@ namespace NibrsXml.NibrsReport.Associations
         public ArrestSubjectAssociation(Arrest.Arrest arrest, Arrestee.Arrestee arrestee)
         {
             ActivityRef = arrest.Reference;
-            SubjectRef = arrestee.Reference;
+            SubjectRef = arrestee.Id;
             RelatedArrestee = arrestee;
             RelatedArrest = arrest;
         }
@@ -21,14 +21,14 @@ namespace NibrsXml.NibrsReport.Associations
         public ArrestSubjectAssociation(string arrestRef, string arresteeRef)
         {
             ActivityRef = new Arrest.Arrest(arrestRef);
-            SubjectRef = new Arrestee.Arrestee(arresteeRef);
+            //SubjectRef = new Arrestee.Arrestee(arresteeRef);
         }
 
         [XmlElement("Activity", Namespace = Namespaces.niemCore, Order = 1)]
         public Arrest.Arrest ActivityRef { get; set; }
 
         [XmlElement("Subject", Namespace = Namespaces.justice, Order = 2)]
-        public Arrestee.Arrestee SubjectRef { get; set; }
+        public string SubjectRef { get; set; }
 
         [XmlIgnore] public Arrest.Arrest RelatedArrest { get; set; }
 

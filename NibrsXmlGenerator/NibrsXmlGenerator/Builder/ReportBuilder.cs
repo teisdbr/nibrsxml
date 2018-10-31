@@ -243,7 +243,8 @@ namespace NibrsXml.Builder
                         
                     }).ToString(CultureInfo.InvariantCulture);
 
-                    var countOfProperties = prop.Count().ToString();
+                    var propDes = prop.First().PropertyDescription.TrimNullIfEmpty();
+                    var countOfProperties = NibrsCodeGroups.VehicleProperties.Contains(propDes) ? prop.Count().ToString() : null;
 
                     // Instantiate and add a new Item object to the list of items
                     nibrsItems.Add(new Item(
@@ -252,8 +253,8 @@ namespace NibrsXml.Builder
                         prop.First().DateRecovered.IsNullBlankOrEmpty()
                             ? null
                             : prop.First().DateRecovered.ConvertToNibrsYearMonthDay(),
-                        prop.First().PropertyDescription.TrimNullIfEmpty(),
-                        countOfProperties)); // todo: ??? Data elements 18 and 19 (stolen and recovered vehicle counts) no longer seem to apply for the IEPD format
+                        propDes,
+                        countOfProperties));
                 }
         }
 
