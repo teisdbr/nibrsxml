@@ -202,7 +202,7 @@ namespace NibrsXml.Builder
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCatCode,
-                        prop.First().EstimatedDrugQty.Trim().TrimStart('0').TrimNullIfEmpty(),
+                        prop.First().EstimatedDrugQty.TrimNullIfEmpty(),
                         prop.First().TypeDrugMeas,
                         nibrsItemStatusCode,
                         prop.First().PropertyValue,
