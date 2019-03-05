@@ -83,6 +83,20 @@
         /// "http://fbi.gov/cjis/nibrs/nibrs-codes/4.2"
         /// </summary>
         public const string cjisNibrsCodes = "http://fbi.gov/cjis/nibrs/nibrs-codes/4.2";
+
+
+        /// <summary>
+        /// "http://schemas.xmlsoap.org/soap/envelope/"
+        /// </summary>
+        public const string soapenv = "http://schemas.xmlsoap.org/soap/envelope/";
+
+
+        /// <summary>
+        /// "http://ws.nibrs.ucr.cjis.fbi.gov/"
+        /// </summary>
+        public const string ws = "http://ws.nibrs.ucr.cjis.fbi.gov/";
+
+
     }
 
     /// <summary>
@@ -155,5 +169,19 @@
         /// "nibrscodes"
         /// </summary>
         public const string nibrscodes = "nibrscodes";
+
+        /// <summary>
+        /// "soapenv"
+        /// </summary>
+        public const string soapenv = "soapenv";
+
+
+        /// <summary>
+        /// "ws"
+        /// </summary>
+        public const string ws = "ws";
+
+        
+
     }
 }

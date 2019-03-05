@@ -7,8 +7,10 @@ using System.Xml.Serialization;
 using LoadBusinessLayer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using NibrsXml.NibrsReport.NibrsSubmissionEnvelope;
 using NibrsXml.Builder;
 using NibrsXml.Constants;
+using NibrsInterface;
 
 namespace NibrsXml.NibrsReport
 {
@@ -55,7 +57,10 @@ namespace NibrsXml.NibrsReport
         public string Xml
         {
             get { return Serializer.Serialize(this); }
+
         }
+
+        
 
         public static Submission Deserialize(string filepath)
         {
@@ -113,10 +118,25 @@ namespace NibrsXml.NibrsReport
 
             foreach (var submission in submissions)
             {
+                // Save locally
                 submission.XsiSchemaLocation = nibrsSchemaLocation;
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
+
+                // Call method to create soap envelop
+                SubmissionEnvelopeSerializer serializer = new SubmissionEnvelopeSerializer();
+                string envelope =  serializer.Serialize(submission.Xml);
+
+                // Call Send report method to get response from FBI
+                if(! string.IsNullOrWhiteSpace(envelope))
+                {
+                    string response = NibrsSubmitter.Sendreport(envelope);
+                }
+
+                // Save response to MongoDB
+
+
             }
 
             //Return submission created above

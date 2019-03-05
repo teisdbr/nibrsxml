@@ -111,6 +111,8 @@
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
     <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
+    <Compile Include="NibrsReport\NibrsSubmissionEnvelope\Envelope.cs" />
+    <Compile Include="NibrsReport\NibrsSubmissionEnvelope\SubmissionEnvelopeSerializer.cs" />
     <Compile Include="NibrsReport\Person\Person.cs" />
     <Compile Include="NibrsReport\Subject\Subject.cs" />
     <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />
@@ -287,6 +289,10 @@
     <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\winlibrs\Application\NibrsInterface\NibrsInterface.csproj">
+      <Project>{d76c22d9-fa27-440e-8cb4-01eff97ebd25}</Project>
+      <Name>NibrsInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
