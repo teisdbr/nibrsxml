@@ -7,10 +7,11 @@ using System.Xml.Serialization;
 using LoadBusinessLayer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using NibrsXml.NibrsReport.NibrsSubmissionEnvelope;
 using NibrsXml.Builder;
 using NibrsXml.Constants;
+using NibrsXml.NibrsReport.NibrsSubmissionEnvelope;
 using NibrsInterface;
+
 
 namespace NibrsXml.NibrsReport
 {
@@ -126,10 +127,10 @@ namespace NibrsXml.NibrsReport
 
                 // Call method to create soap envelop
                 SubmissionEnvelopeSerializer serializer = new SubmissionEnvelopeSerializer();
-                string envelope =  serializer.Serialize(submission.Xml);
+                string envelope = serializer.Serialize(submission.Xml);
 
                 // Call Send report method to get response from FBI
-                if(! string.IsNullOrWhiteSpace(envelope))
+                if (!string.IsNullOrWhiteSpace(envelope))
                 {
                     string response = NibrsSubmitter.Sendreport(envelope);
                 }

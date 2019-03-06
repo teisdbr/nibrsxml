@@ -1,5 +1,5 @@
 ﻿using NibrsXml.Constants;
-using NibrsXml.NibrsSubmissionEnvelope.Envelope;
+using NibrsXml.NibrsReport.NibrsSubmissionEnvelope;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,10 +13,10 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
 {
     class SubmissionEnvelopeSerializer : XmlSerializer
     {
-       
-             /// <summary>
-             /// This class allows the serializer to write in UTF-8 formatting
-             /// </summary>
+
+        /// <summary>
+        /// This class allows the serializer to write in UTF-8 formatting
+        /// </summary>
         internal class Utf8StringWriter : StringWriter
         {
             public override Encoding Encoding
@@ -37,7 +37,6 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
 
 
 
-
         public string Serialize(string Nibrsxml)
         {
             var xml = "";
@@ -46,12 +45,23 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
             {
                 using (StringWriter xmlWriter = new Utf8StringWriter())
                 {
-                    try{
-                        base.Serialize(xmlWriter, BuildEnvelope(Nibrsxml), Namespaces);
+                    try
+                    {
+                        //base.Serialize(xmlWriter, BuildEnvelope(Nibrsxml), Namespaces);
+
+                        // Serializes a class named Envelope as a SOAP message.  
+                        XmlTypeMapping myTypeMapping =
+                            new SoapReflectionImporter().ImportTypeMapping(typeof(Envelope));
+                        XmlSerializer mySerializer = new XmlSerializer(myTypeMapping);
+                        Envelope NDoc = new Envelope();
+                        //NDoc.XmlDoc = "![CDATA[" + Nibrsxml + "]]";
+                        mySerializer.Serialize(xmlWriter, NDoc, Namespaces);
 
                         xml = xmlWriter.ToString();
-                    }catch
+                    }
+                    catch(Exception ex)
                     {
+                        string error = ex.Message;
                         throw new ArgumentException("Error occured while generating the NIBRS Submission SOAP Envelope xml");
                     }
                 }
@@ -63,7 +73,7 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
         {
             Envelope envelope = new Envelope();
 
-            envelope.Body.SubmitNibrsNIEMDocument.XmlDoc = "![CDATA[" + Nibrsxml + "]]";
+            //envelope.Body.SubmitNibrsNIEMDocument.XmlDoc = "![CDATA[" + Nibrsxml + "]]";
 
             return envelope;
         }

@@ -13,36 +13,33 @@ using NibrsXml.Builder;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport;
 
-namespace NibrsXml.NibrsSubmissionEnvelope.Envelope
+namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
 {
     
-    [XmlRoot(ElementName = "Envelope", Namespace = Namespaces.soapenv)]
-    public class Envelope : INibrsSerializable
+    public partial class Envelope 
     {
-        [XmlElement(ElementName = "Header", Namespace = Namespaces.soapenv)]
+        [SoapElement(ElementName = "Header")]
+        [SoapAttribute(Namespace = Namespaces.soapenv)]
         public string Header { get; set; }
-        [XmlElement(ElementName = "Body", Namespace = Namespaces.soapenv)]
-        public Body Body { get; set; } = new Body();
-       
+        
+        
+        //[SoapElement(ElementName = "Body")]
+        //[SoapAttribute(Namespace = Namespaces.soapenv)]
+        //public Body Body { get; set; } = new Body();
+
     }
 
-    [XmlRoot(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
-    public partial  class SubmitNibrsNIEMDocument
-    {
-        [XmlElement(ElementName = "xmlDoc")]
-        public string XmlDoc { get; set; }
-    }
+    //[XmlRoot(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
+    //public partial class SubmitNibrsNIEMDocument
+    //{
+    //    [XmlElement(ElementName = "xmlDoc")]
+    //    public string XmlDoc { get; set; }
+    //}
 
-    [XmlRoot(ElementName = "Body", Namespace = Namespaces.soapenv)]
-    public partial class Body
-    {
-        [XmlElement(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
-        public SubmitNibrsNIEMDocument SubmitNibrsNIEMDocument { get; set; } = new SubmitNibrsNIEMDocument();
-    }
-
-   
-    
-   
-
+    //[XmlRoot(ElementName = "Body", Namespace = Namespaces.soapenv)]
+    //public partial class Body
+    //{
+    //    [XmlElement(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
+    //    public SubmitNibrsNIEMDocument SubmitNibrsNIEMDocument { get; set; } = new SubmitNibrsNIEMDocument();
+    //}
 }
-
