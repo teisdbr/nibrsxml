@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Soap;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -55,14 +56,19 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
                         XmlSerializer mySerializer = new XmlSerializer(myTypeMapping);
                         Envelope NDoc = new Envelope();
                         //NDoc.XmlDoc = "![CDATA[" + Nibrsxml + "]]";
-                        mySerializer.Serialize(xmlWriter, NDoc, Namespaces);
+                        //mySerializer.Serialize(xmlWriter, NDoc, Namespaces);
+                        FileStream fs = new FileStream("DataFile.soap", FileMode.Create);
 
+                        SoapFormatter formatter = new SoapFormatter();
+                        SubmitNibrsNIEMDocument sd = new SubmitNibrsNIEMDocument();
+
+                        formatter.Serialize(fs, sd);
                         xml = xmlWriter.ToString();
                     }
                     catch(Exception ex)
                     {
                         string error = ex.Message;
-                        throw new ArgumentException("Error occured while generating the NIBRS Submission SOAP Envelope xml");
+                        throw new ArgumentException("Error occured while generating the NIBRS Submission SOAP XML Envelope ");
                     }
                 }
             }

@@ -18,9 +18,9 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
     
     public partial class Envelope 
     {
-        [SoapElement(ElementName = "Header")]
-        [SoapAttribute(Namespace = Namespaces.soapenv)]
-        public string Header { get; set; }
+        //[SoapElement(ElementName = "Header")]
+        //[SoapAttribute(Namespace = Namespaces.soapenv)]
+        //public string Header { get; set; }
         
         
         //[SoapElement(ElementName = "Body")]
@@ -29,12 +29,12 @@ namespace NibrsXml.NibrsReport.NibrsSubmissionEnvelope
 
     }
 
-    //[XmlRoot(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
-    //public partial class SubmitNibrsNIEMDocument
-    //{
-    //    [XmlElement(ElementName = "xmlDoc")]
-    //    public string XmlDoc { get; set; }
-    //}
+    [XmlRoot(ElementName = "SubmitNibrsNIEMDocument", Namespace = Namespaces.ws)]
+    public partial class SubmitNibrsNIEMDocument
+    {
+        [XmlElement(ElementName = "xmlDoc")]
+        public string XmlDoc { get; set; }
+    }
 
     //[XmlRoot(ElementName = "Body", Namespace = Namespaces.soapenv)]
     //public partial class Body

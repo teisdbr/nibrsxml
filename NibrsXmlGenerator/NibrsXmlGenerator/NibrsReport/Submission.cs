@@ -125,15 +125,10 @@ namespace NibrsXml.NibrsReport
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
 
-                // Call method to create soap envelop
-                SubmissionEnvelopeSerializer serializer = new SubmissionEnvelopeSerializer();
-                string envelope = serializer.Serialize(submission.Xml);
-
-                // Call Send report method to get response from FBI
-                if (!string.IsNullOrWhiteSpace(envelope))
-                {
-                    string response = NibrsSubmitter.Sendreport(envelope);
-                }
+             
+             
+                    NibrsSubmitter.Sendreport(submission.Xml);
+                
 
                 // Save response to MongoDB
 
