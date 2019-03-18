@@ -19,7 +19,7 @@ namespace NibrsXml.DataAccess
             // INITIALIZATIONS
             IMongoClient server = new MongoClient(dbConnectionUrl);
             _db = server.GetDatabase(dbName);
-
+            
             // Ignore serializing data if null
             ConventionRegistry.Register("IgnoreIfNull",
                 new ConventionPack {new IgnoreIfNullConvention(true)},
@@ -32,8 +32,12 @@ namespace NibrsXml.DataAccess
 
         public SubmissionCollection Submissions
         {
-            get { return new SubmissionCollection(_db.GetCollection<Submission>(CollectionName.Submission)); }
+            //get { return new SubmissionCollection(_db.GetCollection<Submission>(CollectionName.Submission)); }
+            get { return new SubmissionCollection(_db.GetCollection<NIbrsXmlTransaction>(CollectionName.Test)); }
+
         }
+
+
 
         private static class ConfigurationKey
         {
@@ -44,6 +48,9 @@ namespace NibrsXml.DataAccess
         private static class CollectionName
         {
             public const string Submission = "submission";
+            public const string Transaction = "transaction";
+            public const string Test = "test";
+
         }
     }
 }

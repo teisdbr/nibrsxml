@@ -9,8 +9,10 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Builder;
 using NibrsXml.Constants;
-using NibrsXml.NibrsReport.NibrsSubmissionEnvelope;
 using NibrsInterface;
+using NibrsXml.DataAccess;
+using System.Configuration;
+
 
 
 namespace NibrsXml.NibrsReport
@@ -23,7 +25,8 @@ namespace NibrsXml.NibrsReport
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
     public class Submission : INibrsSerializable
     {
-        [BsonIgnore] [XmlIgnore]
+        [BsonIgnore]
+        [XmlIgnore]
         private static readonly NibrsSerializer.NibrsSerializer Serializer =
             new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
@@ -50,10 +53,11 @@ namespace NibrsXml.NibrsReport
             foreach (var r in reports) Reports.Add(r);
         }
 
-        [BsonId] [XmlIgnore] public ObjectId Id { get; set; }
+        [BsonIgnore] [XmlIgnore] public ObjectId Id { get; set; }
 
-        [XmlIgnore] public string Runnumber { get; set; }
+        [BsonIgnore] [XmlIgnore] public string Runnumber { get; set; }
 
+        [BsonIgnore]
         [XmlIgnore]
         public string Xml
         {
@@ -61,7 +65,6 @@ namespace NibrsXml.NibrsReport
 
         }
 
-        
 
         public static Submission Deserialize(string filepath)
         {
@@ -81,7 +84,7 @@ namespace NibrsXml.NibrsReport
                 //Further, you would not have the full context of the victim either because the victim is composed of a person, so you need to use the victim's ID
                 //and retrieve the person data for that victim.
 
-                sub = (Submission) Serializer.Deserialize(xmlReader);
+                sub = (Submission)Serializer.Deserialize(xmlReader);
                 foreach (var report in sub.Reports) report.RebuildCrossReferencedRelationships();
             }
             catch (Exception e)
@@ -101,7 +104,7 @@ namespace NibrsXml.NibrsReport
         /// <param name="fileName">Complete file name with path prefixed</param>
         public static void WriteXml(IncidentList list, string fileName)
         {
-            WriteXml(new List<IncidentList> {list}, fileName);
+            WriteXml(new List<IncidentList> { list }, fileName);
         }
 
         /// <summary>
@@ -113,29 +116,40 @@ namespace NibrsXml.NibrsReport
         public static Submission WriteXml(List<IncidentList> lists, string fileName,
             string nibrsSchemaLocation = Constants.Misc.schemaLocation)
         {
+            NibrsResubmitter.ResbumitNibrsXml();
+
             var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
+
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
 
+             bool IsFileValid = true;
 
             foreach (var submission in submissions)
             {
+                
                 // Save locally
                 submission.XsiSchemaLocation = nibrsSchemaLocation;
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
+                var response = NibrsSubmitter.Sendreport(submission.Xml,  ref IsFileValid);
 
-             
-             
-                    NibrsSubmitter.Sendreport(submission.Xml);
-                
+                // Wrap both response and submission and then save to database 
 
-                // Save response to MongoDB
+                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, IsFileValid);
 
+                AppSettingsReader objAppsettings = new AppSettingsReader();
 
+                var nibrsDb = new DatabaseClient(objAppsettings);
+
+                // save to mongodb
+                nibrsDb.Submissions.InsertOne(NIbrsXmlTransaction);
+
+                // reset IsFileValid property
+                IsFileValid = true;
             }
 
-            //Return submission created above
+            // Return submission created above
             return submissions[0];
         }
     }

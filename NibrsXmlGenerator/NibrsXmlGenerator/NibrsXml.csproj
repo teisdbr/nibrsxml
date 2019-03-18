@@ -109,11 +109,11 @@
     <Compile Include="NibrsReport\MessageMetadata.cs" />
     <Compile Include="NibrsReport\MessageMetadatas\MessageIdentification.cs" />
     <Compile Include="NibrsReport\MessageMetadatas\MessageSubmittingOrganization.cs" />
+    <Compile Include="NibrsReport\NibrsResubmitter.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
     <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
-    <Compile Include="NibrsReport\NibrsSubmissionEnvelope\Envelope.cs" />
-    <Compile Include="NibrsReport\NibrsSubmissionEnvelope\SubmissionEnvelopeSerializer.cs" />
+    <Compile Include="NibrsReport\NIbrsXmlTransaction.cs" />
     <Compile Include="NibrsReport\Person\Person.cs" />
     <Compile Include="NibrsReport\Subject\Subject.cs" />
     <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />

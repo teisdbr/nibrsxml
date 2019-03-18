@@ -32,7 +32,8 @@ namespace NibrsXml.NibrsReport.Misc
             DateTime = date + "T" + time;
         }
 
-        [XmlIgnore] public DateTime RealDateTime
+        [BsonIgnore][XmlIgnore]
+        public DateTime RealDateTime
         {
             get { return _realDateTime; }
             set
@@ -78,6 +79,7 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
+        [BsonIgnore]
         public string Time
         {
             get { return _dateTime.Substring(_dateTime.IndexOf("T") + 1); }
