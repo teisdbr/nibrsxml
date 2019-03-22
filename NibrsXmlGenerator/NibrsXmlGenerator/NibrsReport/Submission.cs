@@ -55,7 +55,7 @@ namespace NibrsXml.NibrsReport
 
         [BsonIgnore] [XmlIgnore] public ObjectId Id { get; set; }
 
-        [BsonIgnore] [XmlIgnore] public string Runnumber { get; set; }
+        [XmlIgnore] public string Runnumber { get; set; }
 
         [BsonIgnore]
         [XmlIgnore]
@@ -123,6 +123,7 @@ namespace NibrsXml.NibrsReport
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
 
              bool IsFileValid = true;
+             string LastException = null;
 
             foreach (var submission in submissions)
             {
@@ -132,17 +133,17 @@ namespace NibrsXml.NibrsReport
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.Sendreport(submission.Xml,  ref IsFileValid);
+                var response = NibrsSubmitter.Sendreport(submission.Xml,  ref IsFileValid, ref LastException);
 
                 // Wrap both response and submission and then save to database 
 
-                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, IsFileValid);
+                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, IsFileValid, LastException);
 
                 AppSettingsReader objAppsettings = new AppSettingsReader();
 
                 var nibrsDb = new DatabaseClient(objAppsettings);
 
-                // save to mongodb
+                // save to mongodb  
                 nibrsDb.Submissions.InsertOne(NIbrsXmlTransaction);
 
                 // reset IsFileValid property

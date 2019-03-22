@@ -25,8 +25,6 @@ namespace NibrsXml.NibrsReport
             var x = _Main();
 
             Task.WaitAll(x);
-
-           
         }
 
         static async Task _Main()
@@ -42,12 +40,16 @@ namespace NibrsXml.NibrsReport
                     AllowDiskUse = false
                 };
 
-                
+
+                //BsonDocument filter = new BsonDocument();
+                //filter.Add("isFileValid", new BsonBoolean(true));
+                //filter.Add("nibrsResponse", new BsonDocument()
+                //        .Add("$exists", new BsonBoolean(false))
+                //        );
+
+
                 BsonDocument filter = new BsonDocument();
-                filter.Add("isFileValid", new BsonBoolean(true));
-                filter.Add("nibrsResponse", new BsonDocument()
-                        .Add("$exists", new BsonBoolean(false))
-                        );
+                filter.Add("_id", new BsonObjectId(new ObjectId("5c92aabb89ae1755e49fac6e")));
 
 
                 var cursor = await nibrsDb.Submissions.Trans.FindAsync(filter);
@@ -55,20 +57,21 @@ namespace NibrsXml.NibrsReport
 
                 // initializing IsFileValid 
                 bool IsFileValid = true;
+                string LastException = null;
 
                 foreach (NIbrsXmlTransaction nibrsXmlTransaction in result)
                 {
                     Submission submission = nibrsXmlTransaction.Submission;
-                    //var id = nibrsXmlTransaction.
+                    
                     string nibrsSchemaLocation = Constants.Misc.schemaLocation;
                     submission.XsiSchemaLocation = nibrsSchemaLocation;
 
                     // send report to FBI and get response
                     // IsFileValid  parameter is passed by ref, value is set in SendReport method. 
-                    var response = NibrsSubmitter.Sendreport(submission.Xml, ref IsFileValid);
+                    var response = NibrsSubmitter.Sendreport(submission.Xml, ref IsFileValid, ref LastException);
 
                     // Updating old nibrs response with the current response. 
-                    nibrsDb.Submissions.UpdateResponse(response, nibrsXmlTransaction.Id);
+                    nibrsDb.Submissions.UpdateResponse(response, nibrsXmlTransaction.Id, LastException, IsFileValid);
 
                     // reset IsFileValid property
                     IsFileValid = true;
@@ -79,7 +82,6 @@ namespace NibrsXml.NibrsReport
             {
                 Console.WriteLine(e.StackTrace);
             }
-
 
         }
 

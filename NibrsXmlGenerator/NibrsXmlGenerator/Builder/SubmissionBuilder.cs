@@ -41,12 +41,12 @@ namespace NibrsXml.Builder
             {
                 foreach (LIBRSIncident incident in agencyIncidentList)
                 {
+                    if (incident.HasErrors) continue;
                     var report = ReportBuilder.Build(incident);
 
                     if (report == null)
                         continue;
 
-                    if (incident.HasErrors) continue;
 
                     var sub = new Submission {Runnumber = agencyIncidentList.Runnumber};
                     sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);

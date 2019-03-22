@@ -21,13 +21,15 @@ namespace NibrsXml.NibrsReport
 
         public bool IsFileValid { get; set; } = true;
 
-        public NIbrsXmlTransaction(Submission submission, nibrsResponse nibrsResponse, bool isFileValid)
+        public string LastException { get; set; } 
+
+        public NIbrsXmlTransaction(Submission submission, nibrsResponse nibrsResponse, bool isFileValid, string lastException)
         {
             Id = submission.Id;
             Submission = submission;
             NibrsResponse = nibrsResponse;
             IsFileValid = isFileValid;
-
+            LastException = lastException;
         }
        
     }

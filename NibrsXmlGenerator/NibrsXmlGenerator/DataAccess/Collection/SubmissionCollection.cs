@@ -29,11 +29,17 @@ namespace NibrsXml.DataAccess.Collection
             Trans.InsertOne(transaction);
         }
 
-        public void UpdateResponse(nibrsResponse Response, ObjectId id )
+        public void UpdateResponse(nibrsResponse Response, ObjectId id, string LastException, bool IsFileValid)
         {
-           
-            var filter = Builders<NIbrsXmlTransaction>.Filter.Eq(x => x.Id, id ); 
-            var updateDef = Builders<NIbrsXmlTransaction>.Update.Set(o => o.NibrsResponse, Response);
+            // also need to update LsFileValid and LastTransaction fields 
+
+            var filter = Builders<NIbrsXmlTransaction>.Filter.Eq(x => x.Id, id);
+
+            var updateDef = Builders<NIbrsXmlTransaction>.Update
+                .Set(o => o.NibrsResponse, Response)
+                .Set(o => o.LastException, LastException)
+                .Set(o => o.IsFileValid, IsFileValid);
+
             var result = Trans.UpdateOneAsync(filter, updateDef).Result;
         }
 
