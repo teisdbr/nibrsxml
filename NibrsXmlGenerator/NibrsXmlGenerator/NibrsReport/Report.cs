@@ -240,7 +240,7 @@ namespace NibrsXml.NibrsReport
             foreach (var assoc in ArrestSubjectAssocs)
             {
                 assoc.RelatedArrest = Arrests.First(a => a.Id == assoc.ActivityRef.ArrestRef);
-                assoc.RelatedArrestee = Arrestees.First(a => a.Id == assoc.SubjectRef);
+                assoc.RelatedArrestee = Arrestees.First(a => a.Id == assoc.SubjectRef.PersonRef);
             }
 
             foreach (var assoc in OffenseLocationAssocs)
