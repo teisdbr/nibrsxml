@@ -121,10 +121,7 @@ namespace NibrsXml.NibrsReport
             var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
 
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
-
-             bool IsFileValid = true;
-             string LastException = null;
-
+            
             foreach (var submission in submissions)
             {
                 
@@ -133,21 +130,20 @@ namespace NibrsXml.NibrsReport
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.Sendreport(submission.Xml,  ref IsFileValid, ref LastException);
+                var response = NibrsSubmitter.Sendreport(submission.Xml);
 
                 // Wrap both response and submission and then save to database 
 
-                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, IsFileValid, LastException);
+                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response);
 
                 AppSettingsReader objAppsettings = new AppSettingsReader();
 
-                var nibrsDb = new DatabaseClient(objAppsettings);
+                var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
 
                 // save to mongodb  
                 nibrsDb.Submissions.InsertOne(NIbrsXmlTransaction);
 
-                // reset IsFileValid property
-                IsFileValid = true;
+               
             }
 
             // Return submission created above

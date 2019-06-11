@@ -17,20 +17,16 @@ namespace NibrsXml.NibrsReport
         public Submission Submission { get; set; }  = new Submission();
 
        
-        public nibrsResponse NibrsResponse { get; set; } = new nibrsResponse();
+        public NibrsXmlSubmissionResponse NibrsSubmissionResponse { get; set; } = new NibrsXmlSubmissionResponse();
 
-        public bool IsFileValid { get; set; } = true;
 
-        public string LastException { get; set; } 
-
-        public NIbrsXmlTransaction(Submission submission, nibrsResponse nibrsResponse, bool isFileValid, string lastException)
+        public NIbrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse )
         {
             Id = submission.Id;
             Submission = submission;
-            NibrsResponse = nibrsResponse;
-            IsFileValid = isFileValid;
-            LastException = lastException;
+            NibrsSubmissionResponse = nibrsSubmissionResponse;
         }
+
        
     }
 }

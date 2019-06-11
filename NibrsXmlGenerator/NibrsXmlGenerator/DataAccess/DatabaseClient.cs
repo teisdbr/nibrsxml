@@ -33,7 +33,7 @@ namespace NibrsXml.DataAccess
         public SubmissionCollection Submissions
         {
             //get { return new SubmissionCollection(_db.GetCollection<Submission>(CollectionName.Submission)); }
-            get { return new SubmissionCollection(_db.GetCollection<NIbrsXmlTransaction>(CollectionName.Test)); }
+            get { return new SubmissionCollection(_db.GetCollection<NIbrsXmlTransaction>(CollectionName.ModifiedTest)); }
 
         }
 
@@ -50,6 +50,7 @@ namespace NibrsXml.DataAccess
             public const string Submission = "submission";
             public const string Transaction = "transaction";
             public const string Test = "test";
+            public const string ModifiedTest = "Modified_test";
 
         }
     }

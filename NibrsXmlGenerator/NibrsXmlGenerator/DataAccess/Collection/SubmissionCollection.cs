@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using NibrsXml.NibrsReport;
 using MongoDB.Bson;
+using NibrsInterface;
 
 namespace NibrsXml.DataAccess.Collection
 {
@@ -29,16 +30,15 @@ namespace NibrsXml.DataAccess.Collection
             Trans.InsertOne(transaction);
         }
 
-        public void UpdateResponse(nibrsResponse Response, ObjectId id, string LastException, bool IsFileValid)
+        public void UpdateResponse( NibrsXmlSubmissionResponse Response, ObjectId id)
         {
             // also need to update LsFileValid and LastTransaction fields 
 
             var filter = Builders<NIbrsXmlTransaction>.Filter.Eq(x => x.Id, id);
 
             var updateDef = Builders<NIbrsXmlTransaction>.Update
-                .Set(o => o.NibrsResponse, Response)
-                .Set(o => o.LastException, LastException)
-                .Set(o => o.IsFileValid, IsFileValid);
+                .Set(o => o.NibrsSubmissionResponse, Response);
+                
 
             var result = Trans.UpdateOneAsync(filter, updateDef).Result;
         }

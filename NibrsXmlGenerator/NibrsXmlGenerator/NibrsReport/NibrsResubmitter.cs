@@ -55,10 +55,6 @@ namespace NibrsXml.NibrsReport
                 var cursor = await nibrsDb.Submissions.Trans.FindAsync(filter);
                 var result = await cursor.ToListAsync();
 
-                // initializing IsFileValid 
-                bool IsFileValid = true;
-                string LastException = null;
-
                 foreach (NIbrsXmlTransaction nibrsXmlTransaction in result)
                 {
                     Submission submission = nibrsXmlTransaction.Submission;
@@ -68,13 +64,12 @@ namespace NibrsXml.NibrsReport
 
                     // send report to FBI and get response
                     // IsFileValid  parameter is passed by ref, value is set in SendReport method. 
-                    var response = NibrsSubmitter.Sendreport(submission.Xml, ref IsFileValid, ref LastException);
+                    var response = NibrsSubmitter.Sendreport(submission.Xml);
 
                     // Updating old nibrs response with the current response. 
-                    nibrsDb.Submissions.UpdateResponse(response, nibrsXmlTransaction.Id, LastException, IsFileValid);
+                    nibrsDb.Submissions.UpdateResponse(response, nibrsXmlTransaction.Id);
 
-                    // reset IsFileValid property
-                    IsFileValid = true;
+                    
                 }
 
             }
