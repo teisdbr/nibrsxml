@@ -130,7 +130,7 @@ namespace NibrsXml.NibrsReport
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.Sendreport(submission.Xml);
+                var response = NibrsSubmitter.SendReport(submission.Xml);
 
                 // Wrap both response and submission and then save to database 
 

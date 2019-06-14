@@ -64,7 +64,7 @@ namespace NibrsXml.NibrsReport
 
                     // send report to FBI and get response
                     // IsFileValid  parameter is passed by ref, value is set in SendReport method. 
-                    var response = NibrsSubmitter.Sendreport(submission.Xml);
+                    var response = NibrsSubmitter.SendReport(submission.Xml);
 
                     // Updating old nibrs response with the current response. 
                     nibrsDb.Submissions.UpdateResponse(response, nibrsXmlTransaction.Id);
