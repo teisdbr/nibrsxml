@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using System;
+using MongoDB.Driver;
 using NibrsXml.NibrsReport;
 using MongoDB.Bson;
 using NibrsInterface;
@@ -37,7 +38,8 @@ namespace NibrsXml.DataAccess.Collection
             var filter = Builders<NIbrsXmlTransaction>.Filter.Eq(x => x.Id, id);
 
             var updateDef = Builders<NIbrsXmlTransaction>.Update
-                .Set(o => o.NibrsSubmissionResponse, Response);
+                .Set(o => o.NibrsSubmissionResponse, Response)
+                .Set(o => o.TransactionDate, DateTime.Now);
                 
 
             var result = Trans.UpdateOneAsync(filter, updateDef).Result;

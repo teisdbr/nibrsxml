@@ -12,7 +12,7 @@ using NibrsXml.Constants;
 using NibrsInterface;
 using NibrsXml.DataAccess;
 using System.Configuration;
-
+using Newtonsoft.Json;
 
 
 namespace NibrsXml.NibrsReport
@@ -27,18 +27,20 @@ namespace NibrsXml.NibrsReport
     {
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         private static readonly NibrsSerializer.NibrsSerializer Serializer =
             new NibrsSerializer.NibrsSerializer(typeof(Submission));
 
         [XmlElement("MessageMetadata", Namespace = Namespaces.cjis)]
         public MessageMetadata MessageMetadata = new MessageMetadata();
 
-        [BsonIgnore] [XmlIgnore] public List<Report> RejectedReports = new List<Report>();
+        [BsonIgnore] [XmlIgnore] [JsonIgnore] public List<Report> RejectedReports = new List<Report>();
 
 
         [XmlElement("Report")] public List<Report> Reports = new List<Report>();
 
         [XmlAttribute("schemaLocation", Namespace = XmlSchema.InstanceNamespace)]
+        //[JsonIgnore]
         public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
         public Submission()
@@ -53,12 +55,13 @@ namespace NibrsXml.NibrsReport
             foreach (var r in reports) Reports.Add(r);
         }
 
-        [BsonIgnore] [XmlIgnore] public ObjectId Id { get; set; }
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]public ObjectId Id { get; set; }
 
         [XmlIgnore] public string Runnumber { get; set; }
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public string Xml
         {
             get { return Serializer.Serialize(this); }
@@ -116,7 +119,7 @@ namespace NibrsXml.NibrsReport
         public static Submission WriteXml(List<IncidentList> lists, string fileName,
             string nibrsSchemaLocation = Constants.Misc.schemaLocation)
         {
-            NibrsResubmitter.ResbumitNibrsXml();
+            // NibrsResubmitter.ResbumitNibrsXml();
 
             var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
 

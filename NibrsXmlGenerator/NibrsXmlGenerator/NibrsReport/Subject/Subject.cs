@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 
@@ -46,7 +47,7 @@ namespace NibrsXml.NibrsReport.Subject
         [XmlElement("SubjectSequenceNumberText", Namespace = Namespaces.justice, Order = 2)]
         public string SeqNum { get; set; }
 
-        [BsonIgnore] [XmlIgnore]
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public Subject Reference
         {
             get { return new Subject(Id); }

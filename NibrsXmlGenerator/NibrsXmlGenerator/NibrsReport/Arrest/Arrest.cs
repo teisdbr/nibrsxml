@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 
@@ -53,11 +54,12 @@ namespace NibrsXml.NibrsReport.Arrest
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public Arrest Reference
         {
             get { return new Arrest(Id); }
         }
 
-        [BsonIgnore] [XmlIgnore] public string SequenceNumber { get; set; }
+        [BsonIgnore] [XmlIgnore] [JsonIgnore] public string SequenceNumber { get; set; }
     }
 }

@@ -20,14 +20,15 @@ namespace NibrsXml.NibrsReport
 {
    public class NibrsResubmitter
     {
-        public static void ResbumitNibrsXml()
-        {
-            var x = _Main();
+        internal static IMongoCollection<NIbrsXmlTransaction> Collection { get; set; }
 
-            Task.WaitAll(x);
+        internal NibrsResubmitter(IMongoCollection<NIbrsXmlTransaction> collection)
+        {
+            Collection = collection;
         }
 
-        static async Task _Main()
+
+        public static async Task ResbumitNibrsXml(List<FilterDefinition<NIbrsXmlTransaction>> reUploadFilter)
         {
             try
             {
@@ -41,19 +42,11 @@ namespace NibrsXml.NibrsReport
                 };
 
 
-                //BsonDocument filter = new BsonDocument();
-                //filter.Add("isFileValid", new BsonBoolean(true));
-                //filter.Add("nibrsResponse", new BsonDocument()
-                //        .Add("$exists", new BsonBoolean(false))
-                //        );
 
 
-                BsonDocument filter = new BsonDocument();
-                filter.Add("_id", new BsonObjectId(new ObjectId("5c92aabb89ae1755e49fac6e")));
-
-
-                var cursor = await nibrsDb.Submissions.Trans.FindAsync(filter);
-                var result = await cursor.ToListAsync();
+                var nibrsXmlTransacCursor = await Collection.FindAsync(Builders<NIbrsXmlTransaction>.Filter.And(reUploadFilter));
+                
+                var result = await nibrsXmlTransacCursor.ToListAsync();
 
                 foreach (NIbrsXmlTransaction nibrsXmlTransaction in result)
                 {

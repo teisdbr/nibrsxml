@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Misc
@@ -32,7 +33,7 @@ namespace NibrsXml.NibrsReport.Misc
             DateTime = date + "T" + time;
         }
 
-        [BsonIgnore][XmlIgnore]
+        [BsonIgnore][XmlIgnore][JsonIgnore]
         public DateTime RealDateTime
         {
             get { return _realDateTime; }
@@ -79,7 +80,7 @@ namespace NibrsXml.NibrsReport.Misc
             }
         }
 
-        [BsonIgnore]
+        [BsonIgnore][JsonIgnore]
         public string Time
         {
             get { return _dateTime.Substring(_dateTime.IndexOf("T") + 1); }

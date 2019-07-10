@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Utility;
@@ -13,7 +14,7 @@ namespace NibrsXml.NibrsReport
     [XmlRoot("Report", Namespace = Namespaces.cjisNibrs)]
     public class Report : INibrsSerializable
     {
-        [BsonIgnore] [XmlIgnore] private static readonly NibrsSerializer.NibrsSerializer Serializer =
+        [BsonIgnore] [XmlIgnore] [JsonIgnore] private static readonly NibrsSerializer.NibrsSerializer Serializer =
             new NibrsSerializer.NibrsSerializer(typeof(Report));
 
         [XmlElement("Person", Namespace = Namespaces.niemCore, Order = 7)]
@@ -112,7 +113,7 @@ namespace NibrsXml.NibrsReport
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
         public List<SubjectVictimAssociation> SubjectVictimAssocs { get; set; }
 
-        [BsonIgnore] [XmlIgnore]
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public List<Item.Item> StolenVehicles
         {
             get
@@ -123,7 +124,7 @@ namespace NibrsXml.NibrsReport
             }
         }
 
-        [BsonIgnore] [XmlIgnore]
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public string Xml
         {
             get

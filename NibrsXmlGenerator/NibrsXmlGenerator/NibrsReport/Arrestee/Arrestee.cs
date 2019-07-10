@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.Utility;
@@ -70,6 +71,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         public string SubjectCountCode { get; set; }
 
         [BsonIgnore]
+        [JsonIgnore]
         public Arrestee Reference
         {
             get { return new Arrestee(Person.Id); }

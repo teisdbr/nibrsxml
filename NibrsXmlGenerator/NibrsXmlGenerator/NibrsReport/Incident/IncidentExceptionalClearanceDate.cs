@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Incident
@@ -27,6 +28,7 @@ namespace NibrsXml.NibrsReport.Incident
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public string YearMonthDate
         {
             get

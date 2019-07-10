@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.Utility;
 
@@ -54,6 +55,7 @@ namespace NibrsXml.NibrsReport.Person
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public bool AgeIsUnknown
         {
             get { return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode(); }
@@ -61,6 +63,7 @@ namespace NibrsXml.NibrsReport.Person
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsJuvenile
         {
             get { return AgeMeasure != null && AgeMeasure.IsJuvenile; }

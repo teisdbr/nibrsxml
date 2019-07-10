@@ -2,6 +2,8 @@
 using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Constants;
+using Newtonsoft.Json;
+
 
 namespace NibrsXml.NibrsReport.Offense
 {
@@ -75,6 +77,7 @@ namespace NibrsXml.NibrsReport.Offense
 
         [BsonIgnore]
         [XmlIgnore]
+       [JsonIgnore]
         public Offense Reference
         {
             get { return new Offense(Id); }

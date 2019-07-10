@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Location
@@ -37,6 +38,7 @@ namespace NibrsXml.NibrsReport.Location
 
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public Location Reference
         {
             get { return new Location(Id); }

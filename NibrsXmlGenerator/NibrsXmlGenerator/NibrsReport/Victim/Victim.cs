@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using LoadBusinessLayer.LIBRSVictim;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 using NibrsXml.NibrsReport.Misc;
 using NibrsXml.Utility;
@@ -101,7 +102,7 @@ namespace NibrsXml.NibrsReport.Victim
 
         [XmlIgnore] public List<LIBRSVictimOffenderRelation> RelatedOffenders { get; set; }
 
-        [BsonIgnore]
+        [BsonIgnore] [JsonIgnore]
         public Victim Reference
         {
             get { return new Victim(Id); }

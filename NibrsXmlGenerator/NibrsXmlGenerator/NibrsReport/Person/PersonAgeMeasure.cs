@@ -1,5 +1,7 @@
-﻿using System.Xml.Serialization;
+﻿
+using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Person
@@ -34,15 +36,19 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("MeasureIntegerValue", Namespace = Namespaces.niemCore)]
         public string Value { get; set; }
 
+      
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public string RangeOrValue
         {
-            get { return Value ?? Range.Min + "-" + Range.Max; }
+            get { return Value ?? ( Range == null ? null : Range.Min + "-" + Range.Max); }
         }
 
+        
         [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsJuvenile
         {
             get
@@ -50,7 +56,7 @@ namespace NibrsXml.NibrsReport.Person
                 //Verify there is a value, not a range and if so indicate whether individual is juvenile or not.
                 int ageValue;
                 if (int.TryParse(Value, out ageValue)) return ageValue < 18;
-                return Range.Max >= 1 && Range.Max < 18;
+                return Range?.Max >= 1 && Range?.Max < 18;
             }
         }
 
