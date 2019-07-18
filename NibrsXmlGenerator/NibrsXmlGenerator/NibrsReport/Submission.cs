@@ -22,6 +22,7 @@ namespace NibrsXml.NibrsReport
     ///     NibrsSerializer to print them accordingly. This also gives full freedom for NibrsReportBuilder to build reports
     ///     however it sees fit.
     /// </summary>
+    
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
     public class Submission : INibrsSerializable
     {
@@ -45,7 +46,7 @@ namespace NibrsXml.NibrsReport
 
         public Submission()
         {
-            Id = ObjectId.GenerateNewId();
+           //Id = ObjectId.GenerateNewId();
         }
 
         public Submission(params Report[] reports)
@@ -55,7 +56,28 @@ namespace NibrsXml.NibrsReport
             foreach (var r in reports) Reports.Add(r);
         }
 
-        [BsonIgnore] [XmlIgnore] [JsonIgnore]public ObjectId Id { get; set; }
+        [XmlIgnore] 
+        [JsonConverter(typeof(ObjectIdConverter))]
+        // Removed Bson Ignore to save the value in the MonogDB. While deserilizing using JsonDeserilzer the Json value from Json string 
+        // will be replace the NewId.
+        public ObjectId Id { get {
+
+                _id = _id == ObjectId.Empty ? ObjectId.GenerateNewId() : _id;
+
+                return _id;
+            }
+
+            set {
+
+                _id = value;
+            } }
+
+
+        [XmlIgnore]
+        [BsonIgnore]
+        [JsonIgnore]
+        private ObjectId _id;
+
 
         [XmlIgnore] public string Runnumber { get; set; }
 
@@ -133,7 +155,7 @@ namespace NibrsXml.NibrsReport
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.SendReport(submission.Xml);
+                var response = NibrsSubmitter.Sendreport(submission.Xml);
 
                 // Wrap both response and submission and then save to database 
 

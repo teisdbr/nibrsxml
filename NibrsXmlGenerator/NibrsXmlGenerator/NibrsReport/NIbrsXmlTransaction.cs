@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 using NibrsInterface;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace NibrsXml.NibrsReport
 {
   [BsonIgnoreExtraElements]
+  
   public  class NIbrsXmlTransaction
   {
+       
+        [JsonConverter(typeof(ObjectIdConverter))]
         public ObjectId Id { get; set; }
+
 
         public Submission Submission { get; set; }  = new Submission();
 
