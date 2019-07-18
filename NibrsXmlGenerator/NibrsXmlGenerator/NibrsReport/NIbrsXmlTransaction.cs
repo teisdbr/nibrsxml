@@ -23,19 +23,34 @@ namespace NibrsXml.NibrsReport
 
         public DateTime TransactionDate { get; set; }
 
+        [JsonIgnore]
+        [BsonIgnore]
+        private NibrsXmlSubmissionResponse _NibrsSubmissionResponse = new NibrsXmlSubmissionResponse();
 
-        public NibrsXmlSubmissionResponse NibrsSubmissionResponse { get; set; } = new NibrsXmlSubmissionResponse();
+        public NibrsXmlSubmissionResponse NibrsSubmissionResponse
+        {
+            get => _NibrsSubmissionResponse;
 
-        
+            set
+            {
+               
+            }
+        } 
+
+        public string Status { get; }
+
+        public int NumberOfAttempts { get; set; }
 
 
-        public NIbrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse )
+
+        public NIbrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
         {
             Id = submission.Id;
             Submission = submission;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
-
+           
+            //NumberOfAttempts = numberOfAttempts + 1;
         }
 
        

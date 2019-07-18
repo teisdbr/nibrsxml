@@ -157,9 +157,13 @@ namespace NibrsXml.NibrsReport
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
                 var response = NibrsSubmitter.Sendreport(submission.Xml);
 
+                var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
+
+                
+
                 // Wrap both response and submission and then save to database 
 
-                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response);
+                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, status );
 
                 AppSettingsReader objAppsettings = new AppSettingsReader();
 
