@@ -35,9 +35,11 @@ namespace NibrsXml.NibrsReport
         public string Status { get => NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse); }
 
         [JsonConstructor]
-        public NibrsXmlTransaction()
+        private NibrsXmlTransaction(NibrsXmlSubmissionResponse nibrsSubmissionResponse, DateTime TransactionDate, int NumberOfAttempts)
         {
-           
+            this.TransactionDate = TransactionDate;
+            this.NibrsSubmissionResponse = nibrsSubmissionResponse;
+            this.NumberOfAttempts = NumberOfAttempts;
         }
 
         public NibrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
