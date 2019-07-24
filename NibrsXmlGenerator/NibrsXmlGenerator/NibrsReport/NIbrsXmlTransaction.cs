@@ -11,7 +11,7 @@ using NibrsInterface;
 namespace NibrsXml.NibrsReport
 {
   [BsonIgnoreExtraElements]
-  public  class NIbrsXmlTransaction
+  public  class NibrsXmlTransaction
   {
        
         [JsonConverter(typeof(ObjectIdConverter))]
@@ -35,12 +35,12 @@ namespace NibrsXml.NibrsReport
         public string Status { get => NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse); }
 
         [JsonConstructor]
-        public NIbrsXmlTransaction()
+        public NibrsXmlTransaction()
         {
            
         }
 
-        public NIbrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
+        public NibrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
         {
             Id = submission.Id;
             Submission = submission;

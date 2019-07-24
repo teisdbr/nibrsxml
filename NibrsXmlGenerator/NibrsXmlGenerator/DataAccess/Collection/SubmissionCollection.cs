@@ -9,14 +9,14 @@ namespace NibrsXml.DataAccess.Collection
     public class SubmissionCollection
     {
         private IMongoCollection<Submission> Collection { get; set; }
-        public IMongoCollection<NIbrsXmlTransaction> Trans { get; set; }
+        public IMongoCollection<NibrsXmlTransaction> Trans { get; set; }
 
         internal SubmissionCollection(IMongoCollection<Submission> collection)
         {
             Collection = collection;
         }
 
-        internal SubmissionCollection(IMongoCollection<NIbrsXmlTransaction> collections)
+        internal SubmissionCollection(IMongoCollection<NibrsXmlTransaction> collections)
         {
             Trans = collections;
         }
@@ -26,7 +26,7 @@ namespace NibrsXml.DataAccess.Collection
             Collection.InsertMany(subs);
         }
 
-        public void InsertOne(NIbrsXmlTransaction transaction)
+        public void InsertOne(NibrsXmlTransaction transaction)
         {
             Trans.InsertOne(transaction);
         }
@@ -35,9 +35,9 @@ namespace NibrsXml.DataAccess.Collection
         {
             // also need to update LsFileValid and LastTransaction fields 
 
-            var filter = Builders<NIbrsXmlTransaction>.Filter.Eq(x => x.Id, id);
+            var filter = Builders<NibrsXmlTransaction>.Filter.Eq(x => x.Id, id);
 
-            var updateDef = Builders<NIbrsXmlTransaction>.Update
+            var updateDef = Builders<NibrsXmlTransaction>.Update
                 .Set(o => o.NibrsSubmissionResponse, Response)
                 .Set(o => o.TransactionDate, DateTime.Now);
                 

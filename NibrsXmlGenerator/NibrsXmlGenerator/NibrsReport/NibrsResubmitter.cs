@@ -20,15 +20,15 @@ namespace NibrsXml.NibrsReport
 {
    public class NibrsResubmitter
     {
-        internal static IMongoCollection<NIbrsXmlTransaction> Collection { get; set; }
+        internal static IMongoCollection<NibrsXmlTransaction> Collection { get; set; }
 
-        internal NibrsResubmitter(IMongoCollection<NIbrsXmlTransaction> collection)
+        internal NibrsResubmitter(IMongoCollection<NibrsXmlTransaction> collection)
         {
             Collection = collection;
         }
 
 
-        public static async Task ResbumitNibrsXml(List<FilterDefinition<NIbrsXmlTransaction>> reUploadFilter)
+        public static async Task ResbumitNibrsXml(List<FilterDefinition<NibrsXmlTransaction>> reUploadFilter)
         {
             try
             {
@@ -44,11 +44,11 @@ namespace NibrsXml.NibrsReport
 
 
 
-                var nibrsXmlTransacCursor = await Collection.FindAsync(Builders<NIbrsXmlTransaction>.Filter.And(reUploadFilter));
+                var nibrsXmlTransacCursor = await Collection.FindAsync(Builders<NibrsXmlTransaction>.Filter.And(reUploadFilter));
                 
                 var result = await nibrsXmlTransacCursor.ToListAsync();
 
-                foreach (NIbrsXmlTransaction nibrsXmlTransaction in result)
+                foreach (NibrsXmlTransaction nibrsXmlTransaction in result)
                 {
                     Submission submission = nibrsXmlTransaction.Submission;
                     

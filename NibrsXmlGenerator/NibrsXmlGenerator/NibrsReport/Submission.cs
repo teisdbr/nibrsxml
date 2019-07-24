@@ -155,7 +155,7 @@ namespace NibrsXml.NibrsReport
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.Sendreport(submission.Xml);
+                var response = NibrsSubmitter.SendReport(submission.Xml);
 
                 var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
 
@@ -163,14 +163,14 @@ namespace NibrsXml.NibrsReport
 
                 // Wrap both response and submission and then save to database 
 
-                NIbrsXmlTransaction NIbrsXmlTransaction = new NIbrsXmlTransaction(submission, response, status );
+                NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response );
 
                 AppSettingsReader objAppsettings = new AppSettingsReader();
 
                 var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
 
                 // save to mongodb  
-                nibrsDb.Submissions.InsertOne(NIbrsXmlTransaction);
+                nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
 
                
             }

@@ -33,7 +33,7 @@ namespace NibrsXml.DataAccess
         public SubmissionCollection Submissions
         {
             //get { return new SubmissionCollection(_db.GetCollection<Submission>(CollectionName.Submission)); }
-            get { return new SubmissionCollection(_db.GetCollection<NIbrsXmlTransaction>(CollectionName.ModifiedTest)); }
+            get { return new SubmissionCollection(_db.GetCollection<NibrsXmlTransaction>(CollectionName.ModifiedTest)); }
 
         }
 
