@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NibrsInterface;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using NibrsInterface;
 
 namespace NibrsXml.NibrsReport
 {
   [BsonIgnoreExtraElements]
-  
   public  class NIbrsXmlTransaction
   {
        
@@ -21,38 +20,47 @@ namespace NibrsXml.NibrsReport
 
         public Submission Submission { get; set; }  = new Submission();
 
-        public DateTime TransactionDate { get; set; }
+        public DateTime TransactionDate { get; private set; }
 
-        [JsonIgnore]
+
+        public int NumberOfAttempts { get; private set; }
+
+        public NibrsXmlSubmissionResponse NibrsSubmissionResponse { get; private set; } = new NibrsXmlSubmissionResponse();
+
+        /// <summary>
+        /// This property will Analyize the Response and give the status of the Response.
+        /// </summary>
         [BsonIgnore]
-        private NibrsXmlSubmissionResponse _NibrsSubmissionResponse = new NibrsXmlSubmissionResponse();
+        [JsonIgnore]
+        public string Status { get => NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse); }
 
-        public NibrsXmlSubmissionResponse NibrsSubmissionResponse
+        [JsonConstructor]
+        public NIbrsXmlTransaction()
         {
-            get => _NibrsSubmissionResponse;
-
-            set
-            {
-               
-            }
-        } 
-
-        public string Status { get; }
-
-        public int NumberOfAttempts { get; set; }
-
-
+           
+        }
 
         public NIbrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
         {
             Id = submission.Id;
             Submission = submission;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
+            TransactionDate = DateTime.Now;          
+            NumberOfAttempts =  1;
+        }
+
+        /// <summary>
+        /// Call this method only to update the new FBI response.
+        /// </summary>
+        /// <param name="nibrsSubmissionResponse"></param>
+        public void SetNibrsXmlSubmissionResponse(NibrsXmlSubmissionResponse nibrsSubmissionResponse)
+        {
+            NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
-           
+            NumberOfAttempts += 1;
             //NumberOfAttempts = numberOfAttempts + 1;
         }
 
-       
+
     }
 }
