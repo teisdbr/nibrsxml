@@ -1,11 +1,9 @@
-﻿using NibrsInterface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace NibrsXml.NibrsReport
+namespace NibrsInterface
 {
     public class NibrsResponseAnalyzer
     {
@@ -14,16 +12,14 @@ namespace NibrsXml.NibrsReport
             if (response != null)
             {
                 if (response.NibrsResponse != null && response.NibrsResponse.success)
-                    return "Accepted";
+                    return "accepted";
                 if (response.NibrsResponse != null && response.NibrsResponse.success == false)
-                    return "Rejected";
+                    return "rejected";
                 if (response.NibrsResponse == null && response.IsFileValid)
-                    return "UploadFailed";
+                    return "uploadFailed";
                 if (response.IsFileValid == false)
-                    return "FormatError";
+                    return "formatError";
             }
-
-
             return null;
         }
     }
