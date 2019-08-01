@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Threading.Tasks;
 using NibrsInterface;
 using System.Xml;
 using MongoDB.Bson.IO;
 using System.Xml.Linq;
 
-
+// TODO: We can remove this class, once we do through LCRx WebapiCore
 
 namespace NibrsXml.NibrsReport
 {

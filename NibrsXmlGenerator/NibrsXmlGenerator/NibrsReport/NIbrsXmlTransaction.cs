@@ -30,18 +30,31 @@ namespace NibrsXml.NibrsReport
         /// <summary>
         /// This property will Analyize the Response and give the status of the Response.
         /// </summary>
-        [BsonIgnore]
-        [JsonIgnore]
-        public string Status { get => NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse); }
+        public string Status { get; private set; }
+
+        /// <summary>
+        /// This property will indicate if there are any operations happening on this document. No operations are happening if Id is Null.
+        /// </summary>
+        public string ProcessingId { get; set; }
+
+
 
         [JsonConstructor]
-        private NibrsXmlTransaction(NibrsXmlSubmissionResponse nibrsSubmissionResponse, DateTime TransactionDate, int NumberOfAttempts)
+        private NibrsXmlTransaction(NibrsXmlSubmissionResponse nibrsSubmissionResponse, DateTime transactionDate, int numberOfAttempts, string status)
         {
-            this.TransactionDate = TransactionDate;
-            this.NibrsSubmissionResponse = nibrsSubmissionResponse;
-            this.NumberOfAttempts = NumberOfAttempts;
+            TransactionDate = transactionDate;
+            NibrsSubmissionResponse = nibrsSubmissionResponse;
+            NumberOfAttempts = numberOfAttempts;
+            Status = status;
         }
 
+
+
+        /// <summary>
+        /// Use this Constructor when trying create a new NibrsXml Inicident Transaction
+        /// </summary>
+        /// <param name="submission"></param>
+        /// <param name="nibrsSubmissionResponse"></param>
         public NibrsXmlTransaction(Submission submission, NibrsXmlSubmissionResponse nibrsSubmissionResponse)
         {
             Id = submission.Id;
@@ -49,10 +62,11 @@ namespace NibrsXml.NibrsReport
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;          
             NumberOfAttempts =  1;
+            Status = NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse);
         }
 
         /// <summary>
-        /// Call this method only to update the new FBI response.
+        /// Call this method only to update the new FBI response to the exsisting NibrsXmlTransaction. Eg:- To Update the response after re-attempt.
         /// </summary>
         /// <param name="nibrsSubmissionResponse"></param>
         public void SetNibrsXmlSubmissionResponse(NibrsXmlSubmissionResponse nibrsSubmissionResponse)
@@ -60,8 +74,12 @@ namespace NibrsXml.NibrsReport
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
             NumberOfAttempts += 1;
+            Status = NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse);
             //NumberOfAttempts = numberOfAttempts + 1;
         }
+
+
+
 
 
     }
