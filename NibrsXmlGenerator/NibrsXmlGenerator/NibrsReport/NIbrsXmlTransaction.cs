@@ -33,7 +33,7 @@ namespace NibrsXml.NibrsReport
         public string Status { get; private set; }
 
         /// <summary>
-        /// This property will indicate if there are any operations happening on this document. No operations are happening if Id is Null.
+        /// This property will indicate if there are any operations happening on this document. No operations are happening if ProcessingId is Null.
         /// </summary>
         public string ProcessingId { get; set; }
 

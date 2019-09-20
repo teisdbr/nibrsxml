@@ -103,6 +103,7 @@
     <Compile Include="Constants\Namespace.cs" />
     <Compile Include="Constants\NibrsCodeGroups.cs" />
     <Compile Include="Constants\NibrsCodes.cs" />
+    <Compile Include="Constants\NibrsSubmissionStatusCodes.cs" />
     <Compile Include="Constants\Ucr\UcrCodeGroups.cs" />
     <Compile Include="DataAccess\Collection\SubmissionCollection.cs" />
     <Compile Include="DataAccess\DatabaseClient.cs" />

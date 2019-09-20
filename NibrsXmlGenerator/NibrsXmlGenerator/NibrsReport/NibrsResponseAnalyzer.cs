@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NibrsXml.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +12,16 @@ namespace NibrsInterface
         {
             if (response != null)
             {
-                if (response.NibrsResponse != null && response.NibrsResponse.success)
-                    return "accepted";
-                if (response.NibrsResponse != null && response.NibrsResponse.success == false)
-                    return "rejected";
+                if (response.NibrsResponse != null && response.NibrsResponse.ingestResponse.status == "ACCEPTED")
+                    return NibrsSubmissionStatusCodes.Accepted;
+                if (response.NibrsResponse != null && response.NibrsResponse.ingestResponse.status != "ACCEPTED")
+                    return  NibrsSubmissionStatusCodes.Rejected; ;
                 if (response.NibrsResponse == null && response.IsFileValid)
-                    return "uploadFailed";
+                    return   NibrsSubmissionStatusCodes.UploadFailed; ;
                 if (response.IsFileValid == false)
-                    return "formatError";
+                    return  NibrsSubmissionStatusCodes.FormatError; ;
             }
-            return null;
+            return "noResponse";
         }
     }
 }

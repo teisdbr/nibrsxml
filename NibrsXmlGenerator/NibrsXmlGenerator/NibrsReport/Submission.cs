@@ -170,7 +170,7 @@ namespace NibrsXml.NibrsReport
                 var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
 
                 // save to mongodb  
-                nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
+            //    nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
 
                
             }
