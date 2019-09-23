@@ -24,10 +24,15 @@ namespace NibrsXml.NibrsReport.Subject
             string uniquePrefix)
         {
             Person = person;
+            if(Person != null)
             Role = new RoleOfPerson(Person.Id);
-            this.SeqNum = int.Parse(seqNum).ToString();
-            this.Id = uniquePrefix + "Subject" + this.SeqNum;
+            this.SeqNum = seqNum.Substring(0);
+            this.Id = uniquePrefix + "Subject" + int.Parse(seqNum);
         }
+
+
+       
+
 
         [XmlIgnore] public Person.Person Person { get; set; }
 

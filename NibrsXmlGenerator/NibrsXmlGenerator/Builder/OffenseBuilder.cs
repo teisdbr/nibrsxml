@@ -81,7 +81,7 @@ namespace NibrsXml.Builder
                 offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
                 offenseReport.EntryPoint = offense.First().MethodOfEntry.TryBuild<OffenseEntryPoint>();
-                offenseReport.Forces = ExtractNibrsOffenseForces(offense.First());
+                offenseReport.Forces = ExtractNibrsOffenseForces(offense.First(), offenseReport.UcrCode);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense.First());
                 // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
                 offenseReport.Location = new Location(offense.First().LocationType, uniqueReportPrefix);
@@ -157,14 +157,25 @@ namespace NibrsXml.Builder
             return offenseFactors;
         }
 
-        private static List<OffenseForce> ExtractNibrsOffenseForces(LIBRSOffense offense)
+        private static List<OffenseForce> ExtractNibrsOffenseForces(LIBRSOffense offense, string nibrsCode)
         {
-            var nibrsOffenseForces = new List<OffenseForce>();
-            nibrsOffenseForces.TryAdd(
+            // Librs accepts force code "99" for the offenses that doesn't require Weapon/Force code. But FBI (Nibrs) expects the code to be empty.
+            // So created a list for the offenses that require force codes, to omit out force code that doesn't require one.
+            var offensesRequireForceCode = new HashSet<string>
+            {
+                 "09A", "09B", "09C", "100", "11A", "11B", "11C", "11D", "120", "13A", "13B", "210", "520", "64A", "64B"                
+                 
+            };
+           
+           var nibrsOffenseForces = new List<OffenseForce>();
+            if(offensesRequireForceCode.Contains(nibrsCode)){
+                nibrsOffenseForces.TryAdd(
                 offense.WeaponForce1.Trim().TryBuild<OffenseForce>(),
                 offense.WeaponForce2.Trim().TryBuild<OffenseForce>(),
                 offense.WeaponForce3.Trim().TryBuild<OffenseForce>());
-            return nibrsOffenseForces;
+                return nibrsOffenseForces;
+            }
+            return null;            
         }
 
         private static string ExtractNibrsAttemptedIndicator(LIBRSOffense offense)
