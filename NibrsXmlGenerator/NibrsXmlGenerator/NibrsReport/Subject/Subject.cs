@@ -26,7 +26,7 @@ namespace NibrsXml.NibrsReport.Subject
             Person = person;
             if(Person != null)
             Role = new RoleOfPerson(Person.Id);
-            this.SeqNum = seqNum.Substring(0);
+            this.SeqNum = seqNum.Substring(1);
             this.Id = uniquePrefix + "Subject" + int.Parse(seqNum);
         }
 

@@ -228,7 +228,7 @@ namespace NibrsXml.Builder
                     {
                         //Find matching subjects
                         var matchingSubjects =
-                            subjects.Where(subject => subject.SeqNum == int.Parse(relatedOffender.OffenderNumberRelated).ToString());
+                            subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated.Substring(1));
 
                        
 
