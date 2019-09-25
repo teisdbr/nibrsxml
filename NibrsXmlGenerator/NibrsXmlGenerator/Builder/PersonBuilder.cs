@@ -171,6 +171,7 @@ namespace NibrsXml.Builder
 
             #region Subjects
 
+
             foreach (var offender in incident.Offender)
             {
                 if(offender.OffenderSeqNum != "000")
@@ -201,7 +202,7 @@ namespace NibrsXml.Builder
                 else
                 {
                      //Create new subject for Unknow Subject
-                    var newSubject = new Subject(null, "00", uniquePrefix);
+                    var newSubject = new Subject(null, "000", uniquePrefix);
                     subjects.Add(newSubject);
                 }
                 
