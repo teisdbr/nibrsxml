@@ -218,7 +218,7 @@ namespace NibrsXml.Builder
                         ((ItemStatusCode) Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
                     // todo: ??? May need to also create the minimal Item within condition for when the Property Loss Type (ItemStatusCode) is Unknown (8) 
-                    if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode())
+                    if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode() || nibrsItemStatusCode == ItemStatusCode.UNKNOWN.NibrsCode())
                     {
                         nibrsItems.Add(new Item(
                             nibrsItemStatusCode,
