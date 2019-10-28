@@ -107,5 +107,10 @@ namespace NibrsXml.NibrsReport.Victim
         {
             get { return new Victim(Id); }
         }
+
+        // This property can be used to know offender's offense from VictimOffenderAssociation
+        [XmlIgnore]
+        [JsonIgnore]
+        public Offense.Offense AssociatedOffense { get; set; }
     }
 }

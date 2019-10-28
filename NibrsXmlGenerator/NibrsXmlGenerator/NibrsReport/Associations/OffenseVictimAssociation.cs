@@ -15,7 +15,9 @@ namespace NibrsXml.NibrsReport.Associations
             OffenseRef = offense.Reference;
             VictimRef = victim.Reference;
             RelatedVictim = victim;
+            victim.AssociatedOffense = offense;
             RelatedOffense = offense;
+
         }
 
         public OffenseVictimAssociation(string offenseRef, string victimRef)

@@ -21,6 +21,7 @@ namespace NibrsXml.NibrsReport.Person
             string raceCode,
             string residentCode,
             string sexCode,
+            string personType,
             PersonAugmentation augmentation)
         {
             Id = id;
@@ -30,6 +31,7 @@ namespace NibrsXml.NibrsReport.Person
             ResidentCode = residentCode == null ? null : residentCode.TrimNullIfEmpty();
             SexCode = sexCode == null ? null : sexCode.TrimNullIfEmpty();
             Augmentation = augmentation;
+            PersonType = personType;
         }
 
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
@@ -52,6 +54,12 @@ namespace NibrsXml.NibrsReport.Person
 
         [XmlElement("PersonAugmentation", Namespace = Namespaces.justice, Order = 7)]
         public PersonAugmentation Augmentation { get; set; }
+
+
+        
+        [XmlIgnore]
+        [JsonIgnore]
+        public string PersonType { get; set; }
 
         [BsonIgnore]
         [XmlIgnore]

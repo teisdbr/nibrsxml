@@ -149,6 +149,7 @@ namespace NibrsXml.NibrsReport
             
             foreach (var submission in submissions)
             {
+               
                 
                 // Save locally
                 submission.XsiSchemaLocation = nibrsSchemaLocation;

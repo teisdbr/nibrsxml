@@ -26,9 +26,10 @@ namespace NibrsXml.Builder
             string raceCode,
             string residentCode,
             string sexCode,
+            string personType,
             PersonAugmentation augmentation){
 
-                return new Person(id+"Person"+PersonSeqNum++, ageMeasure, ethnicityCode, raceCode, residentCode, sexCode, augmentation
+                return new Person(id+"Person"+PersonSeqNum++, ageMeasure, ethnicityCode, raceCode, residentCode, sexCode, personType, augmentation 
                     );
 
         }
@@ -71,7 +72,10 @@ namespace NibrsXml.Builder
                         raceCode: victim.Race,
                         residentCode: victim.ResidentStatus,
                         sexCode: victim.Sex,
-                        augmentation: LibrsAgeCodeParser(victim.Age));
+                        augmentation: LibrsAgeCodeParser(victim.Age),
+                        personType: "Victim"                        
+                        );
+                    
 
                     // First create the new list of aggravated assault homicide to use when creating the new victim
                                      
@@ -171,42 +175,29 @@ namespace NibrsXml.Builder
 
             #region Subjects
 
-
             foreach (var offender in incident.Offender)
             {
-                if(offender.OffenderSeqNum != "000")
-                {
-                    //Create new person
-                    var newPerson =
-                        BuildPerson(
-                            id: uniquePrefix,
-                            ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
-                            ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
-                            ? offender.Ethnicity
-                            : EthnicityCode.UNKNOWN.NibrsCode(),
-                            raceCode: offender.Race,
-                            residentCode: ResidentCode.UNKNOWN.NibrsCode(),
-                            sexCode: offender.Sex,
-                            augmentation: null //This person should never be a NB, BB, or NN.
-                        );
+                //Create new person
+                var newPerson =
+                    BuildPerson(
+                        id: uniquePrefix,
+                        ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
+                        ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
+                        ? offender.Ethnicity
+                        : EthnicityCode.UNKNOWN.NibrsCode(),
+                        raceCode: offender.Race,
+                        residentCode: ResidentCode.UNKNOWN.NibrsCode(),
+                        sexCode: offender.Sex,
+                        personType: "Offender",
+                        augmentation: null //This person should never be a NB, BB, or NN.
+                    ); ;
 
-                    //Create new subject
-                    var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
+                //Create new subject
+                var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
 
-
-                    //Add each of the new objects above to their respective lists
-                    persons.Add(newPerson);
-                    subjects.Add(newSubject);
-
-                }
-                else
-                {
-                     //Create new subject for Unknow Subject
-                    var newSubject = new Subject(null, "000", uniquePrefix);
-                    subjects.Add(newSubject);
-                }
-                
-
+                //Add each of the new objects above to their respective lists
+                persons.Add(newPerson);
+                subjects.Add(newSubject);
             }
 
             #endregion
@@ -229,7 +220,7 @@ namespace NibrsXml.Builder
                     {
                         //Find matching subjects
                         var matchingSubjects =
-                            subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated.Substring(1));
+                            subjects.Where(subject => subject.SeqNum == int.Parse(relatedOffender.OffenderNumberRelated).ToString());
 
                        
 
@@ -287,6 +278,7 @@ namespace NibrsXml.Builder
                             raceCode: librsArrestee.Race,
                             residentCode: librsArrestee.ResidentStatus,
                             sexCode: librsArrestee.Sex,
+                            personType: "Arrestee",
                             augmentation: LibrsAgeCodeParser(librsArrestee.Age)),
                         seqId: librsArrestee.ArrestSeqNum,
                         clearanceIndicator:
@@ -322,13 +314,13 @@ namespace NibrsXml.Builder
 
         public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
-            //Integer to hold possible estimated age.
+            // Integer to hold possible estimated age.
             int calculatedAge;
 
-            //Make sure the first two digit values are a valid integer.
+            // Make sure the first two digit values are a valid integer.
             int.TryParse(age.Substring(0, 2), out calculatedAge);
 
-            //Do not create a PersonAgeMeasure if no valid integer age was obtained
+            // Do not create a PersonAgeMeasure if no valid integer age was obtained
             if (calculatedAge == 0 || age == "NB" || age == "BB" || age == "NN")
             {
 
