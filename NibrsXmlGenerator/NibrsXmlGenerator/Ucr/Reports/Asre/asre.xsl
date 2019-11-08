@@ -110,7 +110,12 @@
               <tr>
                 <th colspan="2">
                   Age, Sex, Race, and Ethnicity of Persons Arrested, All Age Groups<br/>
-                  (includes those released without having been charged formally)
+                  (includes those released without having been charged formally) <br/>
+                  <p style="font-size:13px">
+                    <em>Notice: Incidents that contain any errors will be (either in part or totality) omitted from the UCR submission file.
+                    Be sure to resolve any errors listed in the Error Report, and check the numbers match your totals in IBR.
+                    More information can be found under "How does Lemis IBR validate state reporting?" here: <a href="http://www.crimeinla.org/lemis-faq/">http://www.crimeinla.org/lemis-faq/</a></em><br/>
+                  </p>
                 </th>
               </tr>
               <tr>
