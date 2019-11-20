@@ -232,10 +232,26 @@ namespace NibrsXml.NibrsReport
                 VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())).ToArray();
 
             //Rebuild persons
-            foreach (var arrestee in Arrestees) arrestee.Person = Persons.First(p => p.Id == arrestee.Role.PersonId);
-            foreach (var leo in Officers) leo.Person = Persons.First(p => p.Id == leo.Role.PersonId);
-            foreach (var subject in Subjects) subject.Person = Persons.First(p => p.Id == subject.Role.PersonId);
-            foreach (var victim in personVictims) victim.Person = Persons.First(p => p.Id == victim.Role.PersonId);
+            foreach (var arrestee in Arrestees)
+            {
+                arrestee.Person = Persons.First(p => p.Id == arrestee.Role.PersonId);
+                arrestee.Person.PersonType = "Arrestee";
+            }
+            foreach (var leo in Officers)
+            {
+                leo.Person = Persons.First(p => p.Id == leo.Role.PersonId);
+                leo.Person.PersonType = "Victim";
+            }
+            foreach (var subject in Subjects)
+            {
+                subject.Person = Persons.First(p => p.Id == subject.Role.PersonId);
+                subject.Person.PersonType = "Offender";
+            }
+            foreach (var victim in personVictims)
+            {
+                victim.Person = Persons.First(p => p.Id == victim.Role.PersonId);
+                victim.Person.PersonType = "Victim";
+            }
 
             //Rebuild associations
             foreach (var assoc in ArrestSubjectAssocs)
@@ -254,13 +270,17 @@ namespace NibrsXml.NibrsReport
             foreach (var assoc in OffenseVictimAssocs)
             {
                 assoc.RelatedOffense = Offenses.First(o => o.Id == assoc.OffenseRef.OffenseRef);
-                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                // Association doesnt make any sense 
+                //assoc.RelatedVictim = personVictims.FirstOrDefault(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                assoc.RelatedVictim = Victims.First(v => v.Id == assoc.VictimRef.VictimRef);
+                assoc.RelatedVictim.AssociatedOffense = assoc.RelatedOffense;          
+                
             }
 
             foreach (var assoc in SubjectVictimAssocs)
             {
-                assoc.RelatedSubject = Subjects.First(s => s.Role.PersonId == assoc.SubjectRef.SubjectRef);
-                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                assoc.RelatedSubject = Subjects.First(s => s.Id == assoc.SubjectRef.SubjectRef);
+                assoc.RelatedVictim = Victims.First(v => v.Id == assoc.VictimRef.VictimRef);
             }
         }
     }

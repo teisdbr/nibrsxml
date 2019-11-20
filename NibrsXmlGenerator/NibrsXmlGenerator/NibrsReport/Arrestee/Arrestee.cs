@@ -74,7 +74,7 @@ namespace NibrsXml.NibrsReport.Arrestee
         [JsonIgnore]
         public Arrestee Reference
         {
-            get { return new Arrestee(Person.Id); }
+            get { return new Arrestee(Id); }
         }
     }
 }

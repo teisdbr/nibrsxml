@@ -57,8 +57,7 @@ namespace NibrsXml.NibrsReport.Person
 
 
         
-        [XmlIgnore]
-        [JsonIgnore]
+        [XmlIgnore]      
         public string PersonType { get; set; }
 
         [BsonIgnore]
