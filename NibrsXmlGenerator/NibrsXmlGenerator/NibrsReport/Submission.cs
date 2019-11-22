@@ -59,7 +59,7 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore] 
         [JsonConverter(typeof(ObjectIdConverter))]
         // Removed Bson Ignore to save the value in the MonogDB. While deserilizing using JsonDeserilzer the Json value from Json string 
-        // will be replace the NewId.
+        // will  replace the NewId.
         public ObjectId Id { get {
 
                 _id = _id == ObjectId.Empty ? ObjectId.GenerateNewId() : _id;
