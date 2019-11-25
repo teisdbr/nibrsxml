@@ -177,6 +177,8 @@ namespace NibrsXml.Builder
 
             foreach (var offender in incident.Offender)
             {
+                if(offender.OffenderSeqNum != "000")
+                {
                 //Create new person
                 var newPerson =
                     BuildPerson(
@@ -199,6 +201,15 @@ namespace NibrsXml.Builder
                 persons.Add(newPerson);
                 subjects.Add(newSubject);
             }
+                else
+                {
+                     //Create new subject for Unknow Subject
+                    var newSubject = new Subject(null, "000", uniquePrefix);
+                    subjects.Add(newSubject);
+                }
+                
+
+            }
 
             #endregion
 
@@ -220,7 +231,7 @@ namespace NibrsXml.Builder
                     {
                         //Find matching subjects
                         var matchingSubjects =
-                            subjects.Where(subject => subject.SeqNum == int.Parse(relatedOffender.OffenderNumberRelated).ToString());
+                            subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated.Substring(1));
 
                        
 
