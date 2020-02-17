@@ -56,6 +56,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Runtime.Serialization.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
     </Reference>
@@ -238,13 +239,13 @@
       <Version>12.0.2402.15</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Driver">
-      <Version>2.10.1</Version>
+      <Version>2.10.2</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Libmongocrypt">
       <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
