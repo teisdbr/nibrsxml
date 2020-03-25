@@ -182,10 +182,10 @@
     <None Include="NibrsXsd\xsd\cjis\1.0\cjis.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd">
+    <None Include="NibrsXsd\xsd\nibrs\4.2\nibrs-codes.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs.xsd">
+    <None Include="NibrsXsd\xsd\nibrs\4.2\nibrs.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
@@ -200,9 +200,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.2\fbi_ucr.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
       <SubType>Designer</SubType>
@@ -212,9 +211,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
+    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.2\jxdm.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
       <SubType>Designer</SubType>

@@ -69,12 +69,12 @@ namespace NibrsXml.Ucr.DataMining
                 //Get IDs first because we need to filter out duplicate victim IDs in the event a single victim is associated to many offenses
                 var victimsIds = report.OffenseVictimAssocs
                     .Where(ov => offenseIds.Contains(ov.RelatedOffense.Id))
-                    .Select(ov => ov.RelatedVictim.Person.Id)
+                    .Select(ov => ov.RelatedVictim.Id)
                     .Distinct()
                     .ToList();
 
                 var victims = report.Victims
-                    .Where(v => victimsIds.Contains(v.Person.Id))
+                    .Where(v => victimsIds.Contains(v.Id))
                     .ToList();
 
                 //Get victim types

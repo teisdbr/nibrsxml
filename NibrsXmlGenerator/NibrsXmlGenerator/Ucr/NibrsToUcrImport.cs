@@ -33,13 +33,13 @@ namespace NibrsXml.Ucr
                     new KeyValuePair<string, string>("http://fbi.gov/cjis/1.0", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\cjis\1.0\cjis.xsd"),
                     new KeyValuePair<string, string>("http://fbi.gov/cjis/cjis-codes/1.0", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\cjis\1.0\cjis-codes.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/appinfo/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd"),
-                    new KeyValuePair<string, string>("http://release.niem.gov/niem/codes/fbi_ucr/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd"),
+                    new KeyValuePair<string, string>("http://release.niem.gov/niem/codes/fbi_ucr/3.2/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\codes\fbi_ucr\3.2\fbi_ucr.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/domains/jxdm/5.2/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\domains\jxdm\5.2\jxdm.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/localTerminology/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/niem-core/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\niem-core\3.0\niem-core.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/proxy/xsd/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\proxy\xsd\3.0\xs.xsd"),
                     new KeyValuePair<string, string>("http://release.niem.gov/niem/structures/3.0/", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\niem\structures\3.0\structures.xsd"),
-                    new KeyValuePair<string, string>("http://fbi.gov/cjis/nibrs/nibrs-codes/4.2", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd")
+                    new KeyValuePair<string, string>("http://fbi.gov/cjis/nibrs/nibrs-codes/4.2", ConfigurationManager.AppSettings[@"ReadDirectoryPath"] + @"NibrsXsd\xsd\nibrs\4.2\nibrs-codes.xsd")
                 };
             }
 

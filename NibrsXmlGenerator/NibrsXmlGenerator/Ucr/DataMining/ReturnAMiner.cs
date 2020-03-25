@@ -250,7 +250,7 @@ namespace NibrsXml.Ucr.DataMining
                 fauxReport.Items, //ReturnAMiner.CreateFauxItems returns a list of stolen vehicles
                 null,
                 null,
-                fauxReport.Offenses[0].Forces.Select(f => f.CategoryCode),
+                fauxReport.Offenses[0].Forces?.Select(f => f.CategoryCode),
                 doScoreColumn6);
         }
 
