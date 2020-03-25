@@ -145,7 +145,7 @@ namespace NibrsXml.Ucr
 
         public static string TranslateSupplementaryHomicideRelationship(string nibrsRelationshipCode, string nibrsSexCode)
         {
-            if (nibrsSexCode == SexCode.UNKNOWN.NibrsCode())
+            if (nibrsSexCode == SexCode.UNKNOWN.NibrsCode() || nibrsRelationshipCode == null)
                 return VictimOffenderRelationship.UnknownRelationship;
 
             return SupplementaryHomicideRelationshipDirectTranslations.TryGet(nibrsRelationshipCode) ??

@@ -130,8 +130,8 @@ namespace NibrsXml.Ucr
 
             if (report.Incident.JxdmIncidentAugmentation.IncidentExceptionalClearanceDate.YearMonthDate == null)
                 return false;
-
-            if (!report.Subjects.Any())
+            // return false if the subjects are zero or unknown
+            if (!report.Subjects.Any() || report.Subjects.All( sub => sub.SeqNum == "00"))
                 return false;
 
             allAreJuvenile = report.Subjects.All(s => s.Person.IsJuvenile);
