@@ -6,12 +6,12 @@
     public class Misc
     {
         /// <summary>
-        /// "http://fbi.gov/cjis/nibrs/4.0 ../xsd/nibrs/4.0/nibrs.xsd"
+        /// "http://fbi.gov/cjis/nibrs/4.2 ../xsd/nibrs/4.2/nibrs.xsd"
         /// </summary>
-        public const string schemaLocation = "http://fbi.gov/cjis/nibrs/4.0 ../xsd/nibrs/4.0/nibrs.xsd";
+        public const string schemaLocation = "http://fbi.gov/cjis/nibrs/4.2 ../xsd/nibrs/4.2/nibrs.xsd";
 
         //To be used only by the individual ORI xml generation.
-        public const string rootNibrsSchemaLocation = "http://fbi.gov/cjis/nibrs/4.0 ../../xsd/nibrs/4.0/nibrs.xsd";
+        public const string rootNibrsSchemaLocation = "http://fbi.gov/cjis/nibrs/4.2 ../../xsd/nibrs/4.2/nibrs.xsd";
     }
 
     /// <summary>
@@ -20,9 +20,9 @@
     internal class Namespaces
     {
         /// <summary>
-        /// "http://fbi.gov/cjis/nibrs/4.0"
+        /// "http://fbi.gov/cjis/nibrs/4.2"
         /// </summary>
-        public const string cjisNibrs = "http://fbi.gov/cjis/nibrs/4.0";
+        public const string cjisNibrs = "http://fbi.gov/cjis/nibrs/4.2";
 
         /// <summary>
         /// "http://fbi.gov/cjis/1.0"
@@ -40,14 +40,14 @@
         public const string appInfo = "http://release.niem.gov/niem/appinfo/3.0/";
 
         /// <summary>
-        /// "http://release.niem.gov/niem/codes/fbi_ucr/3.0/"
+        /// "http://release.niem.gov/niem/codes/fbi_ucr/3.2/"
         /// </summary>
-        public const string fbiUcr = "http://release.niem.gov/niem/codes/fbi_ucr/3.0/";
+        public const string fbiUcr = "http://release.niem.gov/niem/codes/fbi_ucr/3.2/";
 
         /// <summary>
-        /// "http://release.niem.gov/niem/domains/jxdm/5.1/"
+        /// "http://release.niem.gov/niem/domains/jxdm/5.2/"
         /// </summary>
-        public const string justice = "http://release.niem.gov/niem/domains/jxdm/5.1/";
+        public const string justice = "http://release.niem.gov/niem/domains/jxdm/5.2/";
 
         /// <summary>
         /// "http://release.niem.gov/niem/localTerminology/3.0/"
@@ -80,9 +80,23 @@
         public const string xsd = "http://www.w3.org/2001/XMLSchema";
 
         /// <summary>
-        /// "http://fbi.gov/cjis/nibrs/nibrs-codes/4.0"
+        /// "http://fbi.gov/cjis/nibrs/nibrs-codes/4.2"
         /// </summary>
-        public const string cjisNibrsCodes = "http://fbi.gov/cjis/nibrs/nibrs-codes/4.0";
+        public const string cjisNibrsCodes = "http://fbi.gov/cjis/nibrs/nibrs-codes/4.2";
+
+
+        /// <summary>
+        /// "http://schemas.xmlsoap.org/soap/envelope/"
+        /// </summary>
+        public const string soapenv = "http://schemas.xmlsoap.org/soap/envelope/";
+
+
+        /// <summary>
+        /// "http://ws.nibrs.ucr.cjis.fbi.gov/"
+        /// </summary>
+        public const string ws = "http://ws.nibrs.ucr.cjis.fbi.gov/";
+
+
     }
 
     /// <summary>
@@ -155,5 +169,19 @@
         /// "nibrscodes"
         /// </summary>
         public const string nibrscodes = "nibrscodes";
+
+        /// <summary>
+        /// "soapenv"
+        /// </summary>
+        public const string soapenv = "soapenv";
+
+
+        /// <summary>
+        /// "ws"
+        /// </summary>
+        public const string ws = "ws";
+
+        
+
     }
 }

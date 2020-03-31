@@ -94,7 +94,7 @@ namespace NibrsXml.NibrsSerializer
         /// </summary>
         /// <param name="serializee">The Submission or Report object to serialize</param>
         /// <returns>An XML representation of the argument object using NIBRS XML schema definitions</returns>
-        public string Serialize(NibrsSerializable serializee)
+        public string Serialize(INibrsSerializable serializee)
         { 
             var xml = "";
             using (StringWriter xmlWriter = new Utf8StringWriter())

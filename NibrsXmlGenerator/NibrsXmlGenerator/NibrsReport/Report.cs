@@ -1,16 +1,73 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
-using NibrsXml.Constants;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using NibrsXml.Constants;
+using NibrsXml.NibrsReport.Associations;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport
 {
     [XmlRoot("Report", Namespace = Namespaces.cjisNibrs)]
-    public class Report : NibrsSerializable
+    public class Report : INibrsSerializable
     {
+        [BsonIgnore] [XmlIgnore] [JsonIgnore] private static readonly NibrsSerializer.NibrsSerializer Serializer =
+            new NibrsSerializer.NibrsSerializer(typeof(Report));
+
+        [XmlElement("Person", Namespace = Namespaces.niemCore, Order = 7)]
+        public List<Person.Person> Persons;
+
+        public Report()
+        {
+            //Initialize Locations
+            Locations = new List<Location.Location>();
+
+            //Initialize Location Associations
+            OffenseLocationAssocs = new List<OffenseLocationAssociation>();
+
+            //Initialize Items
+            Items = new List<Item.Item>();
+
+            //Initialize Substances
+            Substances = new List<Substance.Substance>();
+
+            //Initialize Persons, Victims, EnforcementOfficial, Subjects, Arrestees, Arrests, ArrestSubjectAssocs ,OffenseVictimAssocs, SubjectVictimAssocs
+            Persons = new List<Person.Person>();
+            Victims = new List<Victim.Victim>();
+            Officers = new List<EnforcementOfficial.EnforcementOfficial>();
+            Subjects = new List<Subject.Subject>();
+            Arrestees = new List<Arrestee.Arrestee>();
+            Arrests = new List<Arrest.Arrest>();
+            ArrestSubjectAssocs = new List<ArrestSubjectAssociation>();
+            OffenseVictimAssocs = new List<OffenseVictimAssociation>();
+            SubjectVictimAssocs = new List<SubjectVictimAssociation>();
+        }
+
+        public Report(
+            ReportHeader.ReportHeader header,
+            Incident.Incident incident)
+        {
+            Header = header;
+            Incident = incident;
+            Offenses = new List<Offense.Offense>();
+            Locations = new List<Location.Location>();
+            Items = new List<Item.Item>();
+            Substances = new List<Substance.Substance>();
+            Persons = new List<Person.Person>();
+            Officers = new List<EnforcementOfficial.EnforcementOfficial>();
+            Victims = new List<Victim.Victim>();
+            Subjects = new List<Subject.Subject>();
+            Arrestees = new List<Arrestee.Arrestee>();
+            Arrests = new List<Arrest.Arrest>();
+            ArrestSubjectAssocs = new List<ArrestSubjectAssociation>();
+            OffenseLocationAssocs = new List<OffenseLocationAssociation>();
+            OffenseVictimAssocs = new List<OffenseVictimAssociation>();
+            SubjectVictimAssocs = new List<SubjectVictimAssociation>();
+        }
+
         [XmlElement("ReportHeader", Namespace = Namespaces.cjisNibrs, Order = 1)]
         public ReportHeader.ReportHeader Header { get; set; }
 
@@ -29,9 +86,6 @@ namespace NibrsXml.NibrsReport
         [XmlElement("Substance", Namespace = Namespaces.niemCore, Order = 6)]
         public List<Substance.Substance> Substances { get; set; }
 
-        [XmlElement("Person", Namespace = Namespaces.niemCore, Order = 7)]
-        public List<Person.Person> Persons;
-
         [XmlElement("EnforcementOfficial", Namespace = Namespaces.justice, Order = 8)]
         public List<EnforcementOfficial.EnforcementOfficial> Officers { get; set; }
 
@@ -48,123 +102,73 @@ namespace NibrsXml.NibrsReport
         public List<Arrest.Arrest> Arrests { get; set; }
 
         [XmlElement("ArrestSubjectAssociation", Namespace = Namespaces.justice, Order = 13)]
-        public List<Associations.ArrestSubjectAssociation> ArrestSubjectAssocs { get; set; }
+        public List<ArrestSubjectAssociation> ArrestSubjectAssocs { get; set; }
 
         [XmlElement("OffenseLocationAssociation", Namespace = Namespaces.justice, Order = 14)]
-        public List<Associations.OffenseLocationAssociation> OffenseLocationAssocs { get; set; }
+        public List<OffenseLocationAssociation> OffenseLocationAssocs { get; set; }
 
         [XmlElement("OffenseVictimAssociation", Namespace = Namespaces.justice, Order = 15)]
-        public List<Associations.OffenseVictimAssociation> OffenseVictimAssocs { get; set; }
+        public List<OffenseVictimAssociation> OffenseVictimAssocs { get; set; }
 
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
-        public List<Associations.SubjectVictimAssociation> SubjectVictimAssocs { get; set; }
+        public List<SubjectVictimAssociation> SubjectVictimAssocs { get; set; }
 
-        [XmlIgnore]
-        private static NibrsSerializer.NibrsSerializer serializer = new NibrsSerializer.NibrsSerializer(typeof(Report));
-
-        [XmlIgnore]
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public List<Item.Item> StolenVehicles
         {
             get
             {
-                return Items.Where(i => i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) && i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
+                return Items.Where(i =>
+                    i.NibrsPropertyCategoryCode.MatchOne(NibrsCodeGroups.VehicleProperties) &&
+                    i.Status.Code == ItemStatusCode.STOLEN.NibrsCode()).ToList();
             }
         }
 
-        [XmlIgnore]
+        [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public string Xml
         {
             get
             {
-                return Regex.Replace(serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">", "<nibrs:Report>");
+                return Regex.Replace(Serializer.Serialize(this), ".*\\n<nibrs:Report [\\w\\s\"/\\.:=\\-\\d_]+\">",
+                    "<nibrs:Report>");
             }
-        }
-        public Report() { 
-            //Initialize Locations
-            this.Locations = new List<Location.Location>();
-
-            //Initialize Location Associations
-            this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
-
-            //Initialize Items
-            this.Items = new List<Item.Item>();
-            
-            //Initialize Substances
-            this.Substances = new List<Substance.Substance>();
-
-            //Initialize Persons, Victims, EnforcementOfficial, Subjects, Arrestees, Arrests, ArrestSubjectAssocs ,OffenseVictimAssocs, SubjectVictimAssocs
-            this.Persons = new List<Person.Person>();
-            this.Victims = new List<Victim.Victim>();
-            this.Officers = new List<EnforcementOfficial.EnforcementOfficial>();
-            this.Subjects = new List<Subject.Subject>();
-            this.Arrestees = new List<Arrestee.Arrestee>();
-            this.Arrests = new List<Arrest.Arrest>();
-            this.ArrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
-            this.OffenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
-            this.SubjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
-
-        }
-
-        public Report(
-            ReportHeader.ReportHeader header,
-            Incident.Incident incident)
-        {
-            this.Header = header;
-            this.Incident = incident;
-            this.Offenses = new List<Offense.Offense>();
-            this.Locations = new List<Location.Location>();
-            this.Items = new List<Item.Item>();
-            this.Substances = new List<Substance.Substance>();
-            this.Persons = new List<Person.Person>();
-            this.Officers = new List<EnforcementOfficial.EnforcementOfficial>();
-            this.Victims = new List<Victim.Victim>();
-            this.Subjects = new List<Subject.Subject>();
-            this.Arrestees = new List<Arrestee.Arrestee>();
-            this.Arrests = new List<Arrest.Arrest>();
-            this.ArrestSubjectAssocs = new List<Associations.ArrestSubjectAssociation>();
-            this.OffenseLocationAssocs = new List<Associations.OffenseLocationAssociation>();
-            this.OffenseVictimAssocs = new List<Associations.OffenseVictimAssociation>();
-            this.SubjectVictimAssocs = new List<Associations.SubjectVictimAssociation>();
         }
 
         public void AddOffenses(params Offense.Offense[] offenses)
         {
             foreach (var offense in offenses)
-                this.Offenses.Add(offense);
+                Offenses.Add(offense);
         }
 
         public void AddLocations(params Location.Location[] locations)
         {
             foreach (var location in locations)
-                this.Locations.Add(location);
+                Locations.Add(location);
         }
 
         public void AddItems(params Item.Item[] items)
         {
             foreach (var item in items)
-                this.Items.Add(item);
+                Items.Add(item);
         }
 
         public void AddSubstances(params Substance.Substance[] substances)
         {
             foreach (var substance in substances)
-                this.Substances.Add(substance);
+                Substances.Add(substance);
         }
 
         public void AddEnforcementOfficials(params EnforcementOfficial.EnforcementOfficial[] officers)
         {
-            foreach (var officer in officers)
-            {
-                this.Officers.Add(officer);
-            }
+            foreach (var officer in officers) Officers.Add(officer);
         }
 
         public void AddVictims(params Victim.Victim[] victims)
         {
             foreach (var victim in victims)
             {
-                this.Victims.Add(victim);
-                this.Persons.Add(victim.Person);
+                Victims.Add(victim);
+                Persons.Add(victim.Person);
             }
         }
 
@@ -172,8 +176,8 @@ namespace NibrsXml.NibrsReport
         {
             foreach (var subject in subjects)
             {
-                this.Subjects.Add(subject);
-                this.Persons.Add(subject.Person);
+                Subjects.Add(subject);
+                Persons.Add(subject.Person);
             }
         }
 
@@ -181,62 +185,79 @@ namespace NibrsXml.NibrsReport
         {
             foreach (var arrestee in arrestees)
             {
-                this.Arrestees.Add(arrestee);
-                this.Persons.Add(arrestee.Person);
+                Arrestees.Add(arrestee);
+                Persons.Add(arrestee.Person);
             }
         }
 
         public void AddArrests(params Arrest.Arrest[] arrests)
         {
             foreach (var arrest in arrests)
-                this.Arrests.Add(arrest);
+                Arrests.Add(arrest);
         }
 
-        public void AddArrestSubjectAssociations(params Associations.ArrestSubjectAssociation[] associations)
+        public void AddArrestSubjectAssociations(params ArrestSubjectAssociation[] associations)
         {
             foreach (var association in associations)
-                this.ArrestSubjectAssocs.Add(association);
+                ArrestSubjectAssocs.Add(association);
         }
 
-        public void AddOffenseLocationAssociations(params Associations.OffenseLocationAssociation[] associations)
+        public void AddOffenseLocationAssociations(params OffenseLocationAssociation[] associations)
         {
             foreach (var association in associations)
-                this.OffenseLocationAssocs.Add(association);
+                OffenseLocationAssocs.Add(association);
         }
 
-        public void AddOffenseVictimAssociations(params Associations.OffenseVictimAssociation[] associations)
+        public void AddOffenseVictimAssociations(params OffenseVictimAssociation[] associations)
         {
             foreach (var association in associations)
-                this.OffenseVictimAssocs.Add(association);
+                OffenseVictimAssocs.Add(association);
         }
 
-        public void AddSubjectVictimAssociations(params Associations.SubjectVictimAssociation[] associations)
+        public void AddSubjectVictimAssociations(params SubjectVictimAssociation[] associations)
         {
             foreach (var association in associations)
-                this.SubjectVictimAssocs.Add(association);
+                SubjectVictimAssocs.Add(association);
         }
 
         /// <summary>
-        /// To be called only after deserialization occurs. Because of the nature of deserialization, the full context of
-        /// the associations, arrestees, enforcement officials, subjects, and victims is missing. Person objects only
-        /// have the person ref and the association objects only have the refs of the objects they associate.
+        ///     To be called only after deserialization occurs. Because of the nature of deserialization, the full context of
+        ///     the associations, arrestees, enforcement officials, subjects, and victims is missing. Person objects only
+        ///     have the person ref and the association objects only have the refs of the objects they associate.
         /// </summary>
         public void RebuildCrossReferencedRelationships()
         {
             //Get all person victims so that these loops/lambdas do not try to match victims that are business, gov't, religious org, etc.
-            var personVictims = Victims.Where(v => v.CategoryCode.MatchOne(VictimCategoryCode.INDIVIDUAL.NibrsCode(), VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())).ToArray();
+            var personVictims = Victims.Where(v => v.CategoryCode.MatchOne(VictimCategoryCode.INDIVIDUAL.NibrsCode(),
+                VictimCategoryCode.LAW_ENFORCEMENT_OFFICER.NibrsCode())).ToArray();
 
             //Rebuild persons
-            foreach (var arrestee in Arrestees) arrestee.Person = Persons.First(p => p.Id == arrestee.Role.PersonId);
-            foreach (var leo in Officers) leo.Person = Persons.First(p => p.Id == leo.Role.PersonId);
-            foreach (var subject in Subjects) subject.Person = Persons.First(p => p.Id == subject.Role.PersonId);
-            foreach (var victim in personVictims) victim.Person = Persons.First(p => p.Id == victim.Role.PersonId);
+            foreach (var arrestee in Arrestees)
+            {
+                arrestee.Person = Persons.First(p => p.Id == arrestee.Role.PersonId);
+                arrestee.Person.PersonType = "Arrestee";
+            }
+            foreach (var leo in Officers)
+            {
+                leo.Person = Persons.First(p => p.Id == leo.Role.PersonId);
+                leo.Person.PersonType = "Victim";
+            }
+            foreach (var subject in Subjects)
+            {
+                subject.Person = Persons.First(p => p.Id == subject.Role.PersonId);
+                subject.Person.PersonType = "Offender";
+            }
+            foreach (var victim in personVictims)
+            {
+                victim.Person = Persons.First(p => p.Id == victim.Role.PersonId);
+                victim.Person.PersonType = "Victim";
+            }
 
             //Rebuild associations
             foreach (var assoc in ArrestSubjectAssocs)
             {
                 assoc.RelatedArrest = Arrests.First(a => a.Id == assoc.ActivityRef.ArrestRef);
-                assoc.RelatedArrestee = Arrestees.First(a => a.Role.PersonId == assoc.SubjectRef.PersonRef);
+                assoc.RelatedArrestee = Arrestees.First(a => a.Id == assoc.SubjectRef.PersonRef);
             }
 
             foreach (var assoc in OffenseLocationAssocs)
@@ -249,13 +270,17 @@ namespace NibrsXml.NibrsReport
             foreach (var assoc in OffenseVictimAssocs)
             {
                 assoc.RelatedOffense = Offenses.First(o => o.Id == assoc.OffenseRef.OffenseRef);
-                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                // Association doesnt make any sense 
+                //assoc.RelatedVictim = personVictims.FirstOrDefault(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                assoc.RelatedVictim = Victims.First(v => v.Id == assoc.VictimRef.VictimRef);
+                assoc.RelatedVictim.AssociatedOffense = assoc.RelatedOffense;          
+                
             }
 
             foreach (var assoc in SubjectVictimAssocs)
             {
-                assoc.RelatedSubject = Subjects.First(s => s.Role.PersonId == assoc.SubjectRef.SubjectRef);
-                assoc.RelatedVictim = personVictims.First(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
+                assoc.RelatedSubject = Subjects.First(s => s.Id == assoc.SubjectRef.SubjectRef);
+                assoc.RelatedVictim = Victims.First(v => v.Id == assoc.VictimRef.VictimRef);
             }
         }
     }

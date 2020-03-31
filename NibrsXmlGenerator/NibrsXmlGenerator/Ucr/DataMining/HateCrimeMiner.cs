@@ -53,8 +53,9 @@ namespace NibrsXml.Ucr.DataMining
 
                 //Extract and translate bias motivations
                 //Note: UCR only accepts up to 5 biases per offense
+                //Nore: Excluding the NONE and UNKNOW bias motivations
                 var biases = offLocGroup
-                    .SelectMany(ol => ol.RelatedOffense.FactorBiasMotivationCodes)
+                    .SelectMany(ol => ol.RelatedOffense.FactorBiasMotivationCodes).Where( bias => bias != "UNKNOWN" && bias != "NONE")
                     .Distinct()
                     .Take(5)
                     .Select(bias => Translate.HateCrimeBiasMotivationTranslations[bias])
@@ -69,12 +70,12 @@ namespace NibrsXml.Ucr.DataMining
                 //Get IDs first because we need to filter out duplicate victim IDs in the event a single victim is associated to many offenses
                 var victimsIds = report.OffenseVictimAssocs
                     .Where(ov => offenseIds.Contains(ov.RelatedOffense.Id))
-                    .Select(ov => ov.RelatedVictim.Person.Id)
+                    .Select(ov => ov.RelatedVictim.Id)
                     .Distinct()
                     .ToList();
 
                 var victims = report.Victims
-                    .Where(v => victimsIds.Contains(v.Person.Id))
+                    .Where(v => victimsIds.Contains(v.Id))
                     .ToList();
 
                 //Get victim types
@@ -118,7 +119,7 @@ namespace NibrsXml.Ucr.DataMining
                 var offenseOffenderGroupRace = RACCode.UNKNOWN.NibrsCode();
                 var offenseOffenderGroupEthnicity = EthnicityCode.UNKNOWN.NibrsCode();
 
-                if (offenders.Count > 0 || offenders[0].SeqNum != HateCrimeConstants.UnknownOffenderSequenceCode)
+                if (offenders.Count > 0 && offenders[0].SeqNum != HateCrimeConstants.UnknownOffenderSequenceCode)
                 {
                     //Get offender counts (juvenile, adult, and total)
                     offenseJuvenileOffenderCount = offenders.Count(o => o.Person.AgeMeasure.IsJuvenile);

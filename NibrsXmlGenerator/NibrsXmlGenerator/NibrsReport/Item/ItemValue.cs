@@ -1,31 +1,34 @@
-﻿using NibrsXml.Constants;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Item
 {
     [XmlRoot("ItemValue", Namespace = Namespaces.niemCore)]
     public class ItemValue
     {
+        public ItemValue()
+        {
+        }
+
+        public ItemValue(ItemValueAmount valueAmount, ItemValueDate valueDate)
+        {
+            ValueAmount = valueAmount;
+            ValueDate = valueDate;
+        }
+
+        public ItemValue(string itemValueAmount, string itemValueDate)
+        {
+            if (itemValueAmount != null)
+                ValueAmount = new ItemValueAmount(itemValueAmount);
+            
+            if (itemValueDate != null)
+                ValueDate = new ItemValueDate(itemValueDate);
+        }
+
         [XmlElement("ItemValueAmount", Namespace = Namespaces.niemCore, Order = 1)]
         public ItemValueAmount ValueAmount { get; set; }
 
         [XmlElement("ItemValueDate", Namespace = Namespaces.niemCore, Order = 2)]
         public ItemValueDate ValueDate { get; set; }
-
-        public ItemValue() { }
-
-        public ItemValue(ItemValueAmount valueAmount, ItemValueDate valueDate)
-        {
-            this.ValueAmount = valueAmount;
-            this.ValueDate = valueDate;
-        }
-
-        public ItemValue(string itemValueAmount, string itemValueDate)
-        {
-            this.ValueAmount = new ItemValueAmount(itemValueAmount);
-            
-            if (itemValueDate != null)
-                this.ValueDate = new ItemValueDate(itemValueDate);
-        }
     }
 }

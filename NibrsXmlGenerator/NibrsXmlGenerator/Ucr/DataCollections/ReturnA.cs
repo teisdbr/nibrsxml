@@ -70,8 +70,8 @@ namespace NibrsXml.Ucr.DataCollections
         {
             //Extract force codes and sort because they codes are generally already hierarchically ordered,
             //with the exception of personal weapons (40)
-            offenseForceCodes = offenseForceCodes.OrderBy(f => f);
-            var mostDangerousWeapon = offenseForceCodes.FirstOrDefault();
+            offenseForceCodes = offenseForceCodes?.OrderBy(f => f);
+            var mostDangerousWeapon = offenseForceCodes?.FirstOrDefault();
 
             //Make sure a weapon exists, otherwise classify it as e.
             if (mostDangerousWeapon == null) return "e";
@@ -276,7 +276,7 @@ namespace NibrsXml.Ucr.DataCollections
             var victimsAndWeapons =
                 assaultVictimOffenseAssoc
                     .Select(vo => new KeyValuePair<OffenseVictimAssociation, string>(vo,
-                        ExtractWeaponGroup(vo.RelatedOffense.Forces.Select(f => f.CategoryCode)))).ToList();
+                        ExtractWeaponGroup(vo.RelatedOffense.Forces?.Select(f => f.CategoryCode)))).ToList();
 
             //--Line 4a - Firearms
             incrementer("4a", victimsAndWeapons.Count(vw => vw.Key.RelatedOffense.UcrCode == "13A" && vw.Value == "a"),

@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NibrsXml</RootNamespace>
     <AssemblyName>NibrsXml</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\winlibrs\Application\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,10 +49,17 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hello|AnyCPU'">
+    <OutputPath>bin\Hello\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Runtime.Serialization.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Builder\LibrsExtensions.cs" />
     <Compile Include="Builder\IncidentBuilder.cs" />
+    <Compile Include="Builder\MessageMetaDataBuilder.cs" />
     <Compile Include="Builder\OffenseBuilder.cs" />
     <Compile Include="Builder\PersonBuilder.cs" />
     <Compile Include="Builder\ReportBuilder.cs" />
@@ -70,16 +79,27 @@
     <Compile Include="Constants\Namespace.cs" />
     <Compile Include="Constants\NibrsCodeGroups.cs" />
     <Compile Include="Constants\NibrsCodes.cs" />
+    <Compile Include="Constants\NibrsSubmissionStatusCodes.cs" />
     <Compile Include="Constants\Ucr\UcrCodeGroups.cs" />
+    <Compile Include="DataAccess\Collection\SubmissionCollection.cs" />
+    <Compile Include="DataAccess\DatabaseClient.cs" />
+    <Compile Include="NibrsError\Error.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
     <Compile Include="NibrsReport\Arrest\Arrest.cs" />
     <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
     <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
+    <Compile Include="NibrsReport\MessageMetadata.cs" />
+    <Compile Include="NibrsReport\MessageMetadatas\MessageIdentification.cs" />
+    <Compile Include="NibrsReport\MessageMetadatas\MessageSubmittingOrganization.cs" />
+    <Compile Include="NibrsReport\NibrsResponseAnalyzer.cs" />
+    <Compile Include="NibrsReport\NibrsResubmitter.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
     <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
+    <Compile Include="NibrsReport\NIbrsXmlTransaction.cs" />
+    <Compile Include="NibrsReport\ObjectIdConvertor.cs" />
     <Compile Include="NibrsReport\Person\Person.cs" />
     <Compile Include="NibrsReport\Subject\Subject.cs" />
     <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />
@@ -162,10 +182,10 @@
     <None Include="NibrsXsd\xsd\cjis\1.0\cjis.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs-codes.xsd">
+    <None Include="NibrsXsd\xsd\nibrs\4.2\nibrs-codes.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NibrsXsd\xsd\nibrs\4.0\nibrs.xsd">
+    <None Include="NibrsXsd\xsd\nibrs\4.2\nibrs.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="NibrsXsd\xsd\niem\appinfo\3.0\appinfo.xsd">
@@ -180,9 +200,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.0\fbi_ucr.xsd">
+    <None Include="NibrsXsd\xsd\niem\codes\fbi_ucr\3.2\fbi_ucr.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\codes\unece_rec20\3.0\unece_rec20-misc.xsd">
       <SubType>Designer</SubType>
@@ -192,9 +211,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.1\jxdm.xsd">
+    <None Include="NibrsXsd\xsd\niem\domains\jxdm\5.2\jxdm.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NibrsXsd\xsd\niem\localTerminology\3.0\localTerminology.xsd">
       <SubType>Designer</SubType>
@@ -214,7 +232,20 @@
     </None>
     <EmbeddedResource Include="Ucr\Reports\IncidentsAcceptedOrRejected\incidents.xslt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ReportViewer.Runtime.Common">
+      <Version>12.0.2402.15</Version>
+    </PackageReference>
+    <PackageReference Include="MongoDB.Driver">
+      <Version>2.10.2</Version>
+    </PackageReference>
+    <PackageReference Include="MongoDB.Libmongocrypt">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
     <Content Include="NibrsXsd\xml\nibrs2.xml" />
@@ -252,9 +283,13 @@
       <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
       <Name>XmlValidator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\WinLibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
+    <ProjectReference Include="..\..\..\winlibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\winlibrs\Application\NibrsInterface\NibrsInterface.csproj">
+      <Project>{d76c22d9-fa27-440e-8cb4-01eff97ebd25}</Project>
+      <Name>NibrsInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -262,18 +297,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

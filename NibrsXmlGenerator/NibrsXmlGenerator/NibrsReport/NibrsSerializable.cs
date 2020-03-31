@@ -1,6 +1,7 @@
 ﻿namespace NibrsXml.NibrsReport
 {
-    public interface NibrsSerializable
+    public interface INibrsSerializable
     {
+       
     }
 }

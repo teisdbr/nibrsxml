@@ -8,11 +8,30 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
     [XmlRoot("EnforcementOfficial", Namespace = Namespaces.justice)]
     public class EnforcementOfficial
     {
-        [XmlIgnore]
-        public Person.Person Person { get; set; }
+        public EnforcementOfficial()
+        {
+        }
 
-        [XmlIgnore]
-        public string VictimSeqNum { get; set; }
+        public EnforcementOfficial(
+            Person.Person person,
+            string victimSeqNum,
+            string activityCategoryCode,
+            string assignmentCategoryCode,
+            string agencyOri)
+        {
+            Person = person;
+            VictimSeqNum = victimSeqNum;
+            Role = new RoleOfPerson(Person.Id);
+            ActivityCategoryCode = activityCategoryCode;
+            AssignmentCategoryCode = assignmentCategoryCode;
+            if (agencyOri != null && agencyOri.HasValue(true))
+                Unit = new EnforcementOfficialUnit(
+                    new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
+        }
+
+        [XmlIgnore] public Person.Person Person { get; set; }
+
+        [XmlIgnore] public string VictimSeqNum { get; set; }
 
         [XmlElement("RoleOfPerson", Namespace = Namespaces.niemCore, Order = 1)]
         public RoleOfPerson Role { get; set; }
@@ -25,23 +44,5 @@ namespace NibrsXml.NibrsReport.EnforcementOfficial
 
         [XmlElement("EnforcementOfficialUnit", Namespace = Namespaces.justice, Order = 4)]
         public EnforcementOfficialUnit Unit { get; set; }
-
-        public EnforcementOfficial() { }
-
-        public EnforcementOfficial(
-            Person.Person person,
-            string victimSeqNum,
-            string activityCategoryCode,
-            string assignmentCategoryCode,
-            string agencyOri)
-        {
-            this.Person = person;
-            this.Person.Id += "PersonVictim" + victimSeqNum.TrimStart('0').ToString();
-            this.VictimSeqNum = victimSeqNum;
-            this.Role = new RoleOfPerson(this.Person.Id);
-            this.ActivityCategoryCode = activityCategoryCode;
-            this.AssignmentCategoryCode = assignmentCategoryCode;
-            if (agencyOri != null && agencyOri.HasValue(trim: true)) this.Unit = new EnforcementOfficialUnit(new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri)));
-        }
     }
 }

@@ -31,7 +31,7 @@ namespace NibrsXml.Utility
         }
     }
 
-    internal class NibrsCodeAttribute : NibrsDescriptionAttribute
+    public class NibrsCodeAttribute : NibrsDescriptionAttribute
     {
         public NibrsCodeAttribute(string description) : base(description) { }
 
@@ -41,7 +41,7 @@ namespace NibrsXml.Utility
         }
     }
 
-    internal class CodeDescriptionAttribute : NibrsDescriptionAttribute
+    public class CodeDescriptionAttribute : NibrsDescriptionAttribute
     {
         public CodeDescriptionAttribute(string description) : base(description) { }
 

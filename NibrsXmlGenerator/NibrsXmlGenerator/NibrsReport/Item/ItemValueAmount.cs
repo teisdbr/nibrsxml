@@ -1,23 +1,26 @@
-﻿using NibrsXml.Constants;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport.Item
 {
     [XmlRoot("ItemValueAmount", Namespace = Namespaces.niemCore)]
-	public class ItemValueAmount
+    public class ItemValueAmount
     {
-        [XmlElement("Amount", Namespace = Namespaces.niemCore)]
-        public string Amount { get; set; }
-
-        public ItemValueAmount() { }
+        public ItemValueAmount()
+        {
+        }
 
         public ItemValueAmount(int amount)
         {
-            this.Amount = amount.ToString();
+            Amount = amount.ToString();
         }
+
         public ItemValueAmount(string amount)
         {
-            this.Amount = amount;
+            Amount = amount;
         }
+
+        [XmlElement("Amount", Namespace = Namespaces.niemCore)]
+        public string Amount { get; set; }
     }
 }

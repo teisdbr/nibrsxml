@@ -1,6 +1,7 @@
 ﻿using System;
-using NibrsXml.Constants;
 using System.Xml.Serialization;
+using NibrsXml.Constants;
+using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Item
 {
@@ -32,8 +33,12 @@ namespace NibrsXml.NibrsReport.Item
         public Item(string statusCode, string valueAmount, string valueDate, string nibrsPropCategCode, string quantity)
         {
             this.Status = new ItemStatus(statusCode);
-            this.Value = new ItemValue(valueAmount, valueDate);
+            if ((valueAmount != null || valueDate != null))
+                this.Value = new ItemValue(valueAmount, valueDate);
             this.NibrsPropertyCategoryCode = nibrsPropCategCode;
+
+            // Ignore quntity if ItemStatusCode is not Stolen or Recovered
+            if (statusCode == ItemStatusCode.STOLEN.NibrsCode() || statusCode == ItemStatusCode.RECOVERED.NibrsCode())
             this.Quantity = quantity;
         }
 
@@ -45,8 +50,7 @@ namespace NibrsXml.NibrsReport.Item
             var otherItem = b as Item;
             if (otherItem != null)
                 return Convert.ToInt32(Value.ValueAmount.Amount) - Convert.ToInt32(otherItem.Value.ValueAmount.Amount);
-            else
-                throw new ArgumentException("Object is not an Item.");
+            throw new ArgumentException("Object is not an Item.");
         }
     }
 }

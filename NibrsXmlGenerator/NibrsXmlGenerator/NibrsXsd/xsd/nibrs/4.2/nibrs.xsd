@@ -4,34 +4,34 @@
     NIEM version  : 3.1
     CJIS version : 1.0
     NIBRS version : 4.0
-    Namespace    : xmlns:cjis="http://fbi.gov/cjis/nibrs/4.0"
+    Namespace    : xmlns:cjis="http://fbi.gov/cjis/nibrs/4.2"
     Description     : NIBRS 4.0 Extension Schema
 -->
-<xsd:schema xmlns:nibrs="http://fbi.gov/cjis/nibrs/4.0" 
+<xsd:schema xmlns:nibrs="http://fbi.gov/cjis/nibrs/4.2" 
     xmlns:cjis="http://fbi.gov/cjis/1.0" 
     xmlns:cjiscodes="http://fbi.gov/cjis/cjis-codes/1.0"
     xmlns:i="http://release.niem.gov/niem/appinfo/3.0/" 
-    xmlns:ucr="http://release.niem.gov/niem/codes/fbi_ucr/3.0/" 
-    xmlns:j="http://release.niem.gov/niem/domains/jxdm/5.1/" 
+    xmlns:ucr="http://release.niem.gov/niem/codes/fbi_ucr/3.2/" 
+    xmlns:j="http://release.niem.gov/niem/domains/jxdm/5.2/" 
     xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" 
     xmlns:nc="http://release.niem.gov/niem/niem-core/3.0/"
     xmlns:niem-xsd="http://release.niem.gov/niem/proxy/xsd/3.0/"
     xmlns:s="http://release.niem.gov/niem/structures/3.0/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:nibrscodes="http://fbi.gov/cjis/nibrs/nibrs-codes/4.0"
-    targetNamespace="http://fbi.gov/cjis/nibrs/4.0" version="4.0">
+    xmlns:nibrscodes="http://fbi.gov/cjis/nibrs/nibrs-codes/4.2"
+    targetNamespace="http://fbi.gov/cjis/nibrs/4.2" version="4.2">
     <xsd:annotation>
         <xsd:documentation>NIBRS Exchange Schema</xsd:documentation>
         <xsd:appinfo>
             <i:ConformantIndicator>true</i:ConformantIndicator>
         </xsd:appinfo>
     </xsd:annotation>
-    <xsd:import namespace="http://fbi.gov/cjis/nibrs/nibrs-codes/4.0" schemaLocation="nibrs-codes.xsd"/>
+    <xsd:import namespace="http://fbi.gov/cjis/nibrs/nibrs-codes/4.2" schemaLocation="nibrs-codes.xsd"/>
     <xsd:import namespace="http://fbi.gov/cjis/1.0" schemaLocation="../../cjis/1.0/cjis.xsd"/>
     <xsd:import namespace="http://fbi.gov/cjis/cjis-codes/1.0" schemaLocation="../../cjis/1.0/cjis-codes.xsd"/>
-    <xsd:import namespace="http://release.niem.gov/niem/codes/fbi_ucr/3.0/" schemaLocation="../../niem/codes/fbi_ucr/3.0/fbi_ucr.xsd"/>
+    <xsd:import namespace="http://release.niem.gov/niem/codes/fbi_ucr/3.2/" schemaLocation="../../niem/codes/fbi_ucr/3.0/fbi_ucr.xsd"/>
     <xsd:import namespace="http://release.niem.gov/niem/conformanceTargets/3.0/" schemaLocation="../../niem/conformanceTargets/3.0/conformanceTargets.xsd"/>
-    <xsd:import namespace="http://release.niem.gov/niem/domains/jxdm/5.1/" schemaLocation="../../niem/domains/jxdm/5.1/jxdm.xsd"/>
+    <xsd:import namespace="http://release.niem.gov/niem/domains/jxdm/5.2/" schemaLocation="../../niem/domains/jxdm/5.2/jxdm.xsd"/>
     <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../../niem/localTerminology/3.0/localTerminology.xsd"/>
     <xsd:import namespace="http://release.niem.gov/niem/niem-core/3.0/" schemaLocation="../../niem/niem-core/3.0/niem-core.xsd"/>
     <xsd:import namespace="http://release.niem.gov/niem/proxy/xsd/3.0/" schemaLocation="../../niem/proxy/xsd/3.0/xs.xsd"/>

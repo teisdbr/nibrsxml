@@ -1,5 +1,7 @@
-﻿using NibrsXml.Constants;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using NibrsXml.Constants;
 using NibrsXml.Utility;
 
 namespace NibrsXml.NibrsReport.Person
@@ -7,6 +9,31 @@ namespace NibrsXml.NibrsReport.Person
     [XmlRoot("Person", Namespace = Namespaces.niemCore)]
     public class Person
     {
+        public Person()
+        {
+        }
+
+
+        public Person(
+            string id,
+            PersonAgeMeasure ageMeasure,
+            string ethnicityCode,
+            string raceCode,
+            string residentCode,
+            string sexCode,
+            string personType,
+            PersonAugmentation augmentation)
+        {
+            Id = id;
+            AgeMeasure = ageMeasure;
+            EthnicityCode = ethnicityCode == null ? null : ethnicityCode.TrimNullIfEmpty();
+            RaceCode = raceCode == null ? null : raceCode.TrimNullIfEmpty();
+            ResidentCode = residentCode == null ? null : residentCode.TrimNullIfEmpty();
+            SexCode = sexCode == null ? null : sexCode.TrimNullIfEmpty();
+            Augmentation = augmentation;
+            PersonType = personType;
+        }
+
         [XmlAttribute("id", Namespace = Namespaces.niemStructs)]
         public string Id { get; set; }
 
@@ -28,68 +55,25 @@ namespace NibrsXml.NibrsReport.Person
         [XmlElement("PersonAugmentation", Namespace = Namespaces.justice, Order = 7)]
         public PersonAugmentation Augmentation { get; set; }
 
+
+        
+        [XmlIgnore]      
+        public string PersonType { get; set; }
+
+        [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public bool AgeIsUnknown
         {
-            get
-            {
-                return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode();
-            }
+            get { return Augmentation != null && Augmentation.AgeCode == PersonAgeCode.UNKNOWN.NibrsCode(); }
         }
 
+        [BsonIgnore]
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsJuvenile
         {
-            get
-            {
-                return AgeMeasure != null && AgeMeasure.IsJuvenile;
-            }
-        }
-
-        public Person() { }
-
-        /// <summary>
-        /// Creates a Person object without an id
-        /// </summary>
-        /// <param name="ageMeasure"></param>
-        /// <param name="ethnicityCode"></param>
-        /// <param name="injury"></param>
-        /// <param name="raceCode"></param>
-        /// <param name="residentCode"></param>
-        /// <param name="sexCode"></param>
-        /// <param name="augmentation"></param>
-        public Person(
-            PersonAgeMeasure ageMeasure,
-            string ethnicityCode,
-            string raceCode,
-            string residentCode,
-            string sexCode,
-            PersonAugmentation augmentation)
-            : this(
-                "",
-                ageMeasure,
-                ethnicityCode,
-                raceCode,
-                residentCode,
-                sexCode,
-                augmentation) { }
-
-        public Person(
-            string id,
-            PersonAgeMeasure ageMeasure,
-            string ethnicityCode,
-            string raceCode,
-            string residentCode,
-            string sexCode,
-            PersonAugmentation augmentation)
-        {
-            this.Id = id;
-            this.AgeMeasure = ageMeasure;
-            this.EthnicityCode = ethnicityCode == null ? null : ethnicityCode.TrimNullIfEmpty();
-            this.RaceCode = raceCode == null ? null : raceCode.TrimNullIfEmpty();
-            this.ResidentCode = residentCode == null ? null : residentCode.TrimNullIfEmpty();
-            this.SexCode = sexCode == null ? null : sexCode.TrimNullIfEmpty();
-            this.Augmentation = augmentation;
+            get { return AgeMeasure != null && AgeMeasure.IsJuvenile; }
         }
     }
 }

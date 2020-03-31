@@ -15,9 +15,11 @@ namespace NibrsXml.Builder
             {
                 ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim()),
                 ActivityDate = ExtractNibrsIncidentDateTime(admin),
-                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, false),
-                JxdmIncidentAugmentation = new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin),
-                    ExtractIncidentExceptionalClearanceDate(admin))
+                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, null),
+ 
+                // Ignore incident augmentation when action type is D 
+                JxdmIncidentAugmentation = admin.ActionType != "D" ? new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin) ,
+                ExtractIncidentExceptionalClearanceDate(admin)) : null
             };
             //todo: ??? Will the IncidentReportDateIndicator in CjisIncidentAugmentation always be false?
             // There will be a cargo theft indicator that has to be initialized in this builder sometime in the future
@@ -48,14 +50,21 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsClearanceCode(LIBRSAdmin admin)
         {
-            return admin.ClearedExceptionally == LibrsErrorConstants.CEOther ? LibrsErrorConstants.CENotApp : admin.ClearedExceptionally;
+            // If action type is D ignore Exceptional Clearence Code            
+            if (admin.ActionType == "I")
+            {
+                return admin.ClearedExceptionally == LibrsErrorConstants.CEOther ? LibrsErrorConstants.CENotApp : admin.ClearedExceptionally;
+            }
+            else return null;
         }
 
         private static IncidentExceptionalClearanceDate ExtractIncidentExceptionalClearanceDate(LIBRSAdmin admin)
         {
-            //If empty return null
-            if (admin.ExcpClearDate.IsNullBlankOrEmpty()) return null;
-
+            
+            
+            // If empty or action typr = D return null
+            if (admin.ExcpClearDate.IsNullBlankOrEmpty() || admin.ActionType == "D" ) return null;
+                        
             string month, day, year;
             try
             {

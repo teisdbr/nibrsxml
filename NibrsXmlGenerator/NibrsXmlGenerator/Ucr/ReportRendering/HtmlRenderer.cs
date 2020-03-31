@@ -33,7 +33,7 @@ namespace NibrsXml.Ucr.ReportRendering
             var reportData = ucrReports.MonthlyOriReportData[reportKey];
 
             //Get Ucr Report Paths
-            var ucrReportsPath = path.GetUCRFilesFolderLocation(ori) + @"\" + desiredYear + @"\" + desiredMonth.ToString("00");
+            var ucrReportsPath = path.GetUcrFilesFolderLocation(ori) + @"\" + desiredYear + @"\" + desiredMonth.ToString("00");
 
             //Make sure directory is created
             if (!Directory.Exists(ucrReportsPath)) Directory.CreateDirectory(ucrReportsPath);

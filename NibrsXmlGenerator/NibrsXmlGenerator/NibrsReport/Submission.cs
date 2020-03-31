@@ -1,52 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using NibrsXml.Constants;
 using System.IO;
 using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using LoadBusinessLayer;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Builder;
+using NibrsXml.Constants;
+using NibrsInterface;
+using NibrsXml.DataAccess;
+using System.Configuration;
+using Newtonsoft.Json;
+
 
 namespace NibrsXml.NibrsReport
 {
     /// <summary>
-    /// In the NibrsReport namespace, all XML elements that must be serialized must be given public access in order for
-    /// NibrsSerializer to print them accordingly. This also gives full freedom for NibrsReportBuilder to build reports
-    /// however it sees fit.
+    ///     In the NibrsReport namespace, all XML elements that must be serialized must be given public access in order for
+    ///     NibrsSerializer to print them accordingly. This also gives full freedom for NibrsReportBuilder to build reports
+    ///     however it sees fit.
     /// </summary>
+    
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
-    public class Submission : NibrsSerializable
+    public class Submission : INibrsSerializable
     {
-        [XmlAttribute("schemaLocation", Namespace = System.Xml.Schema.XmlSchema.InstanceNamespace)]
+        [BsonIgnore]
+        [XmlIgnore]
+        [JsonIgnore]
+        private static readonly NibrsSerializer.NibrsSerializer Serializer =
+            new NibrsSerializer.NibrsSerializer(typeof(Submission));
+
+        [XmlElement("MessageMetadata", Namespace = Namespaces.cjis)]
+        public MessageMetadata MessageMetadata = new MessageMetadata();
+
+        [BsonIgnore] [XmlIgnore] [JsonIgnore] public List<Report> RejectedReports = new List<Report>();
+
+
+        [XmlElement("Report")] public List<Report> Reports = new List<Report>();
+
+        [XmlAttribute("schemaLocation", Namespace = XmlSchema.InstanceNamespace)]
+        //[JsonIgnore]
         public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
-        [XmlElement("Report")]
-        public List<Report> Reports = new List<Report>();
-
-        [XmlIgnore]
-        public List<Report> RejectedReports = new List<Report>();
-
-        [XmlIgnore]
-        private static readonly NibrsSerializer.NibrsSerializer Serializer = new NibrsSerializer.NibrsSerializer(typeof(Submission));
-
-        [XmlIgnore]
-        public string Xml
+        public Submission()
         {
-            get
-            {
-                return Serializer.Serialize(this);
-            }
+           //Id = ObjectId.GenerateNewId();
         }
-
-        public Submission() { }
 
         public Submission(params Report[] reports)
         {
-            foreach (var r in reports)
-            {
-                this.Reports.Add(r);
-            }
+            Id = ObjectId.GenerateNewId();
+
+            foreach (var r in reports) Reports.Add(r);
         }
+
+        [XmlIgnore] 
+        [JsonConverter(typeof(ObjectIdConverter))]
+        // Removed Bson Ignore to save the value in the MonogDB. While deserilizing using JsonDeserilzer the Json value from Json string 
+        // will  replace the NewId.
+        public ObjectId Id { get {
+
+                _id = _id == ObjectId.Empty ? ObjectId.GenerateNewId() : _id;
+
+                return _id;
+            }
+
+            set {
+
+                _id = value;
+            } }
+
+
+        [XmlIgnore]
+        [BsonIgnore]
+        [JsonIgnore]
+        private ObjectId _id;
+
+
+        [XmlIgnore] public string Runnumber { get; set; }
+
+        [BsonIgnore]
+        [XmlIgnore]
+        [JsonIgnore]
+        public string Xml
+        {
+            get { return Serializer.Serialize(this); }
+
+        }
+
 
         public static Submission Deserialize(string filepath)
         {
@@ -80,7 +123,7 @@ namespace NibrsXml.NibrsReport
         }
 
         /// <summary>
-        /// Use to write NIBRS XML for a single agency/WinLIBRS runnumber.
+        ///     Use to write NIBRS XML for a single agency/WinLIBRS runnumber.
         /// </summary>
         /// <param name="list">Incident data to be used</param>
         /// <param name="fileName">Complete file name with path prefixed</param>
@@ -90,21 +133,51 @@ namespace NibrsXml.NibrsReport
         }
 
         /// <summary>
-        /// Use to write NIBRS XML for multiple agencies/WinLIBRS runnumbers.
+        ///     Use to write NIBRS XML for multiple agencies/WinLIBRS runnumbers.
         /// </summary>
         /// <param name="lists">Incident data to be used</param>
         /// <param name="fileName">Complete file name with path prefixed</param>
-        public static Submission WriteXml(List<IncidentList> lists, string fileName, string nibrsSchemaLocation = NibrsXml.Constants.Misc.schemaLocation)
+        /// <param name="nibrsSchemaLocation"></param>
+        public static Submission WriteXml(List<IncidentList> lists, string fileName,
+            string nibrsSchemaLocation = Constants.Misc.schemaLocation)
         {
-            var submission = SubmissionBuilder.Build(lists);
-            //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
-            submission.XsiSchemaLocation = nibrsSchemaLocation;
-            var xdoc = new XmlDocument();
-            xdoc.LoadXml(submission.Xml);
-            xdoc.Save(fileName);
+            // NibrsResubmitter.ResbumitNibrsXml();
 
-            //Return submission created above
-            return submission;
+            var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
+
+            //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
+            
+            foreach (var submission in submissions)
+            {
+               
+                
+                // Save locally
+                submission.XsiSchemaLocation = nibrsSchemaLocation;
+                var xdoc = new XmlDocument();
+                xdoc.LoadXml(submission.Xml);
+                xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
+                var response = NibrsSubmitter.SendReport(submission.Xml);
+
+                var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
+
+                
+
+                // Wrap both response and submission and then save to database 
+
+                NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response );
+
+                AppSettingsReader objAppsettings = new AppSettingsReader();
+
+                var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
+
+                // save to mongodb  
+            //    nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
+
+               
+            }
+
+            // Return submission created above
+            return submissions[0];
         }
     }
 }
