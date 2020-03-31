@@ -456,6 +456,10 @@ namespace NibrsXml.Builder
                     "Girlfriend"
                 },
                 {
+                    "XR",
+                    "Ex_Relationship"
+                },
+                {
                     "CF",
                     "Child of Boyfriend_Girlfriend"
                 },

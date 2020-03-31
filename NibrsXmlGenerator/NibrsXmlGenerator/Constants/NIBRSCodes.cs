@@ -849,7 +849,16 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("Victim Was Offender")]
         [CodeDescription("Victim Was Offender")]
-        Victim_Was_Offender
+        Victim_Was_Offender,
+
+              /// <summary>
+              /// Victim Was Offender
+              /// </summary>
+        [NibrsCode("Ex_Relationship")]
+        [CodeDescription("Victim was Ex-Relationship")]
+        Ex_Relationship
+
+
     }  
 
     /// <summary>
