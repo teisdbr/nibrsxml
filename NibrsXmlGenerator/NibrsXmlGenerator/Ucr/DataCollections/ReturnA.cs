@@ -161,6 +161,7 @@ namespace NibrsXml.Ucr.DataCollections
         internal void ScoreHomicide(List<OffenseVictimAssociation> homicideVictimAssociations, int totalStolenValue,
             bool? allArresteesAreJuvenile = null)
         {
+
             if (allArresteesAreJuvenile.HasValue)
             {
                 IncrementHomicideScore(homicideVictimAssociations, IncrementAllClearences,

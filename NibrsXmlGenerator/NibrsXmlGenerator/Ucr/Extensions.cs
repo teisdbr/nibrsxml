@@ -24,7 +24,7 @@ namespace NibrsXml.Ucr
 
         public static int TotalItemValue(this List<Item> items)
         {
-            return items == null || items.Count == 0 ? 0 : items.Aggregate(0, (i, item) => Convert.ToInt32(item.Value.ValueAmount.Amount));
+            return (items == null || items.Count == 0) ? 0 : items.Aggregate(0, (i, item) => i + Convert.ToInt32(item.Value.ValueAmount.Amount));
         }
 
         /// <summary>

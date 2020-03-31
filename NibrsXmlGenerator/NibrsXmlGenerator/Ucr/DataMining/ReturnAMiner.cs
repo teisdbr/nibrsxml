@@ -209,7 +209,7 @@ namespace NibrsXml.Ucr.DataMining
             }
 
             //Score Supplement data for stolen properties
-            returnA.Supplement.ScoreStolenByTypeAndValue(stolenItems);
+           /*if(!doScoreColumn6.HasValue)*/ returnA.Supplement.ScoreStolenByTypeAndValue(stolenItems);
         }
 
         private static void ScoreRecoveredItemsForSupplement(

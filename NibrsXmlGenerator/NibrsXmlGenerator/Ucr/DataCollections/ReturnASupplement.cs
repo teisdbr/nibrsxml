@@ -271,11 +271,13 @@ namespace NibrsXml.Ucr.DataCollections
         public void IncrementHomicide(int murderCount, int totalStolenValue)
         {
             IncrementValues("12", murderCount, totalStolenValue);
+            IncrementValues("77", murderCount, totalStolenValue);
         }
 
         public void IncrementRape(int rapeCount, int totalStolenValue)
         {
             IncrementValues("20", rapeCount, totalStolenValue);
+            IncrementValues("77", rapeCount, totalStolenValue);
         }
 
         public void IncrementRobbery(string locationCategoryCode, int totalStolenValue)
@@ -327,6 +329,7 @@ namespace NibrsXml.Ucr.DataCollections
             }
 
             IncrementValues("30", 1, totalStolenValue);
+            IncrementValues("77", 1, totalStolenValue);
         }
 
         public void IncrementBurglary(string incidentTime, string locationType, int premisesEnteredOrDefault, int totalStolenValue)
@@ -352,6 +355,7 @@ namespace NibrsXml.Ucr.DataCollections
                     premisesEnteredOrDefault,
                     totalStolenValue);
             IncrementValues("50", premisesEnteredOrDefault, totalStolenValue);
+            IncrementValues("77", premisesEnteredOrDefault, totalStolenValue);
         }
 
         public void IncrementLarceny(string offenseUcrCode, List<Item> stolenItems)
@@ -373,6 +377,7 @@ namespace NibrsXml.Ucr.DataCollections
             else
                 IncrementValues("61", 1, totalStolenValue);
             IncrementValues("60", 1, totalStolenValue);
+            IncrementValues("77", 1, totalStolenValue);
 
 
             //Nature of Larceny Section
@@ -438,6 +443,7 @@ namespace NibrsXml.Ucr.DataCollections
         public void IncrementVehicleTheft(int vehiclesStolen, int totalStolenValue)
         {
             IncrementValues("70", vehiclesStolen, totalStolenValue);
+            IncrementValues("77", vehiclesStolen, totalStolenValue);
         }
 
         #endregion
