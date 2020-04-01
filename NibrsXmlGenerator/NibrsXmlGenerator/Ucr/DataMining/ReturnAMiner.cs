@@ -105,6 +105,10 @@ namespace NibrsXml.Ucr.DataMining
                 var victimsOfMostImportantOffense = ucrHierarchyData.VictimsRelatedToHighestRatedOffense;
 
                 //--Collect all stolen items except pending inventory and blank (88 and 99) because those should not be used for scoring
+                // If the Report has multiple offense (eg- 13A and 220) and one is choosen as per the UCR hierarchy (13A) and that offense does not require items
+                // todo: What to do with the items? I dont know, I am just recording all the items and let the furthur logic handle. 
+
+                
                 var stolenItems = report.Items.Where(
                     i => i.Status.Code == ItemStatusCode.STOLEN.NibrsCode() &&
                          i.NibrsPropertyCategoryCode != PropertyCategoryCode.PENDING_INVENTORY.NibrsCode() &&
@@ -115,6 +119,14 @@ namespace NibrsXml.Ucr.DataMining
                          i.NibrsPropertyCategoryCode != PropertyCategoryCode.PENDING_INVENTORY.NibrsCode() &&
                          i.NibrsPropertyCategoryCode != PropertyCategoryCode.BLANK.NibrsCode()
                 ).ToList();
+
+                // Assault doesnot want to score the incidental items.
+                if (highestRatedOffense.UcrCode.Matches("13[ABC]"))
+                {
+                    stolenItems.Clear();
+                    recoveredItems.Clear();
+
+                }
 
                 //Report Offenses and Victims not considered for UCR Report.
                 // ReSharper disable once UnusedVariable
@@ -158,6 +170,7 @@ namespace NibrsXml.Ucr.DataMining
             bool? doScoreColumn6 = null)
         {
             var totalStolenValue = stolenItems.TotalItemValue();
+      
 
             switch (highestRatedOffense.UcrCode)
             {
@@ -185,6 +198,7 @@ namespace NibrsXml.Ucr.DataMining
                 case "13B":
                 case "13C":
                     returnA.ScoreAssault(victimsOfMostImportantOffense, doScoreColumn6);
+                
                     break;
 
                 //Score Burglary by counting Data Element 6 - At most one per report.
@@ -212,9 +226,10 @@ namespace NibrsXml.Ucr.DataMining
                     return;
             }
 
-            //Score Supplement data for stolen properties
-           /*if(!doScoreColumn6.HasValue)*/ returnA.Supplement.ScoreStolenByTypeAndValue(stolenItems);
-        }
+          
+                returnA.Supplement.ScoreStolenByTypeAndValue(stolenItems);
+               
+            }
 
         private static void ScoreRecoveredItemsForSupplement(
             ConcurrentDictionary<string, ReportData> monthlyOriReportData, List<Item> recoveredItems, string ori)
