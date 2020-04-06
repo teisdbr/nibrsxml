@@ -38,19 +38,22 @@ namespace NibrsXml.Ucr.ReportRendering
             //Make sure directory is created
             if (!Directory.Exists(ucrReportsPath)) Directory.CreateDirectory(ucrReportsPath);
 
+            //Generate the xmlfile for all reports at once, XSLT will render reports individual 
+            var xmlfile = reportData.Serialize("", ori, desiredYear, desiredMonth);
+
             //Output all reports
             //Return A
-            RenderUcrReport(UcrReportType.ReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ReturnAData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.ReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Supplement to Return A
-            RenderUcrReport(UcrReportType.SupplementToReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ReturnASupplementData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.SupplementToReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Arson
-            RenderUcrReport(UcrReportType.Arson, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.ArsonData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.Arson, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Asre
-            RenderUcrReport(UcrReportType.Asre, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.AsreData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.Asre, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Human Trafficking
-            RenderUcrReport(UcrReportType.HumanTrafficking, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.HumanTraffickingData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.HumanTrafficking, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Leoka
-            RenderUcrReport(UcrReportType.Leoka, ucrReportsPath, CreateXmlReaderFromXmlString(reportData.LeokaData.Serialize().ToString()));
+            RenderUcrReport(UcrReportType.Leoka, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
 
         }
         public static void RenderUcrReport(UcrReportType ucrReport, string ucrFileNamePrefix, XmlReader ucrReportXmlReader)
