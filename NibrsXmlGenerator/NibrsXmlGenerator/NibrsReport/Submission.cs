@@ -22,7 +22,7 @@ namespace NibrsXml.NibrsReport
     ///     NibrsSerializer to print them accordingly. This also gives full freedom for NibrsReportBuilder to build reports
     ///     however it sees fit.
     /// </summary>
-    
+
     [XmlRoot("Submission", Namespace = Namespaces.cjisNibrs)]
     public class Submission : INibrsSerializable
     {
@@ -46,7 +46,7 @@ namespace NibrsXml.NibrsReport
 
         public Submission()
         {
-           //Id = ObjectId.GenerateNewId();
+            //Id = ObjectId.GenerateNewId();
         }
 
         public Submission(params Report[] reports)
@@ -56,21 +56,26 @@ namespace NibrsXml.NibrsReport
             foreach (var r in reports) Reports.Add(r);
         }
 
-        [XmlIgnore] 
+        [XmlIgnore]
         [JsonConverter(typeof(ObjectIdConverter))]
         // Removed Bson Ignore to save the value in the MonogDB. While deserilizing using JsonDeserilzer the Json value from Json string 
         // will  replace the NewId.
-        public ObjectId Id { get {
+        public ObjectId Id
+        {
+            get
+            {
 
                 _id = _id == ObjectId.Empty ? ObjectId.GenerateNewId() : _id;
 
                 return _id;
             }
 
-            set {
+            set
+            {
 
                 _id = value;
-            } }
+            }
+        }
 
 
         [XmlIgnore]
@@ -146,38 +151,61 @@ namespace NibrsXml.NibrsReport
             var submissions = SubmissionBuilder.BuildMultipleSubmission(lists);
 
             //Allows overriding of the location, primarily for individual ORI xmls at this point.  /ORI/NIBRS
-            
+
             foreach (var submission in submissions)
             {
-               
-                
+
+
                 // Save locally
                 submission.XsiSchemaLocation = nibrsSchemaLocation;
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
                 xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                var response = NibrsSubmitter.SendReport(submission.Xml);
+                //var response = NibrsSubmitter.SendReport(submission.Xml);
 
-                var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
+                //var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
 
-                
 
-                // Wrap both response and submission and then save to database 
 
-                NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response );
+                ////Wrap both response and submission and then save to database
 
-                AppSettingsReader objAppsettings = new AppSettingsReader();
+                //NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
 
-                var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
+                //AppSettingsReader objAppsettings = new AppSettingsReader();
 
-                // save to mongodb  
-            //    nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
+                //var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
 
-               
+                ////save to mongodb
+                ////nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
+
+
             }
 
             // Return submission created above
             return submissions[0];
+        }
+        /// <summary>
+        ///  Use to write NIBRS XML for  UCR extraction  of multiple agencies/WinLIBRS runnumbers. 
+        /// </summary>
+        /// <param name="lists"></param>
+        /// <param name="fileName"></param>
+        /// <param name="nibrsSchemaLocation"></param>
+        /// <returns></returns>
+        public static Submission WriteXmlForUCR(List<IncidentList> lists, string fileName, string ori,
+           string nibrsSchemaLocation = Constants.Misc.schemaLocation)
+        {
+
+            var submission = SubmissionBuilder.Build(lists, ori);
+
+
+            // Save locally
+            submission.XsiSchemaLocation = nibrsSchemaLocation;
+            var xdoc = new XmlDocument();
+            xdoc.LoadXml(submission.Xml);
+            xdoc.Save(fileName);
+
+            return submission;
+
         }
     }
 }

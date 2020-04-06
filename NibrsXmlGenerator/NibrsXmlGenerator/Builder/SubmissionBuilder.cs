@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LoadBusinessLayer;
 using NibrsXml.NibrsReport;
@@ -8,11 +9,11 @@ namespace NibrsXml.Builder
 {
     public class SubmissionBuilder
     {
-        public static Submission Build(List<IncidentList> agencySpecificIncidents, string agencyOri)
+        public static Submission Build(List<IncidentList> agencySpecificIncidents, string oriNumber)
         {
             var sub = new Submission();
 
-            sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyOri);
+            sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, oriNumber);
 
             foreach (var agencyIncidentList in agencySpecificIncidents)
             foreach (LIBRSIncident incident in agencyIncidentList)
