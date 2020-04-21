@@ -112,9 +112,12 @@
                   Age, Sex, Race, and Ethnicity of Persons Arrested, All Age Groups<br/>
                   (includes those released without having been charged formally) <br/>
                   <p style="font-size:13px">
-                    <em>Notice: Incidents that contain any errors will be (either in part or totality) omitted from the UCR submission file.
-                    Be sure to resolve any errors listed in the Error Report, and check the numbers match your totals in IBR.
-                    More information can be found under "How does Lemis IBR validate state reporting?" here: <a href="http://www.crimeinla.org/lemis-faq/">http://www.crimeinla.org/lemis-faq/</a></em><br/>
+                    <em>
+                      Notice: Incidents that contain any errors will be (either in part or totality) omitted from the UCR submission file.
+                      Be sure to resolve any errors listed in the Error Report, and check the numbers match your totals in IBR.
+                      More information can be found under "How does Lemis IBR validate state reporting?" here: <a href="http://www.crimeinla.org/lemis-faq/">http://www.crimeinla.org/lemis-faq/</a>
+                    </em>
+                    <br/>
                   </p>
                 </th>
               </tr>
@@ -903,115 +906,120 @@
                         <tr>
                           <th class="rowheader" scope="row" colspan="3">Totals</th>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='Under 10']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='Under 10']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='10-12']/*)" />
+
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='10-12']/*)" />
+
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='13-14']/*)" />
+
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='13-14']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='15']/*)" />
+
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='15']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='16']/*)" />
+
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='16']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='17']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='17']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='18']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='18']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='19']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='19']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='20']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='20']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='21']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='21']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='22']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='22']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='23']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='23']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='24']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='24']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='25-29']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='25-29']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='30-34']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='30-34']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='35-39']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='35-39']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='40-44']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='40-44']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='45-49']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='45-49']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='50-54']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='50-54']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='55-59']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='55-59']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='60-64']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='60-64']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age[@value='65+']/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age[@value='65+']/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//Ages/Age/*)" />
+                            <xsl:value-of select="sum(//UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Ages/Age/*)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/White)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Races/White)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/White)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Races/White)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/Black)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Races/Black)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/Black)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Races/Black)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/AmericanIndian)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Races/AmericanIndian)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/AmericanIndian)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Races/AmericanIndian)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/Asian)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Races/Asian)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/Asian)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Races/Asian)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Races/NativeHawaiianOrOther)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Races/NativeHawaiianOrOther)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Races/NativeHawaiianOrOther)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Races/NativeHawaiianOrOther)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Ethnicities/Hispanic)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Ethnicities/Hispanic)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Ethnicities/Hispanic)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Ethnicities/Hispanic)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Adult/Ethnicities/Non-Hispanic)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Adult/Ethnicities/Non-Hispanic)" />
                           </td>
                           <td>
-                            <xsl:value-of select="sum(//ASRSummary/UCR/Juvenile/Ethnicities/Non-Hispanic)" />
+                            <xsl:value-of select="sum(//ASRSummary/UCR[ ( (@value='18b' or @value='16b' or  @value='19b')) or not  (starts-with(@value,'18') or starts-with(@value,'16') or  starts-with(@value,'19'))]/Juvenile/Ethnicities/Non-Hispanic)" />
                           </td>
                         </tr>
                       </tbody>
