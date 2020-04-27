@@ -101,7 +101,7 @@ namespace NibrsXml.Builder
         {
             return offense.AgencyAssignedNibrs.HasValue(true)
                 ? offense.AgencyAssignedNibrs
-                : LarsList.LarsDictionary[offense.LrsNumber.Trim()].Nibr;
+                : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[offense.LrsNumber.Trim()].Nibr;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)

@@ -29,10 +29,12 @@ namespace NibrsXml.Builder
 
         public static Report Build(LIBRSIncident incident)
         {
+            //Initialize a new report
+            var rpt = new Report();
+
             try
             {
-                //Initialize a new report
-                var rpt = new Report();
+              
 
                 //Determine the unique report prefix to be used for all items that are to be identified within the report
                 incident.IncidentNumber = incident.IncidentNumber.Trim();
@@ -123,11 +125,38 @@ namespace NibrsXml.Builder
                 //todo: make log writing shared or something
                 Console.WriteLine("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}",
                     incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace);
-                return null;
+                
+                return HandleException(rpt,incident);
             }
         }
 
         #region Helper Functions
+
+
+        private static Report HandleException(Report rpt, LIBRSIncident incident)
+        {
+           
+
+            // If the inciden GROUP B Arrest and exception occurs in Build Arrest than Incident segement is not yet build, so build here
+            // We need the Incident Segment to log this incident.
+                if (rpt.Incident == null)
+               {
+                try
+                {
+                    rpt.Incident = IncidentBuilder.Build(incident.Admin);
+                   
+                }
+                catch (Exception ex)
+                {
+                    // If the exception in Incident Build Segement, we cant determine what the incident Number and date is, so just return null.
+                    return null;
+
+                }
+                }
+
+            rpt.HasFailedToBuildProperly = true;
+            return rpt;
+        }
 
         private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
@@ -271,12 +300,12 @@ namespace NibrsXml.Builder
                         ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
                         Charge = lrs.AgencyAssignedNibrs.HasValue(true)
                             ? lrs.AgencyAssignedNibrs
-                            : LarsList.LarsDictionary[lrs.LrsNumber.Trim()].Nibr,
+                            : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[lrs.LrsNumber.Trim()].Nibr,
                         CategoryCode = arrest.ArrestType,
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
                         //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCYASSIGNEDNIBRS
-                        Rank = Convert.ToDouble(LarsList.LarsDictionary[lrs.LrsNumber.Trim()].Lrank)
+                        Rank = Convert.ToDouble(LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[lrs.LrsNumber.Trim()].Lrank)
                     }
                 ).ToList();
 

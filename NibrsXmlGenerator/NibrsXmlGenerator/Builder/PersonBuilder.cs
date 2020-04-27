@@ -87,7 +87,7 @@ namespace NibrsXml.Builder
 
                     var offenses = incident.Offense.Where(o => o.OffConnecttoVic == victim.VictimSeqNum).ToList();
                                        
-                    bool is09B = offenses.Any(o => (o.AgencyAssignedNibrs.HasValue(trim: true) ? o.AgencyAssignedNibrs : LarsList.LarsDictionary[o.LrsNumber.Trim()].Nibr) == "09B");
+                    bool is09B = offenses.Any(o => (o.AgencyAssignedNibrs.HasValue(trim: true) ? o.AgencyAssignedNibrs : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[o.LrsNumber.Trim()].Nibr) == "09B");
                              
                     
                     //Initialize officer variable to null

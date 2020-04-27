@@ -113,6 +113,11 @@ namespace NibrsXml.NibrsReport
         [XmlElement("SubjectVictimAssociation", Namespace = Namespaces.justice, Order = 16)]
         public List<SubjectVictimAssociation> SubjectVictimAssocs { get; set; }
 
+        [BsonIgnore]
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool HasFailedToBuildProperly { get; set; } = false;
+
         [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public List<Item.Item> StolenVehicles
         {

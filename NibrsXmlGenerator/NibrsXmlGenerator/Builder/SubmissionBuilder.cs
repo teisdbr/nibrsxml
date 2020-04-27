@@ -24,7 +24,7 @@ namespace NibrsXml.Builder
                 if (report == null)
                     continue;
 
-                if (incident.HasErrors)
+                if (incident.HasErrors || (report.HasFailedToBuildProperly))
                     sub.RejectedReports.Add(report);
 
                 else
@@ -45,9 +45,9 @@ namespace NibrsXml.Builder
                     if (incident.HasErrors) continue;
                     var report = ReportBuilder.Build(incident);
 
-                    if (report == null)
+                    if (report == null || report.HasFailedToBuildProperly)
                         continue;
-
+                    
 
                     var sub = new Submission {Runnumber = agencyIncidentList.Runnumber};
                     sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
