@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -16,7 +17,7 @@ namespace NibrsXml.Ucr.DataCollections
         public SupplementaryHomicide SupplementaryHomicideData { get; set; }
         public HateCrime HateCrimeData { get; set; }
         public List<string> AcceptedIncidents { get; set; }
-        public List<string> RejectedIncidents { get; set; }
+        public List<Tuple<string, bool>> RejectedIncidents { get; set; }
 
         #endregion
         
@@ -42,7 +43,7 @@ namespace NibrsXml.Ucr.DataCollections
             SupplementaryHomicideData = new SupplementaryHomicide();
             HateCrimeData = new HateCrime();
             AcceptedIncidents = new List<string>();
-            RejectedIncidents = new List<string>();
+            RejectedIncidents = new List<Tuple<string, bool>>();
         }
 
         public XDocument Serialize()
@@ -84,10 +85,15 @@ namespace NibrsXml.Ucr.DataCollections
             return new XElement("IncidentsAcceptedOrRejected",
                 AcceptedIncidents.Select(i => new XElement("Incident",
                     new XAttribute("id", i),
-                    new XAttribute("accepted", 1))),
-                RejectedIncidents.Select(i => new XElement("Incident",
-                    new XAttribute("id", i),
-                    new XAttribute("accepted", 0))));
+                    new XAttribute("accepted", 1)
+                    )),
+                RejectedIncidents.Where(rj => rj.Item2 == false).Select(i => new XElement("Incident",
+                    new XAttribute("id", i.Item1),
+                    new XAttribute("accepted", 0))),
+                 RejectedIncidents.Where(rj => rj.Item2 == true).Select(i => new XElement("Incident",
+                    new XAttribute("id", i.Item1),
+                    new XAttribute("failed", 1)))
+                );;
         }
     }
 }

@@ -54,6 +54,8 @@ namespace NibrsXml.Ucr.ReportRendering
             RenderUcrReport(UcrReportType.HumanTrafficking, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
             //Leoka
             RenderUcrReport(UcrReportType.Leoka, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
+            //Accepted or Rejected
+            RenderUcrReport(UcrReportType.IncidentsAcceptedOrRejected, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
 
         }
         public static void RenderUcrReport(UcrReportType ucrReport, string ucrFileNamePrefix, XmlReader ucrReportXmlReader)

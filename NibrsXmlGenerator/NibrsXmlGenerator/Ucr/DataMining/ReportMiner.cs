@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NibrsXml.Constants;
@@ -19,13 +20,13 @@ namespace NibrsXml.Ucr.DataMining
 
             var monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
 
-            foreach (var report in submission.RejectedReports)
-            {
+            foreach (var report in submission.RejectedReports)            {
+
                 //Make sure there is at least an empty ReportData structure for this report
                 monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());
 
                 //Add this report to the list of accepted incidents
-                monthlyOriReportData[report.UcrKey()].RejectedIncidents.Add(report.Incident.ActivityId.Id);
+                monthlyOriReportData[report.UcrKey()].RejectedIncidents.Add(Tuple.Create(report.Incident.ActivityId.Id,report.HasFailedToBuildProperly));
             }
 
             //todo: make parallel

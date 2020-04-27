@@ -75,6 +75,7 @@
                       <th>Incident ID</th>
                       <th>Accepted</th>
                       <th>Rejected</th>
+                      <th>Failed</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,6 +89,9 @@
                         </td>
                         <td>
                           <xsl:if test="@accepted = 0">X</xsl:if>
+                        </td>
+                        <td>
+                          <xsl:if test="@failed = 1">X</xsl:if>
                         </td>
                       </tr>
                     </xsl:for-each>
