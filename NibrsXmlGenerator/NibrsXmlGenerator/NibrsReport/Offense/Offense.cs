@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using NibrsXml.Constants;
 using Newtonsoft.Json;
-
+using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport.Offense
 {
@@ -53,9 +53,8 @@ namespace NibrsXml.NibrsReport.Offense
 
         [XmlElement("OffenseUCRCode", Namespace = Namespaces.cjisNibrs, Order = 1)]
         public string UcrCode { get; set; }
-        [XmlIgnore]
-        public string[] UcrTags { get; set; }
 
+    
         [XmlElement("CriminalActivityCategoryCode", Namespace = Namespaces.cjisNibrs, Order = 2)]
         public List<string> CriminalActivityCategoryCodes { get; set; }
 
