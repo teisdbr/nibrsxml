@@ -46,6 +46,13 @@ namespace NibrsXml.NibrsReport
         public string ProcessingId { get; set; }
 
 
+        public string ORI => Submission.Reports[0].Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+
+       
+
+        public string ActionType => Submission.Reports[0].Header.ReportActionCategoryCode;
+
+
         [JsonIgnore]
         [BsonIgnore]
         public string JsonString
@@ -113,22 +120,34 @@ namespace NibrsXml.NibrsReport
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public NibrsXmlTransaction DeserializeNibrsXmlTransaction(string filepath)
+        public static NibrsXmlTransaction DeserializeNibrsXmlTransaction(string filepath)
         {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-            };
-
             var jsonFile = new FileStream(filepath, FileMode.Open);
             var streamReader = new StreamReader(jsonFile, new UTF8Encoding());
-            string json = streamReader.ReadToEnd();
-            var NibrsTrans =  JsonConvert.DeserializeObject<NibrsXmlTransaction>(json);
-            streamReader.Dispose();
-            jsonFile.Close();
-            return NibrsTrans;
+            try
+            {
+                JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+                };               
+                string json = streamReader.ReadToEnd();
+                var NibrsTrans = JsonConvert.DeserializeObject<NibrsXmlTransaction>(json);
+               
+                return NibrsTrans;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                streamReader.Dispose();
+                jsonFile.Close();
+            }
+           
         }
 
 

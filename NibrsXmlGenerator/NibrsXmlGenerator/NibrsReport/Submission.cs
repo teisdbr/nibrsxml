@@ -44,9 +44,22 @@ namespace NibrsXml.NibrsReport
         //[JsonIgnore]
         public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
+        [XmlIgnore]
+        public string ORI { get; private set; }
+
+        [XmlIgnore]
+        public string Incident_Num { get; private set; }
+
+
         public Submission()
         {
             //Id = ObjectId.GenerateNewId();
+        }
+
+        public Submission(string Incident, string Ori)
+        {
+            ORI = Ori;
+            Incident_Num = Incident_Num;
         }
 
         public Submission(params Report[] reports)
@@ -154,31 +167,11 @@ namespace NibrsXml.NibrsReport
 
             foreach (var submission in submissions)
             {
-
-
                 // Save locally
                 submission.XsiSchemaLocation = nibrsSchemaLocation;
                 var xdoc = new XmlDocument();
                 xdoc.LoadXml(submission.Xml);
-                xdoc.Save(fileName.Replace(".xml", Guid.NewGuid() + ".xml"));
-                //var response = NibrsSubmitter.SendReport(submission.Xml);
-
-                //var status = NibrsResponseAnalyzer.AnalyzeResponse(response);
-
-
-
-                ////Wrap both response and submission and then save to database
-
-                //NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
-
-                //AppSettingsReader objAppsettings = new AppSettingsReader();
-
-                //var nibrsDb = new NibrsXml.DataAccess.DatabaseClient(objAppsettings);
-
-                ////save to mongodb
-                ////nibrsDb.Submissions.InsertOne(nibrsXmlTransaction);
-
-
+                xdoc.Save(fileName.Replace(".xml", submission + ".xml"));   
             }
 
             // Return submission created above
@@ -207,5 +200,7 @@ namespace NibrsXml.NibrsReport
             return submission;
 
         }
+
+       
     }
 }
