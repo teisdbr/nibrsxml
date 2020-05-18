@@ -19,6 +19,19 @@ namespace NibrsXml.NibrsReport.Arrestee
         {
             PersonRef = arresteeId;
         }
+        /// <summary>
+        /// Use this constructor  to build the empty arrestee to report Group B Arrest Delete's.
+        /// </summary>
+        /// <param name="seqId"></param>
+        /// <param name="uniquePerfix"></param>
+        public Arrestee(string seqId, string uniquePerfix)
+        {
+            Id = uniquePerfix + "Arrestee" + seqId.TrimStart('0');
+            SeqId = seqId.TrimStart('0');
+        }
+
+
+
 
         public Arrestee(
             Person.Person person,

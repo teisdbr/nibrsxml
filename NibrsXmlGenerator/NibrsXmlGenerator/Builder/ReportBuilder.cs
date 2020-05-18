@@ -31,10 +31,10 @@ namespace NibrsXml.Builder
         {
             //Initialize a new report
             var rpt = new Report();
+          
 
             try
-            {
-              
+            {             
 
                 //Determine the unique report prefix to be used for all items that are to be identified within the report
                 incident.IncidentNumber = incident.IncidentNumber.Trim();
@@ -46,6 +46,7 @@ namespace NibrsXml.Builder
                 //this function may return early when the minimal amount of data required is met for delete action types
 
                 rpt.Header = ReportHeaderBuilder.Build(
+                    //*
                     incident.Offense,
                     incident.Admin.ActionType,
                     incident.Admin);
@@ -53,9 +54,11 @@ namespace NibrsXml.Builder
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode())
                 {
                     rpt.Incident = IncidentBuilder.Build(incident.Admin);
+                   
 
                     //Send only the incident for group A deletes
-                    if (incident.Admin.ActionType == "D") return rpt;
+                    if (incident.Admin.ActionType == "D") 
+                       return rpt;
                 }
 
                 BuildArrests(
@@ -66,12 +69,22 @@ namespace NibrsXml.Builder
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
                 {
                     //Do not send any group B reports if there are no accompanying arrests
-                    if (rpt.Arrests.Count == 0) return null;
+                    if (rpt.Arrests.Count == 0)
+                        return null;
 
-                    //Send only the arrests for group B deletes
-                    if (incident.Admin.ActionType == "D") return rpt;
+
+                    //Send only incident and arrests for group B deletes
+                    if (incident.Admin.ActionType == "D")
+                    {
+                        rpt.Arrests.ForEach(arr => rpt.Arrestees.Add(new Arrestee(arr.SequenceNumber, uniqueReportPrefix)));
+                        rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
+                   rpt.Arrests,
+                   rpt.Arrestees);
+                        return rpt;
+                    }
 
                     rpt.Incident = IncidentBuilder.Build(incident.Admin);
+                    rpt.Header.ReportActionCategoryCode = "A";
                 }
 
 
@@ -176,6 +189,9 @@ namespace NibrsXml.Builder
         #endregion
 
         #region Builder Functions
+
+
+
 
         /// <summary>
         ///     This method initializes the list of Locations and the list of OffenseLocationAssociations
@@ -309,8 +325,7 @@ namespace NibrsXml.Builder
                     }
                 ).ToList();
 
-            var groupedArrests = arrestList.GroupBy(arr => arr.SeqNum,
-                arr => arr,
+            var groupedArrests = arrestList.GroupBy(arr => arr.SeqNum,                arr => arr,
                 (seq, arrList) =>
                 {
                     var minRank = arrList.Min(arr => arr.Rank);
