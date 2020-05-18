@@ -30,7 +30,7 @@ namespace NibrsXml.Builder
                 md.MessageSubmittingOrganization = new MessageSubmittingOrganization
                 {
                     OrganizationAugmentation =
-                        new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000"))
+                        new OrganizationAugmentation(new OrganizationORIIdentification(agencyOri))
                 };
             }
             catch (Exception e)
