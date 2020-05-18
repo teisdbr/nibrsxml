@@ -278,7 +278,7 @@ namespace NibrsXml.NibrsReport
                 // Association doesnt make any sense 
                 //assoc.RelatedVictim = personVictims.FirstOrDefault(v => v.Role.PersonId == assoc.VictimRef.VictimRef);
                 assoc.RelatedVictim = Victims.First(v => v.Id == assoc.VictimRef.VictimRef);
-                assoc.RelatedVictim.AssociatedOffenses.Add(assoc.RelatedOffense);          
+                assoc.RelatedVictim.AssociatedOffense = assoc.RelatedOffense;          
                 
             }
 
