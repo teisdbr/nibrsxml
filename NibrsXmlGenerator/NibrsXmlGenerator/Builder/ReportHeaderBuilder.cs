@@ -31,8 +31,8 @@ namespace NibrsXml.Builder
             rptHeader.ReportActionCategoryCode = actionType;
             rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
             // todo revert the commented code below and remove hard coded reporting agency as "LA0140000"
-            //rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));
-            rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")));
+            rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));
+           // rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")));
             return rptHeader;
         }
 
