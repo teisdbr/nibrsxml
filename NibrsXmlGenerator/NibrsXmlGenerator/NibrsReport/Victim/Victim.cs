@@ -16,6 +16,7 @@ namespace NibrsXml.NibrsReport.Victim
         public Victim()
         {
             RelatedOffenders = new List<LIBRSVictimOffenderRelation>();
+            AssociatedOffenses = new List<Offense.Offense>();
         }
 
         public Victim(string victimId) : this()
@@ -108,8 +109,8 @@ namespace NibrsXml.NibrsReport.Victim
             get { return new Victim(Id); }
         }
 
-        // This property can be used to know offender's offense from VictimOffenderAssociation
+        // This property can be used to know offender's offenses from VictimOffenderAssociation
         [XmlIgnore]      
-        public Offense.Offense AssociatedOffense { get; set; }
+        public List<Offense.Offense> AssociatedOffenses { get; set; }
     }
 }
