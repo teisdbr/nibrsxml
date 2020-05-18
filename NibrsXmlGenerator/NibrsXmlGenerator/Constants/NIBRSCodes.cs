@@ -481,6 +481,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("A")]
         [CodeDescription("ASIAN:  A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.")]
+        [TextDescription("ASIAN")]
         ASIAN,
 
         /// <summary>
@@ -488,6 +489,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("B")]
         [CodeDescription("BLACK:  A person having origins in any of the black racial groups of Africa.")]
+        [TextDescription("BLACK")]
         BLACK,
 
         /// <summary>
@@ -495,10 +497,12 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("I")]
         [CodeDescription("AMERICAN INDIAN or ALASKAN NATIVE:  A person having origins in any of the original peoples of the Americas and maintaining cultural identification through tribal affiliations or community recognition.")]
+        [TextDescription("AMERICAN_INDIAN_OR_ALASKAN_NATIVE")]
         AMERICAN_INDIAN_OR_ALASKAN_NATIVE,
 
         [NibrsCode("P")]
         [CodeDescription(@"NATIVE HAWAIIAN or OTHER PACIFIC ISLANDER:  A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands.  The term ""Native Hawaiian"" does not include individuals who are native to the State of Hawaii by virtue of being born there.  However, the following Pacific Islander groups are included:  Carolinian, Fijian, Kosraean, Melanesian, Micronesian, Northern Mariana Islander, Palauan, Papua New Guinean, Ponapean (Pohnpelan), Polynesian, Solomon Islander, Tahitian, Tarawa Islander, Tokelauan, Tongan, Trukese (Chuukese), and Yapese.")]
+        [TextDescription("HAWAIIAN_OR_PACIFIC_ISLANDER")]
         HAWAIIAN_OR_PACIFIC_ISLANDER,
 
         /// <summary>
@@ -506,6 +510,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("U")]
         [CodeDescription("UNKNOWN")]
+        [TextDescription("UNKNOWN")]
         UNKNOWN,
 
         /// <summary>
@@ -513,6 +518,7 @@ namespace NibrsXml.Constants
         /// </summary>
         [NibrsCode("W")]
         [CodeDescription("WHITE:  A person having origins in any of the original peoples of Europe, North Africa, or Middle East.")]
+        [TextDescription("WHITE")]
         WHITE
     }
 
@@ -577,6 +583,14 @@ namespace NibrsXml.Constants
         [NibrsCode("Child of Boyfriend_Girlfriend")]
         [CodeDescription("Child of Boyfriend_Girlfriend")]
         Child_of_Boyfriend_Girlfriend,
+
+
+        /// <summary>
+        /// Boyfriend_Girlfriend
+        /// </summary>
+        [NibrsCode("Boyfriend_Girlfriend")]
+        [CodeDescription("Boyfriend_Girlfriend")]
+        Boyfriend_Girlfriend,
 
         /// <summary>
         /// Client
@@ -1481,7 +1495,7 @@ namespace NibrsXml.Constants
     /// A data type for a general category of harm or injury
     /// </summary>
     [Description("A data type for a general category of harm or injury.")]
-    internal enum InjuryCategoryCode
+    public enum InjuryCategoryCode
     {
         /// <summary>
         /// apparent broken bones
@@ -2637,7 +2651,7 @@ namespace NibrsXml.Constants
 	/// A data type for circumstances of either an aggravated assault or homicide.
 	/// </summary>
 	[Description("A data type for circumstances of either an aggravated assault or homicide.")]
-    internal enum AggravatedAssaultHomicideFactorsCode
+    public enum AggravatedAssaultHomicideFactorsCode
 	{
 		/// <summary>
 		/// Argument
@@ -3765,5 +3779,11 @@ namespace NibrsXml.Constants
         [NibrsCode("90Z")]
         [CodeDescription("All Other Offenses")]
         OTHER_OFFENSE
+
+
+
+
+
+
     }
 }

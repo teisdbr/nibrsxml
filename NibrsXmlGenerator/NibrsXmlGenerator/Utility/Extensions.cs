@@ -40,6 +40,11 @@ namespace NibrsXml.Utility
             return CodeDescriptionAttribute.GetDescription(e);
         }
 
+        public static string NibrsTextDescription(this Enum e)
+        {
+            return TextDescriptionAttribute.GetDescription(e);
+        }
+
         public static string UcrReportHeader(this Enum e)
         {
             return UcrElementName.GetDescription(e);
