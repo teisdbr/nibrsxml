@@ -147,11 +147,19 @@ namespace NibrsXml.Builder
         private static List<OffenseFactor> TranslateOffenseFactors(List<string> suspectedOfUsingCodes)
         {
             var offenseFactors = new List<OffenseFactor>();
-            foreach (var code in suspectedOfUsingCodes)
+
+            //Exception: If LIBRS is G, should be translated to N.
+            // As N is mutually Exclusive with all other codes, if G or N are appread return N.
+            if (suspectedOfUsingCodes.Any( code => code == LibrsErrorConstants.OffGaming || code == LibrsErrorConstants.OffNotApp))
             {
-                //Exception: If LIBRS is G, should be translated to N
-                var translatedCode = code == LibrsErrorConstants.OffGaming ? LibrsErrorConstants.OffNotApp : code;
-                offenseFactors.Add(translatedCode.TryBuild<OffenseFactor>());
+                offenseFactors.Add(LibrsErrorConstants.OffNotApp.TryBuild<OffenseFactor>());
+                return offenseFactors;
+            }              
+
+            foreach (var code in suspectedOfUsingCodes)
+            {         
+              
+                offenseFactors.Add(code.TryBuild<OffenseFactor>());
             }
 
             return offenseFactors;
