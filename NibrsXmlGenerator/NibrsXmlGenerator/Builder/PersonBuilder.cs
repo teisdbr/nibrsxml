@@ -12,6 +12,8 @@ using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffense;
 using NibrsXml.Utility;
 using TeUtil.Extensions;
+using System.Security.Cryptography;
+using LoadBusinessLayer.LIBRSVictim;
 
 namespace NibrsXml.Builder
 {
@@ -60,7 +62,7 @@ namespace NibrsXml.Builder
                 
                 //Only instantiate injuries if at least one exists.
                 List<VictimInjury> nibrsVictimInjuries = null;
-                if (librsVictimInjuries != null && librsVictimInjuries.Count() > 0)
+                if (librsVictimInjuries != null && librsVictimInjuries.Count() > 0 && IsInjuryValidToOffense(librsVictimInjuries.ToList(), incident.Offense))
                     nibrsVictimInjuries = librsVictimInjuries.Select(i => new VictimInjury(i.InjuryType)).ToList();
                 
                 if (victim.VictimType == LibrsErrorConstants.VTIndividual || victim.VictimType == LibrsErrorConstants.VTLawEnfOfficer)
@@ -436,6 +438,35 @@ namespace NibrsXml.Builder
 
             return VictimOffenderRelationshipLibrsNibrsTranslation[derivedVicOffRelationship];
         }
+
+        private static bool IsInjuryValidToOffense(List<LIBRSVictimInjury> librsvictimInjuries, List<LIBRSOffense> librsoffenses)
+        {
+            // Librs allows Group B offenses to have Victim Injury, but in nibrs we build victim only if we have group A offense. This causes some minor Nibrs Extraction issues which is explained below.
+            //Eg:
+            //1.  If the Incident has both Group A and Group B offense, only Group A offense is considered filtering out Group B to build Nibrs.
+            //2.  If same victim is connected to both  above offenses, and Group A offense doesn't require victim injury and Group B does. 
+            //3.  Librs validations consider Victim Injury is valid as atleast one offense connected to the victim requires injury, 
+            //4.  Now in the Nibrs Only Group A is considered and it doesn't not require Victim Injury, below code makes sure only with  offenses require injury can have victim injuries.
+            var offensesValidToVictimInjuries = new HashSet<string>
+            {
+                "100",
+                "11A",
+                "11C",
+                "11D",
+                "120",
+                "13A",
+                "13B",
+                "210",
+                "64A",
+                "64B"
+
+            };
+
+            // Matching Group A offeneses that requires Victim Injury.
+          return  librsoffenses.Where(of => of.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase) && librsvictimInjuries.Any(injury => injury.VictimSeqNum == of.OffConnecttoVic))?.Any(o => offensesValidToVictimInjuries.Contains(o.AgencyAssignedNibrs)) ?? false;
+        }
+
+
 
         #endregion
 
