@@ -105,6 +105,11 @@ namespace NibrsXml.Builder
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
         {
+            //todo: what if None (88) or Unknown (99) exists together (Mutually Exclusive), return Unknown (99) for now. 
+            if (biasMotivationCodes.Any(code => code == "88")  && biasMotivationCodes.Any(code => code == "99")) return new List<string> { biasMotivationCodeTranslations["99"] };
+            else if (biasMotivationCodes.Any(code => code == "88")) return new List<string> { biasMotivationCodeTranslations["88"] };
+            else if ((biasMotivationCodes.Any(code => code == "99"))) return new List<string> { biasMotivationCodeTranslations["99"] };
+
             return biasMotivationCodes.Select(code => biasMotivationCodeTranslations[code]).ToList();
         }
 
