@@ -3343,7 +3343,7 @@ namespace NibrsXml.Constants
         /// Murder &amp; Nonnegligent Manslaughter
         /// </summary>
         [NibrsCode("09A")]
-        [CodeDescription("Murder &amp; Nonnegligent Manslaughter")]
+        [CodeDescription("Murder & Nonnegligent Manslaughter")]
         MURDER_NONNEGLIGENT,
 
         /// <summary>
@@ -3441,7 +3441,7 @@ namespace NibrsXml.Constants
         /// Burglary/Breaking &amp; Entering
         /// </summary>
         [NibrsCode("220")]
-        [CodeDescription("Burglary/Breaking &amp; Entering")]
+        [CodeDescription("Burglary/Breaking & Entering")]
         BURGLARY_BREAKING_AND_ENTERING,
 
         /// <summary>
