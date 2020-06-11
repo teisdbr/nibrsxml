@@ -44,7 +44,7 @@ namespace NibrsXml.Processor
                 var runnumber = agencyIncidentsGrp.Runnumber;
 
                 AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
-
+               
                
                 var isOutOfSequence = false;
 
@@ -183,10 +183,9 @@ namespace NibrsXml.Processor
                 var httpresponses = await client.PostAsync(endpointURL, byteContent);
                 return httpresponses.IsSuccessStatusCode;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex)            {
 
-                throw ex;
+                throw ;
             }
             //finally
             //{
