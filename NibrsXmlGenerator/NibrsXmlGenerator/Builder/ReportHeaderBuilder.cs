@@ -12,7 +12,7 @@ using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {
-    public class ReportHeaderBuilder 
+    public class ReportHeaderBuilder
     {
         private const string groupAIncidentReport = "A";
         private const string deleteActionType = "D";
@@ -27,23 +27,27 @@ namespace NibrsXml.Builder
             }).ToList();
 
             var rptHeader = new ReportHeader();
-            rptHeader.NibrsReportCategoryCode = DetermineNibrsReportCategoryCode(offenses);
+            rptHeader.NibrsReportCategoryCode = admin.HasGroupAOffense.HasValue ? SetNibrsReportCategoryCode(admin.HasGroupAOffense) : DetermineNibrsReportCategoryCode(offenses);
             rptHeader.ReportActionCategoryCode = actionType;
             rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
-            // todo revert the commented code below and remove hard coded reporting agency as "LA0140000"
             rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));
-           // rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")));
+            //rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")));
             return rptHeader;
+        }
+
+        private static string SetNibrsReportCategoryCode(bool? hasGroupAOffense)
+        {
+            return hasGroupAOffense == true ? NibrsReportCategoryCode.A.NibrsCode() : NibrsReportCategoryCode.B.NibrsCode();
         }
 
         private static string DetermineNibrsReportCategoryCode(List<LIBRSOffense> offenses)
         {
-             // Determine NIBRS report category code based on provided offenses
+            // Determine NIBRS report category code based on provided offenses
             foreach (var offense in offenses)
             {
                 //Trim LRSNumber value in offense
                 offense.LrsNumber = offense.LrsNumber.Trim();
-                
+
                 if (offense.OffenseGroup == groupAIncidentReport)
                 {
                     return NibrsReportCategoryCode.A.NibrsCode();
