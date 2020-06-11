@@ -51,11 +51,11 @@ namespace NibrsXml.Builder
                     if (report == null || report.HasFailedToBuildProperly)
                         continue;
 
-                    var sub = new Submission(incident.Admin.IncidentNumber.Trim(), agencyIncidentList.OriNumber) { Runnumber = agencyIncidentList.Runnumber };
+                    var sub = new Submission(incident.Admin.IncidentNumber.Trim(),  incident.Admin.IncidentDate) { Runnumber = agencyIncidentList.Runnumber };
                     sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
                     sub.Reports.Add(report);
 
-                    var key = sub.ORI + "_" + sub.Incident_Num + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
+                    var key = sub.Ori + "_" + sub.Incident_Num + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
 
                     lock (trackIncidentsDic)
                     {
