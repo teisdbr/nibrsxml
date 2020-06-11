@@ -13,7 +13,9 @@ using NibrsInterface;
 using NibrsXml.DataAccess;
 using System.Configuration;
 using Newtonsoft.Json;
-
+using NibrsXml.NibrsReport.Misc;
+using LoadBusinessLayer.LIBRSAdmin;
+using TeUtil.Extensions;
 
 namespace NibrsXml.NibrsReport
 {
@@ -44,22 +46,39 @@ namespace NibrsXml.NibrsReport
         //[JsonIgnore]
         public string XsiSchemaLocation = Constants.Misc.schemaLocation;
 
-        [XmlIgnore]
-        public string ORI { get; private set; }
 
         [XmlIgnore]
-        public string Incident_Num { get; private set; }
+        public string Incident_Num { get; set; }
 
+        [XmlIgnore]
+        private string _incidentDateTime;
+
+        [XmlIgnore]
+        public string IncidentDateTime
+        {
+            get
+            {
+                return _incidentDateTime;
+            }
+            set
+            {
+                _incidentDateTime = value.Contains("T") ? value : IncidentBuilder.ExtractNibrsIncidentDateTime(value)?.DateTime;
+            }
+        }
+
+     
 
         public Submission()
         {
             //Id = ObjectId.GenerateNewId();
         }
 
-        public Submission(string Incident, string Ori)
-        {
-            ORI = Ori;
-            Incident_Num = Incident_Num;
+       
+        public Submission(string incident_Num,string incident_Date)
+        { 
+          
+            Incident_Num = incident_Num;
+            IncidentDateTime = incident_Date;
         }
 
         public Submission(params Report[] reports)
@@ -72,7 +91,7 @@ namespace NibrsXml.NibrsReport
         [XmlIgnore]
         [JsonConverter(typeof(ObjectIdConverter))]
         // Removed Bson Ignore to save the value in the MonogDB. While deserilizing using JsonDeserilzer the Json value from Json string 
-        // will  replace the NewId.
+        // will  replace the NewId, if created by the getter method.
         public ObjectId Id
         {
             get
@@ -85,7 +104,6 @@ namespace NibrsXml.NibrsReport
 
             set
             {
-
                 _id = value;
             }
         }
@@ -109,9 +127,45 @@ namespace NibrsXml.NibrsReport
         }
 
 
+
+        #region HelperProperties 
+
+        /// Note: Below Helper Properties don't intend or useful for Ucr Reports.
+
+        // This property helps us to create the Report Id in the Transaction wrapper.
+        [XmlIgnore]
+        public string ReportingCategory => Reports[0].Header.NibrsReportCategoryCode;
+
+        // This property helps us to create the Report Id in the Transaction wrapper.
+        [XmlIgnore]
+        public string Ori => Reports[0].Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+
+
+        /// This property acts as an read only property, the getter and setter methods helps the bson and json serlizer to parse the value and save in MongoDb.
+        /// The main motive of creating this property is to easily identify the report and perform actions based on the Report Action Type, 
+        /// it also helps to create MongoIndex  to scan the documents.
+        [XmlIgnore]
+        [BsonElement]
+        public string ReportId
+        {
+            get
+            {
+                return _reportId;
+            }
+           
+        }
+
+        [XmlIgnore]
+        private string _reportId => Ori + "_" + Incident_Num + "_" + ReportingCategory;
+
+
+        #endregion
+
+
         public static Submission Deserialize(string filepath)
         {
             // Retrieve the XML file
+            var fileInfo = new FileInfo(filepath);
             var xmlFile = new FileStream(filepath, FileMode.Open);
             var xmlReader = XmlReader.Create(xmlFile);
 
@@ -132,7 +186,7 @@ namespace NibrsXml.NibrsReport
             }
             catch (Exception e)
             {
-                throw new Exception("There was an error deserializing a submission.", e);
+                throw new Exception("There was an error deserializing a submission: " + fileInfo.Name , e);
             }
 
             // Close the file and return
