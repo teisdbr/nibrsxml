@@ -42,15 +42,7 @@ namespace NibrsXml.NibrsReport
         /// <summary>
         /// This property will indicate if there are any operations happening on this document. No operations are happening if ProcessingId is Null.
         /// </summary>
-
         public string ProcessingId { get; set; }
-
-
-        public string ORI => Submission.Reports[0].Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
-
-       
-
-        public string ActionType => Submission.Reports[0].Header.ReportActionCategoryCode;
 
 
         [JsonIgnore]
@@ -74,7 +66,13 @@ namespace NibrsXml.NibrsReport
         
 
 
-
+        /// <summary>
+        /// This constructor is used by the json serlizer, all the private properties should be set in this constructor.
+        /// </summary>
+        /// <param name="nibrsSubmissionResponse"></param>
+        /// <param name="transactionDate"></param>
+        /// <param name="numberOfAttempts"></param>
+        /// <param name="status"></param>
         [JsonConstructor]
         private NibrsXmlTransaction(NibrsXmlSubmissionResponse nibrsSubmissionResponse, DateTime transactionDate, int numberOfAttempts, string status)
         {
@@ -120,7 +118,7 @@ namespace NibrsXml.NibrsReport
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public static NibrsXmlTransaction DeserializeNibrsXmlTransaction(string filepath)
+        public static NibrsXmlTransaction Deserialize(string filepath)
         {
             var jsonFile = new FileStream(filepath, FileMode.Open);
             var streamReader = new StreamReader(jsonFile, new UTF8Encoding());
