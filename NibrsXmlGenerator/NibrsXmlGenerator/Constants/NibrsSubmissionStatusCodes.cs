@@ -16,4 +16,11 @@ namespace NibrsXml.Constants
             public const string FormatError = "format Error";
         
     }
+
+    public class NibrsResponseCodes
+    {
+        public const string Accepted = "ACCEPTED";
+        public const string Warnings = "WARNINGS";
+        public const string Errors = "ERRORS";
+    }
 }
