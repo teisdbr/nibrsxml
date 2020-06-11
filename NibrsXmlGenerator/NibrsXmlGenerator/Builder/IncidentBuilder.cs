@@ -48,6 +48,28 @@ namespace NibrsXml.Builder
             return new ActivityDate(date, time);
         }
 
+        /// <summary>
+        /// Since LIBRS incidents don't record time, this translates LIBRS date format to NIBRS datetime format
+        /// </summary>
+        public static ActivityDate ExtractNibrsIncidentDateTime(string incidentDate)
+        {
+            string date, time;
+            try
+            {
+                var month = incidentDate.Substring(0, 2);
+                var day = incidentDate.Substring(2, 2);
+                var year = incidentDate.Substring(4, 4);
+                var hour = incidentDate.Substring(9, 2).Trim();
+                date = string.Format("{0}-{1}-{2}", year, month, day);
+                time = string.Format("{0}:00:00", hour == string.Empty ? "00" : hour.PadLeft(2, '0'));
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There was an error parsing the LIBRS incident date.", e);
+            }
+            return new ActivityDate(date, time);
+        }
+
         private static string ExtractNibrsClearanceCode(LIBRSAdmin admin)
         {
             // If action type is D ignore Exceptional Clearence Code            
