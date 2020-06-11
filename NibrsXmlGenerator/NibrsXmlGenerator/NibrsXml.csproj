@@ -56,6 +56,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Runtime.Serialization.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -83,6 +84,7 @@
     <Compile Include="Constants\Ucr\UcrCodeGroups.cs" />
     <Compile Include="DataAccess\Collection\SubmissionCollection.cs" />
     <Compile Include="DataAccess\DatabaseClient.cs" />
+    <Compile Include="DirectoryInfo.cs" />
     <Compile Include="NibrsError\Error.cs" />
     <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
     <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
@@ -135,8 +137,10 @@
     <Compile Include="NibrsReport\Substance\SubstanceQuantityMeasure.cs" />
     <Compile Include="NibrsReport\Victim\Victim.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
+    <Compile Include="Processor\NibrsXmlTransactionProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
+    <Compile Include="Processor\SubmissionProcessor.cs" />
     <Compile Include="Ucr\DataCollections\Arson.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryData.cs" />
@@ -167,7 +171,9 @@
     <Compile Include="Ucr\ReportRendering\HtmlRenderer.cs" />
     <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Constants\Ucr\UcrCodes.cs" />
-    <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\NibrsGenericExtensions.cs" />
+    <Compile Include="Utility\Extensions\Array.cs" />
+    <Compile Include="Utility\Extensions\Object.cs" />
     <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />
   </ItemGroup>
@@ -236,8 +242,14 @@
     <PackageReference Include="Microsoft.ReportViewer.Runtime.Common">
       <Version>12.0.2402.15</Version>
     </PackageReference>
+    <PackageReference Include="MongoDB.Bson">
+      <Version>2.7.0</Version>
+    </PackageReference>
     <PackageReference Include="MongoDB.Driver">
-      <Version>2.10.2</Version>
+      <Version>2.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="MongoDB.Driver.Core">
+      <Version>2.7.0</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Libmongocrypt">
       <Version>1.0.0</Version>
