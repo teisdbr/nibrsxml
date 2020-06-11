@@ -12,9 +12,9 @@ namespace NibrsInterface
         {
             if (response != null)
             {
-                if (response.NibrsResponse != null && response.NibrsResponse.ingestResponse.status == "ACCEPTED")
+                if (response.NibrsResponse != null && ( response.NibrsResponse.ingestResponse.status == "ACCEPTED" || response.NibrsResponse.ingestResponse.status == "WARNINGS"))
                     return NibrsSubmissionStatusCodes.Accepted;
-                if (response.NibrsResponse != null && response.NibrsResponse.ingestResponse.status != "ACCEPTED")
+                if (response.NibrsResponse != null && response.NibrsResponse.ingestResponse.status == "ERRORS")
                     return  NibrsSubmissionStatusCodes.Rejected; ;
                 if (response.NibrsResponse == null && response.IsFileValid)
                     return   NibrsSubmissionStatusCodes.UploadFailed; ;
