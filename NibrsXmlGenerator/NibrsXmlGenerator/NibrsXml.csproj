@@ -95,8 +95,6 @@
     <Compile Include="NibrsReport\MessageMetadata.cs" />
     <Compile Include="NibrsReport\MessageMetadatas\MessageIdentification.cs" />
     <Compile Include="NibrsReport\MessageMetadatas\MessageSubmittingOrganization.cs" />
-    <Compile Include="NibrsReport\NibrsResponseAnalyzer.cs" />
-    <Compile Include="NibrsReport\NibrsResubmitter.cs" />
     <Compile Include="NibrsReport\NibrsSerializable.cs" />
     <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
     <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />

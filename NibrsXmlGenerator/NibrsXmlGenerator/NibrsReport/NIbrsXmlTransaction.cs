@@ -10,6 +10,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NibrsInterface;
+using NibrsXml.Constants;
 
 namespace NibrsXml.NibrsReport
 {
@@ -18,9 +19,7 @@ namespace NibrsXml.NibrsReport
     {
 
         [JsonConverter(typeof(ObjectIdConverter))]
-
-        public ObjectId Id { get; set; }       
-           
+        public ObjectId Id { get; set; }                 
 
 
         public Submission Submission { get; set; } = new Submission();
@@ -96,7 +95,7 @@ namespace NibrsXml.NibrsReport
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
             NumberOfAttempts = 1;
-            Status = NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse);
+            Status = SetTransactionStatus();
         }
 
         /// <summary>
@@ -108,7 +107,7 @@ namespace NibrsXml.NibrsReport
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
             NumberOfAttempts += 1;
-            Status = NibrsResponseAnalyzer.AnalyzeResponse(NibrsSubmissionResponse);
+            Status = SetTransactionStatus();
             //NumberOfAttempts = numberOfAttempts + 1;
         }
 
@@ -148,6 +147,28 @@ namespace NibrsXml.NibrsReport
            
         }
 
+
+        private string  SetTransactionStatus()
+        {
+            return Submission.IsNibrsReportable ? AnalyzeResponse() : NibrsSubmissionStatusCodes.NotReported;
+        }
+
+        public  string AnalyzeResponse()
+        {
+            if (NibrsSubmissionResponse != null)
+            {
+                if (NibrsSubmissionResponse.NibrsResponse != null 
+                    && (NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Accepted || NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Warnings))
+                    return NibrsSubmissionStatusCodes.Accepted;
+                if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Errors)
+                    return NibrsSubmissionStatusCodes.Rejected; ;
+                if ( NibrsSubmissionResponse.IsUploadFailed)
+                    return NibrsSubmissionStatusCodes.UploadFailed;
+                if (NibrsSubmissionResponse.IsFormatError)
+                    return NibrsSubmissionStatusCodes.FormatError;
+            }
+            return NibrsSubmissionStatusCodes.NoResponse;
+        }
 
 
     }
