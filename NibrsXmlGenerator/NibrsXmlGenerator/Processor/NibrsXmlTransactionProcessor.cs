@@ -69,48 +69,13 @@ namespace NibrsXml.Processor
 
                 trans.NibrsSubmissionResponse.NibrsResponse = null;
 
-                //string filePath = @"C:\GIT\law-enforcement\nibrsxml\NibrsXmlGenerator\NibrsXmlGenerator\Assembly\System.Web.Services.dll";
+             
 
-                //Assembly assembly = Assembly.LoadFrom(filePath);
-
-
-                //AppDomainSetup domaininfo = new AppDomainSetup();
-                //domaininfo.ApplicationBase = System.Environment.CurrentDirectory;
-                //Evidence adevidence = AppDomain.CurrentDomain.Evidence;
-                //AppDomain domain = AppDomain.CreateDomain("MyDomain", adevidence, domaininfo);            
-
-               
-
-                //Type type = typeof(Proxy);
-                //var value = (Proxy)domain.CreateInstanceAndUnwrap(
-                //    type.Assembly.FullName,
-                //    type.FullName);
-
-                //var assembly = value.GetAssembly(filePath);
-
-                var response  = NibrsSubmitter.SendReport(trans.Submission.Xml);
+         
 
             });
 
             return transformToDeletes;
         }
-
-        public class Proxy : MarshalByRefObject
-        {
-            public Assembly GetAssembly(string assemblyPath)
-            {
-                try
-                {
-                    return Assembly.LoadFile(assemblyPath);
-                }
-                catch (Exception)
-                {
-                    return null;
-                    // throw new InvalidOperationException(ex);
-                }
-            }
-        }
-
-
     }
 }
