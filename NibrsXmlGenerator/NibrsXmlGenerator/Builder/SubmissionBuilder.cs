@@ -23,7 +23,7 @@ namespace NibrsXml.Builder
                     var report = ReportBuilder.Build(incident);
 
 
-                    if (report == null)
+                    if (report == null || report.IsNibrsReportable)
                         continue;
 
                     if (incident.HasErrors || (report.HasFailedToBuildProperly))
@@ -50,10 +50,12 @@ namespace NibrsXml.Builder
 
                     if (report == null || report.HasFailedToBuildProperly)
                         continue;
+                   
 
-                    var sub = new Submission(incident.Admin.IncidentNumber.Trim(),  incident.Admin.IncidentDate) { Runnumber = agencyIncidentList.Runnumber };
-                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
-                    sub.Reports.Add(report);
+                    var sub = new Submission(incident.Admin.IncidentNumber.Trim(),  incident.Admin.IncidentDate , agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);          
+
+                    sub.Reports.Add(report);                    
 
                     var key = sub.Ori + "_" + sub.Incident_Num + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
 
@@ -64,7 +66,6 @@ namespace NibrsXml.Builder
                         else
                             trackIncidentsDic.TryAdd(key, new List<Submission> { sub });
                     }
-
 
                 }
             });

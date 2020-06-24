@@ -32,11 +32,9 @@ namespace NibrsXml.Processor
 
         public static void ProcessSubmissionsBatch(List<IncidentList> agencyIncidentsCollection, string batchFolderName, bool saveLocally = true)
         {
-            var log = new Logger();
+            var log = new Logger();          
 
-
-          
-
+            
             foreach (var agencyIncidentsGrp in agencyIncidentsCollection.GroupBy(collection => new { collection.OriNumber, collection.Runnumber },
                 (key,g) => new  { Ori = key.OriNumber, Runnumber = key.Runnumber, Incidents = g  } ).OrderBy(grp => grp.Ori).ThenBy( grp => grp.Runnumber))
             {
@@ -90,7 +88,7 @@ namespace NibrsXml.Processor
                                    batchFolderName);
 
 
-                            var failedToUploadPath= agencyXmlDirectoryInfo.GetFailedToUploadLocation();
+                          //  var failedToUploadPath= agencyXmlDirectoryInfo.GetFailedToUploadLocation();
 
                             var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
 
@@ -183,7 +181,8 @@ namespace NibrsXml.Processor
                 var httpresponses = await client.PostAsync(endpointURL, byteContent);
                 return httpresponses.IsSuccessStatusCode;
             }
-            catch (Exception ex)            {
+            catch (Exception ex)            
+            {
 
                 throw ;
             }
@@ -224,17 +223,12 @@ namespace NibrsXml.Processor
                 try
                 {
 
-                    var response = NibrsSubmitter.SendReport(submission.Xml);
+                    var response = submission.IsNibrsReportable ? NibrsSubmitter.SendReport(submission.Xml) : null ;
                     //Wrap both response and submission and then save to database
                     NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
                     var jsonContent = nibrsXmlTransaction.JsonString;
 
-                    //If failed to upload then also outofsequence we have to stop sending files to FBI
-                    //if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed)
-                    //{
-                    //    failedToUpload.Add(submission);
-                    //    throw new Exception("Failed To Upload the Nibrs Xml");
-                    //}
+                  
                     if (attemptToSaveInMongo)
                     {
                         try

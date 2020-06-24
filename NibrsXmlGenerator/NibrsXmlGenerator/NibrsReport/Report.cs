@@ -118,6 +118,10 @@ namespace NibrsXml.NibrsReport
         [JsonIgnore]
         public bool HasFailedToBuildProperly { get; set; } = false;
 
+        
+        [XmlIgnore]
+        public bool IsNibrsReportable { get; set; } = true;
+
         [BsonIgnore] [XmlIgnore] [JsonIgnore]
         public List<Item.Item> StolenVehicles
         {

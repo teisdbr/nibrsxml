@@ -70,16 +70,23 @@ namespace NibrsXml.Builder
                 {
                     //Do not send any group B reports if there are no accompanying arrests
                     if (rpt.Arrests.Count == 0)
+                    {
+                        rpt.IsNibrsReportable = false;
                         return null;
+                    }
+                       
 
 
                     //Send only incident and arrests for group B deletes
-                    if (incident.Admin.ActionType == "D")
+                    if ( incident.Admin.ActionType == "D")
                     {
+                        //if (rpt.Arrests.Count == 0)
+                        //    return null;
+                        // construct Arrest and Arrestee segements to report Group B Arrest Delete
                         rpt.Arrests.ForEach(arr => rpt.Arrestees.Add(new Arrestee(arr.SequenceNumber, uniqueReportPrefix)));
                         rpt.ArrestSubjectAssocs = BuildArrestSubjectAssociation(
-                   rpt.Arrests,
-                   rpt.Arrestees);
+                             rpt.Arrests,
+                            rpt.Arrestees);
                         return rpt;
                     }
 
