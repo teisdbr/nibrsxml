@@ -77,63 +77,13 @@
     <Compile Include="Builder\ReportBuilder.cs" />
     <Compile Include="Builder\ReportHeaderBuilder.cs" />
     <Compile Include="Builder\SubmissionBuilder.cs" />
-    <Compile Include="Constants\Namespace.cs" />
-    <Compile Include="Constants\NibrsCodeGroups.cs" />
-    <Compile Include="Constants\NibrsCodes.cs" />
     <Compile Include="Constants\NibrsSubmissionStatusCodes.cs" />
     <Compile Include="Constants\Ucr\UcrCodeGroups.cs" />
     <Compile Include="DataAccess\Collection\SubmissionCollection.cs" />
     <Compile Include="DataAccess\DatabaseClient.cs" />
     <Compile Include="DirectoryInfo.cs" />
     <Compile Include="NibrsError\Error.cs" />
-    <Compile Include="NibrsReport\Arrestee\Arrestee.cs" />
-    <Compile Include="NibrsReport\Associations\ArrestSubjectAssociation.cs" />
-    <Compile Include="NibrsReport\Arrest\Arrest.cs" />
-    <Compile Include="NibrsReport\Arrest\ArrestCharge.cs" />
-    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficial.cs" />
-    <Compile Include="NibrsReport\EnforcementOfficial\EnforcementOfficialUnit.cs" />
-    <Compile Include="NibrsReport\MessageMetadata.cs" />
-    <Compile Include="NibrsReport\MessageMetadatas\MessageIdentification.cs" />
-    <Compile Include="NibrsReport\MessageMetadatas\MessageSubmittingOrganization.cs" />
-    <Compile Include="NibrsReport\NibrsSerializable.cs" />
-    <Compile Include="NibrsReport\Associations\OffenseLocationAssociation.cs" />
-    <Compile Include="NibrsReport\Associations\OffenseVictimAssociation.cs" />
-    <Compile Include="NibrsReport\NIbrsXmlTransaction.cs" />
-    <Compile Include="NibrsReport\ObjectIdConvertor.cs" />
-    <Compile Include="NibrsReport\Person\Person.cs" />
-    <Compile Include="NibrsReport\Subject\Subject.cs" />
-    <Compile Include="NibrsReport\Misc\RoleOfPerson.cs" />
-    <Compile Include="NibrsReport\Misc\ActivityDate.cs" />
-    <Compile Include="NibrsReport\Misc\ActivityIdentification.cs" />
-    <Compile Include="NibrsReport\Incident\Incident.cs" />
-    <Compile Include="NibrsReport\Incident\CjisIncidentAugmentation.cs" />
-    <Compile Include="NibrsReport\Incident\IncidentExceptionalClearanceDate.cs" />
-    <Compile Include="NibrsReport\Incident\JxdmIncidentAugmentation.cs" />
-    <Compile Include="NibrsReport\Item\Item.cs" />
-    <Compile Include="NibrsReport\Item\ItemStatus.cs" />
-    <Compile Include="NibrsReport\Item\ItemValue.cs" />
-    <Compile Include="NibrsReport\Item\ItemValueAmount.cs" />
-    <Compile Include="NibrsReport\Item\ItemValueDate.cs" />
-    <Compile Include="NibrsReport\Location\Location.cs" />
-    <Compile Include="NibrsReport\Offense\Offense.cs" />
-    <Compile Include="NibrsReport\Offense\OffenseEntryPoint.cs" />
-    <Compile Include="NibrsReport\Offense\OffenseFactor.cs" />
-    <Compile Include="NibrsReport\Offense\OffenseForce.cs" />
-    <Compile Include="NibrsReport\Person\MeasureIntegerRange.cs" />
-    <Compile Include="NibrsReport\Person\PersonAgeMeasure.cs" />
-    <Compile Include="NibrsReport\Person\PersonAugmentation.cs" />
-    <Compile Include="NibrsReport\Victim\VictimInjury.cs" />
-    <Compile Include="NibrsReport\Misc\OrganizationAugmentation.cs" />
-    <Compile Include="NibrsReport\Misc\OrganizationORIIdentification.cs" />
-    <Compile Include="NibrsReport\ReportHeader\ReportDate.cs" />
-    <Compile Include="NibrsReport\Report.cs" />
-    <Compile Include="NibrsReport\ReportHeader\ReportHeader.cs" />
-    <Compile Include="NibrsReport\ReportHeader\ReportingAgency.cs" />
-    <Compile Include="NibrsReport\Associations\SubjectVictimAssociation.cs" />
-    <Compile Include="NibrsReport\Submission.cs" />
-    <Compile Include="NibrsReport\Substance\Substance.cs" />
-    <Compile Include="NibrsReport\Substance\SubstanceQuantityMeasure.cs" />
-    <Compile Include="NibrsReport\Victim\Victim.cs" />
+    <Compile Include="NIbrsXmlTransaction.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Processor\NibrsXmlTransactionProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,10 +119,8 @@
     <Compile Include="Ucr\ReportRendering\HtmlRenderer.cs" />
     <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Constants\Ucr\UcrCodes.cs" />
-    <Compile Include="Utility\NibrsGenericExtensions.cs" />
     <Compile Include="Utility\Extensions\Array.cs" />
     <Compile Include="Utility\Extensions\Object.cs" />
-    <Compile Include="Utility\NIBRSDescriptionAttributes.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +183,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="Ucr\Reports\IncidentsAcceptedOrRejected\incidents.xslt" />
+    <None Include="NuGet.Config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ReportViewer.Runtime.Common">
@@ -254,6 +203,12 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NibrsModels">
+      <Version>1.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Util">
+      <Version>1.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -285,10 +240,6 @@
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\util\Util\Util.csproj">
-      <Project>{cb16f8a8-80d0-478e-b459-1f2dc93c5e6f}</Project>
-      <Name>Util</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\util\XmlValidator\XmlValidator.csproj">
       <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
       <Name>XmlValidator</Name>

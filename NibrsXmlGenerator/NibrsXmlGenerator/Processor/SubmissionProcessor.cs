@@ -1,6 +1,5 @@
 ﻿using LoadBusinessLayer;
-using NibrsXml.Builder;
-using NibrsXml.NibrsReport;
+using NibrsModels.NibrsReport;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,13 +14,13 @@ using NibrsInterface;
 using System.Collections.Concurrent;
 using MongoDB.Bson;
 using System.Threading;
-using NibrsXml.Constants;
-using NibrsXml.Utility;
 using Newtonsoft.Json;
 using System.Net;
 using System.Web.Util;
 using System.ServiceModel.PeerResolvers;
 using System.Data;
+using NibrsXml;
+using NibrsXml.Builder;
 
 namespace NibrsXml.Processor
 {
@@ -447,7 +446,7 @@ namespace NibrsXml.Processor
                     }
                     var docName = submission.Id.ToString() + ".xml";
                     string[] fullpath = { fileName, docName };
-                    string nibrsSchemaLocation = NibrsXml.Constants.Misc.schemaLocation;
+                    string nibrsSchemaLocation = NibrsModels.Constants.Misc.schemaLocation;
                     //Save locally
                     submission.XsiSchemaLocation = nibrsSchemaLocation;
                     var xdoc = new XmlDocument();

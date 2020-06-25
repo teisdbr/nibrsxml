@@ -1,8 +1,7 @@
 ﻿using NibrsInterface;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport;
-using NibrsXml.Utility;
-using NibrsXml.Utility.Extensions;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport;
+using NibrsModels.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using NibrsXml.Utility.Extensions;
 
 namespace NibrsXml.Processor
 {

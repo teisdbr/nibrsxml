@@ -1,4 +1,5 @@
-﻿using NibrsXml.Utility;
+﻿using NibrsModels.Constants;
+using NibrsModels.Utility;
 
 namespace NibrsXml.Constants.Ucr
 {

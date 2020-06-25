@@ -1,34 +1,35 @@
-﻿using NibrsXml.Utility;
+﻿
+using NibrsXml.Utility;
 
 namespace NibrsXml.Constants.Ucr
 {
     public enum UcrReportType
     {
-        [UcrReport("NibrsXml.Ucr.Reports.ReturnA.returna.xsl","_ReturnA.xml","_ReturnA.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.ReturnA.returna.xsl","_ReturnA.xml","_ReturnA.html")]
         ReturnA,
 
-        [UcrReport("NibrsXml.Ucr.Reports.ReturnA.returnasupp.xsl","_ReturnASupplement.xml","_ReturnASupplement.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.ReturnA.returnasupp.xsl","_ReturnASupplement.xml","_ReturnASupplement.html")]
         SupplementToReturnA,
 
-        [UcrReport("NibrsXml.Ucr.Reports.Asre.asre.xsl","_Asre.xml","_Asre.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.Asre.asre.xsl","_Asre.xml","_Asre.html")]
         Asre,
 
-        [UcrReport("NibrsXml.Ucr.Reports.Arson.arson.xsl","_Arson.xml","_Arson.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.Arson.arson.xsl","_Arson.xml","_Arson.html")]
         Arson,
 
-        [UcrReport("NibrsXml.Ucr.Reports.HumanTrafficking.ht.xsl","_HumanTrafficking.xml","_HumanTrafficking.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.HumanTrafficking.ht.xsl","_HumanTrafficking.xml","_HumanTrafficking.html")]
         HumanTrafficking,
 
-        [UcrReport("NibrsXml.Ucr.Reports.HateCrime.hcr.xslt", "_HateCrime.xml", "_HateCrime.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.HateCrime.hcr.xslt", "_HateCrime.xml", "_HateCrime.html")]
         HateCrime,
 
-        [UcrReport("NibrsXml.Ucr.Reports.SupplementaryHomicide.shr.xslt", "_SupplementaryHomicide.xml", "_SupplementaryHomicide.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.SupplementaryHomicide.shr.xslt", "_SupplementaryHomicide.xml", "_SupplementaryHomicide.html")]
         SupplementaryHomicide,
 
-        [UcrReport("NibrsXml.Ucr.Reports.Leoka.leoka.xsl","_Leoka.xml","_Leoka.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.Leoka.leoka.xsl","_Leoka.xml","_Leoka.html")]
         Leoka,
 
-        [UcrReport("NibrsXml.Ucr.Reports.IncidentsAcceptedOrRejected.incidents.xslt", "_IncidentsAcceptedOrRejected.xml", "_IncidentsAcceptedOrRejected.html")]
+        [UcrReport("NibrsModels.Ucr.Reports.IncidentsAcceptedOrRejected.incidents.xslt", "_IncidentsAcceptedOrRejected.xml", "_IncidentsAcceptedOrRejected.html")]
         IncidentsAcceptedOrRejected
     }
 }

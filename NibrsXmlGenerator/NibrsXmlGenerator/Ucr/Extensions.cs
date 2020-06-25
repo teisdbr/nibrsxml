@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NibrsModels.Constants;
 using NibrsXml.Constants;
 using NibrsXml.Constants.Ucr;
-using NibrsXml.NibrsReport.Arrest;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Item;
+using NibrsModels.NibrsReport.Arrest;
+using NibrsModels.NibrsReport;
+using NibrsModels.NibrsReport.Item;
 using NibrsXml.Ucr.DataMining;
-using NibrsXml.NibrsReport.Offense;
+using NibrsModels.NibrsReport.Offense;
+using NibrsModels.Utility;
 using NibrsXml.Utility;
 
 namespace NibrsXml.Ucr

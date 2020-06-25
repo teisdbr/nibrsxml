@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.IO;
-using NibrsXml.NibrsReport;
+using NibrsModels.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Ucr.DataMining;
 using System.Configuration;

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport.Item;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport.Item;
+using NibrsModels.Utility;
 using NibrsXml.Utility;
-using TeUtil.Extensions;
+using Util.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {

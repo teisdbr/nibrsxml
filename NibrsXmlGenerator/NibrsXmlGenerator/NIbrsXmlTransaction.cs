@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NibrsInterface;
+using NibrsModels.NibrsReport;
 using NibrsXml.Constants;
 
-namespace NibrsXml.NibrsReport
+namespace NibrsXml
 {
     [BsonIgnoreExtraElements]
     public class NibrsXmlTransaction

@@ -2,13 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using NibrsXml.Constants;
+using NibrsModels.Constants;
 using NibrsXml.Constants.Ucr;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Item;
+using NibrsModels.NibrsReport;
+using NibrsModels.NibrsReport.Item;
+using NibrsModels.Utility;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Utility;
-using TeUtil.Extensions;
+using Util.Extensions;
 
 namespace NibrsXml.Ucr.DataMining
 {

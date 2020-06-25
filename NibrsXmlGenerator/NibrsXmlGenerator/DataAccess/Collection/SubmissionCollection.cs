@@ -1,6 +1,6 @@
 ﻿using System;
 using MongoDB.Driver;
-using NibrsXml.NibrsReport;
+using NibrsModels.NibrsReport;
 using MongoDB.Bson;
 using NibrsInterface;
 

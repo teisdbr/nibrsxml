@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NibrsXml.NibrsReport.Associations;
-using NibrsXml.NibrsReport.Offense;
+using NibrsModels.NibrsReport.Associations;
+using NibrsModels.NibrsReport.Offense;
 
 namespace NibrsXml.Ucr.DataMining
 {

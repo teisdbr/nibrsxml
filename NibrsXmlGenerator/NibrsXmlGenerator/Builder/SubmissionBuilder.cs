@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LoadBusinessLayer;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport;
-using NibrsXml.Utility;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport;
+using NibrsModels.Utility;
 
 namespace NibrsXml.Builder
 {
@@ -52,12 +52,12 @@ namespace NibrsXml.Builder
                         continue;
                    
 
-                    var sub = new Submission(incident.Admin.IncidentNumber.Trim(),  incident.Admin.IncidentDate , agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+                    var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
                     sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);          
 
                     sub.Reports.Add(report);                    
 
-                    var key = sub.Ori + "_" + sub.Incident_Num + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
+                    var key = sub.Ori + "_" + incident.Admin.IncidentNumber + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
 
                     lock (trackIncidentsDic)
                     {

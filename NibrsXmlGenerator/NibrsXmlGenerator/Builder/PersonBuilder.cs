@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NibrsXml.NibrsReport.Person;
-using NibrsXml.NibrsReport.Victim;
-using NibrsXml.NibrsReport.Subject;
-using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.EnforcementOfficial;
-using NibrsXml.NibrsReport.Associations;
-using NibrsXml.Constants;
+using NibrsModels.NibrsReport.Person;
+using NibrsModels.NibrsReport.Victim;
+using NibrsModels.NibrsReport.Subject;
+using NibrsModels.NibrsReport.Arrestee;
+using NibrsModels.NibrsReport.EnforcementOfficial;
+using NibrsModels.NibrsReport.Associations;
+using NibrsModels.Constants;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffense;
-using NibrsXml.Utility;
-using TeUtil.Extensions;
+using NibrsModels.Utility;
 using System.Security.Cryptography;
 using LoadBusinessLayer.LIBRSVictim;
+using Util.Extensions;
 
 namespace NibrsXml.Builder
 {
@@ -136,21 +136,34 @@ namespace NibrsXml.Builder
                     //Translate {NM : CS, XB : BG, ES : SE} All others remain as is.
                     if (applicableRelationships.Count > 0)
                     {
-                        newVictim.RelatedOffenders = applicableRelationships.Select(r =>
+                        newVictim.RelatedOffenders =
+                            applicableRelationships.Select(r =>
                         {
+
+                           var  VictimOffenderRelation = new VictimOffenderRelation
+                           {
+                               ORINumber = r.ORINumber,
+                               IncidentNumber = r.IncidentNumber,
+                               VictimSeqNum =  r.VictimSeqNum,
+                               OffenderNumberRelated =  r.OffenderNumberRelated
+                           };
+
+
                             switch (r.VictimOffenderRelation)
                             {
                                 case "NM":
-                                    r.VictimOffenderRelation = "CS";
+                                    VictimOffenderRelation.VictimOffenderRelationCode = "CS";
                                     break;
                                 case "XB":
-                                    r.VictimOffenderRelation = "BG";
+                                    VictimOffenderRelation.VictimOffenderRelationCode = "BG";
                                     break;
                                 case "ES":
-                                    r.VictimOffenderRelation = "SE";
+                                    VictimOffenderRelation.VictimOffenderRelationCode = "SE";
                                     break;
                             }
-                            return r;
+
+
+                            return VictimOffenderRelation;
                         }).ToList();
                     }
                     //Add each of the new person objects above to their respective lists
@@ -241,12 +254,12 @@ namespace NibrsXml.Builder
                         foreach (var subject in matchingSubjects)
                         {
                             //Create association
-                            var subVicAssoc = new NibrsReport.Associations.SubjectVictimAssociation(
+                            var subVicAssoc = new NibrsModels.NibrsReport.Associations.SubjectVictimAssociation(
                                 uniquePrefix: uniquePrefix,
                                 id: (subjectVictimAssocs.Count() + 1).ToString(),
                                 subject: subject,
                                 victim: victim,
-                                relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelation.TrimNullIfEmpty()));
+                                relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelationCode.TrimNullIfEmpty()));
 
                             //Add Association to list
                             subjectVictimAssocs.Add(subVicAssoc);

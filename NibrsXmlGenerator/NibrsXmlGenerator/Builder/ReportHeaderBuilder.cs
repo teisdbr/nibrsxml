@@ -4,11 +4,11 @@ using System.Linq;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSOffense;
 using LoadBusinessLayer.LIBRSAdmin;
-using NibrsXml.Utility;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport.ReportHeader;
-using NibrsXml.NibrsReport.Misc;
-using TeUtil.Extensions;
+using NibrsModels.Utility;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport.ReportHeader;
+using NibrsModels.NibrsReport.Misc;
+using Util.Extensions;
 
 namespace NibrsXml.Builder
 {

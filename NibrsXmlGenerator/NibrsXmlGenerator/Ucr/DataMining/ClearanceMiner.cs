@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using NibrsXml.NibrsReport;
+using NibrsModels.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 
 namespace NibrsXml.Ucr.DataMining

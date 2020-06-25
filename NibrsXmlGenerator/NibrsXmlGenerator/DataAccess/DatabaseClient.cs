@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using NibrsXml.DataAccess.Collection;
-using NibrsXml.NibrsReport;
 
 namespace NibrsXml.DataAccess
 {

@@ -7,19 +7,19 @@ using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
 using LoadBusinessLayer.LIBRSProperty;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Arrest;
-using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.Associations;
-using NibrsXml.NibrsReport.Item;
-using NibrsXml.NibrsReport.Location;
-using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.Substance;
-using NibrsXml.NibrsReport.Victim;
-using NibrsXml.Utility;
-using TeUtil.Extensions;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport;
+using NibrsModels.NibrsReport.Arrest;
+using NibrsModels.NibrsReport.Arrestee;
+using NibrsModels.NibrsReport.Associations;
+using NibrsModels.NibrsReport.Item;
+using NibrsModels.NibrsReport.Location;
+using NibrsModels.NibrsReport.Misc;
+using NibrsModels.NibrsReport.Offense;
+using NibrsModels.NibrsReport.Substance;
+using NibrsModels.NibrsReport.Victim;
+using NibrsModels.Utility;
+using Util.Extensions;
 
 namespace NibrsXml.Builder
 {

@@ -5,11 +5,11 @@ using LoadBusinessLayer;
 using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffender;
 using LoadBusinessLayer.LIBRSOffense;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport.Location;
-using NibrsXml.NibrsReport.Offense;
-using NibrsXml.Utility;
-using TeUtil.Extensions;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport.Location;
+using NibrsModels.NibrsReport.Offense;
+using NibrsModels.Utility;
+using Util.Extensions;
 
 namespace NibrsXml.Builder
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using MongoDB.Bson;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.MessageMetadatas;
-using NibrsXml.NibrsReport.Misc;
+using NibrsModels.NibrsReport;
+using NibrsModels.NibrsReport.MessageMetadatas;
+using NibrsModels.NibrsReport.Misc;
 
 namespace NibrsXml.Builder
 {

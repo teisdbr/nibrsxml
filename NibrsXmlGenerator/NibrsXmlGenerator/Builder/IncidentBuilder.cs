@@ -1,9 +1,9 @@
 ﻿using System;
-using NibrsXml.NibrsReport.Incident;
-using NibrsXml.NibrsReport.Misc;
+using NibrsModels.NibrsReport.Incident;
+using NibrsModels.NibrsReport.Misc;
 using LoadBusinessLayer.LIBRSAdmin;
 using LoadBusinessLayer.LibrsErrorConstants;
-using TeUtil.Extensions;
+using Util.Extensions;
 
 namespace NibrsXml.Builder
 {

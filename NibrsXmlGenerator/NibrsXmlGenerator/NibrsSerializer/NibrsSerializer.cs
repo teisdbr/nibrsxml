@@ -3,12 +3,12 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NibrsXml.Constants;
-using NibrsXml.NibrsReport;
-using NibrsXml.NibrsReport.Incident;
-using NibrsXml.NibrsReport.Misc;
-using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.ReportHeader;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport;
+using NibrsModels.NibrsReport.Incident;
+using NibrsModels.NibrsReport.Misc;
+using NibrsModels.NibrsReport.Offense;
+using NibrsModels.NibrsReport.ReportHeader;
 
 
 namespace NibrsXml.NibrsSerializer
@@ -65,19 +65,19 @@ namespace NibrsXml.NibrsSerializer
         private static readonly XmlSerializerNamespaces Namespaces = new XmlSerializerNamespaces(
             new[] 
             {
-                new XmlQualifiedName(Aliases.nibrs, Constants.Namespaces.cjisNibrs),
-                new XmlQualifiedName(Aliases.cjis, Constants.Namespaces.cjis),
-                new XmlQualifiedName(Aliases.cjiscodes, Constants.Namespaces.cjisCodes),
-                new XmlQualifiedName(Aliases.i, Constants.Namespaces.appInfo),
-                new XmlQualifiedName(Aliases.ucr, Constants.Namespaces.fbiUcr),
-                new XmlQualifiedName(Aliases.j, Constants.Namespaces.justice),
-                new XmlQualifiedName(Aliases.term, Constants.Namespaces.niemTerminology),
-                new XmlQualifiedName(Aliases.nc, Constants.Namespaces.niemCore),
-                new XmlQualifiedName(Aliases.niemXsd, Constants.Namespaces.niemXsd),
-                new XmlQualifiedName(Aliases.s, Constants.Namespaces.niemStructs),
-                new XmlQualifiedName(Aliases.xsi, Constants.Namespaces.xsi),
-                new XmlQualifiedName(Aliases.xsd, Constants.Namespaces.xsd),
-                new XmlQualifiedName(Aliases.nibrscodes, Constants.Namespaces.cjisNibrsCodes)
+                new XmlQualifiedName(Aliases.nibrs, NibrsModels.Constants.Namespaces.cjisNibrs),
+                new XmlQualifiedName(Aliases.cjis, NibrsModels.Constants.Namespaces.cjis),
+                new XmlQualifiedName(Aliases.cjiscodes, NibrsModels.Constants.Namespaces.cjisCodes),
+                new XmlQualifiedName(Aliases.i, NibrsModels.Constants.Namespaces.appInfo),
+                new XmlQualifiedName(Aliases.ucr, NibrsModels.Constants.Namespaces.fbiUcr),
+                new XmlQualifiedName(Aliases.j, NibrsModels.Constants.Namespaces.justice),
+                new XmlQualifiedName(Aliases.term, NibrsModels.Constants.Namespaces.niemTerminology),
+                new XmlQualifiedName(Aliases.nc, NibrsModels.Constants.Namespaces.niemCore),
+                new XmlQualifiedName(Aliases.niemXsd, NibrsModels.Constants.Namespaces.niemXsd),
+                new XmlQualifiedName(Aliases.s, NibrsModels.Constants.Namespaces.niemStructs),
+                new XmlQualifiedName(Aliases.xsi, NibrsModels.Constants.Namespaces.xsi),
+                new XmlQualifiedName(Aliases.xsd, NibrsModels.Constants.Namespaces.xsd),
+                new XmlQualifiedName(Aliases.nibrscodes, NibrsModels.Constants.Namespaces.cjisNibrsCodes)
             });
 
         public NibrsSerializer(Type type) : base(type, NonRootTypes)

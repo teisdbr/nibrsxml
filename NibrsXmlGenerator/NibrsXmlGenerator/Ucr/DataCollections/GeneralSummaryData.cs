@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NibrsXml.NibrsReport.Arrestee;
-using NibrsXml.NibrsReport.Incident;
-using TeUtil.Extensions;
+using NibrsModels.NibrsReport.Arrestee;
+using NibrsModels.NibrsReport.Incident;
+using Util.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {

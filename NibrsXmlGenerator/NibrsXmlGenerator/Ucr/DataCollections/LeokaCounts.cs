@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using NibrsModels.Constants;
+using NibrsModels.Utility;
 using NibrsXml.Constants;
 using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
-using TeUtil.Extensions;
+using Util.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using NibrsModels.Constants;
+using NibrsModels.NibrsReport.Offense;
+using NibrsModels.NibrsReport.Substance;
+using NibrsModels.Utility;
 using NibrsXml.Constants;
 using NibrsXml.Constants.Ucr;
-using NibrsXml.NibrsReport.Offense;
-using NibrsXml.NibrsReport.Substance;
 using NibrsXml.Utility;
-using TeUtil.Extensions;
+using Util.Extensions;
 
 namespace NibrsXml.Ucr.DataCollections
 {
