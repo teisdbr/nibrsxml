@@ -145,7 +145,8 @@ namespace NibrsXml.Builder
                                ORINumber = r.ORINumber,
                                IncidentNumber = r.IncidentNumber,
                                VictimSeqNum =  r.VictimSeqNum,
-                               OffenderNumberRelated =  r.OffenderNumberRelated
+                               OffenderNumberRelated =  r.OffenderNumberRelated,
+                               VictimOffenderRelationCode = r.VictimOffenderRelation
                            };
 
 
@@ -259,7 +260,7 @@ namespace NibrsXml.Builder
                                 id: (subjectVictimAssocs.Count() + 1).ToString(),
                                 subject: subject,
                                 victim: victim,
-                                relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelationCode.TrimNullIfEmpty()));
+                                relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelationCode?.TrimNullIfEmpty()));
 
                             //Add Association to list
                             subjectVictimAssocs.Add(subVicAssoc);

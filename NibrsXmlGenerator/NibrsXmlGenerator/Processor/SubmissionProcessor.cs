@@ -263,7 +263,7 @@ namespace NibrsXml.Processor
         {
 
 
-        var task =    new Task(() =>
+        var task =    new Task(async () =>
             {
 
                 var log = new Logger();
@@ -274,56 +274,7 @@ namespace NibrsXml.Processor
              //   var isOutOfSequence = false;
                 var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
 
-                //if (failedToUploadDir.GetDirectories().Any())
-                //{
-                //    log.WriteLog(ori, DateTime.Now.ToString() +  ": Found some files pending to upload", batchFolderName);
-
-                //    //foreach (var subDir in failedToUploadDir.GetDirectories().OrderBy(d => d.Name))
-                //    //{
-                //    //    var runnumber = subDir.Name;
-
-                //    //    if (failedToSaveDir.GetDirectories().Any())
-                //    //        isOutOfSequence = true;
-
-                //    //    log.WriteLog(ori, DateTime.Now.ToString() + ": Started uploading the files for runnumber: " + runnumber, batchFolderName);
-
-                //    //    var submissions = DeserilzeFiles(subDir, log, batchFolderName, ori, Submission.Deserialize);
-                //    //    var tasks = SubmitSubToFBIAndAttemptSaveInMongoAsync(submissions, exceptionsLogger, !isOutOfSequence);
-
-                //    //    Task.WaitAll(tasks);
-
-                //    //    if (tasks.Result.Item2.Any())
-                //    //    {
-                //    //        SaveTrans(tasks.Result.Item2, agencyXmlDirectoryInfo.GetFailedToSaveLocation(), exceptionsLogger);
-                //    //    }
-
-                //    //    if (tasks.Result.Item1.Any())
-                //    //    {
-                //    //        var failedToUploadSubs = tasks.Result.Item1;
-
-                //    //        subDir.GetFiles().ToList().ForEach(fileInfo =>
-                //    //        {
-                //    //            if (failedToUploadSubs.Any(sub => sub.Id + ".xml" == fileInfo.Name))
-                //    //                return;
-                //    //            File.Delete(fileInfo.FullName);
-                //    //        });
-
-                //    //        log.WriteLog(ori, DateTime.Now.ToString() + ": Found some files that failed to upload  for runnumber: " + runnumber, batchFolderName);
-                //    //        // stop uploading.
-                //    //        break;
-
-                //    //    }
-
-                //    //    if (Directory.GetFiles(subDir.FullName).Length == 0 &&
-                //    //            Directory.GetDirectories(subDir.FullName).Length == 0)
-                //    //    {
-                //    //        Directory.Delete(subDir.FullName, true);
-                //    //    }
-
-                       
-                //    //}
-
-                //}
+              
 
                 if (failedToSaveDir.GetDirectories().Any())
                 {
@@ -344,10 +295,29 @@ namespace NibrsXml.Processor
                            
                         foreach (var fileInfo in subDir.GetFiles())
                         {
-                            Task<bool> taskToSave = ReattemptToSaveTransactionInMongoDbAsync(fileInfo.FullName, endpointURL, client);
-                            taskToSave.Wait();
+                            bool taskToSave = false;
+                            try
+                            {
+                                taskToSave =
+                                    await ReattemptToSaveTransactionInMongoDbAsync(fileInfo.FullName, endpointURL,
+                                        client);
 
-                            if (taskToSave.Result)
+
+                            }
+                           
+                            catch (AggregateException aex)
+                            {
+                                foreach (var exception in aex.InnerExceptions)
+                                {
+                                    exceptionsLogger.Enqueue(Tuple.Create(exception,ObjectId.Empty));
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
+                            }
+
+                            if (taskToSave)
                                 File.Delete(fileInfo.FullName);
                             else
                             {
@@ -357,9 +327,8 @@ namespace NibrsXml.Processor
 
                         }
 
-
                         if (Directory.GetFiles(subDir.FullName).Length == 0 &&
-                                    Directory.GetDirectories(subDir.FullName).Length == 0)
+                            Directory.GetDirectories(subDir.FullName).Length == 0)
                         {
 
                             log.WriteLog(ori, DateTime.Now.ToString() + ": Deleting the Folder" + subDir.FullName, batchFolderName);
@@ -426,7 +395,7 @@ namespace NibrsXml.Processor
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
 
         }
