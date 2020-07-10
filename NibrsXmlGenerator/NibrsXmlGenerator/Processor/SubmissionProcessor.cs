@@ -61,14 +61,7 @@ namespace NibrsXml.Processor
                         continue;
                     }
 
-                    //// if multiple files are submitted, process them in asec order of runnumbers.
-                    //var submissionsGrp = subs.GroupBy(sub => sub.Runnumber).OrderBy(grp => grp.Key).ToArray();
-
-                    //foreach (var grpsub in submissionsGrp)
-                    //{
-                        //try
-                        //{
-                          var submissions = subs.ToList();
+                    var submissions = subs.ToList();
 
                             var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
 
@@ -87,30 +80,24 @@ namespace NibrsXml.Processor
                                    batchFolderName);
 
 
-                          //  var failedToUploadPath= agencyXmlDirectoryInfo.GetFailedToUploadLocation();
+                         
 
                             var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
 
-                            //if (agencyXmlDirectoryInfo.GetFailedToUploadDirectory().GetDirectories().Length == 0)
-                            //{                              
+                                                       
 
                                 if (agencyXmlDirectoryInfo.GetFailedToSaveDirectory().GetDirectories().Length != 0)
                                     isOutOfSequence = true;
                              
                               
-                                // ParallelOptions parlleloptions = new ParallelOptions();
+                               
 
                                 var tasks = SubmitSubToFBIAndAttemptSaveInMongoAsync(submissions, exceptionsLogger, !isOutOfSequence);
-                                //   Task.WaitAll(delTasks);
-
-                                //var insertTasks = SubmitSubToFBIAndSaveTransInMongoAsync(submissions.Where(sub => sub.Reports[0].Header.ReportActionCategoryCode != "D")?.ToList(), exceptions);
+                              
                                Task.WaitAll(tasks);
 
                                  if (tasks.Result.Any())
                                 {
-                                   
-                                   // SaveSubXml(tasks.Result.Item1, failedToUploadPath,exceptionsLogger);
-
                                     SaveTrans(tasks.Result, failedToSavePath,exceptionsLogger);                                 
 
                                 }
@@ -126,12 +113,7 @@ namespace NibrsXml.Processor
                                     }                                 
 
                                 }
-                            //}
-                           // else
-                            //{
-                               
-                            //    SaveSubXml(submissions, failedToUploadPath,exceptionsLogger);
-                            //}
+                       
 
                             log.WriteLog(ori, DateTime.Now.ToString() + " : " + "COMPLETED PROCESSING  XML FILES PROCESSING FOR RUNNUMBER : " + runnumber,
                                    batchFolderName);
@@ -295,14 +277,14 @@ namespace NibrsXml.Processor
                            
                         foreach (var fileInfo in subDir.GetFiles())
                         {
-                            bool taskToSave = false;
+                            bool isSaved = false;
                             try
                             {
-                                taskToSave =
-                                    await ReattemptToSaveTransactionInMongoDbAsync(fileInfo.FullName, endpointURL,
-                                        client);
+                               var reattemptTask = ReattemptToSaveTransactionInMongoDbAsync(fileInfo.FullName, endpointURL,
+                                   client) ;
 
-
+                               reattemptTask.Wait();
+                               isSaved = reattemptTask.Result;
                             }
                            
                             catch (AggregateException aex)
@@ -317,7 +299,7 @@ namespace NibrsXml.Processor
                                 exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
                             }
 
-                            if (taskToSave)
+                            if (isSaved)
                                 File.Delete(fileInfo.FullName);
                             else
                             {
