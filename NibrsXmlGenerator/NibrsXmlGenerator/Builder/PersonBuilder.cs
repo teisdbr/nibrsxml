@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using NibrsModels.NibrsReport.Person;
 using NibrsModels.NibrsReport.Victim;
 using NibrsModels.NibrsReport.Subject;
@@ -13,6 +14,7 @@ using LoadBusinessLayer.LIBRSOffense;
 using NibrsModels.Utility;
 using System.Security.Cryptography;
 using LoadBusinessLayer.LIBRSVictim;
+using NibrsModels.NibrsReport.ReportHeader;
 using Util.Extensions;
 
 namespace NibrsXml.Builder
@@ -42,7 +44,7 @@ namespace NibrsXml.Builder
             return matchingOffenses.Any(o => o.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase));         
         }
 
-        public void Build(List<Person> persons, List<Victim> victims, List<Subject> subjects,
+        public void Build(List<Person> persons, ReportHeader rptHeader, List<Victim> victims, List<Subject> subjects,
             List<Arrestee> arrestees, List<SubjectVictimAssociation> subjectVictimAssocs,
             List<EnforcementOfficial> officers, LIBRSIncident incident, string uniquePrefix)
         {
@@ -191,41 +193,45 @@ namespace NibrsXml.Builder
 
             #region Subjects
 
-            foreach (var offender in incident.Offender)
+            if (rptHeader.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode())
             {
-                if(offender.OffenderSeqNum != "000")
+                foreach (var offender in incident.Offender)
                 {
-                //Create new person
-                var newPerson =
-                    BuildPerson(
-                        id: uniquePrefix,
-                        ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
-                        ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
-                        ? offender.Ethnicity
-                        : EthnicityCode.UNKNOWN.NibrsCode(),
-                        raceCode: offender.Race,
-                        residentCode: ResidentCode.UNKNOWN.NibrsCode(),
-                        sexCode: offender.Sex,
-                        personType: "Offender",
-                        augmentation: null //This person should never be a NB, BB, or NN.
-                    ); ;
+                    if (offender.OffenderSeqNum != "000")
+                    {
+                        //Create new person
+                        var newPerson =
+                            BuildPerson(
+                                id: uniquePrefix,
+                                ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
+                                ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
+                                    ? offender.Ethnicity
+                                    : EthnicityCode.UNKNOWN.NibrsCode(),
+                                raceCode: offender.Race,
+                                residentCode: ResidentCode.UNKNOWN.NibrsCode(),
+                                sexCode: offender.Sex,
+                                personType: "Offender",
+                                augmentation: null //This person should never be a NB, BB, or NN.
+                            ); ;
 
-                //Create new subject
-                var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
+                        //Create new subject
+                        var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
 
-                //Add each of the new objects above to their respective lists
-                persons.Add(newPerson);
-                subjects.Add(newSubject);
-            }
-                else
-                {
-                     //Create new subject for Unknow Subject
-                    var newSubject = new Subject(null, "000", uniquePrefix);
-                    subjects.Add(newSubject);
+                        //Add each of the new objects above to their respective lists
+                        persons.Add(newPerson);
+                        subjects.Add(newSubject);
+                    }
+                    else
+                    {
+                        //Create new subject for Unknow Subject
+                        var newSubject = new Subject(null, "000", uniquePrefix);
+                        subjects.Add(newSubject);
+                    }
+
+
                 }
-                
-
             }
+
 
             #endregion
 

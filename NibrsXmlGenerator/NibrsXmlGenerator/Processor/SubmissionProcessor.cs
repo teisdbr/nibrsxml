@@ -84,10 +84,16 @@ namespace NibrsXml.Processor
 
                             var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
 
-                                                       
 
-                                if (agencyXmlDirectoryInfo.GetFailedToSaveDirectory().GetDirectories().Length != 0)
-                                    isOutOfSequence = true;
+
+                            if (agencyXmlDirectoryInfo.GetFailedToSaveDirectory().GetDirectories().Length != 0)
+                            {
+                                log.WriteLog(ori, DateTime.Now.ToString() + " : " + "Out Of SEQUENCE, RUNNUMBER : " + runnumber,
+                                    batchFolderName);
+                        
+                        isOutOfSequence = true;
+                            }
+                                    
                              
                               
                                
@@ -98,9 +104,11 @@ namespace NibrsXml.Processor
 
                                  if (tasks.Result.Any())
                                 {
-                                    SaveTrans(tasks.Result, failedToSavePath,exceptionsLogger);                                 
+                                    SaveTrans(tasks.Result, failedToSavePath,exceptionsLogger);
+                                 log.WriteLog(ori, DateTime.Now.ToString() + " : " + "Files Failed to save moved to"  + failedToSavePath + " , RUNNUMBER : " + runnumber,
+                                   batchFolderName);
 
-                                }
+                                  }
 
                                 if (exceptionsLogger.Any())
                                 {
@@ -153,26 +161,16 @@ namespace NibrsXml.Processor
 
             // var baseURL = System.Convert.ToString(appSettingsReader.GetValue("LcrxAPIURL", typeof(string)));
 
-            try
-            {
-
-                var buffer = System.Text.Encoding.UTF8.GetBytes(jsonString);
-                var byteContent = new ByteArrayContent(buffer);
-                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var httpresponses = await client.PostAsync(endpointURL, byteContent);
-                return httpresponses.IsSuccessStatusCode;
-            }
-            catch (Exception ex)            
-            {
-
-                throw ;
-            }
+            var buffer = System.Text.Encoding.UTF8.GetBytes(jsonString);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var httpresponses = await client.PostAsync(endpointURL, byteContent);
+            return httpresponses.IsSuccessStatusCode;
             //finally
             //{
             //    client.Dispose();
 
             //}
-
         }
 
 
@@ -368,18 +366,9 @@ namespace NibrsXml.Processor
 
         private static async Task<bool> ReattemptToSaveTransactionInMongoDbAsync(string filepath, string endpointURL, HttpClient client)
         {
-
-            try
-            {
-                NibrsXmlTransaction nibrsXmlTransaction = NibrsXmlTransaction.Deserialize(filepath);               
-                var isSaved = await CallApiToSaveInMongoDbAsync(nibrsXmlTransaction.JsonString, endpointURL, client);
-                return isSaved;
-            }
-            catch (Exception ex)
-            {
-                throw ;
-            }
-
+            NibrsXmlTransaction nibrsXmlTransaction = NibrsXmlTransaction.Deserialize(filepath);               
+            var isSaved = await CallApiToSaveInMongoDbAsync(nibrsXmlTransaction.JsonString, endpointURL, client);
+            return isSaved;
         }
 
 

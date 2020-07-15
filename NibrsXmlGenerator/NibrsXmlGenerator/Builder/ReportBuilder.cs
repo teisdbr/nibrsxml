@@ -121,6 +121,7 @@ namespace NibrsXml.Builder
                 //Build Persons, EnforcementOfficials, Victims, Subjects, Arrestees
                 new PersonBuilder().Build(
                     rpt.Persons,
+                    rpt.Header,
                     rpt.Victims,
                     officers: rpt.Officers,
                     subjects: rpt.Subjects,
