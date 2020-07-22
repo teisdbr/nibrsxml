@@ -23,7 +23,7 @@ namespace NibrsXml.Builder
                     var report = ReportBuilder.Build(incident);
 
 
-                    if (report == null || report.IsNibrsReportable)
+                    if (report == null)
                         continue;
 
                     if (incident.HasErrors || (report.HasFailedToBuildProperly))
