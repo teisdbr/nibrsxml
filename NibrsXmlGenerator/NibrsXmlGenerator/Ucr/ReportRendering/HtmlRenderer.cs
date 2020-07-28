@@ -14,6 +14,7 @@ namespace NibrsXml.Ucr.ReportRendering
 {
     public class HtmlRenderer
     {
+        public static string reportPrefix;
         public static void RenderUcrFromSubmission(NibrsToUcrImport ucrReports, string ori, int desiredYear, int desiredMonth)
         {
             //Get folder path
@@ -33,7 +34,7 @@ namespace NibrsXml.Ucr.ReportRendering
             var reportData = ucrReports.MonthlyOriReportData[reportKey];
 
             //Get Ucr Report Paths
-            var ucrReportsPath = path.GetUcrFilesFolderLocation(ori) + @"\" + desiredYear + @"\" + desiredMonth.ToString("00");
+            var ucrReportsPath = path.GetUcrFilesFolderLocation(ori) + @"\" + desiredYear + @"\" + desiredMonth.ToString("00") + @"\" ;
 
             //Make sure directory is created
             if (!Directory.Exists(ucrReportsPath)) Directory.CreateDirectory(ucrReportsPath);
@@ -41,6 +42,7 @@ namespace NibrsXml.Ucr.ReportRendering
             //Generate the xmlfile for all reports at once, XSLT will render reports individual 
             var xmlfile = reportData.Serialize("", ori, desiredYear, desiredMonth);
 
+            reportPrefix = desiredYear.ToString("00") + desiredMonth.ToString("00") + ori;
             //Output all reports
             //Return A
             RenderUcrReport(UcrReportType.ReturnA, ucrReportsPath, CreateXmlReaderFromXmlString(xmlfile.ToString()));
@@ -73,7 +75,7 @@ namespace NibrsXml.Ucr.ReportRendering
             xslt.Load(XmlReader.Create(xslStream));
 
             //Create Html Writer
-            var xmlWriter = new XmlTextWriter(ucrFileNamePrefix + @"\" + details.HtmlOutputName, Encoding.UTF8);
+            var xmlWriter = new XmlTextWriter(ucrFileNamePrefix + @"\" + reportPrefix + details.HtmlOutputName, Encoding.UTF8);
 
             //Write Report
             xslt.Transform(new XPathDocument(ucrReportXmlReader), xmlWriter);
