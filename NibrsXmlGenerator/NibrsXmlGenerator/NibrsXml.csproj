@@ -191,10 +191,10 @@
       <Version>12.0.2402.15</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Bson">
-      <Version>2.7.0</Version>
+      <Version>2.10.2</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Driver">
-      <Version>2.7.0</Version>
+      <Version>2.10.2</Version>
     </PackageReference>
     <PackageReference Include="MongoDB.Driver.Core">
       <Version>2.7.0</Version>
@@ -209,7 +209,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="Util">
-      <Version>1.0.1</Version>
+      <Version>1.0.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
