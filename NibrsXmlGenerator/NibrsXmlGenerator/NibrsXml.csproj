@@ -121,6 +121,7 @@
     <Compile Include="Ucr\Translate.cs" />
     <Compile Include="Constants\Ucr\UcrCodes.cs" />
     <Compile Include="Utility\Extensions\Array.cs" />
+    <Compile Include="Utility\Extensions\NibrsXmlTransactionExtension.cs" />
     <Compile Include="Utility\Extensions\Object.cs" />
     <Compile Include="Utility\UcrReportAttribute.cs" />
   </ItemGroup>
@@ -241,10 +242,6 @@
     <EmbeddedResource Include="Ucr\Reports\ReturnA\returnasupp.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\util\XmlValidator\XmlValidator.csproj">
-      <Project>{a9c4d411-f9ca-4ef7-a918-8551b0e95b7d}</Project>
-      <Name>XmlValidator</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\winlibrs\Application\LoadBusinessLayer\LoadBusinessLayer.vbproj">
       <Project>{d03ab9d9-20f3-469c-82b8-de61b646a978}</Project>
       <Name>LoadBusinessLayer</Name>
