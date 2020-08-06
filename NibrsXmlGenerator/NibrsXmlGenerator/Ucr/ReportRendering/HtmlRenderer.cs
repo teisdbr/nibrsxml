@@ -9,6 +9,7 @@ using LoadBusinessLayer;
 using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
 using Util.Extensions;
+using Util.Xml;
 
 namespace NibrsXml.Ucr.ReportRendering
 {

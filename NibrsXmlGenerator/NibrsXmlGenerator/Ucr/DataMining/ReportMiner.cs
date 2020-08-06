@@ -22,7 +22,8 @@ namespace NibrsXml.Ucr.DataMining
 
             var monthlyOriReportData = new ConcurrentDictionary<string, ReportData>();
 
-            foreach (var report in submission.RejectedReports)            {
+            foreach (var report in submission.RejectedReports)            
+            {
 
                 //Make sure there is at least an empty ReportData structure for this report
                 monthlyOriReportData.TryAdd(report.UcrKey(), new ReportData());

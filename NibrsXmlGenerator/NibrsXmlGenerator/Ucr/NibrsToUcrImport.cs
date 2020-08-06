@@ -5,6 +5,7 @@ using NibrsModels.NibrsReport;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Ucr.DataMining;
 using System.Configuration;
+using Util.Xml;
 
 namespace NibrsXml.Ucr
 {
