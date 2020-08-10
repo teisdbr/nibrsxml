@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NibrsModels.Constants;
+using NibrsModels.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,29 +18,16 @@ namespace NibrsXml.Utility.Extensions
         /// <returns></returns>
         public static DateTime? GetActivityDate(this NibrsXmlTransaction trans)
         {
-            if (trans.Submission.Reports[0]?.Incident?.ActivityDate.DateTime != null)
+            if (trans.Submission.Reports[0]?.Header.NibrsReportCategoryCode ==  NibrsReportCategoryCode.A.NibrsCode())
             {
-                var dateTime = trans.Submission.Reports[0]?.Incident?.ActivityDate.DateTime;
-                if (DateTime.TryParse(dateTime, out DateTime output))
-                {
-                    return output;
-                }
+                return trans.Submission.Reports[0]?.Incident?.ActivityDate.RealDateTime;
             }
             else
             {
-                List<DateTime> dateTimes = new List<DateTime>();
-                foreach (var arrest in trans.Submission.Reports[0].Arrests)
-                {
-
-                    if (DateTime.TryParse(arrest.Date.DateTime, out DateTime output))
-                    {
-                        dateTimes.Add(output);
-                    }
-                }
-                if (dateTimes.Any())
-                    return dateTimes.Min();
+               
+                    return trans.Submission.Reports[0].Arrests.Min(arr => arr.Date.RealDateTime);
             }
-            return null;
+           
 
         }
 
