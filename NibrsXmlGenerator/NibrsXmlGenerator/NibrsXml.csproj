@@ -85,7 +85,8 @@
     <Compile Include="NibrsError\Error.cs" />
     <Compile Include="NIbrsXmlTransaction.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
-    <Compile Include="Processor\NibrsXmlTransactionProcessor.cs" />
+    <Compile Include="Processor\DeleteTransformer.cs" />
+    <Compile Include="Processor\SubmissionBatchStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
     <Compile Include="Processor\SubmissionProcessor.cs" />
