@@ -16,6 +16,7 @@ using NibrsModels.NibrsReport.Item;
 using NibrsModels.NibrsReport.Location;
 using NibrsModels.NibrsReport.Misc;
 using NibrsModels.NibrsReport.Offense;
+using NibrsModels.NibrsReport.ReportHeader;
 using NibrsModels.NibrsReport.Substance;
 using NibrsModels.NibrsReport.Victim;
 using NibrsModels.Utility;
@@ -69,9 +70,8 @@ namespace NibrsXml.Builder
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
                 {
                     //Do not send any group B reports if there are no accompanying arrests
-                    if (rpt.Arrests.Count == 0)
-                    {
-                        rpt.IsNibrsReportable = false;
+                    if (rpt.Arrests.Count == 0) {
+                       
                         return null;
                     }
                        
@@ -380,5 +380,13 @@ namespace NibrsXml.Builder
         }
 
         #endregion
+
+        public static Report BuildZeroReport(IncidentList agencyIncidentList)
+        {
+            //Initialize a new report
+            var rpt = new Report();
+            rpt.Header =  new ReportHeader(NibrsReportCategoryCode.ZERO.NibrsCode(), "A", new ReportDate(agencyIncidentList.ReportYear + "-"+agencyIncidentList.ReportMonth), new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(agencyIncidentList.OriNumber))));
+            return rpt;
+        }
     }
 }

@@ -43,6 +43,18 @@ namespace NibrsXml.Builder
 
             Parallel.ForEach(agencySpecificIncidents, agencyIncidentList =>
             {
+
+                if (agencyIncidentList.IsZeroReport)
+                {
+                   
+                    var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
+
+                    sub.Reports.Add(ReportBuilder.BuildZeroReport(agencyIncidentList));
+                    TryAddSubToDictionary(trackIncidentsDic, sub, "");
+                }
+
+
                 foreach (LIBRSIncident incident in agencyIncidentList)
                 {
                     if (incident.HasErrors) continue;
@@ -52,25 +64,17 @@ namespace NibrsXml.Builder
                         continue;
                    
 
+
                     var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
                     sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);          
 
-                    sub.Reports.Add(report);                    
+                    sub.Reports.Add(report);
 
-                    var key = sub.Ori + "_" + incident.Admin.IncidentNumber + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
-
-                    lock (trackIncidentsDic)
-                    {
-                        if (trackIncidentsDic.ContainsKey(key))
-                            trackIncidentsDic[key].Add(sub);
-                        else
-                            trackIncidentsDic.TryAdd(key, new List<Submission> { sub });
-                    }
-
+                    TryAddSubToDictionary(trackIncidentsDic, sub, incident.Admin.IncidentNumber);
                 }
             });
 
-
+            // Using the track incidents Dictionary to keep track of Insert and Delete action type incidents, so that they can be merged into Replace action type
             
             var KeyValuePairs = trackIncidentsDic.AsEnumerable().ToList();
 
@@ -123,6 +127,21 @@ namespace NibrsXml.Builder
 
 
             return submissions.ToArray();
+        }
+
+
+        private static void TryAddSubToDictionary(ConcurrentDictionary<string, List<Submission>> trackIncidentsDic, Submission sub,string incidentNum)
+        {
+            var key = sub.Ori + "_" + incidentNum + "_" + sub.Runnumber + "_" + sub.Reports[0].Header.NibrsReportCategoryCode;
+
+            lock (trackIncidentsDic)
+            {
+                if (trackIncidentsDic.ContainsKey(key))
+                    trackIncidentsDic[key].Add(sub);
+                else
+                    trackIncidentsDic.TryAdd(key, new List<Submission> { sub });
+            }
+
         }
     }
 }
