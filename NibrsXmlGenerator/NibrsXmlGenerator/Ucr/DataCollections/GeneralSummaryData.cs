@@ -4,7 +4,8 @@ using System.Linq;
 using System.Xml.Linq;
 using NibrsModels.NibrsReport.Arrestee;
 using NibrsModels.NibrsReport.Incident;
-using Util.Extensions;
+using TeUtil.Extensions;
+
 
 namespace NibrsXml.Ucr.DataCollections
 {

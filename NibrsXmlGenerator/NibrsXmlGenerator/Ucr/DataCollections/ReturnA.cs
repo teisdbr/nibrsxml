@@ -8,7 +8,8 @@ using NibrsModels.NibrsReport.Item;
 using NibrsModels.NibrsReport.Offense;
 using NibrsModels.Utility;
 using NibrsXml.Utility;
-using Util.Extensions;
+using TeUtil.Extensions;
+
 
 namespace NibrsXml.Ucr.DataCollections
 {

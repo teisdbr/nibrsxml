@@ -8,7 +8,7 @@ using NibrsModels.Utility;
 using NibrsModels.Constants;
 using NibrsModels.NibrsReport.ReportHeader;
 using NibrsModels.NibrsReport.Misc;
-using Util.Extensions;
+using TeUtil.Extensions;
 
 namespace NibrsXml.Builder
 {

@@ -20,7 +20,8 @@ using NibrsModels.NibrsReport.ReportHeader;
 using NibrsModels.NibrsReport.Substance;
 using NibrsModels.NibrsReport.Victim;
 using NibrsModels.Utility;
-using Util.Extensions;
+using TeUtil.Extensions;
+
 
 namespace NibrsXml.Builder
 {

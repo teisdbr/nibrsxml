@@ -8,8 +8,8 @@ using System.Xml.Xsl;
 using LoadBusinessLayer;
 using NibrsXml.Constants.Ucr;
 using NibrsXml.Utility;
-using Util.Extensions;
-using Util.Xml;
+using TeUtil.Extensions;
+using TeUtil.Xml;
 
 namespace NibrsXml.Ucr.ReportRendering
 {

@@ -11,7 +11,8 @@ using NibrsModels.Utility;
 using NibrsModels.NibrsReport.Offense;
 using NibrsXml.Ucr.DataCollections;
 using NibrsXml.Utility;
-using Util.Extensions;
+using TeUtil.Extensions;
+
 
 namespace NibrsXml.Ucr.DataMining
 {
