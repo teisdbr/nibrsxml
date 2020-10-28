@@ -2,7 +2,7 @@
 {
     public class SubmissionBatchStatus
     {
-        public string RunNUmber { get; set; }
+        public string RunNumber { get; set; }
 
         public int NoOfSubmissions { get; set; }
 

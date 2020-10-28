@@ -23,6 +23,7 @@ using LoadBusinessLayer.Interfaces;
 using NibrsXml;
 using NibrsXml.Builder;
 using NibrsXml.Constants;
+using NibrsXml.Ucr.DataCollections;
 
 namespace NibrsXml.Processor
 {
@@ -151,7 +152,7 @@ namespace NibrsXml.Processor
 
                         var submissionBatchStatus = new SubmissionBatchStatus()
                         {
-                            RunNUmber = runNumber,
+                            RunNumber = runNumber,
                             Ori = ori,
                             Environmennt = incidentList.Environment,
                             NoOfSubmissions = subs.Count(),
@@ -329,6 +330,7 @@ namespace NibrsXml.Processor
                     foreach (var fileInfo in subDir.GetFiles())
                     {
                         bool isSaved = false;
+
                         try
                         {
                             var reattemptTask = ReattemptToSaveTransactionInMongoDbAsync(fileInfo.FullName, baseURL + endpointURL,
@@ -484,7 +486,7 @@ namespace NibrsXml.Processor
 
                     var submissionBatchStatus = new SubmissionBatchStatus()
                     {
-                        RunNUmber = runNumber,
+                        RunNumber = runNumber,
                         Ori = ori,
                         Environmennt = incidentList.Environment,
                         NoOfSubmissions = subs.Count(),
