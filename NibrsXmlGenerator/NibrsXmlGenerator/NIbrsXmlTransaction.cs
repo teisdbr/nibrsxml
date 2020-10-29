@@ -164,7 +164,8 @@ namespace NibrsXml
                 if (NibrsSubmissionResponse.IsFormatError)
                     return NibrsSubmissionStatusCodes.FormatError;
             }
-            return NibrsSubmissionStatusCodes.NoResponse;
+            // Asssuming if no Response treat it as upload failed.
+            return NibrsSubmissionStatusCodes.UploadFailed;
         }
 
 

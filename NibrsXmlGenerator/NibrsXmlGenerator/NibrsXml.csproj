@@ -208,10 +208,10 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NibrsModels">
-      <Version>1.1.2</Version>
+      <Version>1.1.3</Version>
     </PackageReference>
     <PackageReference Include="Util">
-      <Version>1.0.6</Version>
+      <Version>1.0.7</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
