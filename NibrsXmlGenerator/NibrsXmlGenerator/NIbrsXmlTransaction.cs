@@ -158,14 +158,23 @@ namespace NibrsXml
                     && (NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Accepted || NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Warnings))
                     return NibrsSubmissionStatusCodes.Accepted;
                 if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Errors)
-                    return NibrsSubmissionStatusCodes.Rejected; ;
+                    return NibrsSubmissionStatusCodes.Rejected;
                 if ( NibrsSubmissionResponse.IsUploadFailed)
                     return NibrsSubmissionStatusCodes.UploadFailed;
                 if (NibrsSubmissionResponse.IsFormatError)
                     return NibrsSubmissionStatusCodes.FormatError;
+                if (NibrsSubmissionResponse.IsUndetermined)
+                    return NibrsSubmissionStatusCodes.Undetermined;
             }
-            // Asssuming if no Response treat it as upload failed.
-            return NibrsSubmissionStatusCodes.UploadFailed;
+            else
+            {
+                // Assuming if no Response treat it as upload failed.
+                return NibrsSubmissionStatusCodes.UploadFailed;
+            }
+
+            // undetermined nothing matches.
+            return NibrsSubmissionStatusCodes.Undetermined;
+
         }
 
 

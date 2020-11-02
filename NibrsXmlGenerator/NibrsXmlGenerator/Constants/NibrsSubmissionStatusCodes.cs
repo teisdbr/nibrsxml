@@ -15,7 +15,7 @@ namespace NibrsXml.Constants
             public const string UploadFailed = "upload Failed";
             public const string FormatError = "format Error";
             public const string NotReported = "not Reported";
-            public const string NoResponse = "no Response";
+            public const string Undetermined  = "undetermined";
         
     }
 
