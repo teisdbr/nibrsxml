@@ -163,17 +163,14 @@ namespace NibrsXml
                     return NibrsSubmissionStatusCodes.UploadFailed;
                 if (NibrsSubmissionResponse.IsFormatError)
                     return NibrsSubmissionStatusCodes.FormatError;
-                if (NibrsSubmissionResponse.IsUndetermined)
-                    return NibrsSubmissionStatusCodes.Undetermined;
+                
             }
-            else
-            {
-                // Assuming if no Response treat it as upload failed.
+            
+                // Assuming if no Response/no match treat it as upload failed.
                 return NibrsSubmissionStatusCodes.UploadFailed;
-            }
+            
 
-            // undetermined nothing matches.
-            return NibrsSubmissionStatusCodes.Undetermined;
+          
 
         }
 
