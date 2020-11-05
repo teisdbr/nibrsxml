@@ -19,6 +19,7 @@ using System.Net;
 using System.Web.Util;
 using System.ServiceModel.PeerResolvers;
 using System.Data;
+using System.Web;
 using LoadBusinessLayer.Interfaces;
 using NibrsXml;
 using NibrsXml.Builder;
@@ -211,6 +212,15 @@ namespace NibrsXml.Processor
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var httpresponses = await client.PostAsync(endpointURL, byteContent);
+            if (!httpresponses.IsSuccessStatusCode)
+            {
+                var content = await httpresponses.Content.ReadAsStringAsync();
+                Console.Write(content);
+                var code = (int) httpresponses.StatusCode;
+                
+                throw new HttpException(code,content);
+
+            }
             return httpresponses.IsSuccessStatusCode;
         }
 
@@ -222,7 +232,9 @@ namespace NibrsXml.Processor
         /// <param name="exceptions"></param>
         /// <param name="isOutSequence"></param>
         /// <returns></returns>
-        private async static Task<List<NibrsXmlTransaction>> SubmitSubToFbiAndAttemptSaveInMongoAsync(List<Submission> submissions, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions, bool attemptToSaveInMongo, bool attemptToSendFBI = true)
+        private async static Task<List<NibrsXmlTransaction>> SubmitSubToFbiAndAttemptSaveInMongoAsync(
+            List<Submission> submissions, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions,
+            bool attemptToSaveInMongo, bool attemptToSendFBI = true)
         {
             HttpClient httpClient = new HttpClient();
 
@@ -249,7 +261,7 @@ namespace NibrsXml.Processor
                     var jsonContent = nibrsXmlTransaction.JsonString;
 
                     // If failed to report FBI. Don't save in MongoDB. Reattempt to Report FBI and save in MongoDb later.
-                    if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed)
+                    if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed && attemptToSendFBI)
                     {
                         failedToSave.Add(nibrsXmlTransaction);
                         continue;
