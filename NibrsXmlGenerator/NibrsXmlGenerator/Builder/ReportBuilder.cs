@@ -29,7 +29,7 @@ namespace NibrsXml.Builder
     {
         private const string DrugNarcoticLibrsPropDesc = "10";
 
-        public static Report Build(LIBRSIncident incident)
+        public static Report Build(LIBRSIncident incident, string reportingMonth, string reportingYear)
         {
             //Initialize a new report
             var rpt = new Report();
@@ -51,7 +51,8 @@ namespace NibrsXml.Builder
                     //*
                     incident.Offense,
                     incident.Admin.ActionType,
-                    incident.Admin);
+                    incident.Admin,
+                    reportingYear + "-" + reportingMonth);
 
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode())
                 {

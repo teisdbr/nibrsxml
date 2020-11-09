@@ -20,7 +20,7 @@ namespace NibrsXml.Builder
             foreach (var agencyIncidentList in agencySpecificIncidents)
                 foreach (LIBRSIncident incident in agencyIncidentList)
                 {
-                    var report = ReportBuilder.Build(incident);
+                    var report = ReportBuilder.Build(incident, agencyIncidentList.ReportMonth, agencyIncidentList.ReportYear);
 
 
                     if (report == null)
@@ -58,7 +58,7 @@ namespace NibrsXml.Builder
                 foreach (LIBRSIncident incident in agencyIncidentList)
                 {
                     if (incident.HasErrors) continue;
-                    var report = ReportBuilder.Build(incident);
+                    var report = ReportBuilder.Build(incident,agencyIncidentList.ReportMonth,agencyIncidentList.ReportYear);
 
                     if (report == null || report.HasFailedToBuildProperly)
                         continue;

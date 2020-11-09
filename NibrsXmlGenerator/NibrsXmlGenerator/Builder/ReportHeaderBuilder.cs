@@ -4,6 +4,7 @@ using System.Linq;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LIBRSOffense;
 using LoadBusinessLayer.LIBRSAdmin;
+using LoadBusinessLayer.LIBRSHeader;
 using NibrsModels.Utility;
 using NibrsModels.Constants;
 using NibrsModels.NibrsReport.ReportHeader;
@@ -17,7 +18,7 @@ namespace NibrsXml.Builder
         private const string groupAIncidentReport = "A";
         private const string deleteActionType = "D";
 
-        public static ReportHeader Build(List<LIBRSOffense> offenses, string actionType, LIBRSAdmin admin)
+        public static ReportHeader Build(List<LIBRSOffense> offenses, string actionType, LIBRSAdmin admin, string reportingPeriodYm)
         {
             //Make sure all agency assigned nibrs values are filled in regardless of the original Flat file contents/spec
             offenses = offenses.Select(o =>
@@ -29,7 +30,7 @@ namespace NibrsXml.Builder
             var rptHeader = new ReportHeader();
             rptHeader.NibrsReportCategoryCode = admin.HasGroupAOffense.HasValue ? SetNibrsReportCategoryCode(admin.HasGroupAOffense) : DetermineNibrsReportCategoryCode(offenses);
             rptHeader.ReportActionCategoryCode = actionType;
-            rptHeader.ReportDate = new ReportDate(DateTime.Now.NibrsYearMonth());
+            rptHeader.ReportDate = new ReportDate(reportingPeriodYm);
             rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(admin.ORINumber)));
             //rptHeader.ReportingAgency = new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification("LA0140000")));
             return rptHeader;
