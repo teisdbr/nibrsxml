@@ -40,6 +40,11 @@ namespace NibrsXml.Processor
 
             List<SubmissionBatchStatus> submissionBatchStatusLst = new List<SubmissionBatchStatus>();
 
+            // Only process the agencyList with Environment C & P 
+            agencyIncidentsCollection = agencyIncidentsCollection.Where(incList => incList.Environment != "T").ToList();
+
+
+
 
             foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
             {
@@ -450,99 +455,102 @@ namespace NibrsXml.Processor
             return isSaved;
         }
 
+        // This is deprecated because it might corrupt the prod database by hard deleting the data that is already reported to the FBI
 
-        public static async Task<List<SubmissionBatchStatus>> DataSync(List<IncidentList> agencyIncidentsCollection, string batchFolderName)
-        {
+        //public static async Task<List<SubmissionBatchStatus>> DataSync(List<IncidentList> agencyIncidentsCollection, string batchFolderName)
+        //{
 
-            List<SubmissionBatchStatus> submissionBatchStatusLst = new List<SubmissionBatchStatus>();
+        //    List<SubmissionBatchStatus> submissionBatchStatusLst = new List<SubmissionBatchStatus>();
 
-
-            foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
-            {
-                var log = new Logger();
-                var ori = agencyGrp.Key;
-
-                var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
-
-                log.WriteLog(ori, " DATA SYNC PROCESS STARTED", batchFolderName);
+        //    agencyIncidentsCollection = agencyIncidentsCollection.Where(incList => incList.Environment != "T").ToList();
 
 
-                // Process the Batch in same order as it is received
-                foreach (var incidentList in agencyGrp.ToList().OrderBy(grp => grp.Runnumber))
-                {
-                    var runNumber = incidentList.Runnumber;
+        //    foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
+        //    {
+        //        var log = new Logger();
+        //        var ori = agencyGrp.Key;
 
-                    log.WriteLog(ori,
-                        DateTime.Now.ToString() + " : " + "STARTED XML FILES PROCESSING FOR RUNNUMBER : " +
-                        runNumber,
-                        batchFolderName);
+        //        var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
 
-                    var subs = SubmissionBuilder.BuildMultipleSubmission(new List<IncidentList>() { incidentList });
+        //        log.WriteLog(ori, " DATA SYNC PROCESS STARTED", batchFolderName);
 
 
-                    var failedToProcess
-                        = await SubmitSubToFbiAndAttemptSaveInMongoAsync(subs?.ToList(), exceptionsLogger,
-                      attemptToSaveInMongo: true, attemptToSendFBI: false);
+        //        // Process the Batch in same order as it is received
+        //        foreach (var incidentList in agencyGrp.ToList().OrderBy(grp => grp.Runnumber))
+        //        {
+        //            var runNumber = incidentList.Runnumber;
+
+        //            log.WriteLog(ori,
+        //                DateTime.Now.ToString() + " : " + "STARTED XML FILES PROCESSING FOR RUNNUMBER : " +
+        //                runNumber,
+        //                batchFolderName);
+
+        //            var subs = SubmissionBuilder.BuildMultipleSubmission(new List<IncidentList>() { incidentList });
 
 
-
-                    if (failedToProcess.Any())
-                    {
-                        log.WriteLog(ori,
-                            DateTime.Now.ToString() + " : " + "SOMETHING WENT WRONG WHILE PROCESSING FILES; RUNNUMBER : " +
-                            runNumber,
-                            batchFolderName);
-
-                    }
-
-
-                    var submissionBatchStatus = new SubmissionBatchStatus()
-                    {
-                        RunNumber = runNumber,
-                        Ori = ori,
-                        Environmennt = incidentList.Environment,
-                        NoOfSubmissions = subs.Count(),
-                        HasErrorOccured = failedToProcess.Any()
-                    };
-
-                    submissionBatchStatusLst.Add(submissionBatchStatus);
-
-                    if (exceptionsLogger.Any())
-                    {
-                        foreach (var tuple in exceptionsLogger)
-                        {
-                            log.WriteLog(ori,
-                                "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
-                                tuple.Item1.StackTrace +
-                                "" + Environment.NewLine + " File:" + tuple.Item2 + ".xml" + "Date :" +
-                                DateTime.Now.ToString(), batchFolderName);
-                            log.WriteLog(ori,
-                                Environment.NewLine +
-                                "-----------------------------------------------------------------------------" +
-                                Environment.NewLine, batchFolderName);
-
-                        }
-
-                        log.WriteLog(ori,
-                            DateTime.Now.ToString() + " : " + "SOMETHING FAILED TO SAVE IN MONGODB, SO ABORTING THE PROCESS",
-                            batchFolderName);
-                        break;
-                    }
-
-                    log.WriteLog(ori,
-                      DateTime.Now.ToString() + " : " + "COMPLETED FILE PROCESSING FOR RUNNUMBER : " +
-                      runNumber,
-                      batchFolderName);
-
-                }
-
-                log.WriteLog(ori, " DATA SYNC PROCESS COMPLETED", batchFolderName);
-            }
+        //            var failedToProcess
+        //                = await SubmitSubToFbiAndAttemptSaveInMongoAsync(subs?.ToList(), exceptionsLogger,
+        //              attemptToSaveInMongo: true, attemptToSendFBI: false);
 
 
 
-            return submissionBatchStatusLst;
-        }
+        //            if (failedToProcess.Any())
+        //            {
+        //                log.WriteLog(ori,
+        //                    DateTime.Now.ToString() + " : " + "SOMETHING WENT WRONG WHILE PROCESSING FILES; RUNNUMBER : " +
+        //                    runNumber,
+        //                    batchFolderName);
+
+        //            }
+
+
+        //            var submissionBatchStatus = new SubmissionBatchStatus()
+        //            {
+        //                RunNumber = runNumber,
+        //                Ori = ori,
+        //                Environmennt = incidentList.Environment,
+        //                NoOfSubmissions = subs.Count(),
+        //                HasErrorOccured = failedToProcess.Any()
+        //            };
+
+        //            submissionBatchStatusLst.Add(submissionBatchStatus);
+
+        //            if (exceptionsLogger.Any())
+        //            {
+        //                foreach (var tuple in exceptionsLogger)
+        //                {
+        //                    log.WriteLog(ori,
+        //                        "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
+        //                        tuple.Item1.StackTrace +
+        //                        "" + Environment.NewLine + " File:" + tuple.Item2 + ".xml" + "Date :" +
+        //                        DateTime.Now.ToString(), batchFolderName);
+        //                    log.WriteLog(ori,
+        //                        Environment.NewLine +
+        //                        "-----------------------------------------------------------------------------" +
+        //                        Environment.NewLine, batchFolderName);
+
+        //                }
+
+        //                log.WriteLog(ori,
+        //                    DateTime.Now.ToString() + " : " + "SOMETHING FAILED TO SAVE IN MONGODB, SO ABORTING THE PROCESS",
+        //                    batchFolderName);
+        //                break;
+        //            }
+
+        //            log.WriteLog(ori,
+        //              DateTime.Now.ToString() + " : " + "COMPLETED FILE PROCESSING FOR RUNNUMBER : " +
+        //              runNumber,
+        //              batchFolderName);
+
+        //        }
+
+        //        log.WriteLog(ori, " DATA SYNC PROCESS COMPLETED", batchFolderName);
+        //    }
+
+
+
+        //    return submissionBatchStatusLst;
+        //}
 
 
         private static void SaveSubXml(IEnumerable<Submission> submissions, string path, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions)
