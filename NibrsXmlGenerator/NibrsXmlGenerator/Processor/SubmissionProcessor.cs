@@ -78,6 +78,16 @@ namespace NibrsXml.Processor
                             log.WriteLog(ori, DateTime.Now.ToString() + " : " + "NO NIBRS DATA TO PROCESS FOR RUNNUMBER: " +
                             runNumber,
                                 batchFolderName);
+                            var submissionStatus = new SubmissionBatchStatus()
+                            {
+                                RunNumber = runNumber,
+                                Ori = ori,
+                                Environmennt = incidentList.Environment,
+                                NoOfSubmissions = subs.Count(),
+                                HasErrorOccured = isOutOfSequence
+                            };
+
+                            submissionBatchStatusLst.Add(submissionStatus);
                             continue;
                         }
 
