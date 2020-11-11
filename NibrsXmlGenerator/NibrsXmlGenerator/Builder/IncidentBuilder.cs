@@ -84,8 +84,8 @@ namespace NibrsXml.Builder
         {
             
             
-            // If empty or action typr = D return null
-            if (admin.ExcpClearDate.IsNullBlankOrEmpty() || admin.ActionType == "D" ) return null;
+            // If empty or action type = D  or Exception clearance type is other (Exceptional Clearance type O is translated to N) return null
+            if (admin.ExcpClearDate.IsNullBlankOrEmpty() || admin.ActionType == "D"  || admin.ClearedExceptionally == LibrsErrorConstants.CEOther) return null;
                         
             string month, day, year;
             try
