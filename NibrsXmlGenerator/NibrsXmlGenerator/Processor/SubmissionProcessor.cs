@@ -226,17 +226,17 @@ namespace NibrsXml.Processor
             var buffer = System.Text.Encoding.UTF8.GetBytes(jsonString);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var httpresponses = await client.PostAsync(endpointURL, byteContent);
-            if (!httpresponses.IsSuccessStatusCode)
+            var responseMessage = await client.PostAsync(endpointURL, byteContent);
+            if (!responseMessage.IsSuccessStatusCode)
             {
-                var content = await httpresponses.Content.ReadAsStringAsync();
+                var content = await responseMessage.Content.ReadAsStringAsync();
                 Console.Write(content);
-                var code = (int) httpresponses.StatusCode;
+                var code = (int) responseMessage.StatusCode;
                 
                 throw new HttpException(code,content);
 
             }
-            return httpresponses.IsSuccessStatusCode;
+            return responseMessage.IsSuccessStatusCode;
         }
 
 
@@ -249,7 +249,7 @@ namespace NibrsXml.Processor
         /// <returns></returns>
         private async static Task<List<NibrsXmlTransaction>> SubmitSubToFbiAndAttemptSaveInMongoAsync(
             List<Submission> submissions, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions,
-            bool attemptToSaveInMongo, bool attemptToSendFBI = true)
+            bool attemptToSaveInMongo)
         {
             HttpClient httpClient = new HttpClient();
 
@@ -270,13 +270,13 @@ namespace NibrsXml.Processor
                 try
                 {
                     // var response = NibrsSubmitter.SendReport(submission.Xml);
-                    var response = submission.IsNibrsReportable && attemptToSendFBI ? NibrsSubmitter.SendReport(submission.Xml) : null;
+                    var response = submission.IsNibrsReportable ? NibrsSubmitter.SendReport(submission.Xml) : null;
                     //Wrap both response and submission and then save to database
                     NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
                     var jsonContent = nibrsXmlTransaction.JsonString;
 
                     // If failed to report FBI. Don't save in MongoDB. Reattempt to Report FBI and save in MongoDb later.
-                    if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed && attemptToSendFBI)
+                    if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed)
                     {
                         failedToSave.Add(nibrsXmlTransaction);
                         continue;
