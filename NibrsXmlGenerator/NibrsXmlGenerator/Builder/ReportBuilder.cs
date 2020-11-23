@@ -160,7 +160,7 @@ namespace NibrsXml.Builder
         {
            
 
-            // If the inciden GROUP B Arrest and exception occurs in Build Arrest than Incident segement is not yet build, so build here
+            // If the inciden GROUP B Arrest and exception occurs in Build Arrest than Incident segment is not yet build, so build here
             // We need the Incident Segment to log this incident.
                 if (rpt.Incident == null)
                {
