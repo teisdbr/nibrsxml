@@ -26,18 +26,18 @@ namespace NibrsXml
         }
 
 
-        public string GetFailedToUploadLocation()
+        public string GetFailedLocation()
         {
 
-            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedToUploadNibrsXmlFilesFolderLocation", typeof(string)));
+            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
             return NibrsXmlFolderPath + "\\" + failedToUploadLocation;
         }
 
 
-        public DirectoryInfo GetFailedToUploadDirectory()        
+        public DirectoryInfo GetFailedDirectory()        
         {
 
-            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedToUploadNibrsXmlFilesFolderLocation", typeof(string)));
+            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
             DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + failedToUploadLocation);
             if (!directory.Exists)
                 directory.Create();

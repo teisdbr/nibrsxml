@@ -79,18 +79,19 @@ namespace NibrsXml.Builder
             var KeyValuePairs = trackIncidentsDic.AsEnumerable().ToList();
 
             Parallel.ForEach(KeyValuePairs, KeyValuePair =>
-         {
+            {
              var delsub = KeyValuePair.Value.Find(sub => sub.Reports[0].Header.ReportActionCategoryCode == "D");
              var insertOrAddSub = KeyValuePair.Value.Find(sub => sub.Reports[0].Header.ReportActionCategoryCode != "D");
 
-             // replace condition 
+             // replace action type  condition 
              if (delsub != null && insertOrAddSub != null)
              {
+                 // For the Group B Arrest Report Incident has to be null for the Replace Action Type.
                  if (KeyValuePair.Key.EndsWith(NibrsReportCategoryCode.B.NibrsCode()))
                  {
                      insertOrAddSub.Reports[0].Incident = null;
-
                  }
+
                  // send the insert or add incident with R action type and leave Delete Incident.
                  insertOrAddSub.Reports[0].Header.ReportActionCategoryCode = "R";
 
