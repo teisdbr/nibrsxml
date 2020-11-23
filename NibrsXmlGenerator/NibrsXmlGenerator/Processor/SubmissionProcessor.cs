@@ -259,54 +259,71 @@ namespace NibrsXml.Processor
             var baseURL = System.Convert.ToString(appSettingsReader.GetValue("LcrxAPIURL", typeof(string)));
             var endpoint = appSettingsReader.GetValue("SaveNibrsXmlEndpoint", typeof(String)).ToString();
 
-            //List<Task> tasks = new List<Task>();
+            var requestTasks = new List<Task>();
+
+            // The purpose of the semaphoreSlim to control the max number of tasks that can be ran in the requestTasks
+            var maxDegreeOfParallelism = 50; // defines max number of tasks that can be at a time.
+            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(maxDegreeOfParallelism, maxDegreeOfParallelism);
 
             foreach (var submission in submissions)
             {
-                var isSaved = false;
-                try
+                requestTasks.Add(Task.Run(async () =>
                 {
-                    // var response = NibrsSubmitter.SendReport(submission.Xml);
-                    var response = submission.IsNibrsReportable ? NibrsSubmitter.SendReport(submission.Xml) : null;
-                    //Wrap both response and submission and then save to database
-                    NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
-                    var jsonContent = nibrsXmlTransaction.JsonString;
-
-                    // If failed to report FBI. Don't save in MongoDB. Reattempt to Report FBI and save in MongoDb later.
-                    if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed)
+                    var isSaved = false;
+                    await semaphoreSlim.WaitAsync();
+                    try
                     {
-                        failedToSave.Add(nibrsXmlTransaction);
-                        continue;
-                    }
+                        Console.WriteLine("Task {0} enters the semaphore.", Task.CurrentId);
+                        // var response = NibrsSubmitter.SendReport(submission.Xml);
+                        var response = submission.IsNibrsReportable ? NibrsSubmitter.SendReport(submission.Xml) : null;
+                        //Wrap both response and submission and then save to database
+                        NibrsXmlTransaction nibrsXmlTransaction = new NibrsXmlTransaction(submission, response);
+                        var jsonContent = nibrsXmlTransaction.JsonString;
 
-
-                    if (attemptToSaveInMongo)
-                    {
-                        try
+                        // If failed to report FBI. Don't save in MongoDB. Reattempt to Report FBI and save in MongoDb later.
+                        if (nibrsXmlTransaction.Status == NibrsSubmissionStatusCodes.UploadFailed)
                         {
-                            isSaved = await CallApiToSaveInMongoDbAsync(jsonContent, baseURL + endpoint, httpClient);
+                            failedToSave.Add(nibrsXmlTransaction);
+                            return;
                         }
-                        catch (Exception ex)
+                        if (attemptToSaveInMongo)
                         {
-                            exceptions.Enqueue(Tuple.Create(ex, submission.Id));
+                            try
+                            {
+                                isSaved = await CallApiToSaveInMongoDbAsync(jsonContent, baseURL + endpoint,
+                                    httpClient);
+                            }
+                            catch (Exception ex)
+                            {
+                                exceptions.Enqueue(Tuple.Create(ex, submission.Id));
+                            }
+                        }
+                        if (!isSaved)
+                        {
+                            failedToSave.Add(nibrsXmlTransaction);
+                        }
 
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Enqueue(Tuple.Create(ex, submission.Id));
+
+                    }
+                    finally
+                    {
+                        //When the task is ready, release the semaphore. It is vital to ALWAYS release the semaphore when we are ready, or else we will end up with a Semaphore that is forever locked.
+                        //This is why it is important to do the Release within a try...finally clause; program execution may crash or take a different path, this way you are guaranteed execution
+                        lock (semaphoreSlim)
+                        {
+                            semaphoreSlim.Release();
                         }
                     }
-                    if (!isSaved)
-                    {
-                        failedToSave.Add(nibrsXmlTransaction);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    exceptions.Enqueue(Tuple.Create(ex, submission.Id));
-
-                }
+                }));
 
             };
 
-            httpClient.Dispose();
-
+            await Task.WhenAll(requestTasks.ToArray());
+            httpClient?.Dispose();
             return failedToSave;
 
         }
