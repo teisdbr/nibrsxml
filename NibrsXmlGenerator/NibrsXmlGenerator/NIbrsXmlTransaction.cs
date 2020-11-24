@@ -93,7 +93,6 @@ namespace NibrsXml
             Submission = submission;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
-            NumberOfAttempts = 1;
             Status = SetTransactionStatus();
         }
 
