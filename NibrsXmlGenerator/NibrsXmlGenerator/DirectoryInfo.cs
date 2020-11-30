@@ -33,6 +33,22 @@ namespace NibrsXml
             return NibrsXmlFolderPath + "\\" + failedToUploadLocation;
         }
 
+        public string GetTempFolderLocation()
+        {
+            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
+            return NibrsXmlFolderPath + "\\" + failedToUploadLocation + "\\" + "Temp";
+        }
+
+
+        public DirectoryInfo GetTempFolderDirectoryInfo()
+        {
+            var tempLocation = GetTempFolderLocation();
+            DirectoryInfo directory = new DirectoryInfo(tempLocation);
+            if (!directory.Exists)
+                directory.Create();
+            return directory;
+        }
+
 
         public DirectoryInfo GetFailedDirectory()        
         {
@@ -49,6 +65,22 @@ namespace NibrsXml
         {
             var failedToSaveLocation = Convert.ToString(AppSettingsReader.GetValue("FailedToSaveNibrsXmlFilesFolderLocation", typeof(string)));
             return NibrsXmlFolderPath + "\\" + failedToSaveLocation;
+        }
+
+
+        public string GetDataFolderLocation()
+        {
+            var dataFolderName = Convert.ToString(AppSettingsReader.GetValue("IncomingFilesFolderLocation", typeof(string)));
+            return NibrsXmlFolderPath + "\\" + dataFolderName;
+        }
+
+        public DirectoryInfo GetDataDirectoryInfo()
+        {
+            var failedToSaveLocation = GetDataFolderLocation();
+            DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + failedToSaveLocation);
+            if (!directory.Exists)
+                directory.Create();
+            return directory;
         }
 
 

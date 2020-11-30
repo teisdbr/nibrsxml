@@ -1,6 +1,7 @@
 ﻿using LoadBusinessLayer;
 using NibrsModels.NibrsReport;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -14,101 +15,112 @@ using NibrsInterface;
 using System.Collections.Concurrent;
 using MongoDB.Bson;
 using System.Threading;
-using Newtonsoft.Json;
-using System.Net;
-using System.Web.Util;
-using System.ServiceModel.PeerResolvers;
-using System.Data;
 using System.Web;
 using LoadBusinessLayer.Interfaces;
-using NibrsXml;
 using NibrsXml.Builder;
 using NibrsXml.Constants;
-using NibrsXml.Ucr.DataCollections;
 
 namespace NibrsXml.Processor
 {
     public class SubmissionProcessor
     {
 
+        public static void WriteXml(List<IncidentList> agencyIncidentsCollection, string ori, string batchFolderName)
+        {
+            var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
+            var log = new Logger();
 
+
+            AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
+
+            var dataFolderInfo = agencyXmlDirectoryInfo.GetDataDirectoryInfo();
+
+            // Process the Batch in same order as it is received
+            foreach (var incidentList in agencyIncidentsCollection.ToList().OrderBy(grp => grp.Runnumber))
+            {
+                try
+                {
+                    var runNumber = incidentList.Runnumber;
+                    log.WriteLog(ori, DateTime.Now.ToString() + " : " +
+                                      "SAVED THE NIBRS XML FILE: " +
+                                      runNumber,
+                        batchFolderName);
+                    IEnumerable<Submission> subs = new List<Submission>();
+                    subs = SubmissionBuilder.BuildMultipleSubmission(incidentList);
+                    SaveSubXml(subs, dataFolderInfo.FullName, exceptionsLogger);
+                }
+                catch (Exception ex)
+                {
+                    exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
+                    break;
+                }
+            }
+
+            PrintExceptions(exceptionsLogger, log, ori, batchFolderName);
+        }
 
         public static async Task<List<SubmissionBatchStatus>> ProcessSubmissionsBatchAsync(
             List<IncidentList> agencyIncidentsCollection, string batchFolderName,
-            bool saveLocally = true, bool forceDelete = false)
+            bool forceDelete = false)
         {
-            var log = new Logger();
-
-            var httpClient = new HttpClient();
-
-
             List<SubmissionBatchStatus> submissionBatchStatusLst = new List<SubmissionBatchStatus>();
+            var log = new Logger();
+            var httpClient = new HttpClient();
+            var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
 
             // Only process the agencyList with Environment C & P 
             agencyIncidentsCollection = agencyIncidentsCollection.Where(incList => incList.Environment != "T").ToList();
 
-
             foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
             {
                 var ori = agencyGrp.Key;
-
-
-
-                AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
-
-                var isOutOfSequence = false;
-
-                var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
-
-
-
-                if (forceDelete)
+                try
                 {
-                    foreach (var incList in agencyGrp.ToList())
-                    {
+                    log.WriteLog(ori,
+                        DateTime.Now.ToString() + " : " + "--------- PROCESSING NIBRS DATA--------------",
+                        batchFolderName);
 
-                        string fileName = failedToSavePath + "\\" + incList.Runnumber;
-                        // clear the Documents pending to be either uploaded or reported to the FBI, as we are trying to delete all incidents in this run number
-                        if (Directory.Exists(fileName))
+                    AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
+                    var isOutOfSequence = false;
+                    var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
+                    var dataFolderInfo = agencyXmlDirectoryInfo.GetDataDirectoryInfo();
+
+                    if (forceDelete)
+                    {
+                        foreach (var incList in agencyGrp.ToList())
                         {
-                            Directory.Delete(fileName, true);
+
+                            string failedToSaveFullPath = failedToSavePath + "\\" + incList.Runnumber;
+                            // clear the Documents pending to be either uploaded or reported to the FBI, as we are trying to delete all incidents in this run number
+                            if (Directory.Exists(failedToSaveFullPath))
+                            {
+                                Directory.Delete(failedToSaveFullPath, true);
+                            }
+
+                            string dataFullPath = dataFolderInfo.FullName + "\\" + incList.Runnumber;
+
+                            if (Directory.Exists(dataFullPath))
+                            {
+                                Directory.Delete(dataFullPath, true);
+                            }
                         }
                     }
-                }
+
+                    // write xml files
+                    WriteXml(agencyIncidentsCollection, ori, batchFolderName);
+
+                    isOutOfSequence = await ReProcessPendingSubmissionsAsync(ori, batchFolderName, httpClient, exceptionsLogger);
 
 
-
-                // Check If anything pending to reprocess
-                await ReProcessPendingSubmissionsAsync(ori, batchFolderName, httpClient);
-
-                // Process the Batch in same order as it is received
-                foreach (var incidentList in agencyGrp.ToList().OrderBy(grp => grp.Runnumber))
-                {
-                    var runNumber = incidentList.Runnumber;
-                    IEnumerable<Submission> subs = new List<Submission>();
-
-                    try
+                    // Process the Batch in same order as it is received
+                    foreach (var subDir in dataFolderInfo.GetDirectories().OrderBy(dir => dir.Name))
                     {
+                        //  
+                        if (isOutOfSequence)
+                            break;
 
-                        log.WriteLog(ori,
-                            DateTime.Now.ToString() + " : " + "--------- PROCESSING NIBRS DATA--------------",
-                            batchFolderName);
-
-
-
-                        subs = SubmissionBuilder.BuildMultipleSubmission(new List<IncidentList>() { incidentList });
-
-                        if (!subs.Any())
-                        {
-                            log.WriteLog(ori, DateTime.Now.ToString() + " : " +
-                                              "NO NIBRS DATA TO PROCESS FOR RUNNUMBER: " +
-                                              runNumber,
-                                batchFolderName);
-
-
-                            continue;
-                        }
-
+                        var runNumber = subDir.Name;
+                        List<Submission> subs = subDir.GetFiles().Select(fileInfo => Submission.Deserialize(fileInfo.FullName))?.ToList();
                         if (forceDelete)
                         {
                             log.WriteLog(ori,
@@ -117,131 +129,71 @@ namespace NibrsXml.Processor
                                 batchFolderName);
 
                             subs = DeleteTransformer.TransformIntoDeletes(subs);
-
                         }
-
-                        var submissions = subs.ToList();
-
-                        var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
-
-                        var saveLocalPath = agencyXmlDirectoryInfo.GetArchiveLocation();
-
-                        if (saveLocally)
+                        if (subs == null || !subs.Any())
                         {
-
-                            SaveSubXml(submissions, saveLocalPath, exceptionsLogger);
-
-                            log.WriteLog(ori,
-                                DateTime.Now.ToString() + " : " + "SAVED All XML FILES FOR RUNNUMBER: " + runNumber +
-                                "AT " + saveLocalPath,
+                            log.WriteLog(ori, DateTime.Now.ToString() + " : " +
+                                              "NO NIBRS DATA TO PROCESS FOR RUNNUMBER: " +
+                                              runNumber,
                                 batchFolderName);
+                            //TODO Delete the FOlder
+                            Directory.Delete(subDir.FullName, true);
+
                         }
+                        isOutOfSequence = await SubmitSubmissionsAsync(subs, ori, runNumber, batchFolderName, exceptionsLogger, httpClient);
 
-                        log.WriteLog(ori,
-                            DateTime.Now.ToString() + " : " + "STARTED XML FILES PROCESSING FOR RUNNUMBER : " +
-                            runNumber,
-                            batchFolderName);
-
-
-                        if (agencyXmlDirectoryInfo.GetFailedToSaveDirectory().GetDirectories().Length != 0)
-                        {
-                            log.WriteLog(ori,
-                                DateTime.Now.ToString() + " : " + "Out Of SEQUENCE, RUNNUMBER : " + runNumber,
-                                batchFolderName);
-
-                            isOutOfSequence = true;
-
-                            // save documents
-                            SaveTrans(submissions.Select(sub => new NibrsXmlTransaction(sub, null)), failedToSavePath, exceptionsLogger);
-
-                            log.WriteLog(ori,
-                                DateTime.Now.ToString() + " : " +
-                                "FILES  EITHER FAILED TO UPLOAD TO FBI PROPERLY OR ERROR IN SAVING THE FILES IN MONGO, moved to " +
-                                failedToSavePath +
-                                " , RUNNUMBER : " + runNumber,
-                                batchFolderName);
-
-                            continue;
-                        }
-
-
-                          var failedToSave = await AttemptToSaveTransactionInMongoDbAsync(submissions, httpClient, exceptionsLogger);
-
-
-                        if (failedToSave.Any())
-                        {
-
-                            // save documents
-                            SaveTrans(failedToSave, failedToSavePath, exceptionsLogger);
-
-                            log.WriteLog(ori,
-                                DateTime.Now.ToString() + " : " +
-                                "FILES  EITHER FAILED TO UPLOAD TO FBI PROPERLY OR ERROR IN SAVING THE FILES IN MONGO, moved to " +
-                                failedToSavePath +
-                                " , RUNNUMBER : " + runNumber,
-                                batchFolderName);
-
-                            isOutOfSequence = true;
-                        }
-
-                        ExceptionLogger(exceptionsLogger, log, ori, batchFolderName);
-
-                        log.WriteLog(ori,
-                            DateTime.Now.ToString() + " : " +
-                            "COMPLETED PROCESSING  XML FILES PROCESSING FOR RUNNUMBER : " + runNumber,
-                            batchFolderName);
+                        if (!isOutOfSequence)
+                            Directory.Delete(subDir.FullName, true);
                     }
-                    catch (AggregateException exception)
+
+                    if (isOutOfSequence)
                     {
-                        foreach (var innerexception in exception.InnerExceptions)
-                        {
-                            log.WriteLog(ori, "Exception:" + innerexception.Message, batchFolderName);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.WriteLog(ori, "Exception:" + ex.Message, batchFolderName);
-                    }
-                    finally
-                    {
-                        var submissionBatchStatus = new SubmissionBatchStatus()
-                        {
-                            RunNumber = runNumber,
-                            Ori = ori,
-                            Environmennt = incidentList.Environment,
-                            NoOfSubmissions = subs.Count(),
-                            HasErrorOccured = isOutOfSequence
-                        };
+                        var appSettingsReader = new AppSettingsReader();
+                        var emails =
+                            Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
 
-                        submissionBatchStatusLst.Add(submissionBatchStatus);
+                        EmailSender emailSender = new EmailSender();
+
+                        emailSender.SendCriticalErrorEmail(emails,
+                            "Something went wrong while trying to process the submission batch for ORI:" + ori,
+                            "Please check the logs for more details." + Environment.NewLine, false,
+                            "donotreply@lcrx.librs.org", "");
                     }
+
                 }
-
-                if (isOutOfSequence)
+                catch (AggregateException exception)
                 {
-                    var appSettingsReader = new AppSettingsReader();
-                    var emails = Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
-
-                    EmailSender emailSender = new EmailSender();
-
-                    emailSender.SendCriticalErrorEmail(emails, "Something went wrong while trying to process the submission batch for ORI:" + ori, "Please check the logs for more details." + Environment.NewLine, false, "donotreply@lcrx.librs.org", "");
+                    foreach (var innerException in exception.InnerExceptions)
+                    {
+                        log.WriteLog(ori, "Exception:" + innerException.Message, batchFolderName);
+                        exceptionsLogger.Enqueue(Tuple.Create(innerException, ObjectId.Empty));
+                    }
                 }
-
-                log.WriteLog(ori, DateTime.Now.ToString() + " : " + " PROCESSING NIBRS DATA COMPLETED",
-                    batchFolderName);
-
-
+                catch (Exception ex)
+                {
+                    log.WriteLog(ori, "Exception:" + ex.Message, batchFolderName);
+                    exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
+                    //TODO SEND EXCEPTION EMAIL
+                    log.WriteLog(ori, DateTime.Now.ToString() + " : " + "FAILED TO PROCESS NIBRS XML DATA ",
+                        batchFolderName);
+                }
+                finally
+                {
+                    PrintExceptions(exceptionsLogger, log, ori, batchFolderName);
+                    log.WriteLog(ori, DateTime.Now.ToString() + " : " + " PROCESSING NIBRS DATA COMPLETED",
+                        batchFolderName);
+                }
             }
 
             return submissionBatchStatusLst;
         }
 
 
-
         /// <summary>
         /// This Method calls the LCRx API.
         /// </summary>
         /// <param name="content"></param>
+        /// <param name="transaction"></param>
         /// <param name="endpointURL"></param>
         private static async Task<bool> CallApiToSaveInMongoDbAsync(NibrsXmlTransaction transaction, string endpointURL, HttpClient client)
         {
@@ -272,121 +224,140 @@ namespace NibrsXml.Processor
         /// <param name="ori"></param>
         /// <param name="batchFolderName"></param>
         /// <param name="httpClient"></param>
+        /// <param name="exceptionsLogger1"></param>
         /// <param name="submissions"></param>
         /// <param name="exceptions"></param>
         /// <param name="isOutSequence"></param>
+        /// <param name="exceptionsLogger"></param>
         /// <returns></returns>
-        public static async Task ReProcessPendingSubmissionsAsync(string ori, string batchFolderName,
-            HttpClient httpClient)
+        public static async Task<bool> ReProcessPendingSubmissionsAsync(string ori, string batchFolderName,
+            HttpClient httpClient, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger)
         {
 
             var log = new Logger();
-         
+
             // get the paths to the folder 
             AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
             var failedFileLocation = agencyXmlDirectoryInfo.GetFailedLocation();
             var failedToSaveDir = agencyXmlDirectoryInfo.GetFailedToSaveDirectory();
-            var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
+            bool isAnyFailedToSave = false;
 
             if (failedToSaveDir.GetDirectories().Any())
             {
-              
-                bool isAnyFailedToSave = false;
-                log.WriteLog(ori, DateTime.Now.ToString() + ": Found some files pending to save in MongoDb", batchFolderName);
+                log.WriteLog(ori, DateTime.Now.ToString() + ": FOUND SOME FILES PENDING TO SAVE IN MONGODB", batchFolderName);
 
                 foreach (var subDir in failedToSaveDir.GetDirectories().OrderBy(d => d.Name))
                 {
                     var runNumber = subDir.Name;
-
-                    log.WriteLog(ori, DateTime.Now.ToString() + ": Starting Process to  save files for run-number: " + runNumber, batchFolderName);
-
-                    if (isAnyFailedToSave)
+                    try
                     {
-                        log.WriteLog(ori, DateTime.Now.ToString() + ": Skipping the Process for run-number: " + runNumber, batchFolderName);
-                        break;
-                    }
 
-                    if (!subDir.GetFiles().Any())
-                    {
-                  
-                        log.WriteLog(ori, DateTime.Now.ToString() + ": No Files found, Deleting the Folder" + subDir.FullName, batchFolderName);
-                        Directory.Delete(subDir.FullName);
-                        continue;
-                    }
+                        log.WriteLog(ori,
+                            DateTime.Now.ToString() + ": STARTING PROCESS TO  SAVE FILES FOR RUN-NUMBER: " + runNumber,
+                            batchFolderName);
 
-
-                    var nibrsXmlTransactions = subDir.GetFiles().Select(fileInfo => NibrsXmlTransaction.Deserialize(fileInfo.FullName));
-                    var pendingDeletes = nibrsXmlTransactions.Where(trans =>
-                        trans.Submission.Reports[0].Header.ReportActionCategoryCode == "D");
-                    var pendingTransactions = nibrsXmlTransactions.Where(trans =>
-                        trans.Submission.Reports[0].Header.ReportActionCategoryCode != "D");
-
-                    var failedToSaveDeletes = new List<NibrsXmlTransaction>();
-                    // only deletes
-                    if (pendingDeletes.Any())
-                    {
-                        failedToSaveDeletes = await AttemptToSaveTransactionInMongoDbAsync(pendingDeletes, httpClient, exceptionsLogger);
-                    }
-
-                    if (!failedToSaveDeletes.Any() && pendingTransactions.Any())
-                    {
-                        var failedToSave = await AttemptToSaveTransactionInMongoDbAsync(nibrsXmlTransactions, httpClient, exceptionsLogger);
-
-
-                        if (!failedToSave.Any())
+                        if (isAnyFailedToSave)
                         {
-                            log.WriteLog(ori, DateTime.Now.ToString() + ": Deleting the Folder" + subDir.FullName, batchFolderName);
-                            Directory.Delete(subDir.FullName, true);
+                            log.WriteLog(ori,
+                                DateTime.Now.ToString() + ": SKIPPING THE PROCESS FOR RUN-NUMBER: " + runNumber,
+                                batchFolderName);
+                            break;
+                        }
+
+                        if (!subDir.GetFiles().Any())
+                        {
+                            log.WriteLog(ori,
+                                DateTime.Now.ToString() + ": NO FILES FOUND, DELETING THE FOLDER" + subDir.FullName,
+                                batchFolderName);
+                            Directory.Delete(subDir.FullName);
+                            continue;
+                        }
+
+
+                        var nibrsXmlTransactions = subDir.GetFiles()
+                            .Select(fileInfo => NibrsXmlTransaction.Deserialize(fileInfo.FullName));
+                        var pendingDeletes = nibrsXmlTransactions.Where(trans =>
+                            trans.Submission.Reports[0].Header.ReportActionCategoryCode == "D");
+                        var pendingTransactions = nibrsXmlTransactions.Where(trans =>
+                            trans.Submission.Reports[0].Header.ReportActionCategoryCode != "D");
+
+                        var failedToSaveDeletes = new List<NibrsXmlTransaction>();
+                        // only deletes
+                        if (pendingDeletes.Any())
+                        {
+                            failedToSaveDeletes =
+                                await AttemptToSaveTransactionInMongoDbAsync(pendingDeletes, httpClient,
+                                    exceptionsLogger);
+                        }
+
+                        if (!failedToSaveDeletes.Any())
+                        {
+                            // delete saved files from pending Deletes
+                            Parallel.ForEach(pendingDeletes,
+                                transaction =>
+                                {
+
+                                    File.Delete(subDir.FullName + "/" + transaction.Id + ".json");
+                                });
+
+                            var failedToSave =
+                                await AttemptToSaveTransactionInMongoDbAsync(pendingTransactions, httpClient,
+                                    exceptionsLogger);
+
+
+                            if (!failedToSave.Any())
+                            {
+                                log.WriteLog(ori, DateTime.Now.ToString() + ": DELETING THE FOLDER" + subDir.FullName,
+                                    batchFolderName);
+                                Directory.Delete(subDir.FullName, true);
+                            }
+                            else
+                            {
+                                log.WriteLog(ori,
+                                    DateTime.Now.ToString() +
+                                    ": FAILED TO REPORT FBI OR SAVE IN MONGODB FOR RUNNUMBER:" + runNumber,
+                                    batchFolderName);
+                                isAnyFailedToSave = true;
+                                // delete saved files from pendingTransactions
+                                Parallel.ForEach(pendingTransactions.Where(trans => failedToSave.All(fail => trans.Id != fail.Id)),
+                                    transaction =>
+                                    {
+
+                                        File.Delete(subDir.FullName + "/" + transaction.Id + ".json");
+                                    });
+
+                                SaveFailedTransactions(ori, failedToSave, subDir, failedFileLocation, exceptionsLogger);
+                            }
                         }
                         else
                         {
-                            log.WriteLog(ori, DateTime.Now.ToString() + ": Failed to report FBI or Save in MongoDb For RunNumber:" + runNumber, batchFolderName);
                             isAnyFailedToSave = true;
-                            SaveFailedTransactions(failedToSave, subDir, failedFileLocation, exceptionsLogger);
+                            log.WriteLog(ori,
+                                DateTime.Now.ToString() + ": FAILED TO REPORT FBI OR SAVE IN MONGODB FOR RUNNUMBER:" +
+                                runNumber, batchFolderName);
+                            SaveFailedTransactions(ori, failedToSaveDeletes, subDir, failedFileLocation,
+                                exceptionsLogger);
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        isAnyFailedToSave = true;
-                        log.WriteLog(ori, DateTime.Now.ToString() + ": Failed to report FBI or Save in MongoDb For RunNumber:" + runNumber, batchFolderName);
-                        SaveFailedTransactions(failedToSaveDeletes, subDir, failedFileLocation, exceptionsLogger);
+                        exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
+                        throw;
+                    }
+                    finally
+                    {
+                        // log exceptions
+                        PrintExceptions(exceptionsLogger, log, ori, batchFolderName);
+                        log.WriteLog(ori,
+                            DateTime.Now.ToString() + ": COMPLETED PROCESSING FOR THE RUNNUMBER:" + runNumber,
+                            batchFolderName);
                     }
 
-                    log.WriteLog(ori, DateTime.Now.ToString() + ": Completed Processing for the runNumber:" + runNumber, batchFolderName);
-
-                }
-
-            }
-
-            // log exceptions
-            ExceptionLogger(exceptionsLogger, log, ori, batchFolderName);
-
-        }
-
-
-        private static void SaveFailedTransactions(IEnumerable<NibrsXmlTransaction> nibrsXmlTransactions, DirectoryInfo subDir, string failedFileLocation, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger)
-        {
-            var maxAllowedAttempts = 3;
-            // if number of attempts are more than Threshold
-            if (nibrsXmlTransactions.Any(trans => trans.NumberOfAttempts > maxAllowedAttempts))
-            {
-                var failedTrans = nibrsXmlTransactions.Where(trans => trans.NumberOfAttempts > maxAllowedAttempts);
-                // logic to move the file to the Failed folder
-                SaveTrans(failedTrans, failedFileLocation, exceptionsLogger);
-                foreach (var nibrsXmlTransaction in failedTrans)
-                {
-                    // delete from the failedToSave folder
-                    File.Delete(subDir.FullName + "/" + nibrsXmlTransaction.Id + ".json");
                 }
             }
 
-            foreach (var transaction in nibrsXmlTransactions.Where(trans => trans.NumberOfAttempts <= maxAllowedAttempts))
-            {
-                // update the document response or attempt count 
-                File.WriteAllText(subDir.FullName + "/" + transaction.Id + ".json", transaction.JsonString);
-            }
+            return isAnyFailedToSave;
         }
-
 
 
 
@@ -401,7 +372,7 @@ namespace NibrsXml.Processor
         /// <returns></returns>
         private static async Task<List<NibrsXmlTransaction>> AttemptToSaveTransactionInMongoDbAsync<T>(
             IEnumerable<T> documents, HttpClient client,
-            ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionLogger) 
+            ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionLogger)
         {
 
             var appSettingsReader = new AppSettingsReader();
@@ -409,12 +380,14 @@ namespace NibrsXml.Processor
             var baseURL = System.Convert.ToString(appSettingsReader.GetValue("LcrxAPIURL", typeof(string)));
             var endpoint = appSettingsReader.GetValue("SaveNibrsXmlEndpoint", typeof(String)).ToString();
 
+            var maxDegreeOfParallelism = Convert.ToInt32(appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
+
             ConcurrentBag<NibrsXmlTransaction> failedToSave = new ConcurrentBag<NibrsXmlTransaction>();
 
             var requestTasks = new List<Task>();
 
             // The purpose of the semaphoreSlim to control the max number of concurrent tasks that can be ran in the requestTasks
-            var maxDegreeOfParallelism = 50; // defines max number of tasks that can be at a time.
+            // MaxDegreeOfParallelism defines max number of tasks that can be at a time.
             SemaphoreSlim semaphoreSlim = new SemaphoreSlim(maxDegreeOfParallelism, maxDegreeOfParallelism);
 
             foreach (var doc in documents)
@@ -487,13 +460,117 @@ namespace NibrsXml.Processor
 
             };
             await Task.WhenAll(requestTasks.ToArray());
-            
+
             return failedToSave.ToList();
 
         }
 
+        private static async Task<bool> SubmitSubmissionsAsync(List<Submission> subs, string ori, string runNumber,
+            string batchFolderName, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger, HttpClient httpClient)
+        {
+            var log = new Logger();
+
+            try
+            {
+
+                var failedToSavePath = new AgencyXmlDirectoryInfo(ori).GetFailedToSaveLocation();
+
+                log.WriteLog(ori,
+                    DateTime.Now.ToString() + " : " + "STARTED XML FILES PROCESSING FOR RUNNUMBER : " +
+                    runNumber,
+                    batchFolderName);
 
 
+                var failedToSave =
+                    await AttemptToSaveTransactionInMongoDbAsync(subs, httpClient, exceptionsLogger);
+
+                if (failedToSave.Any())
+                {
+                    // save documents
+                    SaveTrans(failedToSave, failedToSavePath, exceptionsLogger);
+
+                    log.WriteLog(ori,
+                        DateTime.Now.ToString() + " : " +
+                        "FILES  EITHER FAILED TO UPLOAD TO FBI PROPERLY OR ERROR IN SAVING THE FILES IN MONGO, MOVED TO" +
+                        failedToSavePath +
+                        " , RUNNUMBER : " + runNumber,
+                        batchFolderName);
+
+                    return true;
+                }
+            }
+            finally
+            {
+
+                PrintExceptions(exceptionsLogger, log, ori, batchFolderName);
+                log.WriteLog(ori,
+                    DateTime.Now.ToString() + " : " +
+                    "COMPLETED PROCESSING  XML FILES PROCESSING FOR RUNNUMBER : " + runNumber,
+                    batchFolderName);
+            }
+
+            return false;
+        }
+
+        #region Helpers
+
+        private static void SaveFailedTransactions(string ori, IEnumerable<NibrsXmlTransaction> failedToSave, DirectoryInfo currentDirectoryInfo, string failedFileLocation, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger)
+        {
+            var maxAllowedAttempts = 3;
+            AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
+
+
+            try
+            {
+
+                // save only that failed to Save in the failedToSave folder and Number of attempts less than threshold.
+                Parallel.ForEach(failedToSave.Where(trans => trans.NumberOfAttempts <= maxAllowedAttempts),
+                    transaction =>
+                    {
+                        // update the document response or/and attempt count 
+                        File.WriteAllText(currentDirectoryInfo.FullName + "/" + transaction.Id + ".json", transaction.JsonString);
+                    });
+
+                // if number of attempts are more than Threshold
+                if (failedToSave.Any(trans => trans.NumberOfAttempts > maxAllowedAttempts))
+                {
+
+                    var failedTrans = failedToSave.Where(trans => trans.NumberOfAttempts > maxAllowedAttempts);
+                    // save in failed folder
+                    SaveTrans(failedTrans, failedFileLocation, exceptionsLogger);
+                    // Delete them from the failed to save folder
+                    Parallel.ForEach(failedToSave.Where(trans => trans.NumberOfAttempts > maxAllowedAttempts),
+                        transaction =>
+                        {
+                            // update the document response or/and attempt count 
+                            File.Delete(currentDirectoryInfo.FullName + "/" + transaction.Id + ".json");
+                        });
+
+                    var appSettingsReader = new AppSettingsReader();
+                    var emails =
+                        Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
+
+                    EmailSender emailSender = new EmailSender();
+
+                    emailSender.SendCriticalErrorEmail(emails,
+                        "Found Some Files Failed to save in the MongoDb Clusters after multiple attempts, that needs your attention for ORI:" +
+                        ori,
+                        "Please check the logs and Directory:" + failedFileLocation + "for more details." +
+                        Environment.NewLine, false,
+                        "donotreply@lcrx.librs.org", "");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
+                throw;
+            }
+
+
+
+        }
 
         private static void SaveSubXml(IEnumerable<Submission> submissions, string path, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions)
         {
@@ -510,8 +587,8 @@ namespace NibrsXml.Processor
                     var docName = submission.Id.ToString() + ".xml";
                     string[] fullpath = { fileName, docName };
                     string nibrsSchemaLocation = NibrsModels.Constants.Misc.schemaLocation;
-                //Save locally
-                submission.XsiSchemaLocation = nibrsSchemaLocation;
+                    //Save locally
+                    submission.XsiSchemaLocation = nibrsSchemaLocation;
                     var xdoc = new XmlDocument();
 
                     xdoc.LoadXml(submission.Xml);
@@ -537,8 +614,8 @@ namespace NibrsXml.Processor
                 // failed to save in MongoDb
                 Parallel.ForEach(transactions, trans =>
                 {
-                // save failed files.
-                string fileName = path + "\\" + trans.Submission.Runnumber;
+                    // save failed files.
+                    string fileName = path + "\\" + trans.Submission.Runnumber;
                     if (!Directory.Exists(fileName))
                     {
                         Directory.CreateDirectory(fileName);
@@ -558,11 +635,16 @@ namespace NibrsXml.Processor
             }
         }
 
-        private static void ExceptionLogger(ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger, Logger log, string ori, string batchFolderName)
+
+
+
+        private static void PrintExceptions(ConcurrentQueue<Tuple<Exception, ObjectId>> exceptionsLogger, Logger log,
+            string ori, string batchFolderName)
         {
             if (exceptionsLogger.Any())
             {
-                foreach (var tuple in exceptionsLogger)
+
+                while (exceptionsLogger.TryDequeue(out Tuple<Exception, ObjectId> tuple))
                 {
                     log.WriteLog(ori,
                         "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
@@ -577,8 +659,7 @@ namespace NibrsXml.Processor
                 }
             }
         }
-
-
+        #endregion
 
     }
 }
