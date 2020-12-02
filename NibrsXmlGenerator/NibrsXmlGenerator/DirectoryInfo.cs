@@ -77,7 +77,7 @@ namespace NibrsXml
         public DirectoryInfo GetDataDirectoryInfo()
         {
             var failedToSaveLocation = GetDataFolderLocation();
-            DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + failedToSaveLocation);
+            DirectoryInfo directory = new DirectoryInfo(failedToSaveLocation);
             if (!directory.Exists)
                 directory.Create();
             return directory;
