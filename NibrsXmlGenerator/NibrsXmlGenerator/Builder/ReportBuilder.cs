@@ -148,38 +148,15 @@ namespace NibrsXml.Builder
                 //todo: make log writing shared or something
                 Console.WriteLine("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}",
                     incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace);
-                
-                return HandleException(rpt,incident);
+                throw new Exception($"Ori: {incident.Admin.ORINumber}, Incid num:{incident.Admin.IncidentNumber}, Message:{ex.Message}, Stack Trace: {ex.StackTrace}",ex.InnerException);
+
             }
         }
 
         #region Helper Functions
 
 
-        private static Report HandleException(Report rpt, LIBRSIncident incident)
-        {
-           
-
-            // If the inciden GROUP B Arrest and exception occurs in Build Arrest than Incident segment is not yet build, so build here
-            // We need the Incident Segment to log this incident.
-                if (rpt.Incident == null)
-               {
-                try
-                {
-                    rpt.Incident = IncidentBuilder.Build(incident.Admin);
-                   
-                }
-                catch (Exception ex)
-                {
-                    // If the exception in Incident Build Segement, we cant determine what the incident Number and date is, so just return null.
-                    return null;
-
-                }
-                }
-
-            rpt.HasFailedToBuildProperly = true;
-            return rpt;
-        }
+      
 
         private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
@@ -383,7 +360,7 @@ namespace NibrsXml.Builder
 
         #endregion
 
-        public static Report BuildZeroReport(IncidentList agencyIncidentList)
+        public static Report BuildZeroReport(incidentList agencyIncidentList)
         {
             //Initialize a new report
             var rpt = new Report();

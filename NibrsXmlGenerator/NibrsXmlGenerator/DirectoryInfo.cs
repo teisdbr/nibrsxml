@@ -26,7 +26,7 @@ namespace NibrsXml
         }
 
 
-        public string GetFailedLocation()
+        public string GetErroredLocation()
         {
 
             var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
@@ -50,11 +50,11 @@ namespace NibrsXml
         }
 
 
-        public DirectoryInfo GetFailedDirectory()        
+        public DirectoryInfo GetErroredDirectory()        
         {
 
-            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
-            DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + failedToUploadLocation);
+            var location = Convert.ToString(AppSettingsReader.GetValue("ErroredNibrsXmlFilesFolderLocation", typeof(string)));
+            DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + location);
             if (!directory.Exists)
                 directory.Create();
             return directory;
