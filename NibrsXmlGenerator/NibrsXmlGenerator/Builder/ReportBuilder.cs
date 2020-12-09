@@ -345,7 +345,7 @@ namespace NibrsXml.Builder
                             uniquePrefix + incident.Admin.ActionType + "-",
                             arrest.SeqNum,
                             new ActivityIdentification(arrest.TransactionNumber.Trim()),
-                            new ActivityDate(arrest.ActivityDate),
+                            new ActivityDate(arrest.ActivityDate, "23:30:00"),
                             new ArrestCharge(arrest.Charge),
                             arrest.CategoryCode,
                             arrest.ArrestCount
