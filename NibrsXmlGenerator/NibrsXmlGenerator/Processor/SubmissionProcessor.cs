@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -25,15 +26,15 @@ namespace NibrsXml.Processor
     public class SubmissionProcessor
     {
 
-        public static int SaveSubmissions(incidentList incidentList, bool forceDelete, string ori, string batchFolderName)
+        public static int SaveSubmissions(IncidentList incidentList, bool forceDelete, string ori, string batchFolderName)
         {
             var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
             var log = new Logger();
             IEnumerable<Submission> subs = new List<Submission>();
 
-            AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
+            AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
 
-            var dataFolderInfo = agencyXmlDirectoryInfo.GetDataDirectoryInfo();
+            var dataFolderInfo = agencyNibrsDirectoryInfo.GetDataDirectoryInfo();
 
             // Process the Batch in same order as it is received
 
@@ -62,7 +63,7 @@ namespace NibrsXml.Processor
             catch (Exception ex)
             {
                 exceptionsLogger.Enqueue(Tuple.Create(ex, ObjectId.Empty));
-                DeleteSubmissions(subs, dataFolderInfo.FullName);
+               ClearPendingToProcess(agencyNibrsDirectoryInfo,incidentList.Runnumber);
                 throw;
             }
             finally
@@ -72,7 +73,7 @@ namespace NibrsXml.Processor
             return subs.Count();
         }
 
-        public static void WriteSubmissionsBatch(List<incidentList> agencyIncidentsCollection,
+        public static void WriteSubmissionsBatch(List<IncidentList> agencyIncidentsCollection,
             string batchFolderName,
             bool forceDelete = false)
         {
@@ -84,39 +85,10 @@ namespace NibrsXml.Processor
             foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
             {
                 var ori = agencyGrp.Key;
-                var isOutOfSequence = false;
+               
                 log.WriteLog(ori,
-                    $"{DateTime.Now} : --------- PROCESSING NIBRS DATA--------------",
+                    $"{DateTime.Now} : --------- WRITING NIBRS DATA--------------",
                     batchFolderName);
-
-                AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
-
-                var failedToSavePath = agencyXmlDirectoryInfo.GetFailedToSaveLocation();
-                var dataFolderInfo = agencyXmlDirectoryInfo.GetDataDirectoryInfo();
-
-                if (forceDelete)
-                {
-                    foreach (var incList in agencyGrp.ToList())
-                    {
-                        log.WriteLog(ori,
-                            $"{DateTime.Now} : Clearing Pending Files For the Run-Number: {incList.Runnumber} As Force Delete Mode is True",
-                            batchFolderName);
-                        string failedToSaveFullPath = failedToSavePath + "\\" + incList.Runnumber;
-                        //TODO check if Nibrs is processing the ori or not
-                        // clear the Documents pending to be either uploaded or reported to the FBI, as we are trying to delete all incidents in this run number
-                        if (Directory.Exists(failedToSaveFullPath))
-                        {
-                            Directory.Delete(failedToSaveFullPath, true);
-                        }
-
-                        string dataFullPath = dataFolderInfo.FullName + "\\" + incList.Runnumber;
-
-                        if (Directory.Exists(dataFullPath))
-                        {
-                            Directory.Delete(dataFullPath, true);
-                        }
-                    }
-                }
 
                 foreach (var incidentList in agencyIncidentsCollection.ToList().OrderBy(grp => grp.Runnumber))
                 {
@@ -126,25 +98,38 @@ namespace NibrsXml.Processor
             }
         }
 
-        public static async Task ProcessSubmissionsBatchAsync(
-            List<string> oriList, string batchFolderName,
-            bool forceDelete = false)
+        public static async Task ProcessSubmissionsBatchAsync(string batchFolderName)
 
         {
             var httpClient = new HttpClient();
             var exceptionsLogger = new ConcurrentQueue<Tuple<Exception, ObjectId>>();
             var log = new Logger();
+            // to place locks
+            var agencyCode = new AgencyCode(null);
 
-            foreach (var ori in oriList)
+            var dtAgencies = agencyCode.GetAllAgencies(false);
+
+            foreach (var agency in dtAgencies.Rows)
             {
+                var dr = agency as DataRow;
+                var ori = dr["SYSTEM_ORI_NUMBER"].ToString();
 
-                AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
+                AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
 
-                var dataFolderInfo = agencyXmlDirectoryInfo.GetDataDirectoryInfo();
+                var dataFolderInfo = agencyNibrsDirectoryInfo.GetDataDirectoryInfo();
+               
+                var lockKey = Guid.NewGuid().ToByteArray();
                 try
                 {
+                    // lock processing agency
+                    agencyCode.LockAgency(ori, lockKey);
+                    var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
+                    if (dtLockedAgency.Rows.Count == 0)
+                    {
+                        continue;
+                    }
 
-                    // Nibrs Processor
+                    // NIBRS Processor
                     var isOutOfSequence = await ReProcessPendingTransactionsAsync(ori, batchFolderName, httpClient, exceptionsLogger);
 
                     // Process the Batch in same order as it is received
@@ -153,8 +138,9 @@ namespace NibrsXml.Processor
 
                         if (isOutOfSequence)
                             break;
-
                         var runNumber = subDir.Name;
+                        log.WriteLog(ori, $"{DateTime.Now} :STARTED PROCESSING NIBRS DATA  FOR RUN-NUMBER: {runNumber}",
+                            batchFolderName);
                         List<Submission> subs = subDir.GetFiles()
                             .Select(fileInfo => Submission.DeserializeJson(fileInfo.FullName))?.ToList();
 
@@ -164,18 +150,30 @@ namespace NibrsXml.Processor
                                 batchFolderName);
                             Directory.Delete(subDir.FullName, true);
                             continue;
-
                         }
-
                         isOutOfSequence = await SubmitSubmissionsAsync(subs, ori, runNumber, batchFolderName,
                             exceptionsLogger, httpClient);
                         string dataFullPath = dataFolderInfo.FullName + "\\" + runNumber;
+
+                        if (!isOutOfSequence)
+                        {
+                            // Update the Nibrs Batch 
+                            var dal = new Nibrs_Batch();
+                            dal.Edit(runNumber, null, null, null, true);
+                        }
+                     
+
                         // Delete Processed
                         Directory.Delete(dataFullPath, true);
+
+                        log.WriteLog(ori, $"{DateTime.Now} :COMPLETED PROCESSING NIBRS DATA FOR RUN-NUMBER: {runNumber}",
+                           batchFolderName);
                     }
 
                     if (isOutOfSequence)
                     {
+                        log.WriteLog(ori, $"{DateTime.Now} :SOMETHING WENT WRONG WHILE PROCESSING NIBRS DATA",
+                            batchFolderName);
                         var appSettingsReader = new AppSettingsReader();
                         var emails =
                             Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
@@ -208,10 +206,15 @@ namespace NibrsXml.Processor
                 }
                 finally
                 {
-                   
+
+                    var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
+                    if (dtLockedAgency.Rows.Count > 0)
+                    {
+                        agencyCode.UnLockAgency(ori);
+                    }
+
                     PrintExceptions(exceptionsLogger, log, ori, batchFolderName);
-                    log.WriteLog(ori, DateTime.Now + " : " + " PROCESSING NIBRS DATA COMPLETED",
-                        batchFolderName);
+                   
                 }
             }
            
@@ -230,8 +233,6 @@ namespace NibrsXml.Processor
         private static async Task<bool> CallApiToSaveInMongoDbAsync(NibrsXmlTransaction transaction, string endpointURL, HttpClient client)
         {
 
-            // increment the attempt count 
-            transaction.IncrementAttemptCount();
 
             var buffer = Encoding.UTF8.GetBytes(transaction.JsonString);
             var byteContent = new ByteArrayContent(buffer);
@@ -266,9 +267,9 @@ namespace NibrsXml.Processor
             var log = new Logger();
 
             // get the paths to the folder 
-            AgencyXmlDirectoryInfo agencyXmlDirectoryInfo = new AgencyXmlDirectoryInfo(ori);
-            var errorDirectory = agencyXmlDirectoryInfo.GetErroredDirectory();
-            var failedToSaveDir = agencyXmlDirectoryInfo.GetFailedToSaveDirectory();
+            AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
+            var errorDirectory = agencyNibrsDirectoryInfo.GetErroredDirectory();
+            var failedToSaveDir = agencyNibrsDirectoryInfo.GetFailedToSaveDirectory();
             bool isAnyFailedToSave = false;
 
             if (failedToSaveDir.GetDirectories().Any())
@@ -479,6 +480,7 @@ namespace NibrsXml.Processor
                         }
                         catch (Exception ex)
                         {
+                            exceptionLogger.Enqueue(Tuple.Create(ex, nibrsTrans.Id));
                             if (ex is HttpException)
                             {
                                 var httpException = (HttpException) ex;
@@ -488,7 +490,7 @@ namespace NibrsXml.Processor
                                     return;
                                 }
                             }
-                            exceptionLogger.Enqueue(Tuple.Create(ex, nibrsTrans.Id));
+                            
                         }
                         if (!isSaved)
                         {
@@ -532,8 +534,9 @@ namespace NibrsXml.Processor
 
             try
             {
-
-                var failedToSavePath = new AgencyXmlDirectoryInfo(ori).GetFailedToSaveLocation();
+                var agencyDir = new AgencyNibrsDirectoryInfo(ori);
+                var failedToSavePath = agencyDir.GetFailedToSaveDirectory().FullName;
+                var errorPath = agencyDir.GetErroredDirectory().FullName;
 
                 log.WriteLog(ori,
                     DateTime.Now + " : " + "STARTED FILES PROCESSING FOR RUN-NUMBER : " +
@@ -542,7 +545,7 @@ namespace NibrsXml.Processor
 
 
                 var failedToSave =
-                    await AttemptToSaveTransactionInMongoDbAsync(subs, httpClient, exceptionsLogger);
+                    await AttemptToSaveTransactionInMongoDbAsync(errorPath,subs, httpClient, exceptionsLogger);
 
                 if (failedToSave.Any())
                 {
@@ -573,10 +576,6 @@ namespace NibrsXml.Processor
         }
 
         #region Helpers
-
-      
-
-
         private static void SendErrorEmail(string errorFileLocation)
         {
             var appSettingsReader = new AppSettingsReader();
@@ -621,20 +620,30 @@ namespace NibrsXml.Processor
             }
         }
 
-        public static void DeleteSubmissions(IEnumerable<Submission> submissions, string path)
+
+        public static void ClearPendingToProcess(AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo, string runNumber)
         {
-            foreach (var submission in submissions)
+            
+
+            var failedToSaveDirectory = agencyNibrsDirectoryInfo.GetFailedToSaveDirectory();
+            var dataFolderInfo = agencyNibrsDirectoryInfo.GetDataDirectoryInfo();
+
+
+            string failedToSaveFullPath = failedToSaveDirectory.FullName + "\\" + runNumber;
+
+            // clear the Documents pending to be either uploaded or reported to the FBI, as we are trying to delete all incidents in this run number
+            if (Directory.Exists(failedToSaveFullPath))
             {
-                var fileName = path + "\\" + submission.Runnumber;
-                if (!Directory.Exists(fileName))
-                {
-                  continue;
-                }
-                var docName = submission.Id + ".json";
-                string[] fullpath = { fileName, docName };
-                string fullPath = Path.Combine(fullpath);
-                File.Delete(fullPath);
+                Directory.Delete(failedToSaveFullPath, true);
             }
+
+            string dataFullPath = dataFolderInfo.FullName + "\\" + runNumber;
+
+            if (Directory.Exists(dataFullPath))
+            {
+                Directory.Delete(dataFullPath, true);
+            }
+
         }
 
         private static void WriteTransactions(IEnumerable<NibrsXmlTransaction> transactions, string path, ConcurrentQueue<Tuple<Exception, ObjectId>> exceptions)
@@ -686,6 +695,7 @@ namespace NibrsXml.Processor
                 }
             }
         }
+
         #endregion
 
     }
