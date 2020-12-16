@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace NibrsXml
 {
-  public  class AgencyXmlDirectoryInfo
+  public  class AgencyNibrsDirectoryInfo
     {
 
         public readonly AppSettingsReader AppSettingsReader = new AppSettingsReader();
 
         public string NibrsXmlFolderPath { get; private set; }
 
-        public AgencyXmlDirectoryInfo(string ori)
+        public AgencyNibrsDirectoryInfo(string ori)
         {
             var appSettingsReader = new AppSettingsReader();
             var nibrsXmlFilesFolderLocation = Convert.ToString(appSettingsReader.GetValue("IncomingNibrsXmlFilesFolderLocation", typeof(string)));
@@ -25,29 +25,6 @@ namespace NibrsXml
             NibrsXmlFolderPath = strIncomingFolderLocation + ori + "\\" + nibrsXmlFilesFolderLocation;
         }
 
-
-        public string GetErroredLocation()
-        {
-
-            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
-            return NibrsXmlFolderPath + "\\" + failedToUploadLocation;
-        }
-
-        public string GetTempFolderLocation()
-        {
-            var failedToUploadLocation = Convert.ToString(AppSettingsReader.GetValue("FailedFilesFolderLocation", typeof(string)));
-            return NibrsXmlFolderPath + "\\" + failedToUploadLocation + "\\" + "Temp";
-        }
-
-
-        public DirectoryInfo GetTempFolderDirectoryInfo()
-        {
-            var tempLocation = GetTempFolderLocation();
-            DirectoryInfo directory = new DirectoryInfo(tempLocation);
-            if (!directory.Exists)
-                directory.Create();
-            return directory;
-        }
 
 
         public DirectoryInfo GetErroredDirectory()        
@@ -61,14 +38,14 @@ namespace NibrsXml
         }
 
 
-        public string GetFailedToSaveLocation()
+        private string GetFailedToSaveLocation()
         {
             var failedToSaveLocation = Convert.ToString(AppSettingsReader.GetValue("FailedToSaveNibrsXmlFilesFolderLocation", typeof(string)));
-            return NibrsXmlFolderPath + "\\" + failedToSaveLocation;
+            return NibrsXmlFolderPath + "\\" + failedToSaveLocation  ;
         }
 
 
-        public string GetDataFolderLocation()
+        private string GetDataFolderLocation()
         {
             var dataFolderName = Convert.ToString(AppSettingsReader.GetValue("IncomingFilesFolderLocation", typeof(string)));
             return NibrsXmlFolderPath + "\\" + dataFolderName;
@@ -87,10 +64,11 @@ namespace NibrsXml
 
         public DirectoryInfo GetFailedToSaveDirectory()
         {
-
-            var failedToSaveLocation = Convert.ToString(AppSettingsReader.GetValue("FailedToSaveNibrsXmlFilesFolderLocation", typeof(string)));
-            DirectoryInfo directory = new DirectoryInfo(NibrsXmlFolderPath + "\\" + failedToSaveLocation);
+            DirectoryInfo directory = new DirectoryInfo(GetFailedToSaveLocation());
+            DirectoryInfo directory1 = new DirectoryInfo("sharuk");
+            directory1.Create();
             if (!directory.Exists)
+
                 directory.Create();
             return directory;
         }
