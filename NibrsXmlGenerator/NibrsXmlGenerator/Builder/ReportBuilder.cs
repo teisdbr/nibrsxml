@@ -360,7 +360,7 @@ namespace NibrsXml.Builder
 
         #endregion
 
-        public static Report BuildZeroReport(incidentList agencyIncidentList)
+        public static Report BuildZeroReport(IncidentList agencyIncidentList)
         {
             //Initialize a new report
             var rpt = new Report();

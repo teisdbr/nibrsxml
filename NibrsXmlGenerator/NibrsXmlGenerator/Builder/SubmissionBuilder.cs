@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,23 +56,29 @@ namespace NibrsXml.Builder
 
             foreach (LIBRSIncident incident in agencyIncident)
             {
-                if (incident.HasErrors) continue;
-                var report = ReportBuilder.Build(incident, agencyIncident.ReportMonth, agencyIncident.ReportYear);
 
-                if (report == null || report.HasFailedToBuildProperly)
-                    continue;
+                try
+                {
+                    if (incident.HasErrors) 
+                        continue;
+                    var report = ReportBuilder.Build(incident, agencyIncident.ReportMonth, agencyIncident.ReportYear);
 
+                    if (report == null)
+                        continue;
 
+                    var sub = new Submission(agencyIncident.Runnumber, agencyIncident.Environment);
+                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncident.OriNumber);
 
-                var sub = new Submission(agencyIncident.Runnumber, agencyIncident.Environment);
-                sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncident.OriNumber);
+                    sub.Reports.Add(report);
 
-                sub.Reports.Add(report);
-
-                TryAddSubToDictionary(trackIncidentsDic, sub, incident.Admin.IncidentNumber);
+                    TryAddSubToDictionary(trackIncidentsDic, sub, incident.Admin.IncidentNumber);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
-
-
             // Using the track incidents Dictionary to keep track of Insert and Delete action type incidents, so that they can be merged into Replace action type
 
             var KeyValuePairs = trackIncidentsDic.AsEnumerable().ToList();
