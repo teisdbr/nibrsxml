@@ -213,8 +213,8 @@ namespace NibrsXml.Builder
                 librsProperties.GroupBy(p => Tuple.Create(p.PropertyLossType, p.PropertyDescription));
 
             foreach (var prop in uniquePropLossTypeDesc)
-                if (prop.First().PropertyDescription == DrugNarcoticLibrsPropDesc &&
-                    prop.First().PropertyLossType == LibrsErrorConstants.PLSeiz)
+                if (prop.First().PropertyDescription == DrugNarcoticLibrsPropDesc &&  (prop.First().PropertyLossType == LibrsErrorConstants.PLNone ||
+                    prop.First().PropertyLossType == LibrsErrorConstants.PLSeiz))
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
                     var drugCatCode = prop.First().SuspectedDrugType.Substring(0, 1) == "1"
