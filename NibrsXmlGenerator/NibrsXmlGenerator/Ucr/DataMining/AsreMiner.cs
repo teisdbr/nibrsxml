@@ -27,7 +27,7 @@ namespace NibrsXml.Ucr.DataMining
             foreach (var assoc in validAssocs)
             {
                 //Gather arrest data from the association
-                var ucrReportKey = ClearanceMiner.ConvertNibrsDateToDateKeyPrefix(assoc.RelatedArrest.Date.Date) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
+                var ucrReportKey = ClearanceMiner.ConvertNibrsDateToDateKeyPrefix(assoc.RelatedArrest.Date.DateTime ?? assoc.RelatedArrest.Date.Date) + report.Header.ReportingAgency.OrgAugmentation.OrgOriId.Id;
                 var chargeUcrCode = assoc.RelatedArrest.Charge.UcrCode;
                 
                 //Gather arrestee data from the association

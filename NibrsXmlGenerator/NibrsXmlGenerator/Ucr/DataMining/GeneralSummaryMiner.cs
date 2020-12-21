@@ -165,7 +165,7 @@ namespace NibrsXml.Ucr.DataMining
             if (classificationKey == null)
                 return null;
 
-            var arrestDate = ConvertNibrsDateToDateKeyPrefix(forArrest.Date.Date);
+            var arrestDate = ConvertNibrsDateToDateKeyPrefix(forArrest.Date.DateTime ?? forArrest.Date.Date);
 
             return new ClearanceDetails
             {

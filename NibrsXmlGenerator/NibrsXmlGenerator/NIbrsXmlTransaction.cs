@@ -12,7 +12,7 @@ using NibrsXml.Constants;
 namespace NibrsXml
 {
     [BsonIgnoreExtraElements]
-    public class NibrsXmlTransaction
+    public class NibrsXmlTransaction 
     {
 
         [JsonConverter(typeof(ObjectIdConverter))]
@@ -23,7 +23,9 @@ namespace NibrsXml
 
         public DateTime TransactionDate { get; private set; }
 
-
+        /// <summary>
+        /// This gives the count of attempts made to save in the MongoDb.
+        /// </summary>
         public int NumberOfAttempts { get; private set; }
 
 
@@ -91,7 +93,6 @@ namespace NibrsXml
             Submission = submission;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
-            NumberOfAttempts = 1;
             Status = SetTransactionStatus();
         }
 
@@ -103,12 +104,16 @@ namespace NibrsXml
         {
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
-            NumberOfAttempts += 1;
             Status = SetTransactionStatus();
             //NumberOfAttempts = numberOfAttempts + 1;
         }
 
-        
+
+        public void IncrementAttemptCount()
+        {
+            NumberOfAttempts += 1;
+        }
+
         /// <summary>
         /// Deserializes the given  JSON file string into NibrsXmlTransaction.
         /// </summary>
@@ -173,6 +178,9 @@ namespace NibrsXml
           
 
         }
+
+
+
 
 
     }
