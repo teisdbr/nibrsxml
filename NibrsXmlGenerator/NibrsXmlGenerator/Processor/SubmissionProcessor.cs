@@ -223,17 +223,11 @@ namespace NibrsXml.Processor
                                 $"{DateTime.Now} : SAVED All XML FILES FOR RUNNUMBER: {runNumber} AT {saveLocalPath}",
                                 batchFolderName);
 
-
                             isOutOfSequence = await SubmitSubmissionsAsync(submissions, ori, runNumber, batchFolderName);
 
                             // Update the Nibrs Batch to have the RunNumber saying the data is processed
                             nibrsBatchDal.Edit(runNumber, null, null, null, DateTime.Now, !isOutOfSequence);
 
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.WriteLog(ori, "Exception:" + ex.Message, batchFolderName);
-                            throw;
                         }
                         finally
                         {
@@ -261,21 +255,15 @@ namespace NibrsXml.Processor
                     Log.WriteLog(ori, DateTime.Now + " : " + "FAILED TO PROCESS NIBRS  DATA ",
                         batchFolderName);
 
-                    var appSettingsReader = new AppSettingsReader();
-                    var emails = Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
-
-                    EmailSender emailSender = new EmailSender();
-
-                    emailSender.SendCriticalErrorEmail(emails,
-                        $"Something went wrong while trying to process the submission batch for ORI:{ori}",
-                        $"Please check the logs for more details.{Environment.NewLine} Batch Folder Name {batchFolderName}  {Environment.NewLine} Exception {ex.Message} {ex.InnerException}", false, "donotreply@lcrx.librs.org", "");
-                    throw;
+                  SendErrorEmail($"Something went wrong while trying to process the submission batch for ORI:{ori}",
+                      $"Please check the logs for more details.{Environment.NewLine} Batch Folder Name {batchFolderName}  {Environment.NewLine} Exception {ex.Message} {ex.InnerException}");
+                   
                 }
                 finally
                 {
-
                     ReleaseLockOnAgency(agencyCode, lockKey, ori);
                     PrintExceptions(ExceptionsLogger, Log, ori, batchFolderName);
+
                 }
             }
 
@@ -424,7 +412,7 @@ namespace NibrsXml.Processor
             }
             else
             {
-                //Update the run number to be processed if the no failed to save directory exists.
+                //Update the NIBRS Batch run number to be processed if the no failed to save directory exists.
                 dal.Edit(runNumber, null, null, null, DateTime.Now, true);
             }
 
@@ -544,7 +532,7 @@ namespace NibrsXml.Processor
             if (errorTransactions.Any())
             {
                 WriteTransactions(errorTransactions, pathToSaveErrorTransactions, ExceptionsLogger);
-                SendErrorEmail(pathToSaveErrorTransactions);
+                SendErrorEmail($"Found Some files failed to save in MongoDb Clusters, that needs your attention", $"Please check the logs and Directory:{pathToSaveErrorTransactions} for more details.{Environment.NewLine}");
             }
 
             return failedToSave.ToList();
@@ -599,7 +587,7 @@ namespace NibrsXml.Processor
         }
 
         #region Helpers
-        private static void SendErrorEmail(string errorFileLocation)
+        private static void SendErrorEmail(string subject, string body)
         {
 
             try
@@ -611,8 +599,8 @@ namespace NibrsXml.Processor
                 EmailSender emailSender = new EmailSender();
 
                 emailSender.SendCriticalErrorEmail(emails,
-                    $"Found Some files failed to save in MongoDb Clusters, that needs your attention" ,
-                    $"Please check the logs and Directory:{errorFileLocation} for more details.{Environment.NewLine}", false,
+                    subject,
+                    body, false,
                     "donotreply@lcrx.librs.org", "");
             }
             catch (Exception e)
