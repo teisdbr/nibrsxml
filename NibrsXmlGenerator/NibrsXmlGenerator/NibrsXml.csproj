@@ -88,7 +88,7 @@
     <Compile Include="Processor\SubmissionBatchStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
-    <Compile Include="Processor\SubmissionProcessor.cs" />
+    <Compile Include="Processor\NibrsReportingProcessor.cs" />
     <Compile Include="SubmissionWriter.cs" />
     <Compile Include="Ucr\DataCollections\Arson.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
