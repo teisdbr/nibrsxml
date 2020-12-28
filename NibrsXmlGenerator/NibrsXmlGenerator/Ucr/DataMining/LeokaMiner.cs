@@ -112,7 +112,7 @@ namespace NibrsXml.Ucr.DataMining
                     .Distinct()
                     .ToArray(); //ToArray here in order for this variable to be used as a variadic parameter
 
-                clearanceYearMonth = ConvertNibrsDateToDateKeyPrefix(leokaArrests.Min(a => a.Date.Date));
+                clearanceYearMonth = ConvertNibrsDateToDateKeyPrefix(leokaArrests.Min(a => a.Date.DateTime ?? a.Date.Date));
             }
             else
             {
