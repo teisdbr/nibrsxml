@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IdentityModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -63,7 +64,7 @@ namespace NibrsXml.Processor
                 var isOutOfSequence = await ProcessPendingTransactionsForOriAsync(ori, batchFolderName);
 
                 // Process the deletes in Last In First Out order and vice-versa for re-attempts
-                var agencyincidentList = agencyIncidentsCollection.ToList().OrderByDescending(grp => grp.Runnumber);
+                var agencyincidentList = agencyGrp.ToList().OrderByDescending(grp => grp.Runnumber);
 
                 foreach (var incidentList in agencyincidentList)
                 {
@@ -81,7 +82,7 @@ namespace NibrsXml.Processor
                         submissions = DeleteTransformer.TransformIntoDeletes(submissions);
                         Log.WriteLog(ori, $"{DateTime.Now} :TRANSFORMED NIBRS DATA INTO DELETE'S  FOR RUN-NUMBER: {runNumber}",
                             batchFolderName);
-                        isOutOfSequence = await SubmitSubmissionsForRunNumberAsync(submissions, ori, runNumber, batchFolderName);
+                        isOutOfSequence = await SubmitSubmissionsForRunNumberAsync(submissions, ori, runNumber, batchFolderName,false);
 
                         if (!isOutOfSequence)
                             nibrsBatchDal.Delete(runNumber, null);
@@ -127,6 +128,9 @@ namespace NibrsXml.Processor
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             var runNumbers = new List<string>();
 
+            // limit the IncidentList to the given ORI
+            agencyIncidentsCollection = agencyIncidentsCollection?.Where(inc => inc.OriNumber == ori)?.ToList();
+
             //  Process any pending runnumber before taking up the new ones
             var isOutOfSequence = await ProcessPendingTransactionsForOriAsync(ori, batchFolderName);
 
@@ -145,8 +149,9 @@ namespace NibrsXml.Processor
             // if no records present for the ORI in NIBRS batch, then this is first ever nibrs processing for the ORI,so no need to check the next runnumber in sequence from database.
             if (dt == null || dt?.Rows.Count == 0)
             {
-                runNumbers = agencyIncidentsCollection.OrderBy(inc => inc.Runnumber)
-                    .Select(incList => incList.Runnumber).ToList();
+                runNumbers = agencyIncidentsCollection?.OrderBy(inc => inc.Runnumber)
+                    .Select(incList => incList.Runnumber).Distinct().ToList() ?? new List<string>() ;
+
             }
             else
             {
@@ -155,15 +160,16 @@ namespace NibrsXml.Processor
                 if (runNumbersdt?.Rows != null)
                     foreach (DataRow runNumber in runNumbersdt?.Rows)
                     {
-                        runNumbers.Add(runNumber["RUNNUMBER"].ToString());
+                        runNumbers.UniqueAdd(runNumber["RUNNUMBER"].ToString());
                     }
             }
+
             foreach (var runNumber in runNumbers)
             {
                 List<Submission> submissions = new List<Submission>();
 
                 // if the incident list for the next run-number not provided, build incident list using the delegate.
-                var incidentList = agencyIncidentsCollection.FirstOrDefault(incList => incList.Runnumber == runNumber) ??
+                var incidentList = agencyIncidentsCollection?.FirstOrDefault(incList => incList.Runnumber == runNumber) ??
                                    await buildLibrsIncidentsListFunc(runNumber, "NORMAL");
 
                 try
@@ -180,6 +186,9 @@ namespace NibrsXml.Processor
                     {
                         Log.WriteLog(ori, $"{DateTime.Now} : NO NIBRS DATA TO PROCESS FOR RUN-NUMBER: {runNumber}",
                             batchFolderName);
+                        //TODO should we report Zero Report for this runnumber?
+                        // Update the Nibrs Batch to have the RunNumber saying the data is processed
+                        nibrsBatchDal.Edit(runNumber, null, null, null, DateTime.Now, true);
                         continue;
                     }
 
@@ -236,21 +245,19 @@ namespace NibrsXml.Processor
 
             // if agencyIncidentsCollection is provided stick to those ORIs
             if (agencyIncidentsCollection != null && agencyIncidentsCollection.Any())
-                oriList = agencyIncidentsCollection.Select(incList => incList.OriNumber).ToList();
+                oriList = agencyIncidentsCollection.Select(incList => incList.OriNumber)?.Distinct().ToList();
             // Else get all failed to save ORIs process them one after the other.
             else
             {
                 var nibrsBatchdt = nibrsBatchDal.GetORIsWithPendingIncidentsToProcess();
                 foreach (DataRow row in nibrsBatchdt.Rows)
                 {
-                    oriList.Add(row["ori_number"].ToString());
+                    
+                        oriList.UniqueAdd(row["ori_number"]?.ToString()?.Trim());
                 }
             }
-
-
             foreach (var ori in oriList)
             {
-
                 var lockKey = Guid.NewGuid().ToByteArray();
                 try
                 {
@@ -280,7 +287,8 @@ namespace NibrsXml.Processor
                         batchFolderName);
 
                     SendErrorEmail($"Something went wrong while trying to process the submission batch for ORI:{ori}",
-                        $"Please check the logs for more details.{Environment.NewLine} Batch Folder Name {batchFolderName}  {Environment.NewLine} Exception {ex.Message} {ex.InnerException}");
+                        $"Please check the logs for more" +
+                        $" details.{Environment.NewLine} Batch Folder Name {batchFolderName}  {Environment.NewLine} Exception {ex.Message} {ex.InnerException}");
 
                 }
                 finally
@@ -331,7 +339,7 @@ namespace NibrsXml.Processor
         {
             var dal = new Nibrs_Batch();
             // get the paths to the folder 
-            AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
+            AgencyNibrsDirectoryInfo agencyNibrsDirectoryInfo = new AgencyNibrsDirectoryInfo(ori.Trim());
             var errorDirectory = agencyNibrsDirectoryInfo.GetErroredDirectory();
             var failedToSaveDir = agencyNibrsDirectoryInfo.GetFailedToSaveDirectory();
             bool isAnyFailedToSave = false;
@@ -485,7 +493,8 @@ namespace NibrsXml.Processor
                         if (doc.GetType() == typeof(Submission))
                         {
                             var sub = doc as Submission;
-                            var response = sub.IsNibrsReportable ? NibrsSubmitter.SendReport(sub.Xml) : null;
+                            var reportToFbi = Convert.ToBoolean(appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
+                            var response = sub.IsNibrsReportable  && reportToFbi ? NibrsSubmitter.SendReport(sub.Xml) : null;
                             //Wrap both response and submission and then save to database
                             nibrsTrans = new NibrsXmlTransaction(sub, response);
                         }
@@ -563,7 +572,7 @@ namespace NibrsXml.Processor
         }
 
         private async Task<bool> SubmitSubmissionsForRunNumberAsync(List<Submission> subs, string ori, string runNumber,
-            string batchFolderName)
+            string batchFolderName, bool saveFailed = true)
         {
 
             try
@@ -583,16 +592,18 @@ namespace NibrsXml.Processor
 
                 if (failedToSave.Any())
                 {
-                    // save documents
-                    WriteTransactions(failedToSave, failedToSavePath, ExceptionsLogger);
+                    if (saveFailed)
+                    {
+                        // save documents
+                        WriteTransactions(failedToSave, failedToSavePath, ExceptionsLogger);
 
-                    Log.WriteLog(ori,
-                        DateTime.Now + " : " +
-                        "FILES  EITHER FAILED TO UPLOAD TO FBI PROPERLY OR ERROR IN SAVING THE FILES IN MONGODB, MOVED TO" +
-                        failedToSavePath +
-                        " , RUNNUMBER : " + runNumber,
-                        batchFolderName);
-
+                        Log.WriteLog(ori,
+                            DateTime.Now + " : " +
+                            "FILES  EITHER FAILED TO UPLOAD TO FBI PROPERLY OR ERROR IN SAVING THE FILES IN MONGODB, MOVED TO" +
+                            failedToSavePath +
+                            " , RUNNUMBER : " + runNumber,
+                            batchFolderName);
+                    }
                     return true;
                 }
             }
