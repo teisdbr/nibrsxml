@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using LoadBusinessLayer;
 using LoadBusinessLayer.LibrsErrorConstants;
 using LoadBusinessLayer.LIBRSOffender;
@@ -308,7 +309,7 @@ namespace NibrsXml.Builder
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
                         //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCYASSIGNEDNIBRS
-                        Rank = Convert.ToDouble(LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[lrs.LrsNumber.Trim()].Lrank)
+                        Rank = Convert.ToDouble(LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[Regex.Replace(lrs.LrsNumber.Trim(), @"\s+", "")].Lrank)
                     }
                 ).ToList();
 
