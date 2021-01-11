@@ -48,8 +48,9 @@ namespace NibrsXml.Processor
         /// <param name="batchFolderName"></param>
         /// <param name="forceDelete"></param>
         /// <returns></returns>
-        public async Task<List<SubmissionBatchStatus>> ProcessDeletesBatchAsync(List<IncidentList> agencyIncidentsCollection,
-            string batchFolderName, Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
+        public async Task<List<SubmissionBatchStatus>> ProcessDeletesBatchAsync(
+            List<IncidentList> agencyIncidentsCollection,
+            string batchFolderName)
         {
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             var anyFailedToSave = false;
