@@ -76,7 +76,7 @@ namespace NibrsXml
         {
             TransactionDate = transactionDate;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
-            NumberOfAttempts = numberOfAttempts;
+            IncrementAttemptCount();
             Status = status;
         }
 
@@ -93,6 +93,7 @@ namespace NibrsXml
             Submission = submission;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
+            IncrementAttemptCount();
             Status = SetTransactionStatus();
         }
 
@@ -105,7 +106,7 @@ namespace NibrsXml
             NibrsSubmissionResponse = nibrsSubmissionResponse;
             TransactionDate = DateTime.Now;
             Status = SetTransactionStatus();
-            //NumberOfAttempts = numberOfAttempts + 1;
+            IncrementAttemptCount();
         }
 
 

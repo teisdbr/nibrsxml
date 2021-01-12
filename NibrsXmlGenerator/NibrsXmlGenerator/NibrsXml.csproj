@@ -82,7 +82,7 @@
     <Compile Include="DataAccess\DatabaseClient.cs" />
     <Compile Include="DirectoryInfo.cs" />
     <Compile Include="NibrsError\Error.cs" />
-    <Compile Include="NIbrsXmlTransaction.cs" />
+    <Compile Include="NibrsXmlTransaction.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Processor\DeleteTransformer.cs" />
     <Compile Include="Processor\SubmissionBatchStatus.cs" />
