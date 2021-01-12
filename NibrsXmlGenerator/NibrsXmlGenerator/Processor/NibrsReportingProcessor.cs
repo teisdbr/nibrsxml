@@ -61,7 +61,11 @@ namespace NibrsXml.Processor
             {
                 var ori = agencyGrp.Key;
                 var nibrsBatchDal = new Nibrs_Batch();
-           
+
+
+                Log.WriteLog(ori, $"{DateTime.Now} : --------- BEGAN PROCESSING THE SUBMISSION DELETES--------------",
+                    batchFolderName);
+
 
                 // Process the deletes in Last In First Out order 
                 var agencyincidentList = agencyGrp.ToList().OrderByDescending(grp => grp.Runnumber);
@@ -79,7 +83,7 @@ namespace NibrsXml.Processor
                         Log.WriteLog(ori, $"{DateTime.Now} : --------- RUNNING THE PROCESS IN THE FORCE DELETE MODE--------------",
                             batchFolderName);
                         submissions = DeleteTransformer.TransformIntoDeletes(submissions);
-                        Log.WriteLog(ori, $"{DateTime.Now} :TRANSFORMED NIBRS DATA INTO DELETE'S  FOR RUN-NUMBER: {runNumber}",
+                        Log.WriteLog(ori, $"{DateTime.Now} : TRANSFORMED NIBRS DATA INTO DELETE'S  FOR RUN-NUMBER: {runNumber}",
                             batchFolderName);
                         anyFailedToSave = await SubmitSubmissionsForRunNumberAsync(submissions, ori, runNumber, batchFolderName);
 
@@ -108,6 +112,10 @@ namespace NibrsXml.Processor
                         PrintExceptions(ExceptionsLogger, Log, ori, batchFolderName);
                     }
                 }
+
+
+                Log.WriteLog(ori, $"{DateTime.Now} : --------- COMPLETED PROCESSING THE SUBMISSION DELETES--------------",
+                    batchFolderName);
             }
 
             return submissionBatchStatusLst;
@@ -229,6 +237,9 @@ namespace NibrsXml.Processor
                 }
             }
 
+
+            Log.WriteLog(ori, $"{DateTime.Now} : -------------------  PROCESSING NIBRS DATA COMPLETED--------------------",
+                batchFolderName);
             return submissionBatchStatusLst;
         }
 
@@ -284,9 +295,6 @@ namespace NibrsXml.Processor
 
                     submissionBatchStatusLst.AddRange(submissionBatchList);
 
-
-                    Log.WriteLog(ori, $"{DateTime.Now} :  PROCESSING NIBRS DATA COMPLETED",
-                        batchFolderName);
 
                 }
                 catch (Exception ex)
