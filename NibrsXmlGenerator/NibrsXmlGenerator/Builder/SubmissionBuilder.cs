@@ -12,6 +12,12 @@ namespace NibrsXml.Builder
 {
     public class SubmissionBuilder
     {
+        /// <summary>
+        /// To build single Submission having multiple Reports, capable to generate NIBRS XML for the UCR reports (FBI doesn't accept XMLs generated in this format ).
+        /// </summary>
+        /// <param name="agencySpecificIncidents"></param>
+        /// <param name="oriNumber"></param>
+        /// <returns></returns>
         public static Submission Build(List<IncidentList> agencySpecificIncidents, string oriNumber)
         {
             var sub = new Submission();
@@ -37,46 +43,47 @@ namespace NibrsXml.Builder
             return sub;
         }
 
-        public static Submission[] BuildMultipleSubmission(IncidentList agencyIncident)
+        /// <summary>
+        /// Build multiple submissions, in a format capable to report NIBRS XMLs to FBI.
+        /// </summary>
+        /// <param name="agencyIncidentList"></param>
+        /// <returns></returns>
+        public static Submission[] BuildMultipleSubmission(IncidentList agencyIncidentList)
         {
             var submissions = new ConcurrentBag<Submission>();
             ConcurrentDictionary<string, List<Submission>> trackIncidentsDic = new ConcurrentDictionary<string, List<Submission>>();
 
 
-            if (agencyIncident.IsZeroReport)
+            if (agencyIncidentList.IsZeroReport)
             {
-
-                var sub = new Submission(agencyIncident.Runnumber, agencyIncident.Environment);
-                sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncident.OriNumber);
-
-                sub.Reports.Add(ReportBuilder.BuildZeroReport(agencyIncident));
-                TryAddSubToDictionary(trackIncidentsDic, sub, "");
+                TryAddSubToDictionary(trackIncidentsDic, BuildZeroReportSubmission(agencyIncidentList), "");
             }
-
-
-            foreach (LIBRSIncident incident in agencyIncident)
+            else
             {
-
-                try
+                foreach (LIBRSIncident incident in agencyIncidentList)
                 {
-                    if (incident.HasErrors) 
-                        continue;
-                    var report = ReportBuilder.Build(incident, agencyIncident.ReportMonth, agencyIncident.ReportYear);
 
-                    if (report == null)
-                        continue;
+                    try
+                    {
+                        if (incident.HasErrors)
+                            continue;
+                        var report = ReportBuilder.Build(incident, agencyIncidentList.ReportMonth, agencyIncidentList.ReportYear);
 
-                    var sub = new Submission(agencyIncident.Runnumber, agencyIncident.Environment);
-                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncident.OriNumber);
+                        if (report == null)
+                            continue;
 
-                    sub.Reports.Add(report);
+                        var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+                        sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
 
-                    TryAddSubToDictionary(trackIncidentsDic, sub, incident.Admin.IncidentNumber);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
+                        sub.Reports.Add(report);
+
+                        TryAddSubToDictionary(trackIncidentsDic, sub, incident.Admin.IncidentNumber);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
                 }
             }
             // Using the track incidents Dictionary to keep track of Insert and Delete action type incidents, so that they can be merged into Replace action type
@@ -110,7 +117,7 @@ namespace NibrsXml.Builder
                 {
                     if (delsub != null)
                     {
-                        //TODO:?? If the GroupB Arrest Report Delete cannnot find the matching insert the total arrests will be zero, as we dont submit Arrestee Delete's along with the incident delete's in Librs flatfile.
+                        //TODO:?? If the GroupB Arrest Report Delete cannnot find the matching insert the total arrests will be zero, as we don't submit Arrestee deletes along with the incident deletes in Librs flatfile.
                         if (KeyValuePair.Key.EndsWith(NibrsReportCategoryCode.B.NibrsCode()) && !delsub.Reports[0].Arrests.Any())
                         {
                             return;
@@ -131,55 +138,30 @@ namespace NibrsXml.Builder
                 }
             });
 
-
             return submissions.ToArray();
         }
 
-
-
         public static Submission[] BuildMultipleSubmission(List<IncidentList> agencySpecificIncidents)
         {
-            var submissions = new ConcurrentBag<Submission>();
+            var submissions = new ConcurrentBag<Submission[]>();
 
             Parallel.ForEach(agencySpecificIncidents, agencyIncidentList =>
             {
-                Submission sub = null;
-
-                if (agencyIncidentList.IsZeroReport)
-                {
-
-                    sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
-                    sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
-
-                    sub.Reports.Add(ReportBuilder.BuildZeroReport(agencyIncidentList));
-                }
-                else
-                {
-                    foreach (LIBRSIncident incident in agencyIncidentList)
-                    {
-                        if (incident.HasErrors) continue;
-                        var report = ReportBuilder.Build(incident, agencyIncidentList.ReportMonth, agencyIncidentList.ReportYear);
-
-                        if (report == null || report.HasFailedToBuildProperly)
-                            continue;
-
-
-
-                        sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
-                        sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
-
-                        sub.Reports.Add(report);
-
-                    }
-                }
-
-                if(sub !=null)
-                    submissions.Add(sub);
+              
+                    submissions.Add(BuildMultipleSubmission(agencyIncidentList));
 
             });
 
+            return submissions.SelectMany(subs => subs).ToArray();
+        }
 
-            return submissions.ToArray();
+
+        public static Submission BuildZeroReportSubmission(IncidentList agencyIncidentList)
+        {
+            var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+            sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
+            sub.Reports.Add(ReportBuilder.BuildZeroReport(agencyIncidentList));
+            return sub;
         }
 
 
