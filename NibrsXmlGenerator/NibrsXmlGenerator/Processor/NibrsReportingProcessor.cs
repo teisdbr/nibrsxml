@@ -80,9 +80,11 @@ namespace NibrsXml.Processor
                        submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList();
                         Log.WriteLog(ori, $"{DateTime.Now} : --------- RUNNING THE PROCESS IN THE FORCE DELETE MODE--------------",
                             batchFolderName);
-                        Log.WriteLog(ori, $"NO OF SUBMISSION BUILD TO PROCESS FOR RUN-NUMBER: { runNumber} ARE { submissions?.Count}",
+                        Log.WriteLog(ori, $"{DateTime.Now} : TOTAL { submissions?.Count} SUBMISSIONS BUILT TO PROCESS FOR RUN-NUMBER: { runNumber}",
                             batchFolderName);
                         //TODO How to handle zero report delete?
+                        if(!submissions.Any())
+                                submissions.Add(SubmissionBuilder.BuildZeroReportSubmission(incidentList));
                         submissions = DeleteTransformer.TransformIntoDeletes(submissions);
                         Log.WriteLog(ori, $"{DateTime.Now} : TRANSFORMED NIBRS DATA INTO DELETE  FOR RUN-NUMBER: {runNumber}",
                             batchFolderName);
@@ -193,7 +195,7 @@ namespace NibrsXml.Processor
 
                     submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ?? new List<Submission>(); ;
 
-                    Log.WriteLog(ori, $"{DateTime.Now} : NO OF SUBMISSION BUILD TO PROCESS FOR RUN-NUMBER: {runNumber} ARE {submissions.Count}",
+                    Log.WriteLog(ori, $"{DateTime.Now} : NO OF SUBMISSIONS BUILT TO PROCESS FOR RUN-NUMBER: {runNumber} ARE {submissions.Count}",
                         batchFolderName);
 
                     if (!submissions.Any())
