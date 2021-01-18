@@ -91,7 +91,7 @@ namespace NibrsXml.Processor
             // make a copy of the list and transform the copied list
             transformToDeletes = submissions.Select(subs => subs.DeepClone()).ToList();
 
-            transformToDeletes.Where(sub => sub.Reports[0].Header.ReportActionCategoryCode != "D" && sub.Reports[0].Header.NibrsReportCategoryCode != NibrsReportCategoryCode.ZERO.NibrsCode())
+            transformToDeletes.Where(sub => sub.Reports[0].Header.ReportActionCategoryCode != "D")
                 .ToList().ForEach(sub =>
                 {
                     var report = sub.Reports[0];
