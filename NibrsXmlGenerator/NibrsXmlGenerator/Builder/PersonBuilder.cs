@@ -204,7 +204,7 @@ namespace NibrsXml.Builder
                         var newPerson =
                             BuildPerson(
                                 id: uniquePrefix,
-                                ageMeasure: offender.OffenderSeqNum == "000" ? null : LibrsAgeMeasureParser(offender.Age),
+                                ageMeasure:  LibrsAgeMeasureParser(offender.Age),
                                 ethnicityCode: offender.Ethnicity.MatchOne(EthnicityCode.HISPANIC_OR_LATINO.NibrsCode(), EthnicityCode.NOT_HISPANIC_OR_LATINO.NibrsCode())
                                     ? offender.Ethnicity
                                     : EthnicityCode.UNKNOWN.NibrsCode(),
@@ -216,7 +216,7 @@ namespace NibrsXml.Builder
                             ); ;
 
                         //Create new subject
-                        var newSubject = new Subject(newPerson, offender.OffenderSeqNum, uniquePrefix);
+                        var newSubject = new Subject(newPerson, offender.OffenderSeqNum.TrimStart('0'), uniquePrefix);
 
                         //Add each of the new objects above to their respective lists
                         persons.Add(newPerson);
@@ -225,7 +225,7 @@ namespace NibrsXml.Builder
                     else
                     {
                         //Create new subject for Unknow Subject
-                        var newSubject = new Subject(null, "000", uniquePrefix);
+                        var newSubject = new Subject(null, "00", uniquePrefix);
                         subjects.Add(newSubject);
                     }
 
