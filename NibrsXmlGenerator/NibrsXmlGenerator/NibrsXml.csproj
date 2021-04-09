@@ -213,7 +213,7 @@
       <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Util">
-      <Version>1.0.7</Version>
+      <Version>1.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
