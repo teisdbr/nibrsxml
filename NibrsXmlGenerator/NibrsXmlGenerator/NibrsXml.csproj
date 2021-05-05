@@ -215,6 +215,9 @@
     <PackageReference Include="Util">
       <Version>1.0.8</Version>
     </PackageReference>
+    <PackageReference Include="WebhookProcessor">
+      <Version>0.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="NibrsXsd\xml\nibrs.xml" />
