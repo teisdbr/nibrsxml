@@ -24,7 +24,7 @@ namespace NibrsXml
         public DateTime TransactionDate { get; private set; }
 
         /// <summary>
-        /// This gives the count of attempts made to save in the MongoDb.
+        /// This gives the count of attempts made to report FBI.
         /// </summary>
         public int NumberOfAttempts { get; private set; }
 
@@ -76,7 +76,7 @@ namespace NibrsXml
         {
             TransactionDate = transactionDate;
             NibrsSubmissionResponse = nibrsSubmissionResponse;
-            IncrementAttemptCount();
+            NumberOfAttempts = numberOfAttempts;
             Status = status;
         }
 
@@ -169,14 +169,10 @@ namespace NibrsXml
                     return NibrsSubmissionStatusCodes.UploadFailed;
                 if (NibrsSubmissionResponse.IsFormatError)
                     return NibrsSubmissionStatusCodes.FormatError;
-                
             }
             
-                // Assuming if no Response/no match treat it as upload failed.
-                return NibrsSubmissionStatusCodes.UploadFailed;
-            
-
-          
+            // Assuming if no Response/no match treat it as upload failed.
+            return NibrsSubmissionStatusCodes.UploadFailed;
 
         }
 
