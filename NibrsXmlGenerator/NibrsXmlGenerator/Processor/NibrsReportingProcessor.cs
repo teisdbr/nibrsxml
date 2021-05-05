@@ -351,7 +351,7 @@ namespace NibrsXml.Processor
             var deleteSubs = DeleteTransformer.TransformIntoDeletes(submissions);
             // Report deletes first
             Log.WriteLog(ori, DateTime.Now + ":REPORTING SUBMISSION DELETE'S FOR RUN NUMBER:" + runNumber, batchFolderName);
-            isAnyFailedToSave =
+           var isAnyFailedToSave =
                 await AttemptToReportDocumentsAsync(ori, deleteSubs);
             if (isAnyFailedToSave)
             {
