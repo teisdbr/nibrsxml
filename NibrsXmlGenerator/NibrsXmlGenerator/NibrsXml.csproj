@@ -86,6 +86,7 @@
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
     <Compile Include="Processor\DeleteTransformer.cs" />
     <Compile Include="Processor\SubmissionBatchStatus.cs" />
+    <Compile Include="Processor\Translator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
     <Compile Include="Processor\NibrsReportingProcessor.cs" />
@@ -207,7 +208,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NibrsModels">
-      <Version>1.2.20</Version>
+      <Version>1.2.21</Version>
     </PackageReference>
     <PackageReference Include="System.ServiceModel.Primitives">
       <Version>4.5.3</Version>

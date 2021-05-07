@@ -7,6 +7,7 @@ using LoadBusinessLayer;
 using NibrsModels.Constants;
 using NibrsModels.NibrsReport;
 using NibrsModels.Utility;
+using NibrsXml.Processor;
 
 namespace NibrsXml.Builder
 {
@@ -98,20 +99,11 @@ namespace NibrsXml.Builder
                 // "replace" action type  condition 
                 if (delsub != null && insertOrAddSub != null)
                 {
-                    // For the Group B Arrest Report Incident has to be null for the Replace Action Type.
-                    if (KeyValuePair.Key.EndsWith(NibrsReportCategoryCode.B.NibrsCode()))
-                    {
-                        insertOrAddSub.Reports[0].Incident = null;
-                    }
-
-                    // send the insert or add incident with R action type and leave Delete Incident.
-                    insertOrAddSub.Reports[0].Header.ReportActionCategoryCode = "R";
-
-                    lock (submissions)
+                  Translator.TranslateAsReplaceSub(insertOrAddSub);
+                  lock (submissions)
                     {
                         submissions.Add(insertOrAddSub);
                     }
-
                 }
                 else
                 {
