@@ -689,10 +689,7 @@ namespace NibrsXml.Processor
                     agencyCode.UnLockAgency(ori);
                 }
             }
-            public void MarkRunNumbersAsPending(List<string> runNumbers)
-            {
-                runNumbers.ForEach( runNumber => _nibrsBatchDal.Edit(runNumber,null,null,null,null,false));
-            }
+           
             #endregion
 
            
