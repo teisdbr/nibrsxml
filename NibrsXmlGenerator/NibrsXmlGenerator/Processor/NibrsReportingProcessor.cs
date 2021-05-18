@@ -26,14 +26,18 @@ namespace NibrsXml.Processor
 {
     public class NibrsReportingProcessor
     {
-        public ConcurrentQueue<Tuple<Exception, string>> ExceptionsLogger { get; set; }
+        private readonly AppSettingsReader _appSettingsReader;
+        private readonly Nibrs_Batch _nibrsBatchDal;
+        private ConcurrentQueue<Tuple<Exception, string>> ExceptionsLogger { get; }
 
-        public Logger Log { get; set; }
+        private Logger Log { get; }
 
         public NibrsReportingProcessor()
         {
             ExceptionsLogger = new ConcurrentQueue<Tuple<Exception, string>>();
             Log = new Logger();
+            _appSettingsReader = new AppSettingsReader();
+            _nibrsBatchDal = new Nibrs_Batch();
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace NibrsXml.Processor
                 var ori = agencyGrp.Key;
                Log.WriteLog(ori, $"{DateTime.Now} : --------- BEGAN PROCESSING THE SUBMISSION DELETES--------------",
                     batchFolderName);
-                submissionBatchStatusLst.AddRange((await RunBatchDeletesProcessAsync(agencyGrp.ToList(), batchFolderName)));
+                submissionBatchStatusLst.AddRange((await RunBatchDeletesProcessAsync(agencyGrp.ToList(), batchFolderName, ori)));
 
                 Log.WriteLog(ori,
                     $"{DateTime.Now} : --------- COMPLETED PROCESSING THE SUBMISSION DELETES--------------",
@@ -68,7 +72,7 @@ namespace NibrsXml.Processor
         }
 
         /// <summary>
-        /// Starts the Nibrs Processing for the next pending run-numbers for given ORI
+        /// Starts the Nibrs Processing for the run-numbers of ORI
         /// </summary>
         /// <param name="ori"></param>
         /// <param name="batchFolderName"></param>
@@ -79,7 +83,9 @@ namespace NibrsXml.Processor
             List<IncidentList> agencyIncidentsCollection,
             Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
         {
-            var nibrsBatchDal = new Nibrs_Batch();
+            Log.WriteLog(ori,
+                $"{DateTime.Now} : -------------------  RUNNING NIBRS BATCH PROCESS--------------------",
+                batchFolderName);
             List<SubmissionBatchStatus> submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             var runNumbers = new List<string>();
 
@@ -91,7 +97,7 @@ namespace NibrsXml.Processor
 
             // foreach run number loop through and update the NIBRS  Batch
             // Process the Batch in same order as it is received
-            var dt = nibrsBatchDal.Search(null, ori);
+            var dt = _nibrsBatchDal.Search(null, ori);
             // if no records present for the ORI in NIBRS batch, then this is first ever nibrs processing for the ORI,so no need to check the next runnumber in sequence from database.
             if (dt == null || dt?.Rows.Count == 0)
             {
@@ -101,7 +107,7 @@ namespace NibrsXml.Processor
             else
             {
                 // the stored procedure gives the run-numbers that are to be NIBRS processed in sequence
-                var runNumbersdt = nibrsBatchDal.GetNextRunNumbersInSequence(ori);
+                var runNumbersdt = _nibrsBatchDal.GetNextRunNumbersInSequence(ori);
                 if (runNumbersdt?.Rows != null)
                     foreach (DataRow runNumber in runNumbersdt?.Rows)
                     {
@@ -109,9 +115,9 @@ namespace NibrsXml.Processor
                     }
             }
             var incListCollection = BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
-            submissionBatchStatusLst.AddRange(await RunBatchProcessAsync(incListCollection, batchFolderName, isAnyFailedToReportFbi));
+            submissionBatchStatusLst.AddRange(await RunBatchProcessAsync(incListCollection,ori, batchFolderName, isAnyFailedToReportFbi));
             Log.WriteLog(ori,
-                $"{DateTime.Now} : -------------------  PROCESSING NIBRS DATA COMPLETED--------------------",
+                $"{DateTime.Now} : -------------------  PROCESSING NIBRS BATCH COMPLETED--------------------",
                 batchFolderName);
             return submissionBatchStatusLst;
         }
@@ -198,10 +204,10 @@ namespace NibrsXml.Processor
         {
             ori = ori.Trim();
             List<string> runNumbers = new List<string>();
-            var dal = new Nibrs_Batch();
+            
 
             // get the pending runnumbers of the ORI
-            var nibrsBatchdt = dal.GetORIsWithPendingIncidentsToProcess(ori);
+            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(ori);
             foreach (DataRow row in nibrsBatchdt.Rows)
             {
                 if (row["ori_number"].ToString() == ori)
@@ -213,15 +219,9 @@ namespace NibrsXml.Processor
 
             if (!runNumbers.Any())
                 return false;
-            // dont bother about reprocessing the pending if REPORT TO FBI is false
-            AppSettingsReader appSettingsReader = new AppSettingsReader();
+   
             var incListCollection = BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
-            if (Convert.ToBoolean(appSettingsReader.GetValue("ReportToFBI", typeof(Boolean))) == false &&
-                 runNumbers.Any())
-            {
-                return true;
-            }
-            var statusList =   await RunBatchProcessAsync(incListCollection, batchFolderName, false, reProcess: true);
+            var statusList =   await RunBatchProcessAsync(incListCollection,ori, batchFolderName, false, reProcess: true);
            return statusList.Any(status => status.HasErrorOccured);
         }
 
@@ -239,15 +239,13 @@ namespace NibrsXml.Processor
         {
             var agencyDir = new AgencyNibrsDirectoryInfo(ori);
             var pathToSaveErrorTransactions = agencyDir.GetErroredDirectory().FullName;
-            var appSettingsReader = new AppSettingsReader();
-
-            var baseURL = Convert.ToString(appSettingsReader.GetValue("LcrxAPIURL", typeof(string)));
-            var endpoint = appSettingsReader.GetValue("SaveNibrsXmlEndpoint", typeof(String)).ToString();
+            var baseURL = Convert.ToString(_appSettingsReader.GetValue("LcrxAPIURL", typeof(string)));
+            var endpoint = _appSettingsReader.GetValue("SaveNibrsXmlEndpoint", typeof(String)).ToString();
 
             var maxDegreeOfParallelism =
-                Convert.ToInt32(appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
+                Convert.ToInt32(_appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
 
-            var reportToFbi = Convert.ToBoolean(appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
+            var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
             var authInfo = new AuthorizationInfo() {AuthType = AuthorizationType.NoAuth};
 
             // // TODO: check with the LCRX API to see, if they are any failed to Upload for this ORI
@@ -343,20 +341,15 @@ namespace NibrsXml.Processor
 
             return attemptResults.Any(isSaved => !isSaved);
         }
-        
-        
 
-        public async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<IncidentList> agencyBatchCollection,
-            string batchFolderName,bool isAnyFailedToReportFbi,  bool reProcess = false)
+        public async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<IncidentList> agencyBatchCollection, string ori,
+            string batchFolderName, bool isAnyPendingToUpload, bool reProcess = false)
         {
             if (agencyBatchCollection == null)
             {
                 return new List<SubmissionBatchStatus>();
             }
-            
-            var ori = agencyBatchCollection.First().Agency;
-
-            var nibrsBatchDal = new Nibrs_Batch();
+          
             var agencyXmlDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
 
@@ -369,7 +362,7 @@ namespace NibrsXml.Processor
 
                 try
                 {
-                    // check if submissions are available for this runNumber else build from scratch
+                   //Build the submissions
                     submissions =  SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
                                   new List<Submission>();
                     Log.WriteLog(ori,
@@ -390,10 +383,7 @@ namespace NibrsXml.Processor
                         Log.WriteLog(ori,
                             $"{DateTime.Now} : TRANSFORMING THE INSERT AS REPLACE BECAUSE REPROCESS MODE IS ENABLED FOR RUNNUMBER : {runNumber}",
                             batchFolderName);
-                        submissions.ForEach(sub =>
-                        {
-                            Translator.TranslateAsReplaceSub(sub);
-                        });
+                        submissions.ForEach(Translator.TranslateAsReplaceSub);
                     }
 
                     Log.WriteLog(ori,
@@ -401,10 +391,10 @@ namespace NibrsXml.Processor
                         batchFolderName);
 
                     // Update the Nibrs Batch table to have this run-number saying it is attempted to process. 
-                   var dt = nibrsBatchDal.Search(runNumber, ori);
+                   var dt = _nibrsBatchDal.Search(runNumber, ori);
                    if (dt.Rows.Count == 0)
                    {
-                       nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors), submissions.Count,
+                       _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors), submissions.Count,
                            DateTime.Now, DateTime.Now, false);
                    }
                    var saveLocalPath = agencyXmlDirectoryInfo.GetArchiveLocation();
@@ -419,7 +409,7 @@ namespace NibrsXml.Processor
                         runNumber,
                         batchFolderName);
 
-                    isAnyFailedToReportFbi = await AttemptToReportDocumentsAsync(ori, submissions,isAnyFailedToReportFbi);
+                    isAnyPendingToUpload = await AttemptToReportDocumentsAsync(ori, submissions,isAnyPendingToUpload);
                 }
                 finally
                 {
@@ -429,35 +419,33 @@ namespace NibrsXml.Processor
                         "COMPLETED FILES PROCESSING FOR RUN-NUMBER : " + runNumber,
                         batchFolderName);
                     Log.WriteLog(ori,
-                        $"{DateTime.Now} : Failed To Report FBI Or Process?:  {isAnyFailedToReportFbi} FOR RUN-NUMBER: {runNumber}",
+                        $"{DateTime.Now} : Failed To Report FBI Or Process?:  {isAnyPendingToUpload} FOR RUN-NUMBER: {runNumber}",
                         batchFolderName);
 
                     // Update the Nibrs Batch to have the RunNumber saying the data is processed
                     if (submissions != null)
                     {
-                        nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
-                            submissions.Count, null, DateTime.Now, !isAnyFailedToReportFbi);
+                        _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
+                            submissions.Count, null, DateTime.Now, !isAnyPendingToUpload);
                         var submissionBatchStatus = new SubmissionBatchStatus()
                         {
                             RunNumber = runNumber,
                             Ori = ori,
                             Environmennt = incidentList.Environment,
                             NoOfSubmissions = (submissions)?.Count() ?? 0,
-                            HasErrorOccured = isAnyFailedToReportFbi
+                            HasErrorOccured = isAnyPendingToUpload
                         };
                         submissionBatchStatusLst.Add(submissionBatchStatus);
                     }
                 }
             }
-
+           
             return submissionBatchStatusLst;
         }
 
-
-        private async Task<List<SubmissionBatchStatus>> RunBatchDeletesProcessAsync(List<IncidentList> agencyBatchCollection, string batchFolderName)
+        private async Task<List<SubmissionBatchStatus>> RunBatchDeletesProcessAsync(
+            List<IncidentList> agencyBatchCollection, string batchFolderName, string ori)
         {
-            var ori = agencyBatchCollection.First().Agency;
-            var nibrsBatchDal = new Nibrs_Batch();
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             // sort the agencyBatch 
            // Process the deletes in Last In First Out order 
@@ -469,7 +457,7 @@ namespace NibrsXml.Processor
                  $"{DateTime.Now} : --------- RUNNING THE PROCESS IN THE FORCE DELETE MODE--------------",
                  batchFolderName);
              Log.WriteLog(ori,
-                 $"{DateTime.Now} : --------- Failed to Upload is initialized to ${isAnyPendingToUpload} --------------",
+                 $"{DateTime.Now} : --------- Report To FBI is initialized to ${resultTuple.Item1} --------------",
                  batchFolderName);
             foreach (var incidentList in agencyBatchCollection)
             {
@@ -499,8 +487,8 @@ namespace NibrsXml.Processor
                     if (isAnyPendingToUpload &&
                         resultTuple.Item2.First(pendingRunNumberInfoTuple => pendingRunNumberInfoTuple.Item1 == runNumber).Item2)
                         throw new Exception(
-                            $"Exception Occured while processing the Deletes, Cannot Report Deletes to incidents that are to reported to the FBI in past, So deleting the current batch with runnumber {runNumber} can cause duplicate incidents errors in future reporting", null);
-                    nibrsBatchDal.Delete(runNumber, null);
+                            $"Exception Occured while processing the Deletes, Cannot Report Deletes to incidents that are to reported to the FBI previously, So deleting the current batch with runnumber {runNumber} can cause duplicate incidents errors in future reporting", null);
+                    _nibrsBatchDal.Delete(runNumber, null);
                 }
                 catch (Exception e)
                 {
@@ -518,16 +506,45 @@ namespace NibrsXml.Processor
                         NoOfSubmissions = (submissions)?.Count() ?? 0,
                         HasErrorOccured = isAnyPendingToUpload
                     };
+                    Log.WriteLog(ori,
+                        DateTime.Now + " : " + "COMPLETED FILES PROCESSING FOR RUN-NUMBER : " +
+                        runNumber,
+                        batchFolderName);
                     submissionBatchStatusLst.Add(submissionBatchStatus);
                     PrintExceptions(ExceptionsLogger, Log, ori, batchFolderName);
                 }
             }
             return submissionBatchStatusLst;
         }
+        
+        public  (bool,List<(string,bool)>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string ori)
+        {
+           
+            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(ori);
+            List<(string,bool)> runNumbersPendingToUpload = new List<(string,bool)>();
+            foreach (DataRow row in nibrsBatchdt.Rows)
+            {
+                if (row["ori_number"].ToString() == ori)
+                {
+                    var tuple = (row["runnumber"].ToString(), (bool) row["Is_Processed"]);
+                    // get the pending runnumbers
+                    runNumbersPendingToUpload.Add(tuple);
+                }
+            }
+             
+            // HERE we are deciding whether the current batch reported to FBI or not, To process the runnumbers in the sequence we are doing below conditionc checks
+            // 1) check if any pending runnumbers to upload? if none return true
+            // 2) If any pending then check if the runNumbers to process in the provided 'runNumbersToProcess' includes all the runNumbers that are pending according to database
+            // 3) based on above conditions initialize the reportToFbi 
+            // you have to process deletes for all pending runnumbers in the database to make isAnyPendingToUpload false, isAnyPendingToUpload decides whether to report the runnumbers to FBI or not.
+            bool reportToFbi = !runNumbersPendingToUpload.Any() || runNumbersPendingToUpload.All( tuple => runNumbersToProcess.Contains(tuple.Item1));
+            return (reportToFbi,runNumbersPendingToUpload);
+        }
+        
 
         #region Helpers
 
-            private static List<IncidentList> BuildMissingRunNumbers(List<IncidentList> agencyIncidentsCollection, List<string> runNumbers,  Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
+            public  List<IncidentList> BuildMissingRunNumbers(List<IncidentList> agencyIncidentsCollection, List<string> runNumbers,  Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
             {
                 var buildIncListFunc = new Func<string, IncidentList>((runNumber) =>
                 {
@@ -542,13 +559,13 @@ namespace NibrsXml.Processor
                 return incidentList;
             }
 
-            private static void SendErrorEmail(string subject, string body)
+            private  void SendErrorEmail(string subject, string body)
             {
                 try
                 {
-                    var appSettingsReader = new AppSettingsReader();
+                    
                     var emails =
-                        Convert.ToString(appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
+                        Convert.ToString(_appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
 
                     EmailSender emailSender = new EmailSender();
 
@@ -629,29 +646,7 @@ namespace NibrsXml.Processor
                 }
             }
 
-            public  (bool,List<(string,bool)>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string ori)
-            {
-                Nibrs_Batch  nibrsBatchDal = new Nibrs_Batch();
-                var nibrsBatchdt = nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(ori);
-                List<(string,bool)> runNumbersPendingToUpload = new List<(string,bool)>();
-                foreach (DataRow row in nibrsBatchdt.Rows)
-                {
-                    if (row["ori_number"].ToString() == ori)
-                    {
-                        var tuple = (row["runnumber"].ToString(), (bool) row["Is_Processed"]);
-                        // get the pending runnumbers
-                        runNumbersPendingToUpload.Add(tuple);
-                    }
-                }
-             
-                // HERE we are deciding whether the current batch reported to FBI or not, To process the runnumbers in the sequence we are doing below conditionc checks
-                // 1) check if any pending runnumbers to upload? if none return false
-                // 2) If any pending then check if the runNumbers to process in the provided agencyBatch collection is same as, what it supposed to be processed in sequence as per database
-                // 3) based on above conditions initialize the isAnyPendingToUpload 
-                // you have to process deletes for all pending runnumbers in the database to make isAnyPendingToUpload false, isAnyPendingToUpload decides whether to report the runnumbers to FBI or not.
-                bool reportToFbi = !runNumbersPendingToUpload.Any() || runNumbersPendingToUpload.All( tuple => runNumbersToProcess.Contains(tuple.Item1));
-                return (reportToFbi,runNumbersPendingToUpload);
-            }
+            
 
             private static void PrintExceptions(ConcurrentQueue<Tuple<Exception, string>> exceptionsLogger, Logger log,
                 string ori, string batchFolderName)
@@ -694,7 +689,12 @@ namespace NibrsXml.Processor
                     agencyCode.UnLockAgency(ori);
                 }
             }
-
+            public void MarkRunNumbersAsPending(List<string> runNumbers)
+            {
+                runNumbers.ForEach( runNumber => _nibrsBatchDal.Edit(runNumber,null,null,null,null,false));
+            }
             #endregion
-        }
+
+           
+    }
     }
