@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,9 +60,10 @@ namespace NibrsXml.Processor
             foreach (var agencyGrp in agencyIncidentsCollection.GroupBy(collection => collection.OriNumber))
             {
                 var ori = agencyGrp.Key;
-               Log.WriteLog(ori, $"{DateTime.Now} : --------- BEGAN PROCESSING THE SUBMISSION DELETES--------------",
+                Log.WriteLog(ori, $"{DateTime.Now} : --------- BEGAN PROCESSING THE SUBMISSION DELETES--------------",
                     batchFolderName);
-                submissionBatchStatusLst.AddRange((await RunBatchDeletesProcessAsync(agencyGrp.ToList(), batchFolderName, ori)));
+                submissionBatchStatusLst.AddRange(
+                    (await RunBatchDeletesProcessAsync(agencyGrp.ToList(), batchFolderName, ori)));
 
                 Log.WriteLog(ori,
                     $"{DateTime.Now} : --------- COMPLETED PROCESSING THE SUBMISSION DELETES--------------",
@@ -93,7 +95,8 @@ namespace NibrsXml.Processor
             agencyIncidentsCollection = agencyIncidentsCollection?.Where(inc => inc.OriNumber == ori)?.ToList();
 
             //  Process any pending runnumber before taking up the new ones
-            var isAnyFailedToReportFbi = await ProcessPendingTransactionsForOriAsync(ori, agencyIncidentsCollection, batchFolderName, buildLibrsIncidentsListFunc);
+            var isAnyFailedToReportFbi = await ProcessPendingTransactionsForOriAsync(ori, agencyIncidentsCollection,
+                batchFolderName, buildLibrsIncidentsListFunc);
 
             // foreach run number loop through and update the NIBRS  Batch
             // Process the Batch in same order as it is received
@@ -114,8 +117,11 @@ namespace NibrsXml.Processor
                         runNumbers.UniqueAdd(runNumber["RUNNUMBER"].ToString());
                     }
             }
-            var incListCollection = BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
-            submissionBatchStatusLst.AddRange(await RunBatchProcessAsync(incListCollection,ori, batchFolderName, isAnyFailedToReportFbi));
+
+            var incListCollection =
+                BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
+            submissionBatchStatusLst.AddRange(await RunBatchProcessAsync(incListCollection, ori, batchFolderName,
+                isAnyFailedToReportFbi));
             Log.WriteLog(ori,
                 $"{DateTime.Now} : -------------------  PROCESSING NIBRS BATCH COMPLETED--------------------",
                 batchFolderName);
@@ -199,12 +205,13 @@ namespace NibrsXml.Processor
             return submissionBatchStatusLst;
         }
 
-        private async Task<bool> ProcessPendingTransactionsForOriAsync(string ori, List<IncidentList> agencyIncidentsCollection,string batchFolderName, 
+        private async Task<bool> ProcessPendingTransactionsForOriAsync(string ori,
+            List<IncidentList> agencyIncidentsCollection, string batchFolderName,
             Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
         {
             ori = ori.Trim();
             List<string> runNumbers = new List<string>();
-            
+
 
             // get the pending runnumbers of the ORI
             var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(ori);
@@ -219,10 +226,12 @@ namespace NibrsXml.Processor
 
             if (!runNumbers.Any())
                 return false;
-   
-            var incListCollection = BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
-            var statusList =   await RunBatchProcessAsync(incListCollection,ori, batchFolderName, false, reProcess: true);
-           return statusList.Any(status => status.HasErrorOccured);
+
+            var incListCollection =
+                BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
+            var statusList =
+                await RunBatchProcessAsync(incListCollection, ori, batchFolderName, false, reProcess: true);
+            return statusList.Any(status => status.HasErrorOccured);
         }
 
 
@@ -293,18 +302,12 @@ namespace NibrsXml.Processor
                         }
                         catch (Exception ex)
                         {
-                            ExceptionsLogger.Enqueue(Tuple.Create(ex,
-                                $"Incident Number: {nibrsTrans?.Submission?.IncidentNumber ?? String.Empty} , Arrest ID: {nibrsTrans?.Submission?.Reports[0]?.Arrests?.FirstOrDefault()?.ActivityId?.Id ?? String.Empty}"));
-                            if (ex is HttpException)
+                            if (ex is HttpRequestException)
                             {
-                                var httpException = (HttpException) ex;
-                                if (httpException.GetHttpCode() == (int) HttpStatusCode.InternalServerError)
-                                {
-                                    // set exception message
-                                    nibrsTrans.NibrsSubmissionResponse.LastException = ex.Message;
-                                    errorTransactions.Add(nibrsTrans);
-                                    return reportedToFbi;
-                                }
+                                errorTransactions.Add(nibrsTrans);
+                                ExceptionsLogger.Enqueue(Tuple.Create(ex,
+                                   $"Incident Number: {nibrsTrans?.Submission?.IncidentNumber ?? String.Empty} , Arrest ID: {nibrsTrans?.Submission?.Reports[0]?.Arrests?.FirstOrDefault()?.ActivityId?.Id ?? "N/A"}. "));
+                               return reportedToFbi;
                             }
                         }
                     }
@@ -342,14 +345,15 @@ namespace NibrsXml.Processor
             return attemptResults.Any(isSaved => !isSaved);
         }
 
-        public async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<IncidentList> agencyBatchCollection, string ori,
+        public async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<IncidentList> agencyBatchCollection,
+            string ori,
             string batchFolderName, bool isAnyPendingToUpload, bool reProcess = false)
         {
             if (agencyBatchCollection == null)
             {
                 return new List<SubmissionBatchStatus>();
             }
-          
+
             var agencyXmlDirectoryInfo = new AgencyNibrsDirectoryInfo(ori);
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
 
@@ -362,8 +366,8 @@ namespace NibrsXml.Processor
 
                 try
                 {
-                   //Build the submissions
-                    submissions =  SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
+                    //Build the submissions
+                    submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
                                   new List<Submission>();
                     Log.WriteLog(ori,
                         $"{DateTime.Now} : NO OF SUBMISSIONS BUILT TO PROCESS FOR RUN-NUMBER: {runNumber} ARE {submissions.Count}",
@@ -391,13 +395,15 @@ namespace NibrsXml.Processor
                         batchFolderName);
 
                     // Update the Nibrs Batch table to have this run-number saying it is attempted to process. 
-                   var dt = _nibrsBatchDal.Search(runNumber, ori);
-                   if (dt.Rows.Count == 0)
-                   {
-                       _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors), submissions.Count,
-                           DateTime.Now, DateTime.Now, false);
-                   }
-                   var saveLocalPath = agencyXmlDirectoryInfo.GetArchiveLocation();
+                    var dt = _nibrsBatchDal.Search(runNumber, ori);
+                    if (dt.Rows.Count == 0)
+                    {
+                        _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors),
+                            submissions.Count,
+                            DateTime.Now, DateTime.Now, false);
+                    }
+
+                    var saveLocalPath = agencyXmlDirectoryInfo.GetArchiveLocation();
                     saveLocalPath = saveLocalPath + "\\" + runNumber;
                     WriteSubmissions(submissions, saveLocalPath);
                     Log.WriteLog(ori,
@@ -409,7 +415,7 @@ namespace NibrsXml.Processor
                         runNumber,
                         batchFolderName);
 
-                    isAnyPendingToUpload = await AttemptToReportDocumentsAsync(ori, submissions,isAnyPendingToUpload);
+                    isAnyPendingToUpload = await AttemptToReportDocumentsAsync(ori, submissions, isAnyPendingToUpload);
                 }
                 finally
                 {
@@ -439,7 +445,7 @@ namespace NibrsXml.Processor
                     }
                 }
             }
-           
+
             return submissionBatchStatusLst;
         }
 
@@ -448,17 +454,17 @@ namespace NibrsXml.Processor
         {
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             // sort the agencyBatch 
-           // Process the deletes in Last In First Out order 
+            // Process the deletes in Last In First Out order 
             agencyBatchCollection = agencyBatchCollection.OrderByDescending(grp => grp.Runnumber).ToList();
             var resultTuple =
                 CheckConditionToReportFbi(agencyBatchCollection.ConvertAll(item => item.Runnumber), ori.Trim());
             bool isAnyPendingToUpload = !resultTuple.Item1; // if report to FBI true set the isAnyPendingToUpload false
-             Log.WriteLog(ori,
-                 $"{DateTime.Now} : --------- RUNNING THE PROCESS IN THE FORCE DELETE MODE--------------",
-                 batchFolderName);
-             Log.WriteLog(ori,
-                 $"{DateTime.Now} : --------- Report To FBI is initialized to ${resultTuple.Item1} --------------",
-                 batchFolderName);
+            Log.WriteLog(ori,
+                $"{DateTime.Now} : --------- RUNNING THE PROCESS IN THE FORCE DELETE MODE--------------",
+                batchFolderName);
+            Log.WriteLog(ori,
+                $"{DateTime.Now} : --------- Report To FBI is initialized to ${resultTuple.Item1} --------------",
+                batchFolderName);
             foreach (var incidentList in agencyBatchCollection)
             {
                 List<Submission> submissions = new List<Submission>();
@@ -476,18 +482,20 @@ namespace NibrsXml.Processor
                     Log.WriteLog(ori,
                         $"{DateTime.Now} : TRANSFORMED NIBRS DATA INTO DELETE  FOR RUN-NUMBER: {runNumber}",
                         batchFolderName);
-                    
+
                     Log.WriteLog(ori,
                         DateTime.Now + " : " + "STARTED FILES PROCESSING FOR RUN-NUMBER : " +
                         runNumber,
                         batchFolderName);
 
-                    isAnyPendingToUpload = await AttemptToReportDocumentsAsync(ori, submissions,isAnyPendingToUpload);
+                    isAnyPendingToUpload = await AttemptToReportDocumentsAsync(ori, submissions, isAnyPendingToUpload);
 
                     if (isAnyPendingToUpload &&
-                        resultTuple.Item2.First(pendingRunNumberInfoTuple => pendingRunNumberInfoTuple.Item1 == runNumber).Item2)
+                        resultTuple.Item2.First(pendingRunNumberInfoTuple =>
+                            pendingRunNumberInfoTuple.Item1 == runNumber).Item2)
                         throw new Exception(
-                            $"Exception Occured while processing the Deletes, Cannot Report Deletes to incidents that are to reported to the FBI previously, So deleting the current batch with runnumber {runNumber} can cause duplicate incidents errors in future reporting", null);
+                            $"Exception Occured while processing the Deletes, Cannot Report Deletes to incidents that are to reported to the FBI previously, So deleting the current batch with runnumber {runNumber} can cause duplicate incidents errors in future reporting",
+                            null);
                     _nibrsBatchDal.Delete(runNumber, null);
                 }
                 catch (Exception e)
@@ -514,14 +522,14 @@ namespace NibrsXml.Processor
                     PrintExceptions(ExceptionsLogger, Log, ori, batchFolderName);
                 }
             }
+
             return submissionBatchStatusLst;
         }
-        
-        public  (bool,List<(string,bool)>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string ori)
+
+        public (bool, List<(string, bool)>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string ori)
         {
-           
             var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(ori);
-            List<(string,bool)> runNumbersPendingToUpload = new List<(string,bool)>();
+            List<(string, bool)> runNumbersPendingToUpload = new List<(string, bool)>();
             foreach (DataRow row in nibrsBatchdt.Rows)
             {
                 if (row["ori_number"].ToString() == ori)
@@ -531,167 +539,165 @@ namespace NibrsXml.Processor
                     runNumbersPendingToUpload.Add(tuple);
                 }
             }
-             
+
             // HERE we are deciding whether the current batch reported to FBI or not, To process the runnumbers in the sequence we are doing below conditionc checks
             // 1) check if any pending runnumbers to upload? if none return true
             // 2) If any pending then check if the runNumbers to process in the provided 'runNumbersToProcess' includes all the runNumbers that are pending according to database
             // 3) based on above conditions initialize the reportToFbi 
             // you have to process deletes for all pending runnumbers in the database to make isAnyPendingToUpload false, isAnyPendingToUpload decides whether to report the runnumbers to FBI or not.
-            bool reportToFbi = !runNumbersPendingToUpload.Any() || runNumbersPendingToUpload.All( tuple => runNumbersToProcess.Contains(tuple.Item1));
-            return (reportToFbi,runNumbersPendingToUpload);
+            bool reportToFbi = !runNumbersPendingToUpload.Any() ||
+                               runNumbersPendingToUpload.All(tuple => runNumbersToProcess.Contains(tuple.Item1));
+            return (reportToFbi, runNumbersPendingToUpload);
         }
-        
+
 
         #region Helpers
 
-            public  List<IncidentList> BuildMissingRunNumbers(List<IncidentList> agencyIncidentsCollection, List<string> runNumbers,  Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
+        public List<IncidentList> BuildMissingRunNumbers(List<IncidentList> agencyIncidentsCollection,
+            List<string> runNumbers, Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
+        {
+            var buildIncListFunc = new Func<string, IncidentList>((runNumber) =>
             {
-                var buildIncListFunc = new Func<string, IncidentList>((runNumber) =>
+                var task = buildLibrsIncidentsListFunc(runNumber, "NORMAL");
+                task.Wait();
+                return task.Result;
+            });
+
+            var incidentList = runNumbers.ConvertAll(runNumber =>
+                agencyIncidentsCollection?.FirstOrDefault(incList => incList.Runnumber == runNumber) ??
+                buildIncListFunc(runNumber));
+            return incidentList;
+        }
+
+        private void SendErrorEmail(string subject, string body)
+        {
+            try
+            {
+                var emails =
+                    Convert.ToString(_appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
+
+                EmailSender emailSender = new EmailSender();
+
+                emailSender.SendCriticalErrorEmail(emails,
+                    subject,
+                    body, false,
+                    "donotreply@lcrx.librs.org", "");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void WriteSubmissions(IEnumerable<Submission> submissions, string path,
+            bool clearPathBeforeSave = true)
+        {
+            try
+            {
+                // check if path exists and clear the files
+                if (Directory.Exists(path) && clearPathBeforeSave)
                 {
-                    var task = buildLibrsIncidentsListFunc(runNumber, "NORMAL");
-                    task.Wait();
-                    return task.Result;
+                    Directory.Delete(path, clearPathBeforeSave);
+                }
+
+                // save xml file locally 
+                Parallel.ForEach(submissions, new ParallelOptions {MaxDegreeOfParallelism = 5}, submission =>
+                {
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    var docName = submission.Id + ".json";
+                    string[] fullpath = {path, docName};
+                    string nibrsSchemaLocation = Misc.schemaLocation;
+                    //Save locally
+                    submission.XsiSchemaLocation = nibrsSchemaLocation;
+                    string fullPath = Path.Combine(fullpath);
+                    File.WriteAllText(fullPath, submission.JsonString);
                 });
-         
-                var incidentList = runNumbers.ConvertAll( runNumber =>
-                    agencyIncidentsCollection?.FirstOrDefault(incList => incList.Runnumber == runNumber) ??
-                    buildIncListFunc(runNumber));
-                return incidentList;
             }
-
-            private  void SendErrorEmail(string subject, string body)
+            catch (AggregateException exception)
             {
-                try
+                foreach (var innerexception in exception.InnerExceptions)
                 {
-                    
-                    var emails =
-                        Convert.ToString(_appSettingsReader.GetValue("CriticalErrorToEmails", typeof(string)));
-
-                    EmailSender emailSender = new EmailSender();
-
-                    emailSender.SendCriticalErrorEmail(emails,
-                        subject,
-                        body, false,
-                        "donotreply@lcrx.librs.org", "");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
+                    ExceptionsLogger.Enqueue(Tuple.Create(innerexception, ""));
                 }
             }
+        }
 
-            private void WriteSubmissions(IEnumerable<Submission> submissions, string path,
-                bool clearPathBeforeSave = true)
+        private void WriteTransactions(IEnumerable<NibrsXmlTransaction> transactions, string path)
+        {
+            try
             {
-                try
+                // failed to save in MongoDb
+                Parallel.ForEach(transactions, trans =>
                 {
-                    // check if path exists and clear the files
-                    if (Directory.Exists(path) && clearPathBeforeSave)
+                    // save failed files.
+                    string fileName = path + "\\" + trans.Submission.Runnumber;
+                    if (!Directory.Exists(fileName))
                     {
-                        Directory.Delete(path, clearPathBeforeSave);
+                        Directory.CreateDirectory(fileName);
                     }
 
-                    // save xml file locally 
-                    Parallel.ForEach(submissions, new ParallelOptions {MaxDegreeOfParallelism = 5}, submission =>
-                    {
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-
-                        var docName = submission.Id + ".json";
-                        string[] fullpath = {path, docName};
-                        string nibrsSchemaLocation = Misc.schemaLocation;
-                        //Save locally
-                        submission.XsiSchemaLocation = nibrsSchemaLocation;
-                        string fullPath = Path.Combine(fullpath);
-                        File.WriteAllText(fullPath, submission.JsonString);
-                    });
-                }
-                catch (AggregateException exception)
-                {
-                    foreach (var innerexception in exception.InnerExceptions)
-                    {
-                        ExceptionsLogger.Enqueue(Tuple.Create(innerexception, ""));
-                    }
-                }
+                    var docName = trans.Submission.Id + ".json";
+                    string[] filePath = {fileName, docName};
+                    string errorPath = Path.Combine(filePath);
+                    File.WriteAllText(errorPath, trans.JsonString);
+                });
             }
-
-            private void WriteTransactions(IEnumerable<NibrsXmlTransaction> transactions, string path)
+            catch (AggregateException exception)
             {
-                try
+                foreach (var innerexception in exception.InnerExceptions)
                 {
-                    // failed to save in MongoDb
-                    Parallel.ForEach(transactions, trans =>
-                    {
-                        // save failed files.
-                        string fileName = path + "\\" + trans.Submission.Runnumber;
-                        if (!Directory.Exists(fileName))
-                        {
-                            Directory.CreateDirectory(fileName);
-                        }
-
-                        var docName = trans.Submission.Id + ".json";
-                        string[] filePath = {fileName, docName};
-                        string errorPath = Path.Combine(filePath);
-                        File.WriteAllText(errorPath, trans.JsonString);
-                    });
-                }
-                catch (AggregateException exception)
-                {
-                    foreach (var innerexception in exception.InnerExceptions)
-                    {
-                        ExceptionsLogger.Enqueue(Tuple.Create(innerexception, ""));
-                    }
+                    ExceptionsLogger.Enqueue(Tuple.Create(innerexception, ""));
                 }
             }
+        }
 
-            
 
-            private static void PrintExceptions(ConcurrentQueue<Tuple<Exception, string>> exceptionsLogger, Logger log,
-                string ori, string batchFolderName)
+        private static void PrintExceptions(ConcurrentQueue<Tuple<Exception, string>> exceptionsLogger, Logger log,
+            string ori, string batchFolderName)
+        {
+            if (exceptionsLogger.Any())
             {
-                if (exceptionsLogger.Any())
+                while (exceptionsLogger.TryDequeue(out Tuple<Exception, string> tuple))
                 {
-                    while (exceptionsLogger.TryDequeue(out Tuple<Exception, string> tuple))
-                    {
-                        log.WriteLog(ori,
-                            "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
-                            tuple.Item1.StackTrace +
-                            "" + Environment.NewLine + " File:" + tuple.Item2 + "Date :" +
-                            DateTime.Now, batchFolderName);
-                        log.WriteLog(ori,
-                            Environment.NewLine +
-                            "-----------------------------------------------------------------------------" +
-                            Environment.NewLine, batchFolderName);
-                    }
+                    log.WriteLog(ori,
+                        "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
+                        tuple.Item1.StackTrace +
+                        "" + Environment.NewLine + " File:" + tuple.Item2 + "Date :" +
+                        DateTime.Now, batchFolderName);
+                    log.WriteLog(ori,
+                        Environment.NewLine +
+                        "-----------------------------------------------------------------------------" +
+                        Environment.NewLine, batchFolderName);
                 }
             }
+        }
 
-            private static bool PlaceLockOnAgency(AgencyCode agencyCode, byte[] lockKey, string ori)
+        private static bool PlaceLockOnAgency(AgencyCode agencyCode, byte[] lockKey, string ori)
+        {
+            // lock processing agency
+            agencyCode.LockAgency(ori, lockKey);
+            var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
+            if (dtLockedAgency.Rows.Count == 0)
             {
-                // lock processing agency
-                agencyCode.LockAgency(ori, lockKey);
-                var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
-                if (dtLockedAgency.Rows.Count == 0)
-                {
-                    return false;
-                }
-
-                return true;
+                return false;
             }
 
-            private static void ReleaseLockOnAgency(AgencyCode agencyCode, byte[] lockKey, string ori)
+            return true;
+        }
+
+        private static void ReleaseLockOnAgency(AgencyCode agencyCode, byte[] lockKey, string ori)
+        {
+            var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
+            if (dtLockedAgency.Rows.Count > 0)
             {
-                var dtLockedAgency = agencyCode.GetLockedAgency(ori, lockKey);
-                if (dtLockedAgency.Rows.Count > 0)
-                {
-                    agencyCode.UnLockAgency(ori);
-                }
+                agencyCode.UnLockAgency(ori);
             }
-           
-            #endregion
+        }
 
-           
+        #endregion
     }
-    }
+}
