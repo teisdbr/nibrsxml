@@ -73,7 +73,7 @@ namespace NibrsXml.Builder
                         if (report == null)
                             continue;
 
-                        var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+                        var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment, agencyIncidentList.SubmissionDate);
                         sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
 
                         sub.Reports.Add(report);
@@ -150,7 +150,7 @@ namespace NibrsXml.Builder
 
         public static Submission BuildZeroReportSubmission(IncidentList agencyIncidentList)
         {
-            var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment);
+            var sub = new Submission(agencyIncidentList.Runnumber, agencyIncidentList.Environment,agencyIncidentList.SubmissionDate);
             sub.MessageMetadata = MessageMetaDataBuilder.Build(sub.Id, agencyIncidentList.OriNumber);
             sub.Reports.Add(ReportBuilder.BuildZeroReport(agencyIncidentList));
             return sub;
