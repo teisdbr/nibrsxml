@@ -223,9 +223,15 @@ namespace NibrsXml.Processor
                     runNumbers.UniqueAdd(row["runnumber"].ToString());
                 }
             }
+            var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
 
             if (!runNumbers.Any())
                 return false;
+            else if(!reportToFbi)
+            {
+                // If Report to FBI is false, there is no use to reprocess just skip reprocess.
+                return true;
+            }
 
             var incListCollection =
                 BuildMissingRunNumbers(agencyIncidentsCollection, runNumbers, buildLibrsIncidentsListFunc);
@@ -290,7 +296,7 @@ namespace NibrsXml.Processor
                         nibrsTrans = new NibrsXmlTransaction(sub, response);
 
                         // Mark as upload failed.
-                        if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed && reportToFbi)
+                        if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed && reportToFbi) 
                         {
                             reportedToFbi = false;
                         }
