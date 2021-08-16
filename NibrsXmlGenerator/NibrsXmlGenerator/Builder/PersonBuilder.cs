@@ -216,7 +216,7 @@ namespace NibrsXml.Builder
                             ); ;
 
                         //Create new subject
-                        var newSubject = new Subject(newPerson, offender.OffenderSeqNum.TrimStart('0'), uniquePrefix);
+                        var newSubject = new Subject(newPerson, ExtractOffenderSequenceNumber(offender.OffenderSeqNum), uniquePrefix);
 
                         //Add each of the new objects above to their respective lists
                         persons.Add(newPerson);
@@ -224,7 +224,7 @@ namespace NibrsXml.Builder
                     }
                     else
                     {
-                        //Create new subject for Unknow Subject
+                        //Create new subject for Unknown Subject
                         var newSubject = new Subject(null, "00", uniquePrefix);
                         subjects.Add(newSubject);
                     }
@@ -254,9 +254,7 @@ namespace NibrsXml.Builder
                     {
                         //Find matching subjects
                         var matchingSubjects =
-                            subjects.Where(subject => subject.SeqNum == relatedOffender.OffenderNumberRelated.Substring(1));
-
-                       
+                            subjects.Where(subject => subject.SeqNum == ExtractOffenderSequenceNumber(relatedOffender.OffenderNumberRelated));
 
                         //Create relationships
                         foreach (var subject in matchingSubjects)
@@ -270,7 +268,7 @@ namespace NibrsXml.Builder
                                 relationshipCode: TranslateRelationship(victim,relatedOffender.VictimOffenderRelationCode?.TrimNullIfEmpty()));
 
                             //Add Association to list
-                            subjectVictimAssocs.Add(subVicAssoc);
+                              subjectVictimAssocs.Add(subVicAssoc);
                         }
                     }
                 }
@@ -487,7 +485,10 @@ namespace NibrsXml.Builder
           return  librsoffenses.Where(of => of.OffenseGroup.Equals("A", System.StringComparison.OrdinalIgnoreCase) && librsvictimInjuries.Any(injury => injury.VictimSeqNum == of.OffConnecttoVic))?.Any(o => offensesValidToVictimInjuries.Contains(o.AgencyAssignedNibrs)) ?? false;
         }
 
-
+        private  string ExtractOffenderSequenceNumber(string librsOffenderSeq)
+        {
+            return librsOffenderSeq.Substring(1);
+        }
 
         #endregion
 
