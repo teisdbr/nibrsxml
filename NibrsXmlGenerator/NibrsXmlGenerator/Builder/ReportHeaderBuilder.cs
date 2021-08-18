@@ -23,7 +23,7 @@ namespace NibrsXml.Builder
             //Make sure all agency assigned nibrs values are filled in regardless of the original Flat file contents/spec
             offenses = offenses.Select(o =>
             {
-                o.AgencyAssignedNibrs = o.AgencyAssignedNibrs.IsNullBlankOrEmpty() ? LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[o.LrsNumber.Trim()].Nibr : o.AgencyAssignedNibrs;
+                o.AgencyAssignedNibrs = o.AgencyAssignedNibrs.IsNullBlankOrEmpty() ? LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGet(o.LrsNumber.Trim())?.Nibr : o.AgencyAssignedNibrs;
                 return o;
             }).ToList();
 

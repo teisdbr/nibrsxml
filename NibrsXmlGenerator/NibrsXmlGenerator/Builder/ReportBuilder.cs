@@ -304,11 +304,11 @@ namespace NibrsXml.Builder
                         ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
                         Charge = lrs.AgencyAssignedNibrs.HasValue(true)
                             ? lrs.AgencyAssignedNibrs
-                            : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[lrs.LrsNumber.Trim()].Nibr,
+                            : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGet(lrs.LrsNumber.Trim())?.Nibr,
                         CategoryCode = arrest.ArrestType,
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
-                        //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCYASSIGNEDNIBRS
+                        //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCY ASSIGNED NIBRS
                         Rank = Convert.ToDouble(LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[Regex.Replace(lrs.LrsNumber.Trim(), @"\s+", "")].Lrank)
                     }
                 ).ToList();
