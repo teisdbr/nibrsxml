@@ -214,7 +214,7 @@
       <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Util">
-      <Version>1.0.8</Version>
+      <Version>1.0.21</Version>
     </PackageReference>
     <PackageReference Include="WebhookProcessor">
       <Version>0.0.1</Version>
