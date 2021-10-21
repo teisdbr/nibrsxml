@@ -296,7 +296,7 @@ namespace NibrsXml.Processor
                         nibrsTrans = new NibrsXmlTransaction(sub, response);
 
                         // Mark as upload failed.
-                        if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed && reportToFbi) 
+                        if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed) 
                         {
                             reportedToFbi = false;
                         }
