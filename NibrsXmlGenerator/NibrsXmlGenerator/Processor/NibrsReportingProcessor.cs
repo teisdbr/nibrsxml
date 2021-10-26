@@ -14,8 +14,6 @@ namespace NibrsXml.Processor
     public static class NibrsReportingProcessor
     {
        
-    
-
         /// <summary>
         /// Process the Nibrs Batch for the given LIBRS Batch of Incidents
         /// </summary>

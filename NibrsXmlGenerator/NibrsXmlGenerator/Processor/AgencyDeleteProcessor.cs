@@ -49,7 +49,7 @@ namespace NibrsXml.Processor
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
                     batchResponseStatus = await AttemptToReportDocumentsAsync(runNumber,  submissions, batchResponseStatus.IsFailedToFBI);
                     if (batchResponseStatus.IsFailedToFBI &&
-                        resultTuple.Item2.First(pendingRunNumberInfoTuple =>
+                        resultTuple.Item2.FirstOrDefault(pendingRunNumberInfoTuple =>
                             pendingRunNumberInfoTuple.Item1 == runNumber).Item2)
                         throw new DeleteRequestAbortException(runNumber);
                     _nibrsBatchDal.Delete(runNumber, null);
