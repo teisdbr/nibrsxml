@@ -81,15 +81,21 @@
     <Compile Include="DataAccess\Collection\SubmissionCollection.cs" />
     <Compile Include="DataAccess\DatabaseClient.cs" />
     <Compile Include="DirectoryInfo.cs" />
+    <Compile Include="Exceptions\DeleteRequestAbortException.cs" />
+    <Compile Include="Exceptions\DocumentsFailedToSaveInDBException.cs" />
+    <Compile Include="LogManager.cs" />
     <Compile Include="NibrsError\Error.cs" />
     <Compile Include="NibrsXmlTransaction.cs" />
     <Compile Include="NibrsSerializer\NibrsSerializer.cs" />
-    <Compile Include="Processor\DeleteTransformer.cs" />
+    <Compile Include="Processor\AgencyDeleteProcessor.cs" />
+    <Compile Include="Processor\AgencyInsertOrReplaceProcessor.cs" />
+    <Compile Include="Processor\BaseProcessor.cs" />
     <Compile Include="Processor\SubmissionBatchStatus.cs" />
     <Compile Include="Processor\Translator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\Ucr\UcrReportTypes.cs" />
     <Compile Include="Processor\NibrsReportingProcessor.cs" />
+    <Compile Include="BatchResponseReport.cs" />
     <Compile Include="SubmissionWriter.cs" />
     <Compile Include="Ucr\DataCollections\Arson.cs" />
     <Compile Include="Ucr\DataCollections\GeneralSummaryCounts.cs" />
@@ -217,7 +223,7 @@
       <Version>1.0.21</Version>
     </PackageReference>
     <PackageReference Include="WebhookProcessor">
-      <Version>0.0.1</Version>
+      <Version>0.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
