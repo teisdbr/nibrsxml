@@ -48,8 +48,8 @@ namespace NibrsXml.Processor
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
                     completedSuccessFully =  await AttemptToReportDocumentsAsync(runNumber,  submissions, reportDocuments: !isAnyPendingToUpload);
                     if (!completedSuccessFully &&
-                       ! resultTuple.Item2.Any(pendingRunNumber =>
-                            pendingRunNumber == runNumber))
+                       !resultTuple.Item2.Any(pendingRunNumber =>
+                           pendingRunNumber == runNumber))
                         throw new DeleteRequestAbortException(runNumber);
                     _nibrsBatchDal.Delete(runNumber, null);
 
