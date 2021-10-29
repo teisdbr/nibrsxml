@@ -14,7 +14,7 @@ namespace NibrsXml
 
         public string Ori { get; }
 
-       private string BatchFolderName { get; }
+       public string BatchFolderName { get; }
 
         public LogManager( string ori, string batchFolderName )
         {
@@ -144,16 +144,18 @@ namespace NibrsXml
                 Environment.NewLine, BatchFolderName);
         }
 
-        public  void PrintExceptions(ConcurrentQueue<Tuple<Exception, string>> exceptionsLogger)
+     
+
+        public  void PrintExceptions(ConcurrentQueue<Exception> exceptionsLogger)
         {
             if (exceptionsLogger.Any())
             {
-                while (exceptionsLogger.TryDequeue(out Tuple<Exception, string> tuple))
+                while (exceptionsLogger.TryDequeue(out Exception ex))
                 {
                     Log.WriteLog(Ori,
-                        "Message :" + tuple.Item1.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
-                        tuple.Item1.StackTrace +
-                        "" + Environment.NewLine + " File:" + tuple.Item2 + "Date :" +
+                        "Message :" + ex.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
+                        ex.StackTrace +
+                        "" + Environment.NewLine  + "Date :" +
                         DateTime.Now, BatchFolderName);
                     Log.WriteLog(Ori,
                         Environment.NewLine +

@@ -13,7 +13,6 @@ namespace NibrsXml.Processor
 {
     public static class NibrsReportingProcessor
     {
-       
         /// <summary>
         /// Process the Nibrs Batch for the given LIBRS Batch of Incidents
         /// </summary>
@@ -25,13 +24,13 @@ namespace NibrsXml.Processor
             List<IncidentList> agencyIncidentsCollection, string batchFolderName,
             Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc)
         {
-            AgencyCode agencyCode = new AgencyCode();           
+            AgencyCode agencyCode = new AgencyCode();
             List<string> oriList = new List<string>();
 
             // if agencyIncidentsCollection is provided stick to those ORIs
             if (agencyIncidentsCollection.Any())
-                oriList = agencyIncidentsCollection.Select(incList => incList.OriNumber)?.Distinct().ToList();         
-            
+                oriList = agencyIncidentsCollection.Select(incList => incList.OriNumber)?.Distinct().ToList();
+
 
             foreach (var ori in oriList)
             {
@@ -42,11 +41,24 @@ namespace NibrsXml.Processor
                     if (!PlaceLockOnAgency(agencyCode, lockKey, ori))
                     {
                         log.PrintFailedToPlaceLock();
-                       
+
                         continue;
-                    }                   
-                   await new AgencyInsertOrReplaceProcessor(log, agencyIncidentsCollection, buildLibrsIncidentsListFunc).ProcessAsync();
-                   
+                    }
+
+                    await new AgencyInsertOrReplaceProcessor(log, agencyIncidentsCollection,
+                        buildLibrsIncidentsListFunc).ProcessAsync();
+                }
+                catch (AggregateException aex)
+                {
+                    foreach (Exception e in aex.Flatten().InnerExceptions)
+                    {
+                        log.PrintExeption(e);
+                    }
+
+                    SendErrorEmail($"Something went wrong while trying to process the submission batch for ORI:{ori}",
+                        $"Please check the logs for more" +
+                        $" details.{Environment.NewLine} Batch Folder Name {batchFolderName} {Environment.NewLine} " +
+                        $"{aex.ToFalttenString()}");
                 }
                 catch (Exception ex)
                 {
@@ -54,23 +66,19 @@ namespace NibrsXml.Processor
                     log.PrintFailedToProcess();
                     SendErrorEmail($"Something went wrong while trying to process the submission batch for ORI:{ori}",
                         $"Please check the logs for more" +
-                        $" details.{Environment.NewLine} Batch Folder Name {batchFolderName} {Environment.NewLine} Exception {ex.Message} {ex.InnerException}");
+                        $" details.{Environment.NewLine} Batch Folder Name {batchFolderName} {Environment.NewLine} {ex.ToReableString()}");
                 }
                 finally
                 {
-                    ReleaseLockOnAgency(agencyCode, lockKey, ori);                   
+                    ReleaseLockOnAgency(agencyCode, lockKey, ori);
                 }
             }
-
-            
         }
-
 
 
         #region Helpers
 
-       
-        private  static void SendErrorEmail(string subject, string body)
+        private static void SendErrorEmail(string subject, string body)
         {
             var _appSettingsReader = new AppSettingsReader();
             try

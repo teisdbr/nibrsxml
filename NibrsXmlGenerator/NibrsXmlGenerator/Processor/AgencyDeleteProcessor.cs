@@ -15,18 +15,17 @@ namespace NibrsXml.Processor
 
         public AgencyDeleteProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection) : base(logManager, agencyIncidentsCollection)
         {
-            
+            // sort the agencyBatch 
+            // Process the deletes in Last In First Out order 
+            AgencyBatchCollection = AgencyBatchCollection.OrderByDescending(grp => grp.Runnumber).ToList();
         }      
 
         public override async Task ProcessAsync()
         {
-            // sort the agencyBatch 
-            // Process the deletes in Last In First Out order 
-            AgencyBatchCollection = AgencyBatchCollection.OrderByDescending(grp => grp.Runnumber).ToList();
+            
             var resultTuple =
              CheckConditionToReportFbi(AgencyBatchCollection.ConvertAll(item => item.Runnumber), Ori.Trim());
-            BatchResponseReport batchResponseStatus = new BatchResponseReport(!resultTuple.Item1); // if conditon met to
-            // report to fbi, set the isFailedToFBI false, so that current runnumbers can be reportes to the fbi
+            var isAnyPendingToUpload = !resultTuple.Item1; // if conditon met to report to fbi, set the isAnyPendingToUpload false, so that current runnumbers can be reported to the fbi
 
 
             LogManager.PrintRunningInForceDeleteMode();
@@ -36,7 +35,7 @@ namespace NibrsXml.Processor
             {
                 List<Submission> submissions = new List<Submission>();
                 var runNumber = incidentList.Runnumber;
-
+                bool completedSuccessFully = false;
                 try
                 {
                     submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList();
@@ -47,35 +46,32 @@ namespace NibrsXml.Processor
 
                     LogManager.PrintTransformIntoDelete(runNumber);
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
-                    batchResponseStatus = await AttemptToReportDocumentsAsync(runNumber,  submissions, batchResponseStatus.IsFailedToFBI);
-                    if (batchResponseStatus.IsFailedToFBI &&
-                        resultTuple.Item2.FirstOrDefault(pendingRunNumberInfoTuple =>
-                            pendingRunNumberInfoTuple.Item1 == runNumber).Item2)
+                    completedSuccessFully =  await AttemptToReportDocumentsAsync(runNumber,  submissions, reportDocuments: !isAnyPendingToUpload);
+                    if (!completedSuccessFully &&
+                       ! resultTuple.Item2.Any(pendingRunNumber =>
+                            pendingRunNumber == runNumber))
                         throw new DeleteRequestAbortException(runNumber);
                     _nibrsBatchDal.Delete(runNumber, null);
-                }
-                catch (Exception e)
-                {
-                    ExceptionsLogger.Enqueue(Tuple.Create(e, ""));
-                    throw;
+
+                    // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
+                    isAnyPendingToUpload = !completedSuccessFully;
                 }
                 finally
-                {                    
-                    LogManager.PrintExceptions(ExceptionsLogger);
+                {  
                     LogManager.PrintProcessCompletedForRunNumber(runNumber);
                 }
             }
         }      
 
-        private (bool, List<(string, bool)>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string Ori)
+        private (bool, List<string>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string Ori)
         {
             var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori);
-            List<(string, bool)> runNumbersPendingToUpload = new List<(string, bool)>();
+            List<string> runNumbersPendingToUpload = new List<string>();
             foreach (DataRow row in nibrsBatchdt.Rows)
             {
                 if (row["Ori_number"].ToString() == Ori)
                 {
-                    var tuple = (row["runnumber"].ToString(), (bool)row["Is_Processed"]);
+                    var tuple = (row["runnumber"].ToString());
                     // get the pending runnumbers
                     runNumbersPendingToUpload.Add(tuple);
                 }
@@ -87,7 +83,7 @@ namespace NibrsXml.Processor
             // 3) based on above conditions initialize the reportToFbi 
             // you have to process deletes for all pending runnumbers in the database to report the runnumbers to FBI.
             bool reportToFbi = !runNumbersPendingToUpload.Any() ||
-                               runNumbersPendingToUpload.All(tuple => runNumbersToProcess.Contains(tuple.Item1));  
+                               runNumbersPendingToUpload.All(runNum => runNumbersToProcess.Contains(runNum));  
             return (reportToFbi, runNumbersPendingToUpload);
         }
 

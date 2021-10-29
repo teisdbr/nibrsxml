@@ -14,7 +14,7 @@ namespace NibrsXml.Processor
 {
     public class AgencyInsertOrReplaceProcessor : BaseProcessor
     {
-        public Func<string, string, Task<IncidentList>> BuildLibrsIncidentsListFunc { get; set; }
+        private Func<string, string, Task<IncidentList>> BuildLibrsIncidentsListFunc { get; set; }
 
         public AgencyInsertOrReplaceProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection,
             Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc) : base(logManager, agencyIncidentsCollection)
@@ -82,7 +82,13 @@ namespace NibrsXml.Processor
             return statusList.Any(status => status.HasErrorOccured);
         }
 
-
+        /// <summary>
+        /// Builds the submissions and sends them to FBI based on 'isAnyPendingToUpload' boolean and save the documents to the database. Reprocess boolean will report all documents with R action type when set to true.
+        /// </summary>
+        /// <param name="runNumbers"></param>
+        /// <param name="isAnyPendingToUpload"></param>
+        /// <param name="reProcess"></param>
+        /// <returns></returns>
         private async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<string> runNumbers,
           bool isAnyPendingToUpload, bool reProcess = false)
         {
@@ -94,8 +100,6 @@ namespace NibrsXml.Processor
                 return new List<SubmissionBatchStatus>();
             }
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
-            var batchResponseStatus = new BatchResponseReport(isAnyPendingToUpload);
-
             // sort them in First In First Out order
             incListCollection = incListCollection.OrderBy(list => list.Runnumber).ToList();
             foreach (var incidentList in incListCollection)
@@ -104,6 +108,7 @@ namespace NibrsXml.Processor
 
                 var runNumber = incidentList.Runnumber;
                 LogManager.PrintStartedProcessForRunNumber(runNumber);
+                bool completedSuccessFully = false;
                 try
                 {
                     //Build the submissions
@@ -133,35 +138,34 @@ namespace NibrsXml.Processor
                         _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors),
                             submissions.Count,
                             DateTime.Now, DateTime.Now, false);
-                    }
-                   
+                    }                  
 
-                    batchResponseStatus = await AttemptToReportDocumentsAsync(runNumber, submissions,  batchResponseStatus.IsFailedToFBI);
-
-                  
-
-                }
-                finally
-                {
-                    LogManager.PrintExceptions(ExceptionsLogger);
-                    LogManager.PrintProcessCompletedForRunNumber(runNumber);
-                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, batchResponseStatus.IsFailedToFBI);
-
+                    completedSuccessFully =  await AttemptToReportDocumentsAsync(runNumber, submissions, reportDocuments:  !isAnyPendingToUpload);
+                    _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
+                           submissions.Count, null, DateTime.Now, completedSuccessFully);
                     // Update the Nibrs Batch to have the RunNumber saying the data is processed
                     if (submissions != null)
                     {
-                        _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
-                            submissions.Count, null, DateTime.Now, !batchResponseStatus.IsFailedToFBI);
+
                         var submissionBatchStatus = new SubmissionBatchStatus()
                         {
                             RunNumber = runNumber,
                             Ori = Ori,
                             Environmennt = incidentList.Environment,
                             NoOfSubmissions = (submissions)?.Count() ?? 0,
-                            HasErrorOccured = batchResponseStatus.IsFailedToFBI
+                            HasErrorOccured = ! completedSuccessFully
                         };
                         submissionBatchStatusLst.Add(submissionBatchStatus);
                     }
+
+                    // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
+                    isAnyPendingToUpload = !completedSuccessFully;
+
+                }               
+                finally
+                {
+                    LogManager.PrintProcessCompletedForRunNumber(runNumber);
+                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, isAnyPendingToUpload);                    
                 }
             }
 
