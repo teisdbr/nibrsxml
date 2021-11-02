@@ -22,7 +22,9 @@ namespace NibrsXml.Processor
 
         public override async Task ProcessAsync()
         {
-            
+            if (!AgencyBatchCollection.Any())
+                return;
+
             var resultTuple =
              CheckConditionToReportFbi(AgencyBatchCollection.ConvertAll(item => item.Runnumber), Ori.Trim());
             var isAnyPendingToUpload = !resultTuple.Item1; // if conditon met to report to fbi, set the isAnyPendingToUpload false, so that current runnumbers can be reported to the fbi

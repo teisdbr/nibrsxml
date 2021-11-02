@@ -95,7 +95,7 @@ namespace NibrsXml.Processor
 
             var incListCollection =
                BuildMissingRunNumbers(runNumbers);
-            if (incListCollection == null)
+            if (incListCollection == null || ! incListCollection.Any())
             {
                 return new List<SubmissionBatchStatus>();
             }
@@ -160,12 +160,11 @@ namespace NibrsXml.Processor
 
                     // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
                     isAnyPendingToUpload = !completedSuccessFully;
-
+                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, isAnyPendingToUpload);
                 }               
                 finally
                 {
-                    LogManager.PrintProcessCompletedForRunNumber(runNumber);
-                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, isAnyPendingToUpload);                    
+                    LogManager.PrintProcessCompletedForRunNumber(runNumber);                                   
                 }
             }
 

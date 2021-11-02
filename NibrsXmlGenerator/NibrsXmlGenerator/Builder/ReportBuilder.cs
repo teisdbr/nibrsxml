@@ -34,10 +34,10 @@ namespace NibrsXml.Builder
         {
             //Initialize a new report
             var rpt = new Report();
-          
+
 
             try
-            {             
+            {
 
                 //Determine the unique report prefix to be used for all items that are to be identified within the report
                 incident.IncidentNumber = incident.IncidentNumber.Trim();
@@ -58,11 +58,11 @@ namespace NibrsXml.Builder
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.A.NibrsCode())
                 {
                     rpt.Incident = IncidentBuilder.Build(incident.Admin);
-                   
+
 
                     //Send only the incident for group A deletes
-                    if (incident.Admin.ActionType == "D") 
-                       return rpt;
+                    if (incident.Admin.ActionType == "D")
+                        return rpt;
                 }
 
                 BuildArrests(
@@ -73,15 +73,16 @@ namespace NibrsXml.Builder
                 if (rpt.Header.NibrsReportCategoryCode == NibrsReportCategoryCode.B.NibrsCode())
                 {
                     //Do not send any group B reports if there are no accompanying arrests
-                    if (rpt.Arrests.Count == 0) {
-                       
+                    if (rpt.Arrests.Count == 0)
+                    {
+
                         return null;
                     }
-                       
+
 
 
                     //Send only incident and arrests for group B deletes
-                    if ( incident.Admin.ActionType == "D")
+                    if (incident.Admin.ActionType == "D")
                     {
                         //if (rpt.Arrests.Count == 0)
                         //    return null;
@@ -149,7 +150,7 @@ namespace NibrsXml.Builder
                 //todo: make log writing shared or something
                 Console.WriteLine("Ori:\t\t{0}\nIncid num:\t{1}\nMessage:\t{2}\nStackTrace:\t{3}",
                     incident.Admin.ORINumber, incident.Admin.IncidentNumber, ex.Message, ex.StackTrace);
-                throw new Exception($"Ori: {incident.Admin.ORINumber}, Incid num:{incident.Admin.IncidentNumber}, Message:{ex.Message}, Stack Trace: {ex.StackTrace}",ex.InnerException);
+                throw new Exception($"Ori: {incident.Admin.ORINumber}, Incid num:{incident.Admin.IncidentNumber}, Message:{ex.Message}, Stack Trace: {ex.StackTrace}", ex.InnerException);
 
             }
         }
@@ -157,7 +158,7 @@ namespace NibrsXml.Builder
         #region Helper Functions
 
 
-      
+
 
         private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
         {
@@ -214,7 +215,7 @@ namespace NibrsXml.Builder
                 librsProperties.GroupBy(p => Tuple.Create(p.PropertyLossType, p.PropertyDescription));
 
             foreach (var prop in uniquePropLossTypeDesc)
-                if (prop.First().PropertyDescription == DrugNarcoticLibrsPropDesc &&  (prop.First().PropertyLossType == LibrsErrorConstants.PLNone ||
+                if (prop.First().PropertyDescription == DrugNarcoticLibrsPropDesc && (prop.First().PropertyLossType == LibrsErrorConstants.PLNone ||
                     prop.First().PropertyLossType == LibrsErrorConstants.PLSeiz))
                 {
                     // Translate LIBRS Suspected Drug Type to NIBRS Drug Category Code according to the LIBRS Spec
@@ -225,7 +226,7 @@ namespace NibrsXml.Builder
                     // Translate LIBRS Property Description to NIBRS ItemStatusCode
                     var librsTypeOfPropertyLoss = prop.First().PropertyLossType.TrimStart('0');
                     var nibrsItemStatusCode =
-                        ((ItemStatusCode) Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
+                        ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
                     // If no recovery date available, use incident date -- if incident date not available, use report date
                     var recoveryDate = string.IsNullOrWhiteSpace(prop.First().DateRecovered)
@@ -248,7 +249,7 @@ namespace NibrsXml.Builder
                     // Translate LIBRS Property Description to NIBRS ItemStatusCode
                     var librsTypeOfPropertyLoss = prop.First().PropertyLossType.TrimStart('0');
                     var nibrsItemStatusCode =
-                        ((ItemStatusCode) Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
+                        ((ItemStatusCode)Enum.Parse(typeof(ItemStatusCode), librsTypeOfPropertyLoss)).NibrsCode();
 
                     // todo: ??? May need to also create the minimal Item within condition for when the Property Loss Type (ItemStatusCode) is Unknown (8) 
                     if (nibrsItemStatusCode == ItemStatusCode.NONE.NibrsCode() || nibrsItemStatusCode == ItemStatusCode.UNKNOWN.NibrsCode())
@@ -273,7 +274,7 @@ namespace NibrsXml.Builder
                         {
                             return 0;
                         }
-                        
+
                     }).ToString(CultureInfo.InvariantCulture);
 
                     var propDes = prop.First().PropertyDescription.TrimNullIfEmpty();
@@ -309,15 +310,17 @@ namespace NibrsXml.Builder
                         ArrestCount = arrest.MultipleArresteeIndicator,
                         SeqNum = arrest.ArrestSeqNum,
                         //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCY ASSIGNED NIBRS
-                        Rank = Convert.ToDouble(LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[Regex.Replace(lrs.LrsNumber.Trim(), @"\s+", "")].Lrank)
+                        Rank = LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGetValue(Regex.Replace(lrs.LrsNumber.Trim(), @"\s+", ""), out LibrsLars value) ? Convert.ToDouble(value.Lrank) : (Double?)null,
+                        Group = lrs.OffenseGroup,
                     }
                 ).ToList();
 
-            var groupedArrests = arrestList.GroupBy(arr => arr.SeqNum,                arr => arr,
+            var groupedArrests = arrestList.GroupBy(arr => arr.SeqNum, arr => arr,
                 (seq, arrList) =>
                 {
-                    var minRank = arrList.Min(arr => arr.Rank);
-                    var arrest = arrList.First(arr => arr.Rank == minRank);
+                    var minRank = arrList.Where(arr => arr.Rank != null)?.Min(arr => arr.Rank);
+
+                    var arrest = minRank != null ? arrList.First(arr => arr.Rank == minRank) : arrList.OrderByDescending(arr => arr.Group).First();
                     return
                         new Arrest(
                             uniquePrefix + incident.Admin.ActionType + "-",
@@ -339,7 +342,7 @@ namespace NibrsXml.Builder
             return librsOffenses
                 .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
                 .GroupBy(offense => offense.AgencyAssignedNibrs + offense.OffConnecttoVic)
-                .Select(group => new {group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic})
+                .Select(group => new { group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic })
                 .Join(
                     victims,
                     offense => int.Parse(offense.OffConnecttoVic.Trim()),
@@ -365,7 +368,7 @@ namespace NibrsXml.Builder
         {
             //Initialize a new report
             var rpt = new Report();
-            rpt.Header =  new ReportHeader(NibrsReportCategoryCode.ZERO.NibrsCode(), "A", new ReportDate(agencyIncidentList.ReportYear + "-"+agencyIncidentList.ReportMonth), new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(agencyIncidentList.OriNumber))));
+            rpt.Header = new ReportHeader(NibrsReportCategoryCode.ZERO.NibrsCode(), "A", new ReportDate(agencyIncidentList.ReportYear + "-" + agencyIncidentList.ReportMonth), new ReportingAgency(new OrganizationAugmentation(new OrganizationORIIdentification(agencyIncidentList.OriNumber))));
             return rpt;
         }
     }
