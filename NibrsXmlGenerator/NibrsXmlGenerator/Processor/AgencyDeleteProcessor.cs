@@ -13,7 +13,7 @@ namespace NibrsXml.Processor
     public class AgencyDeleteProcessor : BaseProcessor
     {      
 
-        public AgencyDeleteProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection) : base(logManager, agencyIncidentsCollection)
+        public AgencyDeleteProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection, string environment) : base(logManager, agencyIncidentsCollection, environment)
         {
             // sort the agencyBatch 
             // Process the deletes in Last In First Out order 
@@ -67,7 +67,7 @@ namespace NibrsXml.Processor
 
         private (bool, List<string>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string Ori)
         {
-            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori);
+            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori,Environment);
             List<string> runNumbersPendingToUpload = new List<string>();
             foreach (DataRow row in nibrsBatchdt.Rows)
             {

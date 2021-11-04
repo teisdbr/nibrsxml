@@ -16,8 +16,8 @@ namespace NibrsXml.Processor
     {
         private Func<string, string, Task<IncidentList>> BuildLibrsIncidentsListFunc { get; set; }
 
-        public AgencyInsertOrReplaceProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection,
-            Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc) : base(logManager, agencyIncidentsCollection)
+        public AgencyInsertOrReplaceProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection,string environment,
+            Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc) : base(logManager, agencyIncidentsCollection, environment)
         {
             BuildLibrsIncidentsListFunc = buildLibrsIncidentsListFunc;
         }
@@ -32,7 +32,7 @@ namespace NibrsXml.Processor
 
             // foreach run number loop through and update the NIBRS  Batch
             // Process the Batch in same order as it is received
-            var dt = _nibrsBatchDal.Search(null, Ori);
+            var dt = _nibrsBatchDal.Search(null, Ori,Environment);
             // if no records present for the ORI in NIBRS batch, then this is first ever nibrs processing for the ORI,so no need to check the next runnumber in sequence from database.
             if (dt == null || dt?.Rows.Count == 0)
             {
@@ -42,7 +42,7 @@ namespace NibrsXml.Processor
             else
             {
                 // the stored procedure gives the run-numbers that are to be NIBRS processed in sequence
-                var runNumbersdt = _nibrsBatchDal.GetNextRunNumbersInSequence(Ori);
+                var runNumbersdt = _nibrsBatchDal.GetNextRunNumbersInSequence(Ori, Environment);
                 if (runNumbersdt?.Rows != null)
                     foreach (DataRow runNumber in runNumbersdt?.Rows)
                     {
@@ -59,7 +59,7 @@ namespace NibrsXml.Processor
             List<string> runNumbers = new List<string>();
 
             // get the pending runnumbers of the ORI
-            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori);
+            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori,Environment);
             foreach (DataRow row in nibrsBatchdt.Rows)
             {
                 if (row["ori_number"].ToString() == Ori)
@@ -132,7 +132,7 @@ namespace NibrsXml.Processor
                     LogManager.PrintAddingBatchDetailsToDatabase(runNumber);
 
                     // Update the Nibrs Batch table to have this run-number saying it is attempted to process. 
-                    var dt = _nibrsBatchDal.Search(runNumber, Ori);
+                    var dt = _nibrsBatchDal.Search(runNumber, Ori,Environment);
                     if (dt.Rows.Count == 0)
                     {
                         _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors),

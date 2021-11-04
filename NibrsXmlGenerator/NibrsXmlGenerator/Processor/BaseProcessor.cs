@@ -20,17 +20,19 @@ namespace NibrsXml.Processor
     {
         protected LogManager LogManager { get; }
         protected string Ori { get; set; }
+        protected string Environment { get; set; }
         protected AppSettingsReader _appSettingsReader;
         protected Nibrs_Batch _nibrsBatchDal;
         protected List<IncidentList> AgencyBatchCollection { get; set; }
 
 
-        protected BaseProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection)
+        protected BaseProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection, string environment)
         {
             LogManager = logManager;
             new ConcurrentQueue<Exception>();
             _nibrsBatchDal = new Nibrs_Batch();
             Ori = logManager.Ori;
+            Environment = environment;
             _appSettingsReader = new AppSettingsReader();
             AgencyBatchCollection = agencyIncidentsCollection =
                 agencyIncidentsCollection?.Where(incList => incList.Environment != "T" && incList.OriNumber == Ori)

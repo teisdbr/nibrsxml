@@ -45,7 +45,8 @@ namespace NibrsXml.Processor
                         continue;
                     }
 
-                    await new AgencyInsertOrReplaceProcessor(log, agencyIncidentsCollection,
+
+                    await new AgencyInsertOrReplaceProcessor(log, agencyIncidentsCollection, agencyCode.GetEnvironmentType(ori),
                         buildLibrsIncidentsListFunc).ProcessAsync();
                 }
                 catch (AggregateException aex)
