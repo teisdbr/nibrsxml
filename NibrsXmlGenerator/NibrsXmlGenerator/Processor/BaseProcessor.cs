@@ -35,7 +35,7 @@ namespace NibrsXml.Processor
             Environment = environment;
             _appSettingsReader = new AppSettingsReader();
             AgencyBatchCollection = agencyIncidentsCollection =
-                agencyIncidentsCollection?.Where(incList => incList.Environment != "T" && incList.OriNumber == Ori)
+                agencyIncidentsCollection?.Where(incList => incList.Environment == Environment && incList.OriNumber == Ori)
                     ?.ToList() ??
                 new List<IncidentList>();
         }
@@ -86,27 +86,30 @@ namespace NibrsXml.Processor
                         //Wrap both response and submission and then save to database
                         nibrsTrans = new NibrsXmlTransaction(sub, response);
 
-                        await HttpActions.Post<NibrsXmlTransaction, object>(nibrsTrans,
-                            baseURL + endpoint, null, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex is HttpRequestException)
-                        {
-                            errorTransactions.Add(nibrsTrans);
-                        }
-
-                        cancellationTokenSource.Cancel();
-                        throw new DocumentsFailedToSaveInDBException(runNumber, pathToSaveErrorTransactions, nibrsTrans,
-                            ex);
-                    }
-                    finally
-                    {
                         // Mark as upload failed.
                         if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed)
                         {
                             uploadSuccessFully = false;
                         }
+
+                        await HttpActions.Post<NibrsXmlTransaction, object>(nibrsTrans,
+                            baseURL + endpoint, null, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        cancellationTokenSource.Cancel();
+                        if (ex is HttpRequestException)
+                        {
+                            errorTransactions.Add(nibrsTrans);
+                            throw new DocumentsFailedToSaveInDBException(runNumber, pathToSaveErrorTransactions, nibrsTrans,
+                           ex);
+                        }
+
+                        throw;
+                       
+                    }
+                    finally
+                    {                   
 
                         //Release the semaphore. It is vital to ALWAYS release the semaphore so that tasks waiting to enter can takeover or else we will end up with a Semaphore that is forever locked.
                         //final block is recommended to release, program execution may crash or take a different path, this way you are guaranteed execution
