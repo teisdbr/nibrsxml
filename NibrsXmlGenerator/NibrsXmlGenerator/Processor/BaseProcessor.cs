@@ -77,7 +77,7 @@ namespace NibrsXml.Processor
                     }
                     await semaphoreSlim.WaitAsync();
                     NibrsXmlTransaction nibrsTrans = null;
-                    bool uploadSuccessFully = true;
+                    bool uploadSuccessFully = false;
                     try
                     {
                         var response = sub.IsNibrsReportable && reportToFbi && reportDocuments
@@ -85,11 +85,10 @@ namespace NibrsXml.Processor
                             : null;
                         //Wrap both response and submission and then save to database
                         nibrsTrans = new NibrsXmlTransaction(sub, response);
-
-                        // Mark as upload failed.
-                        if (nibrsTrans.Status == NibrsSubmissionStatusCodes.UploadFailed)
+                      
+                        if (nibrsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibrsTrans.Status != NibrsSubmissionStatusCodes.FaultedResponse)
                         {
-                            uploadSuccessFully = false;
+                            uploadSuccessFully = true;
                         }
 
                         await HttpActions.Post<NibrsXmlTransaction, object>(nibrsTrans,
