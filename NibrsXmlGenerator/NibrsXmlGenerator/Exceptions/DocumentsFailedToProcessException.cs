@@ -21,7 +21,7 @@ namespace NibrsXml.Exceptions
              : base($"Operation Aborted  while processing the runnumber {runnumber}. " +
                   $"Files failed to save in mongo clusters will be attempted to save in Directory:{path}." +
                    $" Incident Number: { doc?.Submission?.IncidentNumber ?? ""} , Arrest ID: {doc?.Submission?.Reports[0]?.Arrests?.FirstOrDefault()?.ActivityId?.Id }. " +
-                   $"Please check the logs and inner exception to analyze the issue.", inner)
+                   $"Please check the logs and inner exception to analyze the issue. ", inner)
         {
 
         }

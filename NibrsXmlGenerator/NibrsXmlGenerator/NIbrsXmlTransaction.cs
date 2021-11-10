@@ -165,7 +165,7 @@ namespace NibrsXml
                 if (NibrsSubmissionResponse.NibrsResponse != null 
                     && (NibrsSubmissionResponse.NibrsResponse?.ingestResponse?.status == NibrsResponseCodes.Accepted || NibrsSubmissionResponse?.NibrsResponse?.ingestResponse?.status == NibrsResponseCodes.Warnings))
                     return NibrsSubmissionStatusCodes.Accepted;
-                if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Errors)
+                if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse?.ingestResponse?.status == NibrsResponseCodes.Errors)
                     return NibrsSubmissionStatusCodes.Rejected;               
                 if ( NibrsSubmissionResponse.IsUploadFailed)
                     return NibrsSubmissionStatusCodes.UploadFailed;
