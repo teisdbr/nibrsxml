@@ -82,7 +82,7 @@
     <Compile Include="DataAccess\DatabaseClient.cs" />
     <Compile Include="DirectoryInfo.cs" />
     <Compile Include="Exceptions\DeleteRequestAbortException.cs" />
-    <Compile Include="Exceptions\DocumentsFailedToSaveInDBException.cs" />
+    <Compile Include="Exceptions\DocumentsFailedToProcessException.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="NibrsError\Error.cs" />

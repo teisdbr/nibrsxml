@@ -160,11 +160,13 @@ namespace NibrsXml
         {
             if (NibrsSubmissionResponse != null)
             {
+                 if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse?.queryErrors?.Length > 0)
+                    return NibrsSubmissionStatusCodes.FaultedResponse;
                 if (NibrsSubmissionResponse.NibrsResponse != null 
-                    && (NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Accepted || NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Warnings))
+                    && (NibrsSubmissionResponse.NibrsResponse?.ingestResponse?.status == NibrsResponseCodes.Accepted || NibrsSubmissionResponse?.NibrsResponse?.ingestResponse?.status == NibrsResponseCodes.Warnings))
                     return NibrsSubmissionStatusCodes.Accepted;
                 if (NibrsSubmissionResponse.NibrsResponse != null && NibrsSubmissionResponse.NibrsResponse.ingestResponse.status == NibrsResponseCodes.Errors)
-                    return NibrsSubmissionStatusCodes.Rejected;
+                    return NibrsSubmissionStatusCodes.Rejected;               
                 if ( NibrsSubmissionResponse.IsUploadFailed)
                     return NibrsSubmissionStatusCodes.UploadFailed;
                 if (NibrsSubmissionResponse.IsFormatError)

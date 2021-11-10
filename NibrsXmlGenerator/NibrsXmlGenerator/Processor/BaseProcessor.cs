@@ -98,18 +98,15 @@ namespace NibrsXml.Processor
                     catch (Exception ex)
                     {
                         cancellationTokenSource.Cancel();
-                        if (ex is HttpRequestException)
+                        if(nibrsTrans != null)
                         {
-                            errorTransactions.Add(nibrsTrans);
-                            throw new DocumentsFailedToSaveInDBException(runNumber, pathToSaveErrorTransactions, nibrsTrans,
-                           ex);
-                        }
-
-                        throw;
-                       
+                            WriteTransactions(nibrsTrans, pathToSaveErrorTransactions);
+                        }                       
+                        throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibrsTrans,
+                       ex);
                     }
                     finally
-                    {                   
+                    {
 
                         //Release the semaphore. It is vital to ALWAYS release the semaphore so that tasks waiting to enter can takeover or else we will end up with a Semaphore that is forever locked.
                         //final block is recommended to release, program execution may crash or take a different path, this way you are guaranteed execution
@@ -126,6 +123,30 @@ namespace NibrsXml.Processor
 
             var attemptResults = await Task.WhenAll(requestTasks.ToArray());
             return attemptResults.All(reported => reported);
+        }
+
+
+        private static void WriteTransactions(NibrsXmlTransaction trans, string path)
+        {
+            try
+            {
+                    // save failed files.
+                    string fileName = path + "\\" + trans?.Submission?.Runnumber;
+                    if (!Directory.Exists(fileName))
+                    {
+                        Directory.CreateDirectory(fileName);
+                    }
+
+                    var docName = trans?.Submission?.Id + ".json";
+                    string[] filePath = { fileName, docName };
+                    string errorPath = Path.Combine(filePath);
+                    File.WriteAllText(errorPath, trans?.JsonString);
+              
+            }
+            catch (AggregateException exception)
+            {
+
+            }
         }
     }
 }
