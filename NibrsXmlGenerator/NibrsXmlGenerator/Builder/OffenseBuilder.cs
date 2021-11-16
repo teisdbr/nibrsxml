@@ -75,14 +75,14 @@ namespace NibrsXml.Builder
             {
                 var offenseReport = new Offense();
                 offenseReport.Id = ExtractOffenseId(uniqueReportPrefix, offense.First().OffenseSeqNum);
-                offenseReport.UcrCode = ExtractNibrsCode(offense.First());               
+                offenseReport.UcrCode = ExtractNibrsCode(offense.First());
                 offenseReport.CriminalActivityCategoryCodes =
-                    ExtractNibrsCriminalActivityCategoryCodes(offense.First());
+                    ExtractNibrsCriminalActivityCategoryCodes(offenses, offenseReport.UcrCode);
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
                 offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
                 offenseReport.EntryPoint = offense.First().MethodOfEntry.TryBuild<OffenseEntryPoint>();
-                offenseReport.Forces = ExtractNibrsOffenseForces(offense.First(), offenseReport.UcrCode);
+                offenseReport.Forces = ExtractNibrsOffenseForces(offenses, offenseReport.UcrCode);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense.First());
                 // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
                 offenseReport.Location = new Location(offense.First().LocationType, uniqueReportPrefix);
@@ -107,21 +107,22 @@ namespace NibrsXml.Builder
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
         {
             //todo: what if None (88) or Unknown (99) exists together (Mutually Exclusive), return Unknown (99) for now. 
-            if (biasMotivationCodes.Any(code => code == "88")  && biasMotivationCodes.Any(code => code == "99")) return new List<string> { biasMotivationCodeTranslations["99"] };
+            if (biasMotivationCodes.Any(code => code == "88") && biasMotivationCodes.Any(code => code == "99")) return new List<string> { biasMotivationCodeTranslations["99"] };
             else if (biasMotivationCodes.Any(code => code == "88")) return new List<string> { biasMotivationCodeTranslations["88"] };
             else if ((biasMotivationCodes.Any(code => code == "99"))) return new List<string> { biasMotivationCodeTranslations["99"] };
 
             return biasMotivationCodes.Select(code => biasMotivationCodeTranslations[code]).ToList();
         }
 
-        private static List<string> ExtractNibrsCriminalActivityCategoryCodes(LIBRSOffense offense)
+        private static List<string> ExtractNibrsCriminalActivityCategoryCodes(List<LIBRSOffense> offenses, string nibrsCode)
         {
             var nibrsCriminalActivityCategoryCodes = new List<string>();
-            nibrsCriminalActivityCategoryCodes.TryAdd(
-                TranslateCriminalActivityCategoryCode(offense.CriminalActivity1),
-                TranslateCriminalActivityCategoryCode(offense.CriminalActivity2),
-                TranslateCriminalActivityCategoryCode(offense.CriminalActivity3));
-
+            var forces = new List<string>();
+            offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
+            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity1.Trim()));
+            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity2.Trim()));
+            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity3.Trim()));
+            nibrsCriminalActivityCategoryCodes.AddRange(forces.Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
             // Had to do distinct.. 
             return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
         }
@@ -156,40 +157,43 @@ namespace NibrsXml.Builder
 
             //Exception: If LIBRS is G, should be translated to N.
             // As N is mutually Exclusive with all other codes, if G or N are appread return N.
-            if (suspectedOfUsingCodes.Any( code => code == LibrsErrorConstants.OffGaming || code == LibrsErrorConstants.OffNotApp))
+            if (suspectedOfUsingCodes.Any(code => code == LibrsErrorConstants.OffGaming || code == LibrsErrorConstants.OffNotApp))
             {
                 offenseFactors.Add(LibrsErrorConstants.OffNotApp.TryBuild<OffenseFactor>());
                 return offenseFactors;
-            }              
+            }
 
             foreach (var code in suspectedOfUsingCodes)
-            {         
-              
+            {
+
                 offenseFactors.Add(code.TryBuild<OffenseFactor>());
             }
 
             return offenseFactors;
         }
 
-        private static List<OffenseForce> ExtractNibrsOffenseForces(LIBRSOffense offense, string nibrsCode)
+        private static List<OffenseForce> ExtractNibrsOffenseForces(List<LIBRSOffense> offenses, string nibrsCode)
         {
             // Librs accepts force code "99" for the offenses that doesn't require Weapon/Force code. But FBI (Nibrs) expects the code to be empty.
             // So created a list for the offenses that require force codes, to omit out force code that doesn't require one.
             var offensesRequireForceCode = new HashSet<string>
             {
-                 "09A", "09B", "09C", "100", "11A", "11B", "11C", "11D", "120", "13A", "13B", "210", "520", "64A", "64B"                
-                 
+                 "09A", "09B", "09C", "100", "11A", "11B", "11C", "11D", "120", "13A", "13B", "210", "520", "64A", "64B"
+
             };
-           
-           var nibrsOffenseForces = new List<OffenseForce>();
-            if(offensesRequireForceCode.Contains(nibrsCode)){
-                nibrsOffenseForces.TryAdd(
-                offense.WeaponForce1.Trim().TryBuild<OffenseForce>(),
-                offense.WeaponForce2.Trim().TryBuild<OffenseForce>(),
-                offense.WeaponForce3.Trim().TryBuild<OffenseForce>());
+
+            var nibrsOffenseForces = new List<OffenseForce>();
+            if (offensesRequireForceCode.Contains(nibrsCode))
+            {
+                var forces = new List<string>();
+                offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
+                offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce1.Trim()));
+                offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce2.Trim()));
+                offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce3.Trim()));
+                nibrsOffenseForces.AddRange(forces.Take(3).Select(wp => wp.TryBuild<OffenseForce>()));
                 return nibrsOffenseForces;
             }
-            return null;            
+            return null;
         }
 
         private static string ExtractNibrsAttemptedIndicator(LIBRSOffense offense)
@@ -199,6 +203,6 @@ namespace NibrsXml.Builder
                 : false.ToString().ToLower();
         }
 
-        
+
     }
 }
