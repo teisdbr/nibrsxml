@@ -34,8 +34,8 @@ namespace NibrsXml.Processor
             Ori = logManager.Ori;
             Environment = environment;
             _appSettingsReader = new AppSettingsReader();
-            AgencyBatchCollection = agencyIncidentsCollection =
-                agencyIncidentsCollection?.Where(incList => incList.Environment == Environment && incList.OriNumber == Ori)
+            AgencyBatchCollection = 
+                agencyIncidentsCollection?.Where(incList => (incList.Environment == Environment && Environment != "T" ) && incList.OriNumber == Ori )
                     ?.ToList() ??
                 new List<IncidentList>();
         }
