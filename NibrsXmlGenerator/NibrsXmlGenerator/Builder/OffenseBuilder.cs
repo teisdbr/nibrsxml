@@ -117,12 +117,12 @@ namespace NibrsXml.Builder
         private static List<string> ExtractNibrsCriminalActivityCategoryCodes(List<LIBRSOffense> offenses, string nibrsCode)
         {
             var nibrsCriminalActivityCategoryCodes = new List<string>();
-            var forces = new List<string>();
+            var crimeAct = new List<string>();
             offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
-            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity1.Trim()));
-            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity2.Trim()));
-            offenses.ForEach(off => forces.UniqueAdd(off.CriminalActivity3.Trim()));
-            nibrsCriminalActivityCategoryCodes.AddRange(forces.Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
+            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity1.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity2.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity3.Trim()));
+            nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
             // Had to do distinct.. 
             return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
         }
@@ -190,7 +190,7 @@ namespace NibrsXml.Builder
                 offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce1.Trim()));
                 offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce2.Trim()));
                 offenses.ForEach(off => forces.UniqueAdd(off.WeaponForce3.Trim()));
-                nibrsOffenseForces.AddRange(forces.Take(3).Select(wp => wp.TryBuild<OffenseForce>()));
+                nibrsOffenseForces.AddRange(forces.Where(force => force != string.Empty).Take(3).Select(wp => wp.TryBuild<OffenseForce>()));
                 return nibrsOffenseForces;
             }
             return null;
