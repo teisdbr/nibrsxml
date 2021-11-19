@@ -16,8 +16,10 @@ namespace NibrsXml.Processor
     {
         private Func<string, string, Task<IncidentList>> BuildLibrsIncidentsListFunc { get; set; }
 
-        public AgencyInsertOrReplaceProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection,string environment,
-            Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc) : base(logManager, agencyIncidentsCollection, environment)
+        public AgencyInsertOrReplaceProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection,
+            string environment,
+            Func<string, string, Task<IncidentList>> buildLibrsIncidentsListFunc) : base(logManager,
+            agencyIncidentsCollection, environment)
         {
             BuildLibrsIncidentsListFunc = buildLibrsIncidentsListFunc;
         }
@@ -32,7 +34,7 @@ namespace NibrsXml.Processor
 
             // foreach run number loop through and update the NIBRS  Batch
             // Process the Batch in same order as it is received
-            var dt = _nibrsBatchDal.Search(null, Ori,Environment);
+            var dt = _nibrsBatchDal.Search(null, Ori, Environment);
             // if no records present for the ORI in NIBRS batch, then this is first ever nibrs processing for the ORI,so no need to check the next runnumber in sequence from database.
             if (dt == null || dt?.Rows.Count == 0)
             {
@@ -55,28 +57,17 @@ namespace NibrsXml.Processor
 
         private async Task<bool> ProcessPendingTransactionsForOriAsync()
         {
-
-            List<string> runNumbers = new List<string>();
-
-            // get the pending runnumbers of the ORI
-            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori,Environment);
-            foreach (DataRow row in nibrsBatchdt.Rows)
-            {
-                if (row["ori_number"].ToString() == Ori)
-                {
-                    // get the pending runnumber
-                    runNumbers.UniqueAdd(row["runnumber"].ToString());
-                }
-            }
+            List<string> runNumbers = GetPendingRunNumbers();
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
 
             if (!runNumbers.Any())
                 return false;
-            else if (!reportToFbi)
+            if (!reportToFbi && CheckIfBatchIsNibrsReportable())
             {
                 // If Report to FBI is false, there is no use to reprocess just skip reprocess.
                 return true;
             }
+
             var statusList =
                 await RunBatchProcessAsync(runNumbers, false, reProcess: true);
             return statusList.Any(status => status.HasErrorOccured);
@@ -90,30 +81,27 @@ namespace NibrsXml.Processor
         /// <param name="reProcess"></param>
         /// <returns></returns>
         private async Task<List<SubmissionBatchStatus>> RunBatchProcessAsync(List<string> runNumbers,
-          bool isAnyPendingToUpload, bool reProcess = false)
+            bool isAnyPendingToUpload, bool reProcess = false)
         {
-
             var incListCollection =
-               BuildMissingRunNumbers(runNumbers);
-            if (incListCollection == null || ! incListCollection.Any())
+                BuildMissingRunNumbers(runNumbers);
+            if (incListCollection == null || !incListCollection.Any())
             {
                 return new List<SubmissionBatchStatus>();
             }
+
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             // sort them in First In First Out order
             incListCollection = incListCollection.OrderBy(list => list.Runnumber).ToList();
             foreach (var incidentList in incListCollection)
             {
-                List<Submission> submissions = new List<Submission>();
-
                 var runNumber = incidentList.Runnumber;
                 LogManager.PrintStartedProcessForRunNumber(runNumber);
-                bool completedSuccessFully = false;
                 try
                 {
                     //Build the submissions
-                    submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
-                                  new List<Submission>();
+                    var submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
+                                      new List<Submission>();
                     LogManager.PrintSubmissionSummary(submissions.Count, runNumber);
 
                     if (!submissions.Any())
@@ -132,39 +120,36 @@ namespace NibrsXml.Processor
                     LogManager.PrintAddingBatchDetailsToDatabase(runNumber);
 
                     // Update the Nibrs Batch table to have this run-number saying it is attempted to process. 
-                    var dt = _nibrsBatchDal.Search(runNumber, Ori,Environment);
+                    var dt = _nibrsBatchDal.Search(runNumber, Ori, Environment);
                     if (dt.Rows.Count == 0)
                     {
                         _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors),
                             submissions.Count,
-                            DateTime.Now, DateTime.Now, false);
-                    }                  
-
-                    completedSuccessFully =  await AttemptToReportDocumentsAsync(runNumber, submissions, reportDocuments:  !isAnyPendingToUpload);
-                    _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
-                           submissions.Count, null, DateTime.Now, completedSuccessFully);
-                    // Update the Nibrs Batch to have the RunNumber saying the data is processed
-                    if (submissions != null)
-                    {
-
-                        var submissionBatchStatus = new SubmissionBatchStatus()
-                        {
-                            RunNumber = runNumber,
-                            Ori = Ori,
-                            Environmennt = incidentList.Environment,
-                            NoOfSubmissions = (submissions)?.Count() ?? 0,
-                            HasErrorOccured = ! completedSuccessFully
-                        };
-                        submissionBatchStatusLst.Add(submissionBatchStatus);
+                            DateTime.Now, DateTime.Now, false,false);
                     }
 
+                    var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions,
+                        reportDocuments: !isAnyPendingToUpload);
+                    _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
+                        submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb);
+                    
+                    // Update the Nibrs Batch to have the RunNumber saying the data is processed
+                    var submissionBatchStatus = new SubmissionBatchStatus()
+                    {
+                        RunNumber = runNumber,
+                        Ori = Ori,
+                        Environment = incidentList.Environment,
+                        NoOfSubmissions = (submissions)?.Count() ?? 0,
+                        HasErrorOccured = !batchResponseStatus.UploadedToFbi
+                    };
+                    submissionBatchStatusLst.Add(submissionBatchStatus);
                     // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
-                    isAnyPendingToUpload = !completedSuccessFully;
-                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, isAnyPendingToUpload);
-                }               
+                    isAnyPendingToUpload = !batchResponseStatus.UploadedToFbi;
+                    LogManager.PrintStatusAfterProcessForRunNumber(runNumber, batchResponseStatus);
+                }
                 finally
                 {
-                    LogManager.PrintProcessCompletedForRunNumber(runNumber);                                   
+                    LogManager.PrintProcessCompletedForRunNumber(runNumber);
                 }
             }
 
@@ -172,8 +157,8 @@ namespace NibrsXml.Processor
         }
 
 
-        private  List<IncidentList> BuildMissingRunNumbers(
-          List<string> runNumbers)
+        private List<IncidentList> BuildMissingRunNumbers(
+            List<string> runNumbers)
         {
             var buildIncListFunc = new Func<string, IncidentList>((runNumber) =>
             {
@@ -187,6 +172,5 @@ namespace NibrsXml.Processor
                 buildIncListFunc(runNumber));
             return incidentList;
         }
-
     }
 }

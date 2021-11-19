@@ -91,6 +91,7 @@
     <Compile Include="Processor\AgencyDeleteProcessor.cs" />
     <Compile Include="Processor\AgencyInsertOrReplaceProcessor.cs" />
     <Compile Include="Processor\BaseProcessor.cs" />
+    <Compile Include="Processor\BatchResponseReport.cs" />
     <Compile Include="Processor\SubmissionBatchStatus.cs" />
     <Compile Include="Processor\Translator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

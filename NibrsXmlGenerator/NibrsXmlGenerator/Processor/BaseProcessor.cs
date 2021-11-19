@@ -7,11 +7,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using TeUtil.Extensions;
 using WebhookProcessor;
 
 namespace NibrsXml.Processor
@@ -21,15 +23,14 @@ namespace NibrsXml.Processor
         protected LogManager LogManager { get; }
         protected string Ori { get; set; }
         protected string Environment { get; set; }
-        protected AppSettingsReader _appSettingsReader;
-        protected Nibrs_Batch _nibrsBatchDal;
+        protected readonly AppSettingsReader _appSettingsReader;
+        protected readonly Nibrs_Batch _nibrsBatchDal;
         protected List<IncidentList> AgencyBatchCollection { get; set; }
 
 
         protected BaseProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection, string environment)
         {
             LogManager = logManager;
-            new ConcurrentQueue<Exception>();
             _nibrsBatchDal = new Nibrs_Batch();
             Ori = logManager.Ori;
             Environment = environment;
@@ -40,6 +41,11 @@ namespace NibrsXml.Processor
                 new List<IncidentList>();
         }
 
+        protected bool CheckIfBatchIsNibrsReportable()
+        {
+            return Environment == "C";
+        }
+
         public abstract Task ProcessAsync();
         /// <summary>
         /// Sends the Documents to the LCRX API, based on the reportDocuments boolean it will decide whether to report documents to the FBI. Returns true If all documets are processed succefully.
@@ -48,7 +54,7 @@ namespace NibrsXml.Processor
         /// <param name="documentsBatch"></param>
         /// <param name="reportDocuments"></param>
         /// <returns></returns>
-        protected async Task<bool> AttemptToReportDocumentsAsync(string runNumber,
+        protected async Task<BatchResponseReport> AttemptToReportDocumentsAsync(string runNumber,
             IEnumerable<Submission> documentsBatch, bool reportDocuments = true)
         {
             var agencyDir = new AgencyNibrsDirectoryInfo(Ori);
@@ -58,7 +64,7 @@ namespace NibrsXml.Processor
             var maxDegreeOfParallelism =
                 Convert.ToInt32(_appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
-            ConcurrentBag<NibrsXmlTransaction> errorTransactions = new ConcurrentBag<NibrsXmlTransaction>();
+            
 
 
             // The purpose of the semaphoreSlim to control the max number of concurrent tasks that can be ran in the requestTasks
@@ -66,42 +72,42 @@ namespace NibrsXml.Processor
             SemaphoreSlim semaphoreSlim = new SemaphoreSlim(maxDegreeOfParallelism, maxDegreeOfParallelism);
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
-            var requestTasks = new List<Task<bool>>();
+            var requestTasks = new List<Task<ResponseReport>>();
             foreach (var sub in documentsBatch)
             {
+                NibrsXmlTransaction nibsTrans = null;
                 requestTasks.Add(Task.Run(async () =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                     }
-                    await semaphoreSlim.WaitAsync();
-                    NibrsXmlTransaction nibrsTrans = null;
-                    bool uploadSuccessFully = false;
+                    await semaphoreSlim.WaitAsync(cancellationToken);
+                    ResponseReport responseReport = new ResponseReport();
                     try
                     {
-                        var response = sub.IsNibrsReportable && reportToFbi && reportDocuments
+                        var response = CheckIfBatchIsNibrsReportable() && reportToFbi && reportDocuments
                             ? NibrsSubmitter.SendReport(sub.Xml)
                             : null;
                         //Wrap both response and submission and then save to database
-                        nibrsTrans = new NibrsXmlTransaction(sub, response);
+                        nibsTrans = new NibrsXmlTransaction(sub, response);
                       
-                        if (nibrsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibrsTrans.Status != NibrsSubmissionStatusCodes.FaultedResponse)
+                        if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibsTrans.Status != NibrsSubmissionStatusCodes.FaultedResponse)
                         {
-                            uploadSuccessFully = true;
+                            responseReport.UploadedToFbi = true;
                         }
-
-                        await HttpActions.Post<NibrsXmlTransaction, object>(nibrsTrans,
+                        await HttpActions.Post<NibrsXmlTransaction, object>(nibsTrans,
                             baseURL + endpoint, null, true);
+                        responseReport.SavedInDb = true;
                     }
                     catch (Exception ex)
                     {
                         cancellationTokenSource.Cancel();
-                        if(nibrsTrans != null)
+                        if(nibsTrans != null)
                         {
-                            WriteTransactions(nibrsTrans, pathToSaveErrorTransactions);
+                            WriteTransactions(nibsTrans, pathToSaveErrorTransactions);
                         }                       
-                        throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibrsTrans,
+                        throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibsTrans,
                        ex);
                     }
                     finally
@@ -115,15 +121,33 @@ namespace NibrsXml.Processor
                         }
                     }
 
-                    return uploadSuccessFully;
+                    return responseReport;
 
                 }, cancellationToken));
             }
 
             var attemptResults = await Task.WhenAll(requestTasks.ToArray());
-            return attemptResults.All(reported => reported);
+            return new BatchResponseReport(attemptResults);
         }
 
+
+        protected List<string> GetPendingRunNumbers()
+        {
+            List<string> runNumbers = new List<string>();
+
+            // get the pending runnumbers of the ORI
+            var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori, Environment);
+            foreach (DataRow row in nibrsBatchdt.Rows)
+            {
+                if (row["ori_number"].ToString() == Ori)
+                {
+                    // get the pending runnumber
+                    runNumbers.UniqueAdd(row["runnumber"].ToString());
+                }
+            }
+
+            return runNumbers;
+        }
 
         private static void WriteTransactions(NibrsXmlTransaction trans, string path)
         {

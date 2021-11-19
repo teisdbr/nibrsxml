@@ -8,7 +8,7 @@
 
         public string Ori { get; set; }
 
-        public string Environmennt { get; set; }
+        public string Environment { get; set; }
 
         public bool HasErrorOccured { get; set; }
 

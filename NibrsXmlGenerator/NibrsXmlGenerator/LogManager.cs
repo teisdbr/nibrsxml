@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NibrsXml.Processor;
 
 namespace NibrsXml
 {
@@ -89,10 +90,10 @@ namespace NibrsXml
                        BatchFolderName);
         }
 
-        public void PrintStatusAfterProcessForRunNumber(string runnumber, bool status)
+        public void PrintStatusAfterProcessForRunNumber(string runnumber, BatchResponseReport status)
         {
             Log.WriteLog(Ori,
-                        $"{DateTime.Now} : Failed To Report FBI Or Process?:  {status} FOR RUN-NUMBER: {runnumber}",
+                        $"{DateTime.Now} : Uploaded To FBI :  {status.UploadedToFbi} , Saved In Database : {status.SavedInDb} FOR RUN-NUMBER: {runnumber}",
                         BatchFolderName);
         }
 
