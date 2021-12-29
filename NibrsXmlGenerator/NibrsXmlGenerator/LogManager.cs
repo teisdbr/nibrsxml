@@ -119,7 +119,7 @@ namespace NibrsXml
                BatchFolderName);
             if(!status)
             {
-                string strComments = $"{DateTime.Now} :WARNING: If you inteneted to report these deletes to FBI, please make sure you include all runnumbers that are pending to report FBI, may be by adjusting date range";
+                string strComments = $"{DateTime.Now} :WARNING: If you intent to report these deletes to FBI, please make sure you include all runnumbers that are pending to report FBI, may be by adjusting date range";
                 Log.WriteLog(Ori,
                strComments,
                BatchFolderName);
