@@ -135,10 +135,7 @@ namespace NibrsXml
         public void PrintExeption(Exception e)
         {
             Log.WriteLog(Ori,
-                                   "Message :" + e.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
-                                   e.StackTrace +
-                                   "" + Environment.NewLine  + "Date :" +
-                                   DateTime.Now, BatchFolderName);
+                                   $"Message :{e.Message}<br/>{Environment.NewLine} Inner Exception: {e.InnerException} {Environment.NewLine}   StackTrace :{e.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
             Log.WriteLog(Ori,
                 Environment.NewLine +
                 "-----------------------------------------------------------------------------" +
@@ -154,10 +151,7 @@ namespace NibrsXml
                 while (exceptionsLogger.TryDequeue(out Exception ex))
                 {
                     Log.WriteLog(Ori,
-                        "Message :" + ex.Message + "<br/>" + Environment.NewLine + "StackTrace :" +
-                        ex.StackTrace +
-                        "" + Environment.NewLine  + "Date :" +
-                        DateTime.Now, BatchFolderName);
+                        $"Message :{ex.Message}<br/>{Environment.NewLine}  Inner Exception: {ex.InnerException} {Environment.NewLine}   StackTrace :{ex.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
                     Log.WriteLog(Ori,
                         Environment.NewLine +
                         "-----------------------------------------------------------------------------" +

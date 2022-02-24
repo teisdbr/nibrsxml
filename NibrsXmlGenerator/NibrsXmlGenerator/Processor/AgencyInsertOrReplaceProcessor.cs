@@ -143,7 +143,7 @@ namespace NibrsXml.Processor
                         HasErrorOccured = !batchResponseStatus.UploadedToFbi
                     };
                     submissionBatchStatusLst.Add(submissionBatchStatus);
-                    // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
+                    // if all documents uploaded successFully from current batch then set uploadfail to false and vice versa.
                     isAnyPendingToUpload = !batchResponseStatus.UploadedToFbi;
                     LogManager.PrintStatusAfterProcessForRunNumber(runNumber, batchResponseStatus);
                 }
