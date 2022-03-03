@@ -151,7 +151,7 @@ namespace NibrsXml
                 while (exceptionsLogger.TryDequeue(out Exception ex))
                 {
                     Log.WriteLog(Ori,
-                        $"Message :{ex.Message}<br/>{Environment.NewLine}  Inner Exception: {ex.InnerException} {Environment.NewLine}   StackTrace :{ex.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
+                        $"Message :{ex.Message} {Environment.NewLine}  Inner Exception: {ex.InnerException} {Environment.NewLine}   StackTrace :{ex.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
                     Log.WriteLog(Ori,
                         Environment.NewLine +
                         "-----------------------------------------------------------------------------" +

@@ -174,7 +174,7 @@ namespace NibrsXml
             }
             
             // Assuming if no Response/no match treat it as upload failed.
-            return NibrsSubmissionStatusCodes.UploadFailed;
+            return NibrsSubmissionStatusCodes.NotReported;
 
         }
 
