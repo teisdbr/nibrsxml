@@ -35,8 +35,8 @@ namespace NibrsXml.Processor
             Ori = logManager.Ori;
             Environment = environment;
             _appSettingsReader = new AppSettingsReader();
-            AgencyBatchCollection = 
-                agencyIncidentsCollection?.Where(incList => (incList.Environment == Environment && Environment != "T" ) && incList.OriNumber == Ori )
+            AgencyBatchCollection =
+                agencyIncidentsCollection?.Where(incList => (incList.Environment == Environment && Environment != "T") && incList.OriNumber == Ori)
                     ?.ToList() ??
                 new List<IncidentList>();
         }
@@ -64,7 +64,7 @@ namespace NibrsXml.Processor
             var maxDegreeOfParallelism =
                 Convert.ToInt32(_appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
-            
+
 
 
             // The purpose of the semaphoreSlim to control the max number of concurrent tasks that can be ran in the requestTasks
@@ -91,7 +91,7 @@ namespace NibrsXml.Processor
                             : null;
                         //Wrap both response and submission and then save to database
                         nibsTrans = new NibrsXmlTransaction(sub, response);
-                      
+
                         if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibsTrans.Status != NibrsSubmissionStatusCodes.FaultedResponse)
                         {
                             responseReport.UploadedToFbi = true;
@@ -103,10 +103,10 @@ namespace NibrsXml.Processor
                     catch (Exception ex)
                     {
                         cancellationTokenSource.Cancel();
-                        if(nibsTrans != null)
+                        if (nibsTrans != null)
                         {
                             WriteTransactions(nibsTrans, pathToSaveErrorTransactions);
-                        }                       
+                        }
                         throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibsTrans,
                        ex);
                     }
@@ -131,9 +131,9 @@ namespace NibrsXml.Processor
         }
 
 
-        protected List<string> GetPendingRunNumbers()
+        public List<PendingRunNumbers> GetPendingRunNumbers()
         {
-            List<string> runNumbers = new List<string>();
+            List<PendingRunNumbers> runNumbers = new List<PendingRunNumbers>();
 
             // get the pending runnumbers of the ORI
             var nibrsBatchdt = _nibrsBatchDal.GetORIsWithPendingIncidentsToProcess(Ori, Environment);
@@ -141,8 +141,7 @@ namespace NibrsXml.Processor
             {
                 if (row["ori_number"].ToString() == Ori)
                 {
-                    // get the pending runnumber
-                    runNumbers.UniqueAdd(row["runnumber"].ToString());
+                    runNumbers.Add(new PendingRunNumbers(row));
                 }
             }
 
@@ -153,23 +152,40 @@ namespace NibrsXml.Processor
         {
             try
             {
-                    // save failed files.
-                    string fileName = path + "\\" + trans?.Submission?.Runnumber;
-                    if (!Directory.Exists(fileName))
-                    {
-                        Directory.CreateDirectory(fileName);
-                    }
+                // save failed files.
+                string fileName = path + "\\" + trans?.Submission?.Runnumber;
+                if (!Directory.Exists(fileName))
+                {
+                    Directory.CreateDirectory(fileName);
+                }
 
-                    var docName = trans?.Submission?.Id + ".json";
-                    string[] filePath = { fileName, docName };
-                    string errorPath = Path.Combine(filePath);
-                    File.WriteAllText(errorPath, trans?.JsonString);
-              
+                var docName = trans?.Submission?.Id + ".json";
+                string[] filePath = { fileName, docName };
+                string errorPath = Path.Combine(filePath);
+                File.WriteAllText(errorPath, trans?.JsonString);
+
             }
             catch (AggregateException exception)
             {
 
             }
         }
+
     }
+     public class PendingRunNumbers
+    {
+        public PendingRunNumbers(DataRow dataRow)
+        {
+            RunNumber = dataRow["runnumber"].ToString();
+            IsUploadedToFBI = dataRow["is_uploaded_to_fbi"] != null && dataRow["is_uploaded_to_fbi"].ToString() != "" ? Boolean.Parse(dataRow["is_uploaded_to_fbi"].ToString()) : (bool?)null;
+            IsSavedToDb = dataRow["is_saved_to_db"] != null  && dataRow["is_saved_to_db"].ToString() != "" ? Boolean.Parse(dataRow["is_saved_to_db"].ToString()) : (bool?)null;           
+            PendingDeletes = dataRow["pending_deletes"] != null && dataRow["pending_deletes"].ToString() != "" ? Boolean.Parse(dataRow["pending_deletes"].ToString()) : (bool?)null;
+        }
+       public string RunNumber;
+       public bool? IsUploadedToFBI;
+       public bool? IsSavedToDb;
+       public bool? PendingDeletes;
+    }
+
+
 }

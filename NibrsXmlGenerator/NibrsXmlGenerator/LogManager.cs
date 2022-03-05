@@ -135,7 +135,7 @@ namespace NibrsXml
         public void PrintExeption(Exception e)
         {
             Log.WriteLog(Ori,
-                                   $"Message :{e.Message}<br/>{Environment.NewLine} Inner Exception: {e.InnerException} {Environment.NewLine}   StackTrace :{e.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
+                                   $"Message :{e.Message} {Environment.NewLine} Inner Exception: {e.InnerException} {Environment.NewLine}   StackTrace :{e.StackTrace}{Environment.NewLine}Date :{DateTime.Now}", BatchFolderName);
             Log.WriteLog(Ori,
                 Environment.NewLine +
                 "-----------------------------------------------------------------------------" +

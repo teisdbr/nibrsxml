@@ -57,7 +57,7 @@ namespace NibrsXml.Processor
 
         private async Task<bool> ProcessPendingTransactionsForOriAsync()
         {
-            List<string> runNumbers = GetPendingRunNumbers();
+            List<string> runNumbers = GetPendingRunNumbers().Select(pd => pd.RunNumber).Distinct().ToList();
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
 
             if (!runNumbers.Any())
@@ -125,13 +125,13 @@ namespace NibrsXml.Processor
                     {
                         _nibrsBatchDal.Add(runNumber, incidentList.Count(incList => !incList.HasErrors),
                             submissions.Count,
-                            DateTime.Now, DateTime.Now, false,false);
+                            DateTime.Now, DateTime.Now, false,false,false);
                     }
 
                     var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions,
                         reportDocuments: !isAnyPendingToUpload);
                     _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
-                        submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb);
+                        submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb,false);
                     
                     // Update the Nibrs Batch to have the RunNumber saying the data is processed
                     var submissionBatchStatus = new SubmissionBatchStatus()

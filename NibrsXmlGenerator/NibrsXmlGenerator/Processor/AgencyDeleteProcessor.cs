@@ -48,7 +48,12 @@ namespace NibrsXml.Processor
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
                    var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, reportDocuments: !isAnyPendingToUpload);
                     if (!batchResponseStatus.UploadedToFbi && resultTuple.Item2.All(pendingRunNumber => pendingRunNumber != runNumber))
+                    {
+                        _nibrsBatchDal.Edit(runNumber, null, null, null, null, null, null,true);
+
                         throw new DeleteRequestAbortException(runNumber);
+                    }
+                       
                     _nibrsBatchDal.Delete(runNumber, null);
 
                     // if all documents uploaded successFully from current batch then set any upload fail to false and vice versa.
@@ -63,15 +68,16 @@ namespace NibrsXml.Processor
 
         private (bool, List<string>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string Ori)
         {
-            List<string> runNumbersPendingToUpload = GetPendingRunNumbers();
-            // HERE we are deciding whether the current batch reported to FBI or not, To process the runnumbers in the sequence we are doing below condition checks
+            List<PendingRunNumbers> runNumbersPendingToUpload = GetPendingRunNumbers();
+            var  runNumbers = runNumbersPendingToUpload.Where(pd => pd.IsUploadedToFBI == false).Select(pd => pd.RunNumber).ToList();
+            // HERE we are deciding whether the current batch should be reported to FBI or not, To process the runnumbers in the sequence we are doing below condition checks
             // 1) check if any pending runnumbers to upload? if none return true
             // 2) If any pending then check if the runNumbers to process in the provided 'runNumbersToProcess' includes all the runNumbers that are pending according to database
             // 3) based on above conditions initialize the reportToFbi 
             // you have to process deletes for all pending runnumbers in the database to report the runnumbers to FBI.
-            bool reportToFbi = !runNumbersPendingToUpload.Any() ||
-                               runNumbersPendingToUpload.All(runNumbersToProcess.Contains);  
-            return (reportToFbi, runNumbersPendingToUpload);
+            bool reportToFbi = !runNumbers.Any() ||
+                               runNumbers.All(runNumbersToProcess.Contains);  
+            return (reportToFbi, runNumbers);
         }
 
     }
