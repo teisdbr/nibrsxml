@@ -24,6 +24,13 @@ namespace NibrsXml
             BatchFolderName = batchFolderName;
         }
 
+        public void Print(string message)
+        {
+            Log.WriteLog(Ori,
+                      message,
+                       BatchFolderName);
+        }
+
         public void PrintSubmissionSummary(int count, string runnumber)
         {
             Log.WriteLog(Ori,
