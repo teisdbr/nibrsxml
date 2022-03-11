@@ -84,8 +84,13 @@ namespace NibrsXml.Builder
                 offenseReport.EntryPoint = offense.First().MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offenses, offenseReport.UcrCode);
                 offenseReport.AttemptedIndicator = ExtractNibrsAttemptedIndicator(offense.First());
-                // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
-                offenseReport.Location = new Location(offense.First().LocationType, uniqueReportPrefix);
+                if (offenseReport.UcrCode == "09A" && offenseReport.AttemptedIndicator.ToLower() == "true")
+                {
+                    offenseReport.UcrCode = "13A";
+                    offenseReport.AttemptedIndicator = false.ToString().ToLower();
+                }
+                    // todo: ??? Does the FBI want multiple category codes per location or multiple locations with distinct category codes?
+                    offenseReport.Location = new Location(offense.First().LocationType, uniqueReportPrefix);
                 offenseReports.Add(offenseReport);
             }
 
@@ -198,6 +203,7 @@ namespace NibrsXml.Builder
 
         private static string ExtractNibrsAttemptedIndicator(LIBRSOffense offense)
         {
+            
             return offense.AttemptedCompleted == offenseAttemptedCode
                 ? true.ToString().ToLower()
                 : false.ToString().ToLower();
