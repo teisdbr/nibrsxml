@@ -92,7 +92,7 @@ namespace NibrsXml.Processor
                         //Wrap both response and submission and then save to database
                         nibsTrans = new NibrsXmlTransaction(sub, response);
 
-                        if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibsTrans.Status != NibrsSubmissionStatusCodes.FaultedResponse)
+                        if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed)
                         {
                             responseReport.UploadedToFbi = true;
                         }
