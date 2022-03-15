@@ -49,7 +49,7 @@ namespace NibrsXml.Processor
                    var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, reportDocuments: !isAnyPendingToUpload);
                     if (!batchResponseStatus.UploadedToFbi && resultTuple.Item2.All(pendingRunNumber => pendingRunNumber != runNumber))
                     {
-                        _nibrsBatchDal.Edit(runNumber, null, null, null, null, null, null,true);
+                        _nibrsBatchDal.Edit(runNumber, null, null, null, DateTime.Now, null, null,true);
 
                         throw new DeleteRequestAbortException(runNumber);
                     }

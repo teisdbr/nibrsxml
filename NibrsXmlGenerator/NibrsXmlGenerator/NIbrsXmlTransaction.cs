@@ -153,7 +153,7 @@ namespace NibrsXml
 
         private string  SetTransactionStatus()
         {
-            return Submission.IsNibrsReportable ? AnalyzeResponse() : NibrsSubmissionStatusCodes.NotReported;
+            return Submission.IsNibrsReportable ? AnalyzeResponse() : NibrsSubmissionStatusCodes.NotReportable;
         }
 
         public  string AnalyzeResponse()
