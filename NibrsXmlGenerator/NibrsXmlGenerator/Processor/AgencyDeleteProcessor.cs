@@ -66,6 +66,17 @@ namespace NibrsXml.Processor
             }
         }      
 
+
+        //TODO: Get Back to Implement this method when we have developement hours.
+        private void ApplyOptimalStrategy(string runNumber,
+            IEnumerable<Submission> documentsBatch, bool reportDocuments)
+        {
+            // search NibrsBatch and get details
+            // if pending  is false and uploaded is false we can apply local delete eg: Delete By Runnumber since we are only modifying local database (Not Caring about FBI)
+            // if partially is true  or uploaded is true reported then attempt to FBI by standard process
+
+        }
+
         private (bool, List<string>) CheckConditionToReportFbi(List<string> runNumbersToProcess, string Ori)
         {
             List<PendingRunNumbers> runNumbersPendingToUpload = GetPendingRunNumbers();
