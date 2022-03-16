@@ -342,13 +342,13 @@ namespace NibrsXml.Builder
             return librsOffenses
                 .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
                 .GroupBy(offense => offense.AgencyAssignedNibrs + offense.OffConnecttoVic)
-                .Select(group => new { group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic })
+                .Select(group => new { group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic,group.First().OffenseSeqNum })
                 .Join(
                     victims,
                     offense => int.Parse(offense.OffConnecttoVic.Trim()),
                     victim => int.Parse(victim.SeqNum.Trim()),
                     (offense, victim) =>
-                        new OffenseVictimAssociation(offenses.First(off => off.UcrCode == offense.AgencyAssignedNibrs),
+                        new OffenseVictimAssociation(offenses.First(off => off.RelationshipMetadata == offense.OffenseSeqNum),
                             victim)).Distinct().ToList();
         }
 
