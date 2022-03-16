@@ -143,6 +143,9 @@ namespace NibrsXml.Builder
                     rpt.Victims,
                     incident.Offense);
 
+                //apply few manupulations that are missing in LIBRS but required by NIBRS
+                AdjustToNibrs(rpt);
+
                 return rpt;
             }
             catch (Exception ex)
@@ -154,10 +157,28 @@ namespace NibrsXml.Builder
 
             }
         }
+        /// <summary>
+        /// Manipulate the report to comply with NIBRS validations.
+        /// </summary>
+        /// <param name="rpt"></param>
+        private static void AdjustToNibrs(Report rpt)
+        {
+            // we are manipulate the ucr code so that FBI doesn't complain
+            rpt.Offenses.ForEach(offenseReport =>
+            {
+
+                if (offenseReport.UcrCode == "09A" && offenseReport.AttemptedIndicator.ToLower() == "true")
+                {
+                    offenseReport.UcrCode = "13A";
+                    offenseReport.AttemptedIndicator = false.ToString().ToLower();
+                }
+            });
+            
+        }
 
         #region Helper Functions
 
-
+      
 
 
         private static List<string> UniqueBiasMotivationCodes(List<LIBRSOffender> offenders)
@@ -339,6 +360,16 @@ namespace NibrsXml.Builder
         private static List<OffenseVictimAssociation> BuildOffenseVictimAssociations(List<Offense> offenses,
             List<Victim> victims, List<LIBRSOffense> librsOffenses)
         {
+
+            if(librsOffenses.HasResultsWhere(inc => inc.IncidentNumber.Trim() == "21-110413"))
+            {
+                var test = librsOffenses
+                .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
+                .GroupBy(offense => offense.AgencyAssignedNibrs + offense.OffConnecttoVic)
+                .Select(group => new { group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic, group.First().OffenseSeqNum });
+
+            }
+
             return librsOffenses
                 .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
                 .GroupBy(offense => offense.AgencyAssignedNibrs + offense.OffConnecttoVic)
