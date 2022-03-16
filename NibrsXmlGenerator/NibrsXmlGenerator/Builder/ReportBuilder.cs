@@ -361,14 +361,6 @@ namespace NibrsXml.Builder
             List<Victim> victims, List<LIBRSOffense> librsOffenses)
         {
 
-            if(librsOffenses.HasResultsWhere(inc => inc.IncidentNumber.Trim() == "21-110413"))
-            {
-                var test = librsOffenses
-                .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
-                .GroupBy(offense => offense.AgencyAssignedNibrs + offense.OffConnecttoVic)
-                .Select(group => new { group.First().AgencyAssignedNibrs, group.First().OffConnecttoVic, group.First().OffenseSeqNum });
-
-            }
 
             return librsOffenses
                 .Where(offense => offense.OffenseGroup.Equals("A", StringComparison.OrdinalIgnoreCase))
