@@ -75,7 +75,6 @@ namespace NibrsXml.Builder
             {
                 var offenseReport = new Offense();
                 offenseReport.Id = ExtractOffenseId(uniqueReportPrefix, offense.First().OffenseSeqNum);
-                offenseReport.RelationshipMetadata = offense.First().OffenseSeqNum; // In this case we are preserving LIBRS seq number, which might be needed later for association.
                 offenseReport.UcrCode = ExtractNibrsCode(offense.First());
                 offenseReport.CriminalActivityCategoryCodes =
                     ExtractNibrsCriminalActivityCategoryCodes(offenses, offenseReport.UcrCode);
