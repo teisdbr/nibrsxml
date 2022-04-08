@@ -143,7 +143,7 @@ namespace NibrsXml.Builder
                     rpt.Victims,
                     incident.Offense);
 
-                //apply few manupulations that are missing in LIBRS but required by NIBRS
+                //apply few maipulations that are missing in LIBRS but required by NIBRS
                 AdjustToNibrs(rpt);
 
                 return rpt;
