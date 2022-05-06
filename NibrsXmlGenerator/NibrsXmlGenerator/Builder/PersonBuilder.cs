@@ -470,6 +470,7 @@ namespace NibrsXml.Builder
             {
                 "100",
                 "11A",
+                "11B",
                 "11C",
                 "11D",
                 "120",
