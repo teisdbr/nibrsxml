@@ -119,9 +119,9 @@ namespace NibrsXml.Builder
             var nibrsCriminalActivityCategoryCodes = new List<string>();
             var crimeAct = new List<string>();
             offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
-            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity1.Trim() == "I" || off.CriminalActivity1.Trim() == "X" ? "P" : off.CriminalActivity1.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity2.Trim() == "I" || off.CriminalActivity2.Trim() == "X" ? "P" : off.CriminalActivity2.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd(off.CriminalActivity3.Trim() == "I" || off.CriminalActivity3.Trim() == "X" ? "P" : off.CriminalActivity3.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs != "720" ) || off.CriminalActivity1.Trim() == "X" ? "P" : off.CriminalActivity1.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs != "720" ) || off.CriminalActivity2.Trim() == "X" ? "P" : off.CriminalActivity2.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs != "720" ) || off.CriminalActivity3.Trim() == "X" ? "P" : off.CriminalActivity3.Trim()));
             nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
             // Had to do distinct.. 
             return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
