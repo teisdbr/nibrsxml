@@ -128,7 +128,7 @@ namespace NibrsXml.Processor
                             DateTime.Now, DateTime.Now, false,false,false);
                     }
 
-                    var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions,
+                    var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions, incidentList,
                         reportDocuments: !isAnyPendingToUpload);
                     _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
                         submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb,false);

@@ -46,7 +46,7 @@ namespace NibrsXml.Processor
                     submissions = Translator.TransformIntoDeletes(submissions);
                     LogManager.PrintTransformIntoDelete(runNumber);
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
-                   var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, reportDocuments: !isAnyPendingToUpload);
+                   var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, incidentList, reportDocuments: !isAnyPendingToUpload);
                     if (!batchResponseStatus.UploadedToFbi && resultTuple.Item2.All(pendingRunNumber => pendingRunNumber != runNumber))
                     {
                         _nibrsBatchDal.Edit(runNumber, null, null, null, DateTime.Now, null, null,true);

@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TeUtil.Extensions;
 using WebhookProcessor;
+using Newtonsoft.Json;
 
 namespace NibrsXml.Processor
 {
@@ -55,7 +56,7 @@ namespace NibrsXml.Processor
         /// <param name="reportDocuments"></param>
         /// <returns></returns>
         protected async Task<BatchResponseReport> AttemptToReportDocumentsAsync(string runNumber,
-            IEnumerable<Submission> documentsBatch, bool reportDocuments = true)
+            IEnumerable<Submission> documentsBatch, IncidentList incidentList, bool reportDocuments = true)
         {
             var agencyDir = new AgencyNibrsDirectoryInfo(Ori);
             var pathToSaveErrorTransactions = agencyDir.GetErroredDirectory().FullName;
@@ -78,25 +79,37 @@ namespace NibrsXml.Processor
                 NibrsXmlTransaction nibsTrans = null;
                 requestTasks.Add(Task.Run(async () =>
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
-                    await semaphoreSlim.WaitAsync(cancellationToken);
-                    ResponseReport responseReport = new ResponseReport();
-                    try
-                    {
-                        var response = CheckIfBatchIsNibrsReportable() && reportToFbi && reportDocuments
-                            ? NibrsSubmitter.SendReport(sub.Xml)
-                            : null;
-                        //Wrap both response and submission and then save to database
-                        nibsTrans = new NibrsXmlTransaction(sub, response);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
+                await semaphoreSlim.WaitAsync(cancellationToken);
+                ResponseReport responseReport = new ResponseReport();
+                try
+                {
+                    var response = CheckIfBatchIsNibrsReportable() && reportToFbi && reportDocuments
+                        ? NibrsSubmitter.SendReport(sub.Xml)
+                        : null;
+                    //Wrap both response and submission and then save to database
+                    nibsTrans = new NibrsXmlTransaction(sub, response);
 
-                        if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibsTrans.Status != NibrsSubmissionStatusCodes.NotReported)
-                        {
-                            responseReport.UploadedToFbi = true;
-                        }
-                        await HttpActions.Post<NibrsXmlTransaction, object>(nibsTrans,
+                    if (nibsTrans.Status != NibrsSubmissionStatusCodes.UploadFailed && nibsTrans.Status != NibrsSubmissionStatusCodes.NotReported)
+                    {
+                        responseReport.UploadedToFbi = true;
+                    }
+
+                    //Clean up object because it is causing an issue on HTTP POST and can't use Tuple
+                    //Issue: Self referencing loop detected with type 
+                    incidentList = JsonConvert.DeserializeObject<IncidentList>
+                                    (
+                                        JsonConvert.SerializeObject(incidentList, new JsonSerializerSettings
+                                            {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})
+                                    );
+                  
+
+                        //await HttpActions.Post<Tuple<NibrsXmlTransaction, IncidentList>, object>(new Tuple<NibrsXmlTransaction, IncidentList>(nibsTrans, copyIncidentList),
+                        //    baseURL + endpoint, null, true);
+                        await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, IncidentList>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, IncidentList>(nibsTrans, incidentList),
                             baseURL + endpoint, null, true);
                         responseReport.SavedInDb = true;
                     }
@@ -186,6 +199,4 @@ namespace NibrsXml.Processor
        public bool? IsSavedToDb;
        public bool? PendingDeletes;
     }
-
-
 }
