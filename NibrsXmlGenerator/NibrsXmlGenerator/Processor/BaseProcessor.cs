@@ -74,6 +74,15 @@ namespace NibrsXml.Processor
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
             var requestTasks = new List<Task<ResponseReport>>();
+
+            //Clean up object because it is causing an issue on HTTP POST and can't use Tuple
+            //Issue: Self referencing loop detected with type 
+            incidentList = JsonConvert.DeserializeObject<IncidentList>
+                            (
+                                JsonConvert.SerializeObject(incidentList, new JsonSerializerSettings
+                                { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                            );
+
             foreach (var sub in documentsBatch)
             {
                 NibrsXmlTransaction nibsTrans = null;
@@ -97,42 +106,56 @@ namespace NibrsXml.Processor
                     {
                         responseReport.UploadedToFbi = true;
                     }
+                        //Remove delete incident and send the incident pertaining that the submission report only to lessen the data transfer
+                        //Sending the filterIncidentList is not related to the FBI submission data. This is for retrieving the lrs number
+                        //Scenario: 1 - ZeroReport doesn't have any incident
+                        //          2 - If submission.report.incidentNumber is not Null. use sub.incidentNumber to filter the incidentlist
+                        //          3 - If submission.report.incidentNumber is Null then get IncidentNumber from ArrestId to filter incidentlist
 
-                    //Clean up object because it is causing an issue on HTTP POST and can't use Tuple
-                    //Issue: Self referencing loop detected with type 
-                    incidentList = JsonConvert.DeserializeObject<IncidentList>
-                                    (
-                                        JsonConvert.SerializeObject(incidentList, new JsonSerializerSettings
-                                            {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})
-                                    );
-                  
-
-                        //await HttpActions.Post<Tuple<NibrsXmlTransaction, IncidentList>, object>(new Tuple<NibrsXmlTransaction, IncidentList>(nibsTrans, copyIncidentList),
-                        //    baseURL + endpoint, null, true);
-                        await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, IncidentList>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, IncidentList>(nibsTrans, incidentList),
-                            baseURL + endpoint, null, true);
-                        responseReport.SavedInDb = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        cancellationTokenSource.Cancel();
-                        if (nibsTrans != null)
-                        {
-                            WriteTransactions(nibsTrans, pathToSaveErrorTransactions);
+                        LIBRSIncident filterIncidentList = null; 
+                        if (sub.IncidentNumber != null)
+                        {   
+                            filterIncidentList = incidentList.Where(i => i.ActionType != "D" && i.IncidentNumber == sub.IncidentNumber).FirstOrDefault();
                         }
-                        throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibsTrans,
-                       ex);
-                    }
-                    finally
-                    {
-
-                        //Release the semaphore. It is vital to ALWAYS release the semaphore so that tasks waiting to enter can takeover or else we will end up with a Semaphore that is forever locked.
-                        //final block is recommended to release, program execution may crash or take a different path, this way you are guaranteed execution
-                        lock (semaphoreSlim)
+                        else
                         {
-                            semaphoreSlim.Release();
+                            List<string> ArrestIncidentNumber = new List<string>();
+                            if (sub.Reports[0].Arrests.Count>0)
+                            {
+                                //Retrieve incidentNumber in submission Report ArrestId then filter the IncidentList object.
+                                var ArrestId = sub.Reports[0].Arrests[0].Id;
+                                var oriNumber = ArrestId.Substring(0, ArrestId.IndexOf("-"));
+                                var withoutOriNumber = ArrestId.Replace(oriNumber, "").Remove(0, 1);
+                                var arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-"));
+                                filterIncidentList = incidentList.Where(i => i.ActionType != "D" && i.IncidentNumber == arrestIncidentNumber).FirstOrDefault();
+                            }
                         }
+
+                        //Call LCRX API
+                        await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident>(nibsTrans, filterIncidentList),
+                        baseURL + endpoint, null, true);
+                    responseReport.SavedInDb = true;
+                }
+                catch (Exception ex)
+                {
+                    cancellationTokenSource.Cancel();
+                    if (nibsTrans != null)
+                    {
+                        WriteTransactions(nibsTrans, pathToSaveErrorTransactions);
                     }
+                    throw new DocumentsFailedToProcessException(runNumber, pathToSaveErrorTransactions, nibsTrans,
+                    ex);
+                }
+                finally
+                {
+
+                    //Release the semaphore. It is vital to ALWAYS release the semaphore so that tasks waiting to enter can takeover or else we will end up with a Semaphore that is forever locked.
+                    //final block is recommended to release, program execution may crash or take a different path, this way you are guaranteed execution
+                    lock (semaphoreSlim)
+                    {
+                        semaphoreSlim.Release();
+                    }
+                }
 
                     return responseReport;
 
