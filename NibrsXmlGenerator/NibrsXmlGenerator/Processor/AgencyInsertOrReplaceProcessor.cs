@@ -93,6 +93,9 @@ namespace NibrsXml.Processor
             var submissionBatchStatusLst = new List<SubmissionBatchStatus>();
             // sort them in First In First Out order
             incListCollection = incListCollection.OrderBy(list => list.Runnumber).ToList();
+            LIBRSCodes objLibrs = new LIBRSCodes();
+            DataTable larsDatatable = objLibrs.LARS_Search(); //Data send to LCRX. Don't want to query this table again over and over.
+
             foreach (var incidentList in incListCollection)
             {
                 var runNumber = incidentList.Runnumber;
@@ -128,7 +131,7 @@ namespace NibrsXml.Processor
                             DateTime.Now, DateTime.Now, false,false,false);
                     }
 
-                    var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions, incidentList,
+                    var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions, incidentList, larsDatatable,
                         reportDocuments: !isAnyPendingToUpload);
                     _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
                         submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb,false);

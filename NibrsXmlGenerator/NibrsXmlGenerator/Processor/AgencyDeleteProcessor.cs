@@ -32,6 +32,8 @@ namespace NibrsXml.Processor
 
             LogManager.PrintRunningInForceDeleteMode();
             LogManager.PrintWhetherDeletesReportToFBI(resultTuple.Item1);
+            LIBRSCodes objLibrs = new LIBRSCodes();
+            DataTable larsDatatable = objLibrs.LARS_Search(); //Data send to LCRX. Don't want to query this table again over and over.
 
             foreach (var incidentList in AgencyBatchCollection)
             {
@@ -46,7 +48,7 @@ namespace NibrsXml.Processor
                     submissions = Translator.TransformIntoDeletes(submissions);
                     LogManager.PrintTransformIntoDelete(runNumber);
                     LogManager.PrintStartedProcessForRunNumber(runNumber);
-                   var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, incidentList, reportDocuments: !isAnyPendingToUpload);
+                   var batchResponseStatus =  await AttemptToReportDocumentsAsync(runNumber,  submissions, incidentList, larsDatatable, reportDocuments: !isAnyPendingToUpload);
                     if (!batchResponseStatus.UploadedToFbi && resultTuple.Item2.All(pendingRunNumber => pendingRunNumber != runNumber))
                     {
                         _nibrsBatchDal.Edit(runNumber, null, null, null, DateTime.Now, null, null,true);

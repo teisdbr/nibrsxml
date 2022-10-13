@@ -56,7 +56,7 @@ namespace NibrsXml.Processor
         /// <param name="reportDocuments"></param>
         /// <returns></returns>
         protected async Task<BatchResponseReport> AttemptToReportDocumentsAsync(string runNumber,
-            IEnumerable<Submission> documentsBatch, IncidentList incidentList, bool reportDocuments = true)
+            IEnumerable<Submission> documentsBatch, IncidentList incidentList, DataTable larsDatatable, bool reportDocuments = true)
         {
             var agencyDir = new AgencyNibrsDirectoryInfo(Ori);
             var pathToSaveErrorTransactions = agencyDir.GetErroredDirectory().FullName;
@@ -65,7 +65,7 @@ namespace NibrsXml.Processor
             var maxDegreeOfParallelism =
                 Convert.ToInt32(_appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
-
+     
 
 
             // The purpose of the semaphoreSlim to control the max number of concurrent tasks that can be ran in the requestTasks
@@ -82,7 +82,7 @@ namespace NibrsXml.Processor
                                 JsonConvert.SerializeObject(incidentList, new JsonSerializerSettings
                                 { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
                             );
-
+            
             foreach (var sub in documentsBatch)
             {
                 NibrsXmlTransaction nibsTrans = null;
@@ -132,7 +132,7 @@ namespace NibrsXml.Processor
                         }
 
                         //Call LCRX API
-                        await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident>(nibsTrans, filterIncidentList),
+                        await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>(nibsTrans, filterIncidentList, larsDatatable),
                         baseURL + endpoint, null, true);
                     responseReport.SavedInDb = true;
                 }
