@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 using TeUtil.Extensions;
 using WebhookProcessor;
 using Newtonsoft.Json;
+using LoadBusinessLayer.LIBRSAdmin;
+using LoadBusinessLayer.LIBRSArrestee;
+using LibrsModels.Classes;
 
 namespace NibrsXml.Processor
 {
@@ -27,7 +30,6 @@ namespace NibrsXml.Processor
         protected readonly AppSettingsReader _appSettingsReader;
         protected readonly Nibrs_Batch _nibrsBatchDal;
         protected List<IncidentList> AgencyBatchCollection { get; set; }
-
 
         protected BaseProcessor(LogManager logManager, List<IncidentList> agencyIncidentsCollection, string environment)
         {
@@ -65,8 +67,6 @@ namespace NibrsXml.Processor
             var maxDegreeOfParallelism =
                 Convert.ToInt32(_appSettingsReader.GetValue("MaxDegreeOfParallelism", typeof(int)));
             var reportToFbi = Convert.ToBoolean(_appSettingsReader.GetValue("ReportToFBI", typeof(Boolean)));
-     
-
 
             // The purpose of the semaphoreSlim to control the max number of concurrent tasks that can be ran in the requestTasks
             // MaxDegreeOfParallelism defines max number of tasks that can be at a time.
@@ -75,14 +75,6 @@ namespace NibrsXml.Processor
             var cancellationToken = cancellationTokenSource.Token;
             var requestTasks = new List<Task<ResponseReport>>();
 
-            //Clean up object because it is causing an issue on HTTP POST and can't use Tuple
-            //Issue: Self referencing loop detected with type 
-            incidentList = JsonConvert.DeserializeObject<IncidentList>
-                            (
-                                JsonConvert.SerializeObject(incidentList, new JsonSerializerSettings
-                                { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
-                            );
-            
             foreach (var sub in documentsBatch)
             {
                 NibrsXmlTransaction nibsTrans = null;
@@ -112,25 +104,33 @@ namespace NibrsXml.Processor
                         //          2 - If submission.report.incidentNumber is not Null. use sub.incidentNumber to filter the incidentlist
                         //          3 - If submission.report.incidentNumber is Null then get IncidentNumber from ArrestId to filter incidentlist
 
-                        LIBRSIncident filterIncidentList = null; 
-                        if (sub.IncidentNumber != null)
-                        {   
-                            filterIncidentList = incidentList.Where(i => i.ActionType != "D" && i.IncidentNumber == sub.IncidentNumber).FirstOrDefault();
+                        LIBRSIncident filterIncidentList = new LIBRSIncident(); //Use for getting the LRSCode in the LCRX. Nothing else for now. This doesn't affect the submissionReport.
+                       
+                        if (sub.Reports[0].Header.ReportActionCategoryCode == "D" || sub.Reports[0].Header.ReportActionCategoryCode == "R")
+                        {
+                            filterIncidentList = null;
+                        }
+                        else if (sub.IncidentNumber != null)
+                        {
+                            filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber).FirstOrDefault();
+                            RemoveRelationshipProperties(filterIncidentList);
                         }
                         else
                         {
                             List<string> ArrestIncidentNumber = new List<string>();
-                            if (sub.Reports[0].Arrests.Count>0)
+                            if (sub.Reports[0].Arrests.Count > 0)
                             {
                                 //Retrieve incidentNumber in submission Report ArrestId then filter the IncidentList object.
                                 var ArrestId = sub.Reports[0].Arrests[0].Id;
                                 var oriNumber = ArrestId.Substring(0, ArrestId.IndexOf("-"));
                                 var withoutOriNumber = ArrestId.Replace(oriNumber, "").Remove(0, 1);
-                                var arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-"));
-                                filterIncidentList = incidentList.Where(i => i.ActionType != "D" && i.IncidentNumber == arrestIncidentNumber).FirstOrDefault();
+                                var arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-I"));
+                               
+                                filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == arrestIncidentNumber).FirstOrDefault();
+                                RemoveRelationshipProperties(filterIncidentList);
                             }
                         }
-
+                        
                         //Call LCRX API
                         await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>(nibsTrans, filterIncidentList, larsDatatable),
                         baseURL + endpoint, null, true);
@@ -165,7 +165,16 @@ namespace NibrsXml.Processor
             var attemptResults = await Task.WhenAll(requestTasks.ToArray());
             return new BatchResponseReport(attemptResults);
         }
+        private void RemoveRelationshipProperties(LIBRSIncident filterIncidentList)
+        {
+            //Clean up object because it is causing an issue on HTTP POST
+            //Issue: Self referencing loop detected with type 
+            //Fix: Must set these null inorder to pass the object over HTTP. This filterIncidentList is only use to extract the lrsCode.
+            //     The submissionReport already has everything for fbi submission.
 
+            filterIncidentList.Offense.ForEach(g => g.RelationshipsToProperties = null);
+            filterIncidentList.PropDesc.ForEach(g => g.RelationshipsToOffenses = null);
+        }
 
         public List<PendingRunNumbers> GetPendingRunNumbers()
         {
