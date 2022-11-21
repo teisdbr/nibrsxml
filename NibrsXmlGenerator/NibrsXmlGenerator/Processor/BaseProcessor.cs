@@ -113,7 +113,7 @@ namespace NibrsXml.Processor
                         else if (sub.IncidentNumber != null)
                         {
                             filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber).FirstOrDefault();
-                            RemoveRelationshipProperties(filterIncidentList);
+                            RemoveRelationshipFields(filterIncidentList);
                         }
                         else
                         {
@@ -127,7 +127,7 @@ namespace NibrsXml.Processor
                                 var arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-I"));
                                
                                 filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == arrestIncidentNumber).FirstOrDefault();
-                                RemoveRelationshipProperties(filterIncidentList);
+                                RemoveRelationshipFields(filterIncidentList);
                             }
                         }
                         
@@ -165,7 +165,7 @@ namespace NibrsXml.Processor
             var attemptResults = await Task.WhenAll(requestTasks.ToArray());
             return new BatchResponseReport(attemptResults);
         }
-        private void RemoveRelationshipProperties(LIBRSIncident filterIncidentList)
+        private void RemoveRelationshipFields(LIBRSIncident filterIncidentList)
         {
             //Clean up object because it is causing an issue on HTTP POST
             //Issue: Self referencing loop detected with type 
