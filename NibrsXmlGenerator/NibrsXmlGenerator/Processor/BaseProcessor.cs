@@ -19,6 +19,8 @@ using Newtonsoft.Json;
 using LoadBusinessLayer.LIBRSAdmin;
 using LoadBusinessLayer.LIBRSArrestee;
 using LibrsModels.Classes;
+using NibrsModels.Constants;
+using NibrsModels.Utility;
 
 namespace NibrsXml.Processor
 {
@@ -105,12 +107,9 @@ namespace NibrsXml.Processor
                         //          3 - If submission.report.incidentNumber is Null then get IncidentNumber from ArrestId to filter incidentlist
 
                         LIBRSIncident filterIncidentList = new LIBRSIncident(); //Use for getting the LRSCode in the LCRX. Nothing else for now. This doesn't affect the submissionReport.
-                       
-                        if (sub.Reports[0].Header.ReportActionCategoryCode == "D" || sub.Reports[0].Header.ReportActionCategoryCode == "R")
-                        {
-                            filterIncidentList = null;
-                        }
-                        else if (sub.IncidentNumber != null)
+                        filterIncidentList = null;
+                     
+                        if (sub.IncidentNumber != null)
                         {
                             filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber).FirstOrDefault();
                             RemoveRelationshipFields(filterIncidentList);
