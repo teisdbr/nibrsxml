@@ -123,8 +123,17 @@ namespace NibrsXml.Processor
                                 var ArrestId = sub.Reports[0].Arrests[0].Id;
                                 var oriNumber = ArrestId.Substring(0, ArrestId.IndexOf("-"));
                                 var withoutOriNumber = ArrestId.Replace(oriNumber, "").Remove(0, 1);
-                                var arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-I"));
-                               
+                                var arrestIncidentNumber = "";
+
+                                if (withoutOriNumber.IndexOf("-I") > 0)
+                                {
+                                    arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-I"));
+                                }
+                                else if(withoutOriNumber.IndexOf("-D") > 0)
+                                {
+                                    arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-D"));
+                                }
+
                                 filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == arrestIncidentNumber).FirstOrDefault();
                                 RemoveRelationshipFields(filterIncidentList);
                             }
