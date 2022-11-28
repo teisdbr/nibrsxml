@@ -179,9 +179,12 @@ namespace NibrsXml.Processor
             //Issue: Self referencing loop detected with type 
             //Fix: Must set these null inorder to pass the object over HTTP. This filterIncidentList is only use to extract the lrsCode.
             //     The submissionReport already has everything for fbi submission.
-
-            filterIncidentList.Offense.ForEach(g => g.RelationshipsToProperties = null);
-            filterIncidentList.PropDesc.ForEach(g => g.RelationshipsToOffenses = null);
+            if(filterIncidentList != null)
+            {
+                filterIncidentList.Offense.ForEach(g => g.RelationshipsToProperties = null);
+                filterIncidentList.PropDesc.ForEach(g => g.RelationshipsToOffenses = null);
+            }
+            
         }
 
         public List<PendingRunNumbers> GetPendingRunNumbers()
