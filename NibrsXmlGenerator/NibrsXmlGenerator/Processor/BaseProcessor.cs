@@ -111,7 +111,7 @@ namespace NibrsXml.Processor
                      
                         if (sub.IncidentNumber != null)
                         {
-                            filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber).FirstOrDefault();
+                            filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber.Trim()).FirstOrDefault();
                             RemoveRelationshipFields(filterIncidentList);
                         }
                         else
