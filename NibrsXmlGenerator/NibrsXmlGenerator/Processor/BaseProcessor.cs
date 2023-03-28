@@ -103,15 +103,17 @@ namespace NibrsXml.Processor
                         //Remove delete incident and send the incident pertaining that the submission report only to lessen the data transfer
                         //Sending the filterIncidentList is not related to the FBI submission data. This is for retrieving the lrs number
                         //Scenario: 1 - ZeroReport doesn't have any incident
-                        //          2 - If submission.report.incidentNumber is not Null. use sub.incidentNumber to filter the incidentlist
+                        //          2 - If submission.report.incidentNumber is not Null. use sub.incidentNumber to filter the incidentlist.
+                        //              When ActionType is "D", there will be other data to use for LCRX.
                         //          3 - If submission.report.incidentNumber is Null then get IncidentNumber from ArrestId to filter incidentlist
+                        //          4 - If IEPDReprocessor is execute, the ActionType will be blank.
 
                         LIBRSIncident filterIncidentList = new LIBRSIncident(); //Use for getting the LRSCode in the LCRX. Nothing else for now. This doesn't affect the submissionReport.
                         filterIncidentList = null;
                      
                         if (sub.IncidentNumber != null)
                         {
-                            filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber.Trim()).FirstOrDefault();
+                            filterIncidentList = incidentList.Where(i => i.ActionType?.Trim() != "D" && i.IncidentNumber.Trim() == sub.IncidentNumber.Trim()).FirstOrDefault();
                             RemoveRelationshipFields(filterIncidentList);
                         }
                         else
@@ -134,7 +136,7 @@ namespace NibrsXml.Processor
                                     arrestIncidentNumber = withoutOriNumber.Substring(0, withoutOriNumber.IndexOf("-D"));
                                 }
 
-                                filterIncidentList = incidentList.Where(i => i.ActionType.Trim() != "D" && i.IncidentNumber.Trim() == arrestIncidentNumber).FirstOrDefault();
+                                filterIncidentList = incidentList.Where(i => i.ActionType?.Trim() != "D" && i.IncidentNumber.Trim() == arrestIncidentNumber).FirstOrDefault();
                                 RemoveRelationshipFields(filterIncidentList);
                             }
                         }
