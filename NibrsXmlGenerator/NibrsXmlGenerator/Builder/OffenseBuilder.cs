@@ -124,7 +124,6 @@ namespace NibrsXml.Builder
 
             // List of offenses where ciminal activity 1 through 3 == "I" with just the AgencyAssignedNibrs for debugging to console.
             var listOfAgencyAssignedNibrsWithI = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2.Trim() == "I" || off.CriminalActivity3.Trim() == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
-            var listOfAgencyAssignedNibrsWithX = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2.Trim() == "I" || off.CriminalActivity3.Trim() == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
 
             listOfAgencyAssignedNibrsWithI.ForEach(nibrs =>
             {
