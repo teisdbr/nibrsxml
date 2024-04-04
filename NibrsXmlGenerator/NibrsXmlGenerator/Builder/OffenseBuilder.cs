@@ -136,9 +136,11 @@ namespace NibrsXml.Builder
                 Console.WriteLine($"Non 720 code for 'X' became \"{nibrs}\"");
             });
 
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity1.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity1.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity2.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity2.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity3.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity3.Trim()));
+            offenses.ForEach(off => {
+                crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || (off.CriminalActivity1.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity1.Trim());
+                crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || (off.CriminalActivity2.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity2.Trim());
+                crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || (off.CriminalActivity3.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity3.Trim());
+            });
 
             nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
 
