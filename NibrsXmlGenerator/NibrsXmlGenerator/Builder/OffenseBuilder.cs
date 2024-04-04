@@ -123,8 +123,8 @@ namespace NibrsXml.Builder
             offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
 
             // List of offenses where ciminal activity 1 through 3 == "I" with just the AgencyAssignedNibrs for debugging to console.
-            var listOfAgencyAssignedNibrsWithI = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2 == "I" || off.CriminalActivity3 == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
-            var listOfAgencyAssignedNibrsWithX = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2 == "I" || off.CriminalActivity3 == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
+            var listOfAgencyAssignedNibrsWithI = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2.Trim() == "I" || off.CriminalActivity3.Trim() == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
+            var listOfAgencyAssignedNibrsWithX = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2.Trim() == "I" || off.CriminalActivity3.Trim() == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
 
             listOfAgencyAssignedNibrsWithI.ForEach(nibrs =>
             {
@@ -136,6 +136,14 @@ namespace NibrsXml.Builder
                 crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || off.CriminalActivity2.Trim() == "X" ? "P" : off.CriminalActivity2.Trim());
                 crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || off.CriminalActivity3.Trim() == "X" ? "P" : off.CriminalActivity3.Trim());
             });
+
+            var logger = new LogManager("LA0090100", "DougTest");
+            foreach(LIBRSOffense off in offenses)
+            {
+                crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || off.CriminalActivity1.Trim() == "X" ? "P" : off.CriminalActivity1.Trim());
+                crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || off.CriminalActivity2.Trim() == "X" ? "P" : off.CriminalActivity2.Trim());
+                crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720") || off.CriminalActivity3.Trim() == "X" ? "P" : off.CriminalActivity3.Trim());
+            }
 
             nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
 
