@@ -140,11 +140,13 @@ namespace NibrsXml.Processor
                                 RemoveRelationshipFields(filterIncidentList);
                             }
                         }
-                        
+
                         //Call LCRX API
+
                         await HttpActions.Post<HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>, object>(new HTTPDataObjectTransport<NibrsXmlTransaction, LIBRSIncident, DataTable>(nibsTrans, filterIncidentList, larsDatatable),
                         baseURL + endpoint, null, true);
-                    responseReport.SavedInDb = true;
+
+                        responseReport.SavedInDb = true;
                 }
                 catch (Exception ex)
                 {

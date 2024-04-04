@@ -76,8 +76,10 @@ namespace NibrsXml.Builder
                 var offenseReport = new Offense();
                 offenseReport.Id = ExtractOffenseId(uniqueReportPrefix, offense.First().OffenseSeqNum);
                 offenseReport.UcrCode = ExtractNibrsCode(offense.First());
+                Console.WriteLine("Started ExtractNibrsCriminalActivityCategoryCodes().");
                 offenseReport.CriminalActivityCategoryCodes =
                     ExtractNibrsCriminalActivityCategoryCodes(offenses, offenseReport.UcrCode);
+                Console.WriteLine("Completed ExtractNibrsCriminalActivityCategoryCodes().");
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
                 offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
@@ -119,10 +121,32 @@ namespace NibrsXml.Builder
             var nibrsCriminalActivityCategoryCodes = new List<string>();
             var crimeAct = new List<string>();
             offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || off.CriminalActivity1.Trim() == "X" ? "P" : off.CriminalActivity1.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || off.CriminalActivity2.Trim() == "X" ? "P" : off.CriminalActivity2.Trim()));
-            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || off.CriminalActivity3.Trim() == "X" ? "P" : off.CriminalActivity3.Trim()));
+
+            // List of offenses where ciminal activity 1 through 3 == "I" with just the AgencyAssignedNibrs for debugging to console.
+            var listOfAgencyAssignedNibrsWithI = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2 == "I" || off.CriminalActivity3 == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
+            var listOfAgencyAssignedNibrsWithX = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2 == "I" || off.CriminalActivity3 == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
+
+            listOfAgencyAssignedNibrsWithI.ForEach(nibrs =>
+            {
+                Console.WriteLine($"Non 720 code for 'I' became \"{nibrs}\"");
+            }); 
+            
+            listOfAgencyAssignedNibrsWithX.ForEach(nibrs =>
+            {
+                Console.WriteLine($"Non 720 code for 'X' became \"{nibrs}\"");
+            });
+
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity1.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity1.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity1.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity2.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity2.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity2.Trim()));
+            offenses.ForEach(off => crimeAct.UniqueAdd((off.CriminalActivity3.Trim() == "I" && off.AgencyAssignedNibrs.Trim() != "720" ) || (off.CriminalActivity3.Trim() == "X" && off.AgencyAssignedNibrs.Trim() != "720") ? "P" : off.CriminalActivity3.Trim()));
+
             nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
+
+            foreach (var nibrsCategoryCode in nibrsCriminalActivityCategoryCodes.Distinct().ToList())
+            {
+                Console.WriteLine($"NIBRS Category Code after conversion: \"{nibrsCategoryCode}\"");
+            }
+            
             // Had to do distinct.. 
             return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
         }

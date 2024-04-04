@@ -103,8 +103,10 @@ namespace NibrsXml.Processor
                 try
                 {
                     //Build the submissions
+                    LogManager.Print("Started SubmissionBuilder.BuildMultipleSubmission().");
                     var submissions = SubmissionBuilder.BuildMultipleSubmission(incidentList)?.ToList() ??
                                       new List<Submission>();
+                    LogManager.Print("Completed SubmissionBuilder.BuildMultipleSubmission().");
                     LogManager.PrintSubmissionSummary(submissions.Count, runNumber);
 
                     if (!submissions.Any())
@@ -133,6 +135,7 @@ namespace NibrsXml.Processor
 
                     var batchResponseStatus  = await AttemptToReportDocumentsAsync(runNumber, submissions, incidentList, larsDatatable,
                         reportDocuments: !isAnyPendingToUpload);
+                    
                     _nibrsBatchDal.Edit(runNumber, incidentList.Count(incList => !incList.HasErrors),
                         submissions.Count, null, DateTime.Now, batchResponseStatus.UploadedToFbi,batchResponseStatus.SavedInDb,false);
                     
