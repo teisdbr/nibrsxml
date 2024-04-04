@@ -129,11 +129,6 @@ namespace NibrsXml.Builder
             listOfAgencyAssignedNibrsWithI.ForEach(nibrs =>
             {
                 Console.WriteLine($"Non 720 code for 'I' became \"{nibrs}\"");
-            }); 
-            
-            listOfAgencyAssignedNibrsWithX.ForEach(nibrs =>
-            {
-                Console.WriteLine($"Non 720 code for 'X' became \"{nibrs}\"");
             });
 
             offenses.ForEach(off => {
