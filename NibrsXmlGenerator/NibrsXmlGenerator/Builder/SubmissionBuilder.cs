@@ -68,7 +68,9 @@ namespace NibrsXml.Builder
                     {
                         if (incident.HasErrors)
                             continue;
+                        FileLogger.WriteInfo("Started ReportBuilder.Build().");
                         var report = ReportBuilder.Build(incident, agencyIncidentList.ReportMonth, agencyIncidentList.ReportYear);
+                        FileLogger.WriteInfo("Completed ReportBuilder.Build().");
 
                         if (report == null)
                             continue;
