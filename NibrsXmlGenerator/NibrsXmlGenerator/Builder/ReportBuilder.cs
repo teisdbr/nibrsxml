@@ -98,7 +98,7 @@ namespace NibrsXml.Builder
                     rpt.Header.ReportActionCategoryCode = "A";
                 }
 
-                Console.WriteLine("Started OffenseBuilder.Build().");
+                FileLogger.WriteInfo("Started OffenseBuilder.Build().");
 
                 rpt.Offenses = OffenseBuilder.Build(
                     incident.Offense,
@@ -106,7 +106,7 @@ namespace NibrsXml.Builder
                     UniqueSuspectedOfUsingCodes(incident.OffUsing),
                     uniqueReportPrefix);
 
-                Console.WriteLine("Completed OffenseBuilder.Build().");
+                FileLogger.WriteInfo("Completed OffenseBuilder.Build().");
 
                 // If incident is some kind of theft or larceny, we need to include cargo theft indicator
                 // todo: for now we will always put "false" because WinLIBRS does not capture cargo theft

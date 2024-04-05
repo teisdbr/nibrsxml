@@ -84,6 +84,7 @@
     <Compile Include="Exceptions\DeleteRequestAbortException.cs" />
     <Compile Include="Exceptions\DocumentsFailedToProcessException.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="HTTPDataObjectTransport.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="NibrsError\Error.cs" />
