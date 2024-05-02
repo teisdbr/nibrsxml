@@ -76,10 +76,8 @@ namespace NibrsXml.Builder
                 var offenseReport = new Offense();
                 offenseReport.Id = ExtractOffenseId(uniqueReportPrefix, offense.First().OffenseSeqNum);
                 offenseReport.UcrCode = ExtractNibrsCode(offense.First());
-                FileLogger.WriteInfo("Started ExtractNibrsCriminalActivityCategoryCodes().");
                 offenseReport.CriminalActivityCategoryCodes =
                     ExtractNibrsCriminalActivityCategoryCodes(offenses, offenseReport.UcrCode);
-                FileLogger.WriteInfo("Completed ExtractNibrsCriminalActivityCategoryCodes().");
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
                 offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
@@ -122,38 +120,22 @@ namespace NibrsXml.Builder
             var crimeAct = new List<string>();
             offenses = offenses.Where(of => of.AgencyAssignedNibrs == nibrsCode).ToList();
 
-            // List of offenses where ciminal activity 1 through 3 == "I" with just the AgencyAssignedNibrs for debugging to console.
-            var listOfAgencyAssignedNibrsWithI = offenses.Where(off => off.CriminalActivity1.Trim() == "I" || off.CriminalActivity2.Trim() == "I" || off.CriminalActivity3.Trim() == "I").Select(off => off.AgencyAssignedNibrs.Trim()).ToList();
-
-            listOfAgencyAssignedNibrsWithI.ForEach(nibrs =>
-            {
-                FileLogger.WriteInfo($"Attempting conversion from 'I' with nibrs \"{nibrs}\" code to 'P'...");
-            });
-
             offenses.ForEach(off => {
                 crimeAct.UniqueAdd((string.Equals(off.CriminalActivity1.Trim(), "I") && !string.Equals(off.AgencyAssignedNibrs.Trim(), "720")) || string.Equals(off.CriminalActivity1.Trim(), "X") ? "P" : off.CriminalActivity1.Trim());
                 crimeAct.UniqueAdd((string.Equals(off.CriminalActivity2.Trim(), "I") && !string.Equals(off.AgencyAssignedNibrs.Trim(), "720")) || string.Equals(off.CriminalActivity2.Trim(), "X") ? "P" : off.CriminalActivity2.Trim());
                 crimeAct.UniqueAdd((string.Equals(off.CriminalActivity3.Trim(), "I") && !string.Equals(off.AgencyAssignedNibrs.Trim(), "720")) || string.Equals(off.CriminalActivity3.Trim(), "X") ? "P" : off.CriminalActivity3.Trim());
             });
 
-            nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => TranslateCriminalActivityCategoryCode(cr)));
-
-            foreach (var nibrsCategoryCode in nibrsCriminalActivityCategoryCodes.Distinct().ToList())
-            {
-                FileLogger.WriteInfo($"NIBRS Category Code after conversion: \"{nibrsCategoryCode}\"");
-            }
+            nibrsCriminalActivityCategoryCodes.AddRange(crimeAct.Where(crime => crime != string.Empty).Take(3).Select(cr => CheckForEmptyCrimeCode(cr)));
             
             // Had to do distinct.. 
             return nibrsCriminalActivityCategoryCodes.Distinct().ToList();
         }
 
-        private static string TranslateCriminalActivityCategoryCode(string librsCriminalActivity)
+        private static string CheckForEmptyCrimeCode(string librsCriminalActivity)
         {
-            if (librsCriminalActivity.Trim() == string.Empty)
+            if (string.IsNullOrWhiteSpace(librsCriminalActivity))
                 return null;
-            //Other (X) and Possession with Intent to Sell (I) are only ones translated as P because they are LIBRS only.
-            if (librsCriminalActivity.MatchOne(LibrsErrorConstants.OthCrim, LibrsErrorConstants.Int))
-                return LibrsErrorConstants.Posses;
             return librsCriminalActivity;
         }
 
