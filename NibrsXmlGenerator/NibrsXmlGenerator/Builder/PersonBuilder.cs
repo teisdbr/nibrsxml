@@ -344,42 +344,48 @@ namespace NibrsXml.Builder
 
         #region Helper Static Methods
 
+        private static class BabiesAbbrev
+        {
+            public const string DoubleZero = "00";
+            public const string Blank = "";
+            public const string NewBorn = "NB";
+            public const string Baby = "BB";
+            public const string NeoNatal = "NN";
+        }
         public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
-            // Integer to hold possible estimated age.
-            int calculatedAge;
+            string[] ageArrayConstant = new string[] { BabiesAbbrev.DoubleZero, BabiesAbbrev.Blank, BabiesAbbrev.NewBorn, BabiesAbbrev.Baby, BabiesAbbrev.NeoNatal };
+           
 
-            // Make sure the first two digit values are a valid integer.
-            int.TryParse(age.Substring(0, 2), out calculatedAge);
-
-            // Do not create a PersonAgeMeasure if no valid integer age was obtained
-            if (calculatedAge == 0 || age == "NB" || age == "BB" || age == "NN")
+            //Determine babies agetext
+            if (ageArrayConstant.Contains(age.Trim().ToUpper()))
             {
-
-                if (calculatedAge == 0)
+                switch (age.Trim().ToUpper())
                 {
-                    return new PersonAgeMeasure("UNKNOWN");
-                }
-                else if(age == "NB")
-                { return new PersonAgeMeasure("NEWBORN");}
-                else if(age == "BB")
-                { return new PersonAgeMeasure("BABY");}
-                else
-                { return new PersonAgeMeasure("NEONATAL"); }
+                    case BabiesAbbrev.DoubleZero:
+                    case BabiesAbbrev.Blank:
+                        return new PersonAgeMeasure(PersonAgeCode.UNKNOWN.NibrsCode());
+                    case BabiesAbbrev.NewBorn:
+                        return new PersonAgeMeasure(PersonAgeCode.NEWBORN.NibrsCode());
+                    case BabiesAbbrev.Baby:
+                        return new PersonAgeMeasure(PersonAgeCode.BABY.NibrsCode());
+                    default:
+                        return new PersonAgeMeasure(PersonAgeCode.NEONATAL.NibrsCode());
 
+                }
             }
-                
+
             //Determine if age is numeric or not. If it is not numeric and contains an E 
             //Parse out equivalent age range.
             else if (age.Contains("E"))
             {
                 //Approximate age.
-                var range = LibrsAgeAproximator(calculatedAge);
+                var range = LibrsAgeAproximator(int.Parse(age.Substring(0, 2)));
                 return new PersonAgeMeasure(range.Max, range.Min);
             }
             else
             {
-                return new PersonAgeMeasure(calculatedAge);
+                return new PersonAgeMeasure(int.Parse(age.Substring(0, 2)));
             }
         }
 
@@ -387,10 +393,10 @@ namespace NibrsXml.Builder
         {
             switch (age)
             {
-                case "NN": return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
-                case "NB": return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
-                case "BB": return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
-                case "00": return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
+                case BabiesAbbrev.NeoNatal: return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
+                case BabiesAbbrev.NewBorn: return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
+                case BabiesAbbrev.Baby: return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
+                case BabiesAbbrev.DoubleZero: return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
             }
 
             return null;
