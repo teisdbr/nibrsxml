@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using LoadBusinessLayer.LIBRSVictim;
 using NibrsModels.NibrsReport.ReportHeader;
 using TeUtil.Extensions;
+using NibrsXml.Constants;
 
 
 namespace NibrsXml.Builder
@@ -344,17 +345,14 @@ namespace NibrsXml.Builder
 
         #region Helper Static Methods
 
-        private static class BabiesAbbrev
-        {
-            public const string DoubleZero = "00";
-            public const string Blank = "";
-            public const string NewBorn = "NB";
-            public const string Baby = "BB";
-            public const string NeoNatal = "NN";
-        }
         public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
-            string[] ageArrayConstant = new string[] { BabiesAbbrev.DoubleZero, BabiesAbbrev.Blank, BabiesAbbrev.NewBorn, BabiesAbbrev.Baby, BabiesAbbrev.NeoNatal };
+            
+            string[] ageArrayConstant = new string[] { AgeCodes.BabiesAbbreviations.DoubleZero,
+                                                       AgeCodes.BabiesAbbreviations.Blank,
+                                                       AgeCodes.BabiesAbbreviations.NewBorn,
+                                                       AgeCodes.BabiesAbbreviations.Baby,
+                                                       AgeCodes.BabiesAbbreviations.NeoNatal };
            
 
             //Determine babies agetext
@@ -362,12 +360,12 @@ namespace NibrsXml.Builder
             {
                 switch (age.Trim().ToUpper())
                 {
-                    case BabiesAbbrev.DoubleZero:
-                    case BabiesAbbrev.Blank:
+                    case AgeCodes.BabiesAbbreviations.DoubleZero:
+                    case AgeCodes.BabiesAbbreviations.Blank:
                         return new PersonAgeMeasure(PersonAgeCode.UNKNOWN.NibrsCode());
-                    case BabiesAbbrev.NewBorn:
+                    case AgeCodes.BabiesAbbreviations.NewBorn:
                         return new PersonAgeMeasure(PersonAgeCode.NEWBORN.NibrsCode());
-                    case BabiesAbbrev.Baby:
+                    case AgeCodes.BabiesAbbreviations.Baby:
                         return new PersonAgeMeasure(PersonAgeCode.BABY.NibrsCode());
                     default:
                         return new PersonAgeMeasure(PersonAgeCode.NEONATAL.NibrsCode());
@@ -393,10 +391,10 @@ namespace NibrsXml.Builder
         {
             switch (age)
             {
-                case BabiesAbbrev.NeoNatal: return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
-                case BabiesAbbrev.NewBorn: return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
-                case BabiesAbbrev.Baby: return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
-                case BabiesAbbrev.DoubleZero: return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.NeoNatal: return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.NewBorn: return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.Baby: return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.DoubleZero: return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
             }
 
             return null;
