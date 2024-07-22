@@ -393,10 +393,15 @@ namespace NibrsXml.Builder
         {
             switch (age)
             {
-                case AgeCodes.BabiesAbbreviations.NeoNatal: return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
-                case AgeCodes.BabiesAbbreviations.NewBorn: return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
-                case AgeCodes.BabiesAbbreviations.Baby: return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
-                case AgeCodes.BabiesAbbreviations.DoubleZero: return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.NeoNatal: 
+                    return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.NewBorn: 
+                    return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.Baby: 
+                    return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
+                case AgeCodes.BabiesAbbreviations.DoubleZero: 
+                case AgeCodes.BabiesAbbreviations.Zero: 
+                    return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
             }
 
             return null;
