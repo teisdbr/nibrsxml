@@ -51,7 +51,7 @@ namespace NibrsXml.Builder
             List<EnforcementOfficial> officers, LIBRSIncident incident, string uniquePrefix)
         {
             #region Victims & EnforcementOfficials
-
+            
             foreach (var victim in incident.Victim)
             {
                 // Ensure its groupA victim
@@ -360,6 +360,7 @@ namespace NibrsXml.Builder
             {
                 switch (age.Trim().ToUpper())
                 {
+                    case AgeCodes.BabiesAbbreviations.Zero:
                     case AgeCodes.BabiesAbbreviations.DoubleZero:
                     case AgeCodes.BabiesAbbreviations.Blank:
                         return new PersonAgeMeasure(PersonAgeCode.UNKNOWN.NibrsCode());

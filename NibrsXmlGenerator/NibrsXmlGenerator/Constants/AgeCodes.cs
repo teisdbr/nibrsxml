@@ -4,6 +4,7 @@
     {
         public static class BabiesAbbreviations
         {
+            public const string Zero = "0";
             public const string DoubleZero = "00";
             public const string Blank = "";
             public const string NewBorn = "NB";
