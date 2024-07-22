@@ -355,7 +355,7 @@ namespace NibrsXml.Builder
                                                        AgeCodes.BabiesAbbreviations.NeoNatal };
            
 
-            //Determine babies agetext
+            //Determine babies agetext. Check LCRX for additional ValueText add to the property.
             if (ageArrayConstant.Contains(age.Trim().ToUpper()))
             {
                 switch (age.Trim().ToUpper())
