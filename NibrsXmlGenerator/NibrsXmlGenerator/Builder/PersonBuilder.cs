@@ -348,7 +348,8 @@ namespace NibrsXml.Builder
         public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
             
-            string[] ageArrayConstant = new string[] { AgeCodes.BabiesAbbreviations.DoubleZero,
+            string[] ageArrayConstant = new string[] { AgeCodes.BabiesAbbreviations.Zero,
+                                                       AgeCodes.BabiesAbbreviations.DoubleZero,
                                                        AgeCodes.BabiesAbbreviations.Blank,
                                                        AgeCodes.BabiesAbbreviations.NewBorn,
                                                        AgeCodes.BabiesAbbreviations.Baby,
