@@ -86,9 +86,9 @@ namespace NibrsXml.Builder
                                      
                     var aggAssaults = new List<string>();
                     aggAssaults.TryAdd(
-                        victim.AggravatedAssault1.TrimNullIfEmpty(),
-                        victim.AggravatedAssault2.TrimNullIfEmpty(),
-                        victim.AggravatedAssault3.TrimNullIfEmpty());
+                        victim.AggravatedAssault1?.TrimNullIfEmpty(),
+                        victim.AggravatedAssault2?.TrimNullIfEmpty(),
+                        victim.AggravatedAssault3?.TrimNullIfEmpty());
 
                     var offenses = incident.Offense.Where(o => o.OffConnecttoVic == victim.VictimSeqNum).ToList();
                                        
@@ -105,8 +105,8 @@ namespace NibrsXml.Builder
                         newOfficer = new EnforcementOfficial(
                             person: newPerson,
                             victimSeqNum: victim.VictimSeqNum,
-                            activityCategoryCode: victim.OfficerActivityCircumstance.TrimNullIfEmpty(),
-                            assignmentCategoryCode: victim.OfficerAssignmentType.TrimNullIfEmpty(),
+                            activityCategoryCode: victim.OfficerActivityCircumstance?.TrimNullIfEmpty(),
+                            assignmentCategoryCode: victim.OfficerAssignmentType?.TrimNullIfEmpty(),
                             agencyOri: victim.OfficerOri != incident.Admin.ORINumber ? victim.OfficerOri : null);
 
                         //Add each of the new objects above to their respective lists
@@ -116,7 +116,7 @@ namespace NibrsXml.Builder
 
                             // Convert aggAssault 40 to 34 if offense is 09B else convert to 09 
                             aggravatedAssaultHomicideFactorCode: aggAssaults.Select(a => (a == "40")  ?  (is09B ? "34" : "09") : a).ToList(),
-                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide?.TrimNullIfEmpty(),
                             uniquePrefix: uniquePrefix);
                     }
                     else
@@ -129,7 +129,7 @@ namespace NibrsXml.Builder
 
                             // Convert aggAssault 40 to 34 if offense is 09B else convert to 09 
                             aggravatedAssaultHomicideFactorCodes: aggAssaults.Select(a => (a == "40") ? (is09B ? "34" : "09") : a).ToList(),
-                            justifiableHomicideFactorCode: victim.AdditionalHomicide.TrimNullIfEmpty(),
+                            justifiableHomicideFactorCode: victim.AdditionalHomicide?.TrimNullIfEmpty(),
                             uniquePrefix: uniquePrefix);
                     }
 
@@ -321,7 +321,7 @@ namespace NibrsXml.Builder
                         //todo: ??? Does LIBRS Clearance Indicator of "O" translate to NIBRS of "N"?
                         armedWithCode:
                         incident.ArrArm.Where(armm => armm.ArrestSeqNum == librsArrestee.ArrestSeqNum)
-                            .Select(aarm => aarm.ArrestArmedWith.TrimNullIfEmpty())
+                            .Select(aarm => aarm.ArrestArmedWith?.TrimNullIfEmpty())
                             .ToList(),
                         juvenileDispositionCode: TranslateJuvenileDispositionCode(juvenileDispositionCode,librsArrestee.Age),
                         subjectCountCode: librsArrestee.MultipleArresteeIndicator,

@@ -258,7 +258,7 @@ namespace NibrsXml.Builder
                     // Instantiate and add a new Substance object to the list of substances
                     nibrsSubstances.Add(new Substance(
                         drugCatCode,
-                        prop.First().EstimatedDrugQty.TrimNullIfEmpty(),
+                        prop.First().EstimatedDrugQty?.TrimNullIfEmpty(),
                         prop.First().TypeDrugMeas,
                         nibrsItemStatusCode,
                         prop.First().PropertyValue,
@@ -299,7 +299,7 @@ namespace NibrsXml.Builder
 
                     }).ToString(CultureInfo.InvariantCulture);
 
-                    var propDes = prop.First().PropertyDescription.TrimNullIfEmpty();
+                    var propDes = prop.First().PropertyDescription?.TrimNullIfEmpty();
                     var countOfProperties = NibrsCodeGroups.VehicleProperties.Contains(propDes) ? prop.Count().ToString() : null;
 
                     // Instantiate and add a new Item object to the list of items

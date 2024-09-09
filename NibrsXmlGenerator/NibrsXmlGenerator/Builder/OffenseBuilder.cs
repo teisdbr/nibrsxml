@@ -79,7 +79,7 @@ namespace NibrsXml.Builder
                 offenseReport.CriminalActivityCategoryCodes =
                     ExtractNibrsCriminalActivityCategoryCodes(offenses, offenseReport.UcrCode);
                 offenseReport.FactorBiasMotivationCodes = TranslateBiasMotivationCodes(uniqueBiasMotivationCodes);
-                offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0').TrimNullIfEmpty();
+                offenseReport.StructuresEnteredQuantity = offense.First().Premises.TrimStart('0')?.TrimNullIfEmpty();
                 offenseReport.Factors = TranslateOffenseFactors(uniqueSuspectedOfUsingCodes);
                 offenseReport.EntryPoint = offense.First().MethodOfEntry.TryBuild<OffenseEntryPoint>();
                 offenseReport.Forces = ExtractNibrsOffenseForces(offenses, offenseReport.UcrCode);
