@@ -97,7 +97,7 @@ namespace NibrsXml.Builder
             return uniqueReportPrefix + "Offense" + offenseSeqNum.Trim().TrimStart('0');
         }
 
-        private static string ExtractNibrsCode(LIBRSOffense offense, DateTime incidentDate)
+        private static string ExtractNibrsCode(LIBRSOffense offense)
         {
             return offense.AgencyAssignedNibrs;
         }

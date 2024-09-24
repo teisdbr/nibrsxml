@@ -333,7 +333,7 @@ namespace NibrsXml.Builder
                         arrestDate < expDate);
 
                         var unexpiredLars = LarsList.LarsListBuildNibrsXmlForUcrExtract
-                        .Where(x => x.ExpirationDate == null &&
+                        .Where(x => x.ExpirationDate.IsNullBlankOrEmpty() &&
                         Regex.Replace(x.StatuteNum.Trim(), @"\s+", "") == lrs.LrsNumber).FirstOrDefault();
 
                         Double? rank = null;
@@ -343,7 +343,14 @@ namespace NibrsXml.Builder
                         }
                         else
                         {
-                            rank = unexpiredLars.Lrank.HasValue() ? Convert.ToDouble(unexpiredLars.Lrank) : (Double?)null;
+                            if (unexpiredLars != null)
+                            {
+                                rank = unexpiredLars.Lrank.HasValue() ? Convert.ToDouble(unexpiredLars.Lrank) : (Double?)null;
+                            }
+                            else
+                            {
+                                rank = null;
+                            }
                         }
 
                         return new
