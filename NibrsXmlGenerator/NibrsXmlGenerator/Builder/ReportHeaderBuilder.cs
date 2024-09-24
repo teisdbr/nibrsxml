@@ -21,11 +21,7 @@ namespace NibrsXml.Builder
         public static ReportHeader Build(List<LIBRSOffense> offenses, string actionType, LIBRSAdmin admin, string reportingPeriodYm)
         {
             //Make sure all agency assigned nibrs values are filled in regardless of the original Flat file contents/spec
-            offenses = offenses.Select(o =>
-            {
-                o.AgencyAssignedNibrs = o.AgencyAssignedNibrs.IsNullBlankOrEmpty() ? LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGet(o.LrsNumber.Trim())?.Nibr : o.AgencyAssignedNibrs;
-                return o;
-            }).ToList();
+            offenses = offenses.ToList();
 
             var rptHeader = new ReportHeader();
             rptHeader.NibrsReportCategoryCode = admin.HasGroupAOffense.HasValue ? SetNibrsReportCategoryCode(admin.HasGroupAOffense) : DetermineNibrsReportCategoryCode(offenses);

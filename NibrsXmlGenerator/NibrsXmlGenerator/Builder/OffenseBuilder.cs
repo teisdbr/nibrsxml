@@ -97,11 +97,9 @@ namespace NibrsXml.Builder
             return uniqueReportPrefix + "Offense" + offenseSeqNum.Trim().TrimStart('0');
         }
 
-        private static string ExtractNibrsCode(LIBRSOffense offense)
+        private static string ExtractNibrsCode(LIBRSOffense offense, DateTime incidentDate)
         {
-            return offense.AgencyAssignedNibrs.HasValue(true)
-                ? offense.AgencyAssignedNibrs
-                : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract[offense.LrsNumber.Trim()].Nibr;
+            return offense.AgencyAssignedNibrs;
         }
 
         private static List<string> TranslateBiasMotivationCodes(List<string> biasMotivationCodes)
