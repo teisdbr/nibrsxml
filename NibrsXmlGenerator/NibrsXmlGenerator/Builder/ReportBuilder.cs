@@ -321,19 +321,50 @@ namespace NibrsXml.Builder
                     incident.ArrStatute,
                     arrest => arrest.ArrestSeqNum,
                     arrlrs => arrlrs.ArrestSeqNum,
-                    (arrest, lrs) => new
+                    (arrest, lrs) =>
                     {
-                        TransactionNumber = arrest.ArrestNumber,
-                        ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
-                        Charge = lrs.AgencyAssignedNibrs.HasValue(true)
-                            ? lrs.AgencyAssignedNibrs
-                            : LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGet(lrs.LrsNumber.Trim())?.Nibr,
-                        CategoryCode = arrest.ArrestType,
-                        ArrestCount = arrest.MultipleArresteeIndicator,
-                        SeqNum = arrest.ArrestSeqNum,
-                        //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCY ASSIGNED NIBRS
-                        Rank = LarsList.LarsDictionaryBuildNibrsXmlForUcrExtract.TryGetValue(Regex.Replace(lrs.LrsNumber.Trim(), @"\s+", ""), out LibrsLars value) ? Convert.ToDouble(value.Lrank) : (Double?)null,
-                        Group = lrs.OffenseGroup,
+                        DateTime.TryParse(arrest.ArrestDate, out DateTime arrestDate);
+
+                        var expiredLars = LarsList.LarsListBuildNibrsXmlForUcrExtract
+                        .Where(x => DateTime.TryParse(x.ExpirationDate, out _) && 
+                        Regex.Replace(x.StatuteNum.Trim(), @"\s+", "") == lrs.LrsNumber)
+                        .OrderByDescending(x => x.ExpirationDate)
+                        .FirstOrDefault(x => DateTime.TryParse(x.ExpirationDate, out DateTime expDate) &&
+                        arrestDate < expDate);
+
+                        var unexpiredLars = LarsList.LarsListBuildNibrsXmlForUcrExtract
+                        .Where(x => x.ExpirationDate.IsNullBlankOrEmpty() &&
+                        Regex.Replace(x.StatuteNum.Trim(), @"\s+", "") == lrs.LrsNumber).FirstOrDefault();
+
+                        Double? rank = null;
+                        if (expiredLars != null)
+                        {
+                            rank = expiredLars.Lrank.HasValue() ? Convert.ToDouble(expiredLars.Lrank) : (Double?)null;
+                        }
+                        else
+                        {
+                            if (unexpiredLars != null)
+                            {
+                                rank = unexpiredLars.Lrank.HasValue() ? Convert.ToDouble(unexpiredLars.Lrank) : (Double?)null;
+                            }
+                            else
+                            {
+                                rank = null;
+                            }
+                        }
+
+                        return new
+                        {
+                            TransactionNumber = arrest.ArrestNumber,
+                            ActivityDate = arrest.ArrestDate.ConvertToNibrsYearMonthDay(),
+                            Charge = lrs.AgencyAssignedNibrs,
+                            CategoryCode = arrest.ArrestType,
+                            ArrestCount = arrest.MultipleArresteeIndicator,
+                            SeqNum = arrest.ArrestSeqNum,
+                            //TODO: MAKE SURE TO VERIFY WHETHER THE FOLLOWING CODE SHOULD BE MODIFIED TO TAKE INTO CONSIDERATION AGENCY ASSIGNED NIBRS
+                            Rank = rank,
+                            Group = lrs.OffenseGroup,
+                        };
                     }
                 ).ToList();
 
