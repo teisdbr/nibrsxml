@@ -210,7 +210,7 @@
       <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="NibrsModels">
-      <Version>1.3.7</Version>
+      <Version>1.3.13</Version>
     </PackageReference>
     <PackageReference Include="System.ServiceModel.Primitives">
       <Version>4.10.0</Version>
