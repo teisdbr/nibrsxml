@@ -343,35 +343,31 @@ namespace NibrsXml.Builder
 
         #region Helper Static Methods
 
-        private static class BabiesAbbrev
-        {
-            public const string DoubleZero = "00";
-            public const string Blank = "";
-            public const string NewBorn = "NB";
-            public const string Baby = "BB";
-            public const string NeoNatal = "NN";
-        }
+      
         public static PersonAgeMeasure LibrsAgeMeasureParser(string age)
         {
-            string[] ageArrayConstant = new string[] { BabiesAbbrev.DoubleZero, BabiesAbbrev.Blank, BabiesAbbrev.NewBorn, BabiesAbbrev.Baby, BabiesAbbrev.NeoNatal };
-           
-
             //Determine babies agetext
-            if (ageArrayConstant.Contains(age.Trim().ToUpper()))
+            var ageTrim = age.Trim().ToUpper();
+            //Determine babies agetext
+            if (PersonAgeCode.UNKNOWN.AbbreviationCode() == ageTrim ||  PersonAgeCode.NEWBORN.AbbreviationCode() == ageTrim || 
+                PersonAgeCode.BABY.AbbreviationCode() == ageTrim || PersonAgeCode.NEONATAL.AbbreviationCode() == ageTrim || 
+                ageTrim == "")
             {
-                switch (age.Trim().ToUpper())
-                {
-                    case BabiesAbbrev.DoubleZero:
-                    case BabiesAbbrev.Blank:
-                        return new PersonAgeMeasure(PersonAgeCode.UNKNOWN.NibrsCode());
-                    case BabiesAbbrev.NewBorn:
-                        return new PersonAgeMeasure(PersonAgeCode.NEWBORN.NibrsCode());
-                    case BabiesAbbrev.Baby:
-                        return new PersonAgeMeasure(PersonAgeCode.BABY.NibrsCode());
-                    default:
-                        return new PersonAgeMeasure(PersonAgeCode.NEONATAL.NibrsCode());
+                if (PersonAgeCode.UNKNOWN.AbbreviationCode() == ageTrim  || ageTrim == ""){
+                    return new PersonAgeMeasure(PersonAgeCode.UNKNOWN.NibrsCode());
 
                 }
+                else if (PersonAgeCode.NEWBORN.AbbreviationCode() == ageTrim) {
+                    return new PersonAgeMeasure(PersonAgeCode.NEWBORN.NibrsCode());
+
+                }
+                else if (PersonAgeCode.BABY.AbbreviationCode() == ageTrim){
+                    return new PersonAgeMeasure(PersonAgeCode.BABY.NibrsCode());
+                }
+                else{
+                    return new PersonAgeMeasure(PersonAgeCode.NEONATAL.NibrsCode());
+                }
+
             }
 
             //Determine if age is numeric or not. If it is not numeric and contains an E 
@@ -390,15 +386,25 @@ namespace NibrsXml.Builder
 
         public static PersonAugmentation LibrsAgeCodeParser(string age)
         {
-            switch (age)
-            {
-                case BabiesAbbrev.NeoNatal: return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
-                case BabiesAbbrev.NewBorn: return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
-                case BabiesAbbrev.Baby: return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
-                case BabiesAbbrev.DoubleZero: return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
-            }
+            if (PersonAgeCode.NEONATAL.AbbreviationCode() == age) {
+                return new PersonAugmentation(PersonAgeCode.NEONATAL.NibrsCode());
 
-            return null;
+            }
+            else if (PersonAgeCode.NEWBORN.AbbreviationCode() == age) {
+                return new PersonAugmentation(PersonAgeCode.NEWBORN.NibrsCode());
+
+            }
+            else if (PersonAgeCode.BABY.AbbreviationCode() == age)  {
+                return new PersonAugmentation(PersonAgeCode.BABY.NibrsCode());
+
+            }
+            else if (PersonAgeCode.UNKNOWN.AbbreviationCode() == age) {
+                return new PersonAugmentation(PersonAgeCode.UNKNOWN.NibrsCode());
+
+            }
+            else {
+                return null;
+            }
         }
 
         private static MeasureIntegerRange LibrsAgeAproximator(int age)
