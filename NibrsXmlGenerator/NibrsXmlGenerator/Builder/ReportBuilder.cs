@@ -109,7 +109,16 @@ namespace NibrsXml.Builder
                 // If incident is some kind of theft or larceny, we need to include cargo theft indicator
                 // todo: for now we will always put "false" because WinLIBRS does not capture cargo theft
                 if (rpt.Offenses.Any(o => o.UcrCode.MatchOne(NibrsCodeGroups.TheftOffenseFactorCodes)))
-                    rpt.Incident.CjisIncidentAugmentation.OffenseCargoTheftIndicator = false.ToString().ToLower();
+                {
+                    if (!incident.Admin.CargoTheft.IsNullBlankOrEmpty())
+                    {
+                        rpt.Incident.CjisIncidentAugmentation.OffenseCargoTheftIndicator = incident.Admin.CargoTheft == "Y" ? true.ToString().ToLower() : false.ToString().ToLower();
+                    }
+                    else
+                    {
+                        rpt.Incident.CjisIncidentAugmentation.OffenseCargoTheftIndicator = false.ToString().ToLower();
+                    }
+                }
 
                 BuildLocationsAndLocationAssociations(
                     rpt.Offenses,
