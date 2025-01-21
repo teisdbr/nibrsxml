@@ -11,11 +11,18 @@ namespace NibrsXml.Builder
     {
         public static Incident Build(LIBRSAdmin admin)
         {
+            CjisIncidentAugmentation cjisincidentAugmentation = new CjisIncidentAugmentation(false, null);
+
+            if (!admin.CargoTheft.IsNullBlankOrEmpty())
+            {
+                cjisincidentAugmentation = new CjisIncidentAugmentation(false, admin.CargoTheft.ToUpper() == "Y" ? true : false);
+            }
+
             var inc = new Incident
             {
                 ActivityId = new ActivityIdentification(admin.IncidentNumber.Trim()),
                 ActivityDate = ExtractNibrsIncidentDateTime(admin),
-                CjisIncidentAugmentation = new CjisIncidentAugmentation(false, null),
+                CjisIncidentAugmentation = cjisincidentAugmentation,
  
                 // Ignore incident augmentation when action type is D 
                 JxdmIncidentAugmentation = admin.ActionType != "D" ? new JxdmIncidentAugmentation(ExtractNibrsClearanceCode(admin) ,
