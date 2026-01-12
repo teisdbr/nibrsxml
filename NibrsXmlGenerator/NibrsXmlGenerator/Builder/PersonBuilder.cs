@@ -466,7 +466,12 @@ namespace NibrsXml.Builder
                 return VictimOffenderRelationshipLibrsNibrsTranslation["RU"];
             }
 
-            return VictimOffenderRelationshipLibrsNibrsTranslation[derivedVicOffRelationship];
+            if (VictimOffenderRelationshipLibrsNibrsTranslation.ContainsKey(derivedVicOffRelationship))
+            {
+                return VictimOffenderRelationshipLibrsNibrsTranslation[derivedVicOffRelationship];
+            }
+
+            return null;
         }
 
         private static bool IsInjuryValidToOffense(List<LIBRSVictimInjury> librsvictimInjuries, List<LIBRSOffense> librsoffenses)
