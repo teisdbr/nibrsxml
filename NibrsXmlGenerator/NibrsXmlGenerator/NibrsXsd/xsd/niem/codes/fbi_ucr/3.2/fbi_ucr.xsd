@@ -708,7 +708,12 @@ http://www.fbi.gov/about-us/cjis/ucr/nibrs_technical_specification_version_1.0_f
           <xs:documentation>Not Applicable</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-    </xs:restriction>
+	    <xs:enumeration value="R">
+		<xs:annotation>
+			<xs:documentation>Drone/ Unmanned aircraft system</xs:documentation>
+		</xs:annotation>
+	    </xs:enumeration>
+	</xs:restriction>
   </xs:simpleType>
   <xs:complexType name="IncidentFactorCodeType">
     <xs:annotation>
@@ -730,6 +735,11 @@ http://www.fbi.gov/about-us/cjis/ucr/nibrs_technical_specification_version_1.0_f
           <xs:documentation>apparent broken bones</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+	  <xs:enumeration value="G">
+		<xs:annotation>
+			<xs:documentation>gunshot</xs:documentation>
+		</xs:annotation>
+	  </xs:enumeration>	
       <xs:enumeration value="I">
         <xs:annotation>
           <xs:documentation>possible internal injury</xs:documentation>
@@ -764,7 +774,7 @@ http://www.fbi.gov/about-us/cjis/ucr/nibrs_technical_specification_version_1.0_f
         <xs:annotation>
           <xs:documentation>unconsciousness</xs:documentation>
         </xs:annotation>
-      </xs:enumeration>
+      </xs:enumeration>	
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="InjuryCategoryCodeType">

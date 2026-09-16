@@ -587,10 +587,12 @@
     <w:Facet w:facet="enumeration" w:value="C"/>
     <w:Facet w:facet="enumeration" w:value="D"/>
     <w:Facet w:facet="enumeration" w:value="N"/>
+	<w:Facet w:facet="enumeration" w:value="R"/>  
   </w:Type>
   <w:Type w:name="ucr:IncidentFactorCodeType" w:isRequested="true"/>
   <w:Type w:name="ucr:InjuryCategoryCodeSimpleType" w:isRequested="false">
     <w:Facet w:facet="enumeration" w:value="B"/>
+	<w:Facet w:facet="enumeration" w:value="G"/>
     <w:Facet w:facet="enumeration" w:value="I"/>
     <w:Facet w:facet="enumeration" w:value="L"/>
     <w:Facet w:facet="enumeration" w:value="M"/>
